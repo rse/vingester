@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="200" align="right" alt=""/>
+<img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="150" align="right" alt=""/>
 
 Vingester
 =========
