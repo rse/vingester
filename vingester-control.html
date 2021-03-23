@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+**  Vingester ~ Ingest Web Contents as Video Streams
+**  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
+-->
+<html>
+    <head>
+        <!-- application title -->
+        <title>Vingester</title>
+
+        <!-- general meta-information -->
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; worker-src 'self' 'unsafe-inline' 'unsafe-eval' blob:;"/>
+
+        <!-- load dependency: FontAwesome -->
+        <link rel="stylesheet" type="text/css" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+        <script type="text/javascript" src="node_modules/@fortawesome/fontawesome-free/js/all.min.js"></script>
+
+        <!-- load dependency: TypoPRO -->
+        <link rel="stylesheet" type="text/css" href="node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceSansPro.css">
+        <link rel="stylesheet" type="text/css" href="node_modules/typopro-web/web/TypoPRO-Overlock/TypoPRO-Overlock.css">
+
+        <!-- load dependency: VueJS -->
+        <script type="text/javascript" src="node_modules/sprintfjs/sprintf.js"></script>
+        <script type="text/javascript" src="node_modules/vue/dist/vue.global.prod.js"></script>
+
+        <!-- load application -->
+        <link rel="stylesheet" type="text/css" href="vingester-control.css"/>
+    </head>
+    <body>
+        <div class="ui">
+            <div class="browser browser-global">
+                <div class="button button-plus" v-on:click="addBrowser">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <div class="box">
+                    <div class="row">
+                        <div class="row-left">
+                            <div class="field field-start"  v-on:click="control('start-all', null)"><i class="fas fa-play"></i> &nbsp;START</div>
+                            <div class="field field-reload" v-on:click="control('reload-all', null)"><i class="fas fa-redo"></i> &nbsp;RELOAD</div>
+                            <div class="field field-stop"   v-on:click="control('stop-all', null)"><i class="fas fa-pause"></i> &nbsp;STOP</div>
+                        </div>
+                        <div class="row-middle">
+                            <img class="title-icon" src="vingester-icon.png">
+                            <div class="title-text">Vingester</div>
+                        </div>
+                        <div class="row-right">
+                            <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>
+                            <div class="field field-import" v-on:click="importBrowsers"><i class="fas fa-download"></i> &nbsp;IMPORT</div>
+                            <div class="field field-gpu" v-on:click="toggleGPU">
+                                <span v-show="gpu"><i class="fas fa-check-circle"></i></span>
+                                <span v-show="!gpu"><i class="fas fa-circle"></i></span>
+                                &nbsp;GPU
+                            </div>
+                            <div class="field field-usage"><i class="fas fa-microchip"></i> &nbsp;{{ usage.toFixed(1) }}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-for="browser in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
+                <div class="button button-minus" v-on:click="delBrowser(browser)">
+                    <i class="fas fa-minus-circle"></i>
+                </div>
+                <div class="box">
+                    <div class="preview" v-show="browser.P === true && running[browser.id]">
+                        <canvas v-bind:ref="'canvas-' + browser.id" width="128" height="72"></canvas>
+                    </div>
+                    <div class="row">
+                        <div class="group">Browser:</div>
+                        <div class="label label-title">Title:</div>
+                        <div class="field field-title">
+                            <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
+                                v-bind:class="{ disabled: running[browser.id] }"
+                                v-bind:disabled="running[browser.id]">
+                        </div>
+                        <div class="label">Size:</div>
+                        <div class="field">
+                            <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
+                                v-bind:class="{ disabled: running[browser.id] }"
+                                v-bind:disabled="running[browser.id]">
+                        </div>
+                        <div class="sep">x</div>
+                        <div class="field">
+                            <input type="text" v-model="browser.h" v-on:keyup="changed(browser)"
+                                v-bind:class="{ disabled: running[browser.id] }"
+                                v-bind:disabled="running[browser.id]">
+                        </div>
+                        <div class="label">Color:</div>
+                        <div class="field field-color">
+                            <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
+                                v-bind:class="{ disabled: running[browser.id] }"
+                                v-bind:disabled="running[browser.id]">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="group">Input:</div>
+                        <div class="label label-url">URL:</div>
+                        <div class="field field-url">
+                            <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
+                                v-bind:class="{ disabled: running[browser.id] }"
+                                v-bind:disabled="running[browser.id]">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="group">Output 1:</div>
+                        <div class="label label-output">Frameless (DTP):</div>
+                        <div class="field">
+                            <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
+                                <div class="toggle-option" v-bind:class="{ selected: browser.D === true  }">YES</div>
+                                <div class="toggle-option" v-bind:class="{ selected: browser.D === false }">NO</div>
+                            </div>
+                        </div>
+                        <div class="cluster" v-show="browser.D">
+                            <div class="label">Pos:</div>
+                            <div class="field">
+                                <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                            <div class="sep">x</div>
+                            <div class="field">
+                                <input type="text" v-model="browser.y" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                            <div class="sep">@</div>
+                            <div class="field">
+                                <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                            <div class="label">Pin:</div>
+                            <div class="field">
+                                <div class="toggle" v-on:click="toggle(browser, 'p', [ true, false ])">
+                                    <div class="toggle-option toggle-option-pin"   v-bind:class="{ selected: browser.p === true  }">YES</div>
+                                    <div class="toggle-option toggle-option-nopin" v-bind:class="{ selected: browser.p === false }">NO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="group">Output 2:</div>
+                        <div class="label label-output">Headless (NDI):</div>
+                        <div class="field">
+                            <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
+                                <div class="toggle-option" v-bind:class="{ selected: browser.N === true  }">YES</div>
+                                <div class="toggle-option" v-bind:class="{ selected: browser.N === false }">NO</div>
+                            </div>
+                        </div>
+                        <div class="cluster" v-show="browser.N">
+                            <div class="label">FPS:</div>
+                            <div class="field">
+                                <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row-left">
+                            <div class="field field-start"  v-bind:class="{ disabled: !browser.D && !browser.N }" v-on:click="control('start', browser.id)"><i class="fas fa-play"></i> &nbsp;START</div>
+                            <div class="field field-reload" v-on:click="control('reload', browser.id)"><i class="fas fa-redo"></i> &nbsp;RELOAD</div>
+                            <div class="field field-stop"   v-on:click="control('stop', browser.id)"><i class="fas fa-pause"></i> &nbsp;STOP</div>
+                            <div class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
+                                <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
+                                <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
+                                &nbsp;PREVIEW
+                            </div>
+                        </div>
+                        <div class="row-middle">
+                        </div>
+                        <div class="row-right">
+                            <div class="stat" v-if="running[browser.id]">
+                                <span class="stat-item" v-if="browser.N || browser.P">
+                                CPU: {{ Math.round(burst[browser.id].avg) }}/{{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
+                                </span>
+                                <span class="stat-item">
+                                GFX: {{ Math.round(stat[browser.id].fps) }} f/s
+                                </span>
+                                <span class="stat-item">
+                                RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="vingester-control.js"></script>
+</html>
