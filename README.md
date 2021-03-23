@@ -1,10 +1,14 @@
 
-<img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="300" align="right" alt=""/>
+<img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="200" align="right" alt=""/>
 
 Vingester
 =========
 
 **Ingest Web Contents as Video Streams**
+
+This is **Vingester**, a small desktop application for running multiple
+Web browser instances and ingesting their Web Contents as Video Streams
+for further use in video streaming applications.
 
      GPU !GPU
 DTP  3.0 6.0
