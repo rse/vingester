@@ -6,10 +6,12 @@ Vingester
 
 **Ingest Web Contents as Video Streams**
 
-This is **Vingester**, a small Electron-based desktop application for
-running multiple Chromium-based Web browser instances and ingesting
-their rendered Web Contents as video streams for further use in video
-mixing applications like OBS Studio.
+This is **Vingester**, a small Electron-based desktop application
+for running multiple Chromium-based Web browser instances and
+ingesting their rendered Web Contents as desktop/window-captured
+or NDI-multicasted video streams for further use in video mixing
+applications. It is primarily intended as a companion application to OBS
+Studio in order to ingest OBS.Ninja sessions in an efficient way.
 
      GPU !GPU
 DTP  3.0 6.0
