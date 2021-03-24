@@ -67,9 +67,9 @@ electron.dialog.showErrorBox = (title, content) => {
     /*  initialize store  */
     const store = new Store()
 
-    /*  optionally and early disable GPU hardware accelleration  */
+    /*  optionally and early disable GPU hardware acceleration  */
     if (!store.get("gpu")) {
-        log.info("disabling GPU hardware accelleration (explicitly configured)")
+        log.info("disabling GPU hardware acceleration (explicitly configured)")
         electron.app.disableHardwareAcceleration()
     }
 
@@ -619,12 +619,12 @@ electron.dialog.showErrorBox = (title, content) => {
             setTimeout(check, 100)
         })
 
-        /*  toggle GPU hardware accelleration  */
+        /*  toggle GPU hardware acceleration  */
         log.info("send GPU status and provide IPC hook for GPU status change")
         mainWin.webContents.send("gpu", !!store.get("gpu"))
         electron.ipcMain.handle("gpu", async (ev, gpu) => {
             const choice = electron.dialog.showMessageBoxSync(mainWin, {
-                message: `${gpu ? "Enabling" : "Disabling"} GPU hardware accelleration ` +
+                message: `${gpu ? "Enabling" : "Disabling"} GPU hardware acceleration ` +
                     "requires an application restart.",
                 type: "question",
                 buttons: [ "Restart", "Cancel" ],
