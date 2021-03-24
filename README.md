@@ -34,7 +34,18 @@ By externally ingesting the video streams of meeting participants
 through **Vingester**, this performance degradation in OBS Studio can be
 avoided, although the total system load will be not necessarily lower.
 
+Sneak Preview
+-------------
+
 ![Vingester Screenshot](vingester-screenshot.png)
+
+In the screenshot above you can see **Vingester** in action. It is
+running two browser instances: one in "frameless" (desktop window) mode
+and one in "headless (NDI stream) mode. In each of them a receiver
+instance of OBS.Ninja is running. The "frameless" window usually is
+captured by OBS Studio through a "Display Capture" or "Window Capture"
+source while the "headless" NDI stream usually is directly consumed by
+OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
 Performance Notice
 ------------------
