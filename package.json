@@ -117,8 +117,7 @@
     "scripts": {
         "postinstall":                   "electron-builder install-app-deps",
         "lint":                          "eslint --config eslint.yaml --ext js *.js",
-        "start-linux":                   "/c/Windows/System32/cmd.exe /c 'npm run start'",
-        "start":                         "cross-env DEBUG=1 electron . -- -d -1,0 -x 0 -y 0 -w 1024 -h 576 -r -c '#00ff00' https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01 -t -c '#ff0000' https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01 -c '#0000ff' https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01 -c '#f0f0f0' https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01",
+        "start":                         "cross-env DEBUG=1 electron .",
         "package":                       "node npm-package.js",
         "clean":                         "rimraf ./dist",
         "release":                       "electron-builder --publish always"
