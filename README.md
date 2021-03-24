@@ -6,13 +6,20 @@ Vingester
 
 **Ingest Web Contents as Video Streams**
 
-This is **Vingester**, a small Electron-based desktop application for
+**Vingester** is a small Electron-based desktop application for
 use under Windows, macOS and Linux to run multiple Chromium-based
 Web browser instances and ingesting their rendered Web Contents as
 desktop/window-captured or NDI-multicasted video streams for further use
-in video mixing applications. It is primarily intended as a companion
-application to OBS Studio in order to ingest OBS.Ninja sessions in an
-efficient way.
+in video mixing applications.
+
+**Vingester** is primarily intended as an essential companion
+application to OBS Studio and OBS.Ninja in order to ingest the video
+streams of OBS.Ninja meeting particpants into an OBS Studio based
+production in an efficient and robust way. As challenge here is that
+although OBS.Ninja could be directly running in a Browser Source of OBS
+Studio, using it for more than 3-4 participants causes a dramatical
+performance drop-down in OBS Studio and as a result at least regularily
+destroys the audio quality in OBS Studio.
 
 ![Vingester Screenshot](vingester-screenshot.png)
 
