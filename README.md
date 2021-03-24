@@ -6,23 +6,25 @@ Vingester
 
 **Ingest Web Contents as Video Streams**
 
-**Vingester** is a small Electron-based desktop application for
-use under Windows, macOS and Linux to run multiple Chromium-based
-Web browser instances and ingesting their rendered Web Contents as
-desktop/window-captured or NDI-multicasted video streams for further use
-in video mixing applications.
+**Vingester** (**V**ideo **ingester**) is a small [Electron](https://www.electronjs.org/)-based
+desktop application for use under Windows, macOS and Linux to
+run multiple [Chromium](https://www.chromium.org/)-based Web
+browser instances and ingesting their rendered Web Contents as
+desktop/window-captured or [NDI](https://www.ndi.tv/)-multicasted video
+streams for further use in video mixing applications.
 
-**Vingester** is primarily intended as an essential companion
-application to OBS Studio and OBS.Ninja in order to ingest the video
-streams of OBS.Ninja meeting particpants into an OBS Studio based
-production in an efficient and robust way. The challenge here is that
-although OBS.Ninja could be directly running in a Browser Source of OBS
-Studio, using it for more than 3-4 participants causes a dramatical
-performance drop-down in OBS Studio and as a result at least regularily
-destroys the audio quality in OBS Studio. By externally ingesting
-the video streams through **Vingester** this performance degradation
-in OBS Studio can be avoided, although the total system load is
-not necessarily lower.
+Although not strictly tied to this use case, **Vingester** is
+primarily intended as an essential companion application to [OBS
+Studio](https://obsproject.com/) and [OBS.Ninja](https://obs.ninja/)
+in order to ingest the video streams of OBS.Ninja meeting particpants
+into an OBS Studio based production in an efficient and robust way. The
+challenge here is that although OBS.Ninja could be directly running in
+a Browser Source of OBS Studio, using it for more than 3-4 participants
+causes a dramatical performance drop-down in OBS Studio and as a
+result at least regularily destroys the audio quality in OBS Studio.
+By externally ingesting the video streams through **Vingester** this
+performance degradation in OBS Studio can be avoided, although the total
+system load is not necessarily lower.
 
 ![Vingester Screenshot](vingester-screenshot.png)
 
