@@ -47,6 +47,20 @@ captured by OBS Studio through a "Display Capture" or "Window Capture"
 source while the "headless" NDI stream usually is directly consumed by
 OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
+Audio/Video Notice
+------------------
+
+Usually the Web Content produces both audio and video. **Vingester**
+currently is only able to ingest video. The underlying Electron
+technology still does not provide an API for capturing audio
+of Web Content. As a consequence, **Vingester** can play audio
+to the selected Audio output device of the operation system
+only. For ingesting audio from **Vingester** into the mixing
+application, you have to use a virtual audio output device
+like [Virtual Audio Cable](https://vac.muzychenko.net/en/) or
+[VB-Cable](https://vb-audio.com/Cable/) and tell the operating system to
+direct the audio of **Vingester** to this device.
+
 Performance Notice
 ------------------
 
@@ -100,8 +114,8 @@ related aspects should be kept in mind:
   operating system, but does not require a large or even spare monitor
   (all browser windows even can overlap).
 
-These points together means you should use one of the following
-modes of operation in practice only:
+These points together mean you should use only one of the following
+modes of operation in practice:
 
 - Vingester: **enabled GPU Hardware Acceleration** + **Frameless Mode**<br/>
   OBS Studio: **Desktop Capturing Source** + **Cropping Transform**<br/>
