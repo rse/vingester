@@ -139,7 +139,6 @@ modes of operation in practice:
 Copyright & License
 -------------------
 
-Vingester<br/>
 Copyright &copy; 2021 [Dr. Ralf S. Engelschall](mailto:rse@engelschall.com)<br/>
 Licensed under [GPL 3.0](https://spdx.org/licenses/GPL-3.0-only)
 
