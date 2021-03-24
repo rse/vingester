@@ -14,6 +14,8 @@ in video mixing applications. It is primarily intended as a companion
 application to OBS Studio in order to ingest OBS.Ninja sessions in an
 efficient way.
 
+![Vingester Screenshot](vingester-screenshot.png)
+
      GPU !GPU
 DTP  3.0 6.0
 NDI  35  25
