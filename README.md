@@ -79,8 +79,6 @@ related aspects should be kept in mind:
   operating system, but does not require a large or even spare monitor
   (all browser windows even can overlap).
 
-- *Window/NDIDesktop/Window Capturing*:<br/>
-
 These points together means you should use one of the following
 modes of operation in practice only:
 
