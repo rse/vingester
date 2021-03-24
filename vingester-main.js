@@ -12,7 +12,7 @@ const process     = require("process")
 
 /*  require external modules  */
 const electron    = require("electron")
-const log         = require("electron-log")
+const electronLog = require("electron-log")
 const Store       = require("electron-store")
 const debounce    = require("throttle-debounce").debounce
 const jsYAML      = require("js-yaml")
@@ -25,18 +25,20 @@ const pkg         = require("./package.json")
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
-    log.transports.file.level    = "debug"
-    log.transports.console.level = "debug"
+    electronLog.transports.file.level    = "debug"
+    electronLog.transports.console.level = "debug"
+    electronLog.transports.ipc.level     = "debug"
 }
 else {
-    log.transports.file.level    = "info"
-    log.transports.console.level = false
+    electronLog.transports.file.level    = "info"
+    electronLog.transports.console.level = false
+    electronLog.transports.ipc.level     = false
 }
-log.transports.remote.level   = false
-log.transports.ipc.level      = false
-log.transports.console.format = "Vingester: {h}:{i}:{s}.{ms} > [{level}] {text}"
-log.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {text}"
-log.debug(`(find persistent log under ${log.transports.file.getFile()})`)
+electronLog.transports.remote.level   = false
+electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
+electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
+const log = electronLog.scope("main")
+log.debug(`(find persistent log under ${electronLog.transports.file.getFile()})`)
 
 /*  redirect exception error boxes to the console  */
 electron.dialog.showErrorBox = (title, content) => {
@@ -55,19 +57,19 @@ electron.dialog.showErrorBox = (title, content) => {
         ndi:       grandiose.version().replace(/^.+\s+/, "")
     }
     electron.ipcMain.handle("version", (ev) => { return version })
-    log.info(`main: starting Vingester: ${version.vingester}`)
-    log.info(`main: using Electron: ${version.electron}`)
-    log.info(`main: using Chromium: ${version.chromium}`)
-    log.info(`main: using V8: ${version.v8}`)
-    log.info(`main: using Node: ${version.node}`)
-    log.info(`main: using NDI: ${version.ndi}`)
+    log.info(`starting Vingester: ${version.vingester}`)
+    log.info(`using Electron: ${version.electron}`)
+    log.info(`using Chromium: ${version.chromium}`)
+    log.info(`using V8: ${version.v8}`)
+    log.info(`using Node: ${version.node}`)
+    log.info(`using NDI: ${version.ndi}`)
 
     /*  initialize store  */
     const store = new Store()
 
     /*  optionally and early disable GPU hardware accelleration  */
     if (!store.get("gpu")) {
-        log.info("main: disabling GPU hardware accelleration (explicitly configured)")
+        log.info("disabling GPU hardware accelleration (explicitly configured)")
         electron.app.disableHardwareAcceleration()
     }
 
@@ -113,7 +115,7 @@ electron.dialog.showErrorBox = (title, content) => {
     /*  helper class for browser abstraction  */
     class Browser {
         constructor (id, cfg, mainWin) {
-            log.info("main: browser: constructor")
+            log.info("browser: constructor")
             this.id              = id
             this.cfg             = cfg
             this.win             = null
@@ -127,7 +129,7 @@ electron.dialog.showErrorBox = (title, content) => {
             this.mainWin         = mainWin
         }
         reconfigure (cfg) {
-            log.info("main: browser: reconfigure")
+            log.info("browser: reconfigure")
             Object.assign(this.cfg, cfg)
             this.update()
         }
@@ -135,7 +137,7 @@ electron.dialog.showErrorBox = (title, content) => {
             return (this.win !== null)
         }
         async start () {
-            log.info("main: browser: start")
+            log.info("browser: start")
 
             /*  determine window title  */
             const title = (this.cfg.t == null ? "Vingester" : this.cfg.t)
@@ -278,7 +280,7 @@ electron.dialog.showErrorBox = (title, content) => {
             win.loadURL(this.cfg.u)
 
             this.win = win
-            log.info("main: browser: started")
+            log.info("browser: started")
         }
         update () {
             if (this.win !== null) {
@@ -364,13 +366,13 @@ electron.dialog.showErrorBox = (title, content) => {
             })
         }
         reload () {
-            log.info("main: browser: reload")
+            log.info("browser: reload")
             if (this.win === null)
                 throw new Error("still not started")
             this.win.reload()
         }
         async stop () {
-            log.info("main: browser: stop")
+            log.info("browser: stop")
             if (this.win === null)
                 throw new Error("still not started")
             this.win.close()
@@ -384,10 +386,10 @@ electron.dialog.showErrorBox = (title, content) => {
                     resolve()
                 }, 1000)
             })
-            log.info("main: browser: stopped")
+            log.info("browser: stopped")
         }
         destroy () {
-            log.info("main: browser: destroy")
+            log.info("browser: destroy")
             if (this.win === null)
                 throw new Error("still not started")
             this.win.destroy()
@@ -397,10 +399,10 @@ electron.dialog.showErrorBox = (title, content) => {
 
     /*  once electron is ready...  */
     electron.app.on("ready", async () => {
-        log.info("main: Electron is now ready")
+        log.info("Electron is now ready")
 
         /*  determine main window position and size  */
-        log.info("main: loading persistant settings")
+        log.info("loading persistant settings")
         const x = store.get("control.x", null)
         const y = store.get("control.y", null)
         const w = store.get("control.w", 810)
@@ -408,7 +410,7 @@ electron.dialog.showErrorBox = (title, content) => {
         const pos = (x !== null && y !== null ? { x, y } : {})
 
         /*  create main window  */
-        log.info("main: creating control user interface")
+        log.info("creating control user interface")
         const mainWin = new electron.BrowserWindow({
             ...pos,
             width:           w,
@@ -453,7 +455,7 @@ electron.dialog.showErrorBox = (title, content) => {
         }))
 
         /*  provide IPC hooks for store access  */
-        log.info("main: provide IPC hooks for control user interface")
+        log.info("provide IPC hooks for control user interface")
         electron.ipcMain.handle("browsers-load", async (ev) => {
             return store.get("browsers")
         })
@@ -504,7 +506,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  provide IPC hooks for browsers control  */
-        log.info("main: provide IPC hooks for browser control")
+        log.info("provide IPC hooks for browser control")
         const browsers = {}
         const control = async (action, id, cfg) => {
             if (action === "add") {
@@ -579,7 +581,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  explicitly allow capturing our windows  */
-        log.info("main: provide hook for permissions checking")
+        log.info("provide hook for permissions checking")
         electron.session.fromPartition("default").setPermissionRequestHandler((webContents, permission, callback) => {
             const allowedPermissions = [ "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental" ]
             if (allowedPermissions.includes(permission))
@@ -592,14 +594,14 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  load web content  */
-        log.info("main: loading control user interface")
+        log.info("loading control user interface")
         mainWin.loadURL(`file://${path.join(__dirname, "vingester-control.html")}`)
         mainWin.webContents.on("did-fail-load", (ev) => {
             electron.app.quit()
         })
 
         /*  wait until control UI is created  */
-        log.info("main: awaiting control user interface to become ready")
+        log.info("awaiting control user interface to become ready")
         let controlReady = false
         electron.ipcMain.handle("control-created", (event) => {
             controlReady = true
@@ -615,7 +617,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  toggle GPU hardware accelleration  */
-        log.info("main: send GPU status and provide IPC hook for GPU status change")
+        log.info("send GPU status and provide IPC hook for GPU status change")
         mainWin.webContents.send("gpu", !!store.get("gpu"))
         electron.ipcMain.handle("gpu", async (ev, gpu) => {
             const choice = electron.dialog.showMessageBoxSync(mainWin, {
@@ -634,7 +636,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  collect metrics  */
-        log.info("main: start usage gathering timer")
+        log.info("start usage gathering timer")
         const usages = new WeightedAverage(20, 5)
         let timer = setInterval(() => {
             if (timer === null)
@@ -649,9 +651,9 @@ electron.dialog.showErrorBox = (title, content) => {
         }, 100)
 
         /*  gracefully shutdown application  */
-        log.info("main: hook into control user interface window states")
+        log.info("hook into control user interface window states")
         mainWin.on("close", async (ev) => {
-            log.info("main: shuting down")
+            log.info("shuting down")
             ev.preventDefault()
             if (timer !== null) {
                 clearTimeout(timer)
@@ -665,10 +667,10 @@ electron.dialog.showErrorBox = (title, content) => {
             electron.app.quit()
         })
         electron.app.on("will-quit", () => {
-            log.info("main: terminating")
+            log.info("terminating")
         })
 
-        log.info("main: up and running")
+        log.info("up and running")
     })
 })().catch((err) => {
     if (log)

@@ -4,12 +4,28 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
-const electron = require("electron")
-const log      = require("electron-log")
-const debounce = require("throttle-debounce").debounce
-const UUID     = require("pure-uuid")
+const electron    = require("electron")
+const electronLog = require("electron-log")
+const debounce    = require("throttle-debounce").debounce
+const UUID        = require("pure-uuid")
 
-log.info("UI")
+/*  etablish reasonable logging environment  */
+if (typeof process.env.DEBUG !== "undefined") {
+    electronLog.transports.file.level    = "debug"
+    electronLog.transports.console.level = "debug"
+    electronLog.transports.ipc.level     = "debug"
+}
+else {
+    electronLog.transports.file.level    = "info"
+    electronLog.transports.console.level = false
+    electronLog.transports.ipc.level     = false
+}
+electronLog.transports.remote.level   = false
+electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
+electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
+const log = electronLog.scope("UI")
+log.info("starting up")
+
 Vue.createApp({
     data () {
         return {
@@ -24,7 +40,7 @@ Vue.createApp({
         }
     },
     async created () {
-        log.info("created")
+        log.info("creating")
         this.load()
         electron.ipcRenderer.on("browser-start", (ev, id) => {
             log.info("browser-start", id)
@@ -67,6 +83,7 @@ Vue.createApp({
             this.gpu = gpu
         })
         this.version = await electron.ipcRenderer.invoke("version")
+        log.info("created")
         electron.ipcRenderer.invoke("control-created")
     },
     methods: {
