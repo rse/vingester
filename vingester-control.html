@@ -31,6 +31,23 @@
     </head>
     <body>
         <div class="ui">
+            <div class="browser browser-global" v-show="info">
+                <div class="button button-info">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="box">
+                    <div class="row">
+                        <div class="versions">
+                            Vingester <b>{{version.vingester}}</b>,
+                            Electron <b>{{version.electron}}</b>,
+                            Chromium <b>{{version.chromium}}</b>,
+                            V8 <b>{{version.v8}}</b>,
+                            Node <b>{{version.node}}</b>,
+                            NDI <b>{{version.ndi}}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="browser browser-global">
                 <div class="button button-plus" v-on:click="addBrowser">
                     <i class="fas fa-plus-circle"></i>
@@ -44,7 +61,7 @@
                         </div>
                         <div class="row-middle">
                             <img class="title-icon" src="vingester-icon.png">
-                            <div class="title-text">Vingester</div>
+                            <div v-on:click="info = !info" class="title-text">Vingester</div>
                         </div>
                         <div class="row-right">
                             <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>

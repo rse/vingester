@@ -20,6 +20,9 @@ const grandiose   = require("grandiose")
 const tesladon    = require("tesladon")
 const Jimp        = require("jimp")
 
+/*  require own modules  */
+const pkg         = require("./package.json")
+
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
     log.transports.file.level    = "debug"
@@ -42,7 +45,22 @@ electron.dialog.showErrorBox = (title, content) => {
 
 /*  enter an asynchronous environment in main process  */
 ;(async () => {
-    log.info("starting up")
+    /*  determine versions  */
+    const version = {
+        vingester: pkg.version,
+        electron:  process.versions.electron,
+        chromium:  process.versions.chrome,
+        v8:        process.versions.v8.replace(/-electron.*$/, ""),
+        node:      process.versions.node,
+        ndi:       grandiose.version().replace(/^.+\s+/, "")
+    }
+    electron.ipcMain.handle("version", (ev) => { return version })
+    log.info(`staring Vingester: ${version.vingester}`)
+    log.info(`using Electron: ${version.electron}`)
+    log.info(`using Chromium: ${version.chromium}`)
+    log.info(`using V8: ${version.v8}`)
+    log.info(`using Node: ${version.node}`)
+    log.info(`using NDI: ${version.ndi}`)
 
     /*  initialize store  */
     const store = new Store()
@@ -327,11 +345,11 @@ electron.dialog.showErrorBox = (title, content) => {
                         yres:               size.height,
                         frameRateN:         this.framerate * 1000,
                         frameRateD:         1000,
-                        fourCC:             1095911234 /* BGRA */,
+                        fourCC:             grandiose.FOURCC_BGRA,
                         pictureAspectRatio: image.getAspectRatio(this.factor),
                         timestamp:          ptp,
                         timecode:           [ ptp[0] / 100, ptp[1] / 100 ],
-                        frameFormatType:    1 /* progressive */,
+                        frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
                         lineStrideBytes:    size.width * 4,
                         data:               buffer
                     }

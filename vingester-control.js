@@ -18,10 +18,12 @@ Vue.createApp({
             stat:     {},
             burst:    {},
             usage:    0,
-            gpu:      false
+            gpu:      false,
+            info:     false,
+            version:  {}
         }
     },
-    created () {
+    async created () {
         log.info("created")
         this.load()
         electron.ipcRenderer.on("browser-start", (ev, id) => {
@@ -64,6 +66,7 @@ Vue.createApp({
         electron.ipcRenderer.on("gpu", (ev, gpu) => {
             this.gpu = gpu
         })
+        this.version = await electron.ipcRenderer.invoke("version")
         electron.ipcRenderer.invoke("control-created")
     },
     methods: {

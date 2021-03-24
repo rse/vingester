@@ -85,6 +85,11 @@ html, body {
 .ui .browser .box .row .row-right {
     padding-right: 8px;
 }
+.ui .browser .versions {
+    width: 100%;
+    text-align: center;
+    color: #fff8f0;
+}
 .ui .browser .title-icon {
     height: 20px;
     margin-top: 1px;
@@ -205,6 +210,7 @@ html, body {
 .ui .browser .field.field-stop:hover {
     cursor: default;
 }
+.ui .browser.browser-global .button.button-info,
 .ui .browser.browser-global .button.button-plus {
     color: #f0e0c0;
 }
