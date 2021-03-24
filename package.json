@@ -25,7 +25,7 @@
         "electron-log":                  "4.3.2",
         "electron-store":                "7.0.2",
         "jimp":                          "0.16.1",
-        "grandiose":                     "rse/FOREIGN-grandiose#bb05e45",
+        "grandiose":                     "rse/FOREIGN-grandiose#18c52e9",
         "throttle-debounce":             "3.0.1",
         "tesladon":                      "0.1.1",
         "js-yaml":                       "4.0.0",
