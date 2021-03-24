@@ -13,8 +13,8 @@ browser instances and ingesting their rendered Web Contents as
 desktop/window-captured or [NDI](https://www.ndi.tv/)-multicasted video
 streams for further use in video mixing applications.
 
-Although not strictly tied to this use case, **Vingester** is
-primarily intended as an essential companion application to [OBS
+Although not strictly tied to this use case, **Vingester** was
+born for and is primarily intended as an essential companion application to [OBS
 Studio](https://obsproject.com/) and [OBS.Ninja](https://obs.ninja/)
 in order to ingest the video streams of OBS.Ninja meeting particpants
 into an OBS Studio based production in an efficient and robust way. The
