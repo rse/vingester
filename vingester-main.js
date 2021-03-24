@@ -55,7 +55,7 @@ electron.dialog.showErrorBox = (title, content) => {
         ndi:       grandiose.version().replace(/^.+\s+/, "")
     }
     electron.ipcMain.handle("version", (ev) => { return version })
-    log.info(`staring Vingester: ${version.vingester}`)
+    log.info(`starting Vingester: ${version.vingester}`)
     log.info(`using Electron: ${version.electron}`)
     log.info(`using Chromium: ${version.chromium}`)
     log.info(`using V8: ${version.v8}`)
@@ -67,7 +67,7 @@ electron.dialog.showErrorBox = (title, content) => {
 
     /*  optionally and early disable GPU hardware accelleration  */
     if (!store.get("gpu")) {
-        log.info("disabling GPU hardware accelleration")
+        log.info("disabling GPU hardware accelleration (explicitly configured)")
         electron.app.disableHardwareAcceleration()
     }
 
@@ -397,7 +397,10 @@ electron.dialog.showErrorBox = (title, content) => {
 
     /*  once electron is ready...  */
     electron.app.on("ready", async () => {
+        log.info("Electron is now ready")
+
         /*  determine main window position and size  */
+        log.info("loading persistant settings")
         const x = store.get("control.x", null)
         const y = store.get("control.y", null)
         const w = store.get("control.w", 810)
@@ -405,6 +408,7 @@ electron.dialog.showErrorBox = (title, content) => {
         const pos = (x !== null && y !== null ? { x, y } : {})
 
         /*  create main window  */
+        log.info("creating control user interface")
         const mainWin = new electron.BrowserWindow({
             ...pos,
             width:           w,
@@ -449,6 +453,7 @@ electron.dialog.showErrorBox = (title, content) => {
         }))
 
         /*  provide IPC hooks for store access  */
+        log.info("provide IPC hooks for control user interface")
         electron.ipcMain.handle("browsers-load", async (ev) => {
             return store.get("browsers")
         })
@@ -501,6 +506,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  provide IPC hooks for browsers control  */
+        log.info("provide IPC hooks for browser control")
         const browsers = {}
         const control = async (action, id, cfg) => {
             if (action === "add") {
@@ -575,6 +581,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  explicitly allow capturing our windows  */
+        log.info("provide hook for permissions checking")
         electron.session.fromPartition("default").setPermissionRequestHandler((webContents, permission, callback) => {
             const allowedPermissions = [ "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental" ]
             if (allowedPermissions.includes(permission))
@@ -587,12 +594,14 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  load web content  */
+        log.info("loading control user interface")
         mainWin.loadURL(path.join(__dirname, "vingester-control.html"))
         mainWin.webContents.on("did-fail-load", (ev) => {
             electron.app.quit()
         })
 
         /*  wait until control UI is created  */
+        log.info("awaiting control user interface to become ready")
         let controlReady = false
         electron.ipcMain.handle("control-created", (event) => {
             controlReady = true
@@ -608,6 +617,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  toggle GPU hardware accelleration  */
+        log.info("send GPU status and provide IPC hook for GPU status change")
         mainWin.webContents.send("gpu", !!store.get("gpu"))
         electron.ipcMain.handle("gpu", async (ev, gpu) => {
             const choice = electron.dialog.showMessageBoxSync(mainWin, {
@@ -626,6 +636,7 @@ electron.dialog.showErrorBox = (title, content) => {
         })
 
         /*  collect metrics  */
+        log.info("start usage gathering timer")
         const usages = new WeightedAverage(20, 5)
         let timer = setInterval(() => {
             if (timer === null)
@@ -640,6 +651,7 @@ electron.dialog.showErrorBox = (title, content) => {
         }, 100)
 
         /*  gracefully shutdown application  */
+        log.info("hook into control user interface window states")
         mainWin.on("close", async (ev) => {
             log.info("shuting down")
             ev.preventDefault()
@@ -657,6 +669,8 @@ electron.dialog.showErrorBox = (title, content) => {
         electron.app.on("will-quit", () => {
             log.info("terminating")
         })
+
+        log.info("up and running")
     })
 })().catch((err) => {
     if (log)
