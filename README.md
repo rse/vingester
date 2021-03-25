@@ -9,30 +9,40 @@ Vingester
 About
 -----
 
-**Vingester** (**V**ideo **ingester**) is a small [Electron](https://www.electronjs.org/)-based
-desktop application for use under Windows, macOS and Linux to
-run multiple [Chromium](https://www.chromium.org/)-based Web
-browser instances and ingesting their rendered Web Contents as
-desktop/window-captured or [NDI](https://www.ndi.tv/)-multicasted video
-streams for further use in video mixing applications.
+**Vingester** (**V**ideo **ingester**) is a small
+[Electron](https://www.electronjs.org/)-based desktop application
+for use under Windows, macOS or Linux to run multiple
+[Chromium](https://www.chromium.org/)-based Web browser instances and
+ingesting their rendered Web Contents as screen/window-captured or
+[NDI](https://www.ndi.tv/)-multicasted video streams for further use in
+video mixing applications.
 
 Motivation
 ----------
 
-Although not strictly tied to this use case, **Vingester** was born for
+Although not just tied to this particular use case, **Vingester** was born for
 and is primarily intended as an essential companion application to [OBS
-Studio](https://obsproject.com/) and [OBS.Ninja](https://obs.ninja/)
-in order to ingest the video streams of OBS.Ninja meeting particpants
-into an OBS Studio based production in an efficient and robust way.
+Studio](https://obsproject.com/) and [OBS.Ninja](https://obs.ninja/),
+in order to ingest the video streams of OBS.Ninja meeting participants
+into an OBS Studio based video production in an efficient and robust way.
 
 The challenge here is that although OBS.Ninja could be directly running
 in a [Browser Source](https://github.com/obsproject/obs-browser) of
-OBS Studio, using it for more than 2-3 participants usually causes a
+OBS Studio, using this approach for more than 2-3 participants usually causes a
 dramatical performance drop-down in OBS Studio and as a side-effect
-at least regularily destroys the entire audio quality in OBS Studio.
+at least regularly destroys the entire audio quality in OBS Studio.
 By externally ingesting the video streams of meeting participants
 through **Vingester**, this performance degradation in OBS Studio can be
 avoided, although the total system load will be not necessarily lower.
+
+Additionally, the **Vingester** approach also better handles packet
+losses than OBS Studio (such as guests on poor WiFi connections) and the
+Window Capture source of OBS Studio causes lower resource usage than
+its Browser Source. Additionally, **Vingester** does not throttle its
+browser performance if it is backgrounded like a regular Chrome browser
+does. And **Vingester** windows can be pinned to be always on top of
+others windows and determine the correct window sizes if the display
+uses a high DPi mode.
 
 Sneak Preview
 -------------
@@ -80,7 +90,7 @@ related aspects should be kept in mind:
   Acceleration.
 
 - *Frameless/Headless Rendering*:<br/>
-  **Vingester** supports both "frameless" (desktop-window based)
+  **Vingester** supports both "frameless" (desktop window based)
   and "headless" (NDI network protocol based) modes of operation. The
   "frameless" mode means that **Vingester** lets Chromium render the Web
   Content into a frameless desktop window which then should be captured
@@ -106,7 +116,7 @@ related aspects should be kept in mind:
 
 - *Desktop/Window Capturing*:<br/>
   OBS Studio can capture both an entire desktop and just a particular
-  window. Capturing an entire desktop is more efficient as it leverages
+  window. Capturing an entire desktop screen is more efficient as it leverages
   from GPU Hardware Acceleration within the operating system, but
   requires a large or even spare monitor for displaying the browser
   window(s) of **Vingester**. Capturing just a particular window is less
@@ -121,7 +131,7 @@ modes of operation in practice:
   OBS Studio: **Desktop Capturing Source** + **Cropping Transform**<br/>
   In this mode you enable GPU Hardware Acceleration within **Vingester**
   and render the Web Content into dedicated "frameless" desktop
-  windows which then are all together "desktop captured" by OBS Studio
+  windows which then are all together "screen captured" by OBS Studio
   and just split into individual videos within OBS Studio through
   multiple cropping transforms. This combination usually has the best
   overall performance as GPU Hardware Acceleration is used both within
