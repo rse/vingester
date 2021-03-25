@@ -340,7 +340,7 @@ html, body {
             }
         }
         .stat {
-            width: 350px;
+            width: 400px;
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
@@ -354,6 +354,7 @@ html, body {
                 background-color: #225588;
                 color: #c0d0e0;
                 margin-left: 4px;
+                overflow: hidden;
             }
         }
         .toggle {
