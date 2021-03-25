@@ -116,29 +116,36 @@ related aspects should be kept in mind:
   framerate. As a result, this combined mode can result is less stable
   NDI streams.
 
-- *Content Previewing*:<br/>
-  **Vingester** supports previewing the rendered Web Content in a small
-  thumbnail image of the main window. This is not very useful for the
-  "frameless" mode of operation in practice, but can be important for
-  debugging in case of "headless" mode. Nevertheless, use the previewing
-  only for debugging purposes as it also throttles the performance of
+- *Content Previewing*:
+
+  **Vingester** supports previewing the rendered Web Content as a small
+  thumbnail image (128x72 pixels) in the main **Vingester** control
+  window. This is not very useful for the "frameless" mode of operation
+  in practice, but can be important for debugging in case of the
+  "headless" mode. Nevertheless, use the previewing functionality only
+  for debugging purposes, as it also throttles the performance of
   **Vingester**.
 
-- *Desktop/Window Capturing*:<br/>
-  OBS Studio can capture both an entire desktop and just a particular
-  window. Capturing an entire desktop screen is more efficient as it leverages
-  from GPU Hardware Acceleration within the operating system, but
-  requires a large or even spare monitor for displaying the browser
-  window(s) of **Vingester**. Capturing just a particular window is less
-  efficient as it cannot leverage GPU Hardware Acceleration within the
-  operating system, but does not require a large or even spare monitor
-  (all browser windows even can overlap).
+- *Screen/Window Capturing*:
 
-These points together mean you should use only one of the following
-modes of operation in practice:
+  OBS Studio can capture both an entire desktop (Screen Capture source)
+  and just a particular window (Window Capture source). Capturing an
+  entire desktop is more efficient as it usually leverages from GPU
+  Hardware Acceleration within the operating system, but requires a
+  large or even spare monitor for displaying the browser windows of
+  **Vingester** and an extra cropping step within OBS Studio.
+
+  Capturing just a particular window is less efficient as it usually
+  cannot leverage GPU Hardware Acceleration within the operating system,
+  but does not require a large or even spare monitor (all browser
+  windows even can overlap).
+
+These performance aspects all together mean, you should use only one of
+the following modes of operation in practice:
 
 - Vingester: **enabled GPU Hardware Acceleration** + **Frameless Mode**<br/>
-  OBS Studio: **Desktop Capturing Source** + **Cropping Transform**<br/>
+  OBS Studio: **Desktop Capturing Source** + **Cropping Transform**
+
   In this mode you enable GPU Hardware Acceleration within **Vingester**
   and render the Web Content into dedicated "frameless" desktop
   windows which then are all together "screen captured" by OBS Studio
@@ -148,7 +155,8 @@ modes of operation in practice:
   **Vingester** and the operating system for OBS Studio.
 
 - Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode**<br/>
-  OBS Studio: **NDI Source**<br/>
+  OBS Studio: **NDI Source**
+
   In this mode you disable GPU Hardware Acceleration within
   **Vingester** and render all the Web Content off-screen in "headless"
   mode, let them be sent out as NDI video streams and directly used
