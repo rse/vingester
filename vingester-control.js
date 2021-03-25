@@ -33,6 +33,7 @@ Vue.createApp({
             running:  {},
             stat:     {},
             burst:    {},
+            trace:    {},
             usage:    0,
             gpu:      false,
             info:     false,
@@ -75,6 +76,12 @@ Vue.createApp({
         electron.ipcRenderer.on("stat", (ev, stat) => {
             this.stat[stat.id] = stat
         })
+        electron.ipcRenderer.on("trace", (ev, trace) => {
+            if (trace.level === 2)
+                this.trace[trace.id].warning++
+            else if (trace.level === 3)
+                this.trace[trace.id].error++
+        })
         electron.ipcRenderer.on("usage", (ev, usage) => {
             this.usage = usage
         })
@@ -107,6 +114,7 @@ Vue.createApp({
                 this.running[browser.id] = false
                 this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
                 this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+                this.trace[browser.id] = { warning: 0, error: 0 }
             }
         },
         save: debounce(1000, async function () {
@@ -134,6 +142,7 @@ Vue.createApp({
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
             this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+            this.trace[browser.id] = { warning: 0, error: 0 }
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
         },
@@ -147,6 +156,7 @@ Vue.createApp({
             delete this.running[browser.id]
             delete this.stat[browser.id]
             delete this.burst[browser.id]
+            delete this.trace[browser.id]
             this.save()
             await electron.ipcRenderer.invoke("control", "del", browser.id)
         },

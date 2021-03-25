@@ -238,6 +238,9 @@
                                 <span class="stat-item">
                                 RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
                                 </span>
+                                <span class="stat-item">
+                                CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -202,8 +202,9 @@ electron.dialog.showErrorBox = (title, content) => {
                     devTools:                   (typeof process.env.DEBUG !== "undefined"),
                     backgroundThrottling:       false,
                     preload:                    path.join(__dirname, "vingester-preload.js"),
-                    nodeIntegration:            true,
-                    nodeIntegrationInWorker:    true,
+                    nodeIntegration:            false,
+                    nodeIntegrationInWorker:    false,
+                    enableRemoteModule:         false,
                     disableDialogs:             true,
                     autoplayPolicy:             "no-user-gesture-required",
                     spellcheck:                 false,
@@ -263,6 +264,13 @@ electron.dialog.showErrorBox = (title, content) => {
                     this.mainWin.webContents.send("stat", { ...msg, id: this.id })
             })
 
+            /*  receive console outputs  */
+            win.webContents.on("console-message", (ev, level, message, line, sourceId) => {
+                const trace = { level, message }
+                if (this.mainWin !== null)
+                    this.mainWin.webContents.send("trace", { ...trace, id: this.id })
+            })
+
             /*  react on window events  */
             win.on("close", (ev) => {
                 ev.preventDefault()
@@ -270,18 +278,25 @@ electron.dialog.showErrorBox = (title, content) => {
             })
             win.on("page-title-updated", (ev) => {
                 ev.preventDefault()
-                /*  FIXME  */
-            })
-            win.webContents.on("did-fail-load", (ev) => {
-                ev.preventDefault()
-                /*  FIXME  */
             })
 
-            /*  load the URL  */
-            win.loadURL(this.cfg.u)
-
+            /*  remember window object  */
             this.win = win
-            log.info("browser: started")
+
+            /*  finally load the Web Content  */
+            return new Promise((resolve, reject) => {
+                win.webContents.on("did-fail-load", (ev, errorCode, errorDescription) => {
+                    ev.preventDefault()
+                    log.info("browser: failed")
+                    resolve(false)
+                })
+                win.webContents.on("did-finish-load", (ev) => {
+                    ev.preventDefault()
+                    log.info("browser: started")
+                    resolve(true)
+                })
+                win.loadURL(this.cfg.u)
+            })
         }
         update () {
             if (this.win !== null) {
@@ -552,8 +567,13 @@ electron.dialog.showErrorBox = (title, content) => {
                 if (browser.running())
                     throw new Error("browser already running")
                 mainWin.webContents.send("browser-start", id)
-                await browser.start()
-                mainWin.webContents.send("browser-started", id)
+                let success = await browser.start()
+                if (success)
+                    mainWin.webContents.send("browser-started", id)
+                else {
+                    mainWin.webContents.send("browser-failed", id)
+                    browser.stop()
+                }
             }
             else if (action === "reload") {
                 /*  reload a particular browser  */
