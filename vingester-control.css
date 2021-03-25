@@ -229,6 +229,13 @@ html, body {
             &.field-stop:hover {
                 cursor: default;
             }
+            &.disabled {
+                background-color: #a0a0a0;
+                cursor: default;
+                &.disabled:hover {
+                    background-color: #a0a0a0;
+                }
+            }
         }
         &.browser-global {
             .button {
@@ -369,10 +376,18 @@ html, body {
             .toggle-option.selected {
                 display: block;
             }
+            &:hover {
+                background-color: #ffffff;
+                color: #000000;
+            }
         }
         &.running .toggle {
             background-color: #6699cc;
             cursor: default;
+            &:hover {
+                background-color: #6699cc;
+                color: #ffffff;
+            }
         }
     }
 }
