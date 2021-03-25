@@ -81,7 +81,8 @@ Performance Notice
 Performance is crucial in ingesting rendered Web Content. The following
 related aspects should be kept in mind:
 
-- *GPU Hardware Acceleration*:<br/>
+- *GPU Hardware Acceleration*:
+
   Both **Vingester** and OBS Studio use Chromium for the browser
   component in order to render Web Content. Chromium has the possibility
   to leverage from GPU Hardware Acceleration to speed up video decoding
@@ -95,7 +96,7 @@ related aspects should be kept in mind:
   your prefered operation mode.
 
 - *Frameless/Headless Rendering*:
-  <p/>
+
   **Vingester** supports both "frameless" (desktop window based) and
   "headless" (NDI network protocol based) modes of operation. The
   "frameless" mode means that **Vingester** lets Chromium render the Web
@@ -108,7 +109,6 @@ related aspects should be kept in mind:
   combined with GPU Hardware Acceleration enabled. The "headless" mode
   is best combined with GPU Hardware Acceleration disabled.
 
-  <p/>
   Also keep in mind that although **Vingester**
   supports both "frameless" and "headless" mode in parallel, using
   this combined mode means that the (usually lower) NDI framerate has
