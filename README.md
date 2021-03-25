@@ -51,9 +51,10 @@ Sneak Preview
 
 In the screenshot above you can see **Vingester** in action. It is
 running two browser instances: one in "frameless" (desktop window) mode
-and one in "headless (NDI stream) mode. In each of them a receiver
-instance of OBS.Ninja is running. The "frameless" window usually is
-captured by OBS Studio through a "Display Capture" or "Window Capture"
+and one in "headless" (NDI stream) mode. In each of them a receiver
+instance of OBS.Ninja is running (for demonstration purposes, it is just the
+same OBS.Ninja session). The "frameless" window usually is
+captured by OBS Studio through a "Screen Capture" or "Window Capture"
 source while the "headless" NDI stream usually is directly consumed by
 OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
