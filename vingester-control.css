@@ -109,7 +109,6 @@ html, body {
     display: flex;
     flex-direction: row;
 }
-
 .ui .browser .sep {
     margin-left: 0px;
     margin-right: 4px;
