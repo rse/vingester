@@ -6,6 +6,7 @@ Changes
     - BUGFIX: fixed distribution by keeping TypoPRO Overlock font 
     - CLEANUP: cleanup source code
     - IMPROVEMENT: extend the documentation
+    - REFACTORING: switch from plain CSS to LESS
 
 - 0.9.1
     - UPGRADE: upgrade to Electron 12.0.2
