@@ -87,10 +87,31 @@ html, body {
         &.browser-global .box {
             background-color: #b0a080;
         }
-        .versions {
+        .about {
+            text-align: left;
+            color: #ffffff;
+            padding-left: 8px;
+            padding-right: 30px;
             width: 100%;
-            text-align: center;
+            font-size: 12pt;
+            line-height: 120%;
+        }
+        .versions {
+            width: 350px;
+            text-align: left;
             color: #fff8f0;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            padding-right: 8px;
+            tr, td {
+                margin: 0;
+                padding: 0;
+            }
+            td {
+                padding-right: 4px;
+            }
         }
         .title-icon {
             height: 20px;

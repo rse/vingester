@@ -40,13 +40,27 @@
                 </div>
                 <div class="box">
                     <div class="row">
-                        <div class="versions">
-                            Vingester <b>{{version.vingester}}</b>,
-                            Electron <b>{{version.electron}}</b>,
-                            Chromium <b>{{version.chromium}}</b>,
-                            V8 <b>{{version.v8}}</b>,
-                            Node <b>{{version.node}}</b>,
-                            NDI <b>{{version.ndi}}</b>
+                        <div class="row-left">
+                            <div class="about">
+                                <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
+                                Electron-based desktop application for
+                                use under Windows, macOS or Linux to
+                                run multiple Chromium-based Web browser
+                                instances and ingesting their rendered
+                                Web Contents as screen/window-captured or
+                                NDI-multicasted video streams for further
+                                use in video mixing applications.
+                             </div>
+                        </div>
+                        <div class="row-right">
+                            <table class="versions">
+                                <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
+                                <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
+                                <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
+                                <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
+                                <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
+                                <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
+                            </table>
                         </div>
                     </div>
                 </div>
