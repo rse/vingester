@@ -81,7 +81,7 @@ Performance Notice
 Performance is crucial in ingesting rendered Web Content. The following
 related aspects should be kept in mind:
 
-- *GPU Hardware Acceleration*:
+- **GPU Hardware Acceleration**:
 
   Both **Vingester** and OBS Studio use Chromium for the browser
   component in order to render Web Content. Chromium has the possibility
@@ -95,7 +95,7 @@ related aspects should be kept in mind:
   **Vingester** to enable/disable GPU Hardware Acceleration according to
   your prefered operation mode.
 
-- *Frameless/Headless Rendering*:
+- **Frameless/Headless Rendering**:
 
   **Vingester** supports both "frameless" (desktop window based) and
   "headless" (NDI network protocol based) modes of operation. The
@@ -116,7 +116,7 @@ related aspects should be kept in mind:
   framerate. As a result, this combined mode can result is less stable
   NDI streams.
 
-- *Content Previewing*:
+- **Content Previewing**:
 
   **Vingester** supports previewing the rendered Web Content as a small
   thumbnail image (128x72 pixels) in the main **Vingester** control
@@ -126,7 +126,7 @@ related aspects should be kept in mind:
   for debugging purposes, as it also throttles the performance of
   **Vingester**.
 
-- *Screen/Window Capturing*:
+- **Screen/Window Capturing**:
 
   OBS Studio can capture both an entire desktop (Screen Capture source)
   and just a particular window (Window Capture source). Capturing an
@@ -143,7 +143,9 @@ related aspects should be kept in mind:
 These performance aspects all together mean, you should use only one of
 the following modes of operation in practice:
 
-- Vingester: **enabled GPU Hardware Acceleration** + **Frameless Mode**<br/>
+- **Mode 1: "Frameless"**
+
+  Vingester: **enabled GPU Hardware Acceleration** + **Frameless Mode**<br/>
   OBS Studio: **Desktop Capturing Source** + **Cropping Transform**
 
   In this mode you enable GPU Hardware Acceleration within **Vingester**
@@ -154,7 +156,9 @@ the following modes of operation in practice:
   overall performance as GPU Hardware Acceleration is used both within
   **Vingester** and by the operating system for OBS Studio.
 
-- Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode**<br/>
+- **Mode 2: "Headless"**
+
+  Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode**<br/>
   OBS Studio: **NDI Source**
 
   In this mode you intentionally disable GPU Hardware Acceleration
