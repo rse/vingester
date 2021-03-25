@@ -72,9 +72,21 @@
                 <div class="box">
                     <div class="row">
                         <div class="row-left">
-                            <div class="field field-start"  v-on:click="control('start-all', null)"><i class="fas fa-play"></i> &nbsp;START</div>
-                            <div class="field field-reload" v-on:click="control('reload-all', null)"><i class="fas fa-redo"></i> &nbsp;RELOAD</div>
-                            <div class="field field-stop"   v-on:click="control('stop-all', null)"><i class="fas fa-pause"></i> &nbsp;STOP</div>
+                            <div class="field field-start"
+                                v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
+                                v-on:click="control('start-all', null)">
+                                <i class="fas fa-play"></i> &nbsp;START
+                            </div>
+                            <div class="field field-reload"
+                                v-bind:class="{ disabled: nRunning === 0 }"
+                                v-on:click="control('reload-all', null)">
+                                <i class="fas fa-redo"></i> &nbsp;RELOAD
+                            </div>
+                            <div class="field field-stop"
+                                v-bind:class="{ disabled: nRunning === 0 }"
+                                v-on:click="control('stop-all', null)">
+                                <i class="fas fa-pause"></i> &nbsp;STOP
+                            </div>
                         </div>
                         <div class="row-middle">
                             <img class="title-icon" src="vingester-icon.png">
