@@ -522,7 +522,7 @@ electron.dialog.showErrorBox = (title, content) => {
             }
             else if (action === "del") {
                 /*  delete browser configuration  */
-                if (browsers[id] !== undefined)
+                if (browsers[id] !== undefined && browsers[id].running())
                     browsers[id].stop()
                 delete browsers[id]
             }
