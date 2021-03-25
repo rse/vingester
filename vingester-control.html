@@ -207,7 +207,7 @@
                     <div class="row">
                         <div class="row-left">
                             <div class="field field-start"
-                                v-bind:class="{ disabled: !browser.D && !browser.N }"
+                                v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.u === '' }"
                                 v-on:click="control('start', browser.id)">
                                 <i class="fas fa-play"></i> &nbsp;START
                             </div>

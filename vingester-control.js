@@ -151,7 +151,8 @@ Vue.createApp({
             await electron.ipcRenderer.invoke("control", "del", browser.id)
         },
         async control (action, id) {
-            if (   (action === "start-all"  && (this.nAvailable === 0 || this.nAvailable === this.nRunning))
+            const browser = this.browsers.find((b) => b.id === id)
+            if (   (action === "start-all"  && (this.nAvailable === 0 || this.nAvailable === this.nRunning) || browser.u === '')
                 || (action === "reload-all" && this.nRunning === 0)
                 || (action === "stop-all"   && this.nRunning === 0))
                 return
@@ -159,7 +160,6 @@ Vue.createApp({
                 || (action === "reload" && !this.running[id])
                 || (action === "stop"   && !this.running[id]))
                 return
-            const browser = this.browsers.find((b) => b.id === id)
             if (action === "start" && browser !== undefined && !browser.D && !browser.N)
                 return
             await electron.ipcRenderer.invoke("control", action, id)
