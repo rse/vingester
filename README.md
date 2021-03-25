@@ -181,32 +181,32 @@ Alternatives
 The following alternatives are known for ingesting Web Contents into
 video production software like OBS Studio:
 
-- [OBS-Browser](https://github.com/obsproject/obs-browser):<br/>
+- [OBS-Browser](https://github.com/obsproject/obs-browser):
   This is OBS Studio's built-in "Browser Source". It is a decent
   implementation based on the Chromium Embedded Framework (CEF). The
   drawback (and the original motivation for **Vingester**) is that CPU
   intensive applications like OBS.Ninja, running in a Browser Source,
   can cause OBS Studio to degrade at least audio quality regularly.
 
-- [Singular Recast for NDI](https://www.singular.live/ndi)<br/>
+- [Singular Recast for NDI](https://www.singular.live/ndi):
   This is a Windows application providing a similar functionality than
   the **Vingester** "headless" mode by capturing the Web Contents and
   sending it out via NDI. Unfortunately, it does not support multiple
   browser instances.
 
-- [SIENNA WebNDI](http://www.sienna-tv.com/ndi/webndi.html)<br/>
+- [SIENNA WebNDI](http://www.sienna-tv.com/ndi/webndi.html):
   This is an iPad application providing a similar functionality than
   the **Vingester** "headless" mode by capturing the Web Contents and
   sending it out via NDI. Unfortunately, it does not support multiple
   browser instances.
 
-- [ElectronCapture](https://github.com/steveseguin/electroncapture)<br/>
+- [ElectronCapture](https://github.com/steveseguin/electroncapture):
   This is a similar but less feature-rich program of the OBS.Ninja
   author. It mainly provides the **Vingester** "frameless" mode, but
   especially no NDI mode. And its multiple browser instance support and
   corresponding window positioning management is rather simple.
 
-- [ChromiCast](https://github.com/steveseguin/chomicast)<br/>
+- [ChromiCast](https://github.com/steveseguin/chomicast):
   This is a similar but less feature-rich program of the OBS.Ninja
   author. It mainly provides the **Vingester** "headless" mode, but
   especially no screen capturing mode. And it is just a proof of concept
