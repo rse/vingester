@@ -17,19 +17,6 @@ ingesting their rendered Web Contents as screen/window-captured or
 [NDI](https://www.ndi.tv/)-multicasted video streams for further use in
 video mixing applications.
 
-Sneak Preview
--------------
-
-![Vingester Screenshot](vingester-screenshot.png)
-
-In the screenshot above you can see **Vingester** in action. It is
-running two browser instances: one in "frameless" (desktop window) mode
-and one in "headless (NDI stream) mode. In each of them a receiver
-instance of OBS.Ninja is running. The "frameless" window usually is
-captured by OBS Studio through a "Display Capture" or "Window Capture"
-source while the "headless" NDI stream usually is directly consumed by
-OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
-
 Motivation
 ----------
 
@@ -56,6 +43,19 @@ browser performance if it is backgrounded like a regular Chrome browser
 does. And **Vingester** windows can be pinned to be always on top of
 others windows and determine the correct window sizes if the display
 uses a high DPi mode.
+
+Sneak Preview
+-------------
+
+![Vingester Screenshot](vingester-screenshot.png)
+
+In the screenshot above you can see **Vingester** in action. It is
+running two browser instances: one in "frameless" (desktop window) mode
+and one in "headless (NDI stream) mode. In each of them a receiver
+instance of OBS.Ninja is running. The "frameless" window usually is
+captured by OBS Studio through a "Display Capture" or "Window Capture"
+source while the "headless" NDI stream usually is directly consumed by
+OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
 Audio/Video Notice
 ------------------
