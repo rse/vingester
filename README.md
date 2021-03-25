@@ -152,17 +152,24 @@ the following modes of operation in practice:
   and just split into individual videos within OBS Studio through
   multiple cropping transforms. This combination usually has the best
   overall performance as GPU Hardware Acceleration is used both within
-  **Vingester** and the operating system for OBS Studio.
+  **Vingester** and by the operating system for OBS Studio.
 
 - Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode**<br/>
   OBS Studio: **NDI Source**
 
-  In this mode you disable GPU Hardware Acceleration within
-  **Vingester** and render all the Web Content off-screen in "headless"
-  mode, let them be sent out as NDI video streams and directly used
-  within OBS Studio through its NDI Source. This combination is the most
-  elegant way, but as GPU Hardware Acceleration cannot be used it has
-  less performance than the previous mode of operation.
+  In this mode you intentionally disable GPU Hardware Acceleration
+  within **Vingester** and render all the Web Content off-screen in
+  "headless" mode, let them be sent out as NDI video multicast streams
+  and ingested into OBS Studio through its NDI Source. This combination
+  is the most elegant way, but as GPU Hardware Acceleration cannot be
+  used it has a somewhat lower overall performance than the previous
+  mode of operation.
+
+<b>Remember: in any case of operation modes of **Vingester** and OBS
+Studio, always ensure that the total CPU usage of your system never
+exceeds about 70-80% or you will will be certainly faced with quality
+problems in both audio (clipping, lip-unsyncing) and video (frame loss)
+streams.</b>
 
 Alternatives
 ------------
