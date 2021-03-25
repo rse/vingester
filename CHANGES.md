@@ -3,11 +3,12 @@ Changes
 =======
 
 - 0.9.2
-    - BUGFIX: fixed distribution by keeping TypoPRO Overlock font 
-    - CLEANUP: cleanup source code
+    - EXTENSION: provide console tracing for Web Content
     - IMPROVEMENT: extend the documentation
     - IMPROVEMENT: improve optical appearance
+    - BUGFIX: fixed distribution by keeping TypoPRO Overlock font 
     - REFACTORING: switch from plain CSS to LESS
+    - CLEANUP: cleanup source code
 
 - 0.9.1
     - UPGRADE: upgrade to Electron 12.0.2

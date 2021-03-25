@@ -204,6 +204,7 @@ electron.dialog.showErrorBox = (title, content) => {
                     preload:                    path.join(__dirname, "vingester-preload.js"),
                     nodeIntegration:            false,
                     nodeIntegrationInWorker:    false,
+                    contextIsolation:           true,
                     enableRemoteModule:         false,
                     disableDialogs:             true,
                     autoplayPolicy:             "no-user-gesture-required",
@@ -443,9 +444,8 @@ electron.dialog.showErrorBox = (title, content) => {
                 nodeIntegration:            true,
                 nodeIntegrationInWorker:    true,
                 contextIsolation:           false,
-                worldSafeExecuteJavaScript: true,
-                disableDialogs:             true,
                 enableRemoteModule:         false,
+                disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false
             }

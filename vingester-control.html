@@ -20,6 +20,7 @@
 
         <!-- load dependency: TypoPRO -->
         <link rel="stylesheet" type="text/css" href="node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceSansPro.css">
+        <link rel="stylesheet" type="text/css" href="node_modules/typopro-web/web/TypoPRO-SourceSansPro/TypoPRO-SourceCodePro.css">
         <link rel="stylesheet" type="text/css" href="node_modules/typopro-web/web/TypoPRO-Overlock/TypoPRO-Overlock.css">
 
         <!-- load application style -->
@@ -238,9 +239,17 @@
                                 <span class="stat-item">
                                 RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
                                 </span>
-                                <span class="stat-item">
+                                <span class="stat-item" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
                                 CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
                                 </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" v-show="running[browser.id] && trace[browser.id].visible">
+                        <div class="console" v-bind:ref="'console-' + browser.id">
+                            <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
+                                <div class="console-level">{{ message.level }}:</div>
+                                <div class="console-message">{{ message.message }}</div>
                             </div>
                         </div>
                     </div>

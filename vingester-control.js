@@ -81,6 +81,20 @@ Vue.createApp({
                 this.trace[trace.id].warning++
             else if (trace.level === 3)
                 this.trace[trace.id].error++
+            let level = "UNKNOWN"
+            switch (trace.level) {
+                case 0: level = "DEBUG";   break
+                case 1: level = "INFO";    break
+                case 2: level = "WARNING"; break
+                case 3: level = "ERROR";   break
+            }
+            if (this.trace[trace.id].messages.length > 20)
+                this.trace[trace.id].messages.shift()
+            this.trace[trace.id].messages.push({ level, message: trace.message })
+            this.$nextTick(() => {
+                const console = this.$refs[`console-${trace.id}`]
+                console.scrollTop = console.scrollHeight
+            })
         })
         electron.ipcRenderer.on("usage", (ev, usage) => {
             this.usage = usage
@@ -108,14 +122,15 @@ Vue.createApp({
             let browsers = await electron.ipcRenderer.invoke("browsers-load")
             if (browsers === undefined)
                 browsers = "[]"
-            this.browsers = JSON.parse(browsers)
-            for (const browser of this.browsers) {
+            const B = JSON.parse(browsers)
+            for (const browser of B) {
                 await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
                 this.running[browser.id] = false
                 this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
                 this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
-                this.trace[browser.id] = { warning: 0, error: 0 }
+                this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
             }
+            this.browsers = B
         },
         save: debounce(1000, async function () {
             const browsers = JSON.stringify(this.browsers)
@@ -138,11 +153,11 @@ Vue.createApp({
                 N: false, f: "30",
                 P: false
             }
-            this.browsers.push(browser)
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
             this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
-            this.trace[browser.id] = { warning: 0, error: 0 }
+            this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
+            this.browsers.push(browser)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
         },
