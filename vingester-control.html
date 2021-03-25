@@ -206,9 +206,19 @@
                     </div>
                     <div class="row">
                         <div class="row-left">
-                            <div class="field field-start"  v-bind:class="{ disabled: !browser.D && !browser.N }" v-on:click="control('start', browser.id)"><i class="fas fa-play"></i> &nbsp;START</div>
-                            <div class="field field-reload" v-on:click="control('reload', browser.id)"><i class="fas fa-redo"></i> &nbsp;RELOAD</div>
-                            <div class="field field-stop"   v-on:click="control('stop', browser.id)"><i class="fas fa-pause"></i> &nbsp;STOP</div>
+                            <div class="field field-start"
+                                v-bind:class="{ disabled: !browser.D && !browser.N }"
+                                v-on:click="control('start', browser.id)">
+                                <i class="fas fa-play"></i> &nbsp;START
+                            </div>
+                            <div class="field field-reload"
+                                v-on:click="control('reload', browser.id)">
+                                <i class="fas fa-redo"></i> &nbsp;RELOAD
+                            </div>
+                            <div class="field field-stop"
+                                v-on:click="control('stop', browser.id)">
+                                <i class="fas fa-pause"></i> &nbsp;STOP
+                            </div>
                             <div class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
                                 <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
                                 <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
