@@ -11,6 +11,9 @@ Changes
 - 0.9.1
     - UPGRADE: upgrade to Electron 12.0.2
 
+- 0.9.0
+    - EXTENSION: initial release
+
 Legend
 ------
 
