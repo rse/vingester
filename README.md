@@ -136,6 +136,37 @@ modes of operation in practice:
   elegant way, but as GPU Hardware Acceleration cannot be used it has
   less performance than the previous mode of operation.
 
+Alternatives
+------------
+
+The following alternatives are known for ingesting Web Contents into
+video production software like OBS Studio:
+
+- [OBS-Browser](https://github.com/obsproject/obs-browser):<br/>
+  This is OBS Studio's built-in "Browser Source". It is a decent
+  implementation based on the Chromium Embedded Framework (CEF). The
+  drawback (and the original motivation for **Vingester**) is that CPU
+  hogs like OBS.Ninja, running in a Browser Source, can cause OBS Studio
+  to degrade at least audio quality regularly.
+
+- [ElectronCapture](https://github.com/steveseguin/electroncapture)<br/>
+  This is a similar but less feature-rich program of the OBS.Ninja
+  author. It mainly provides the **Vingester** "frameless" mode, but
+  especially no NDI mode. And its multiple browser instance support and
+  corresponding window positioning management is rather simple.
+
+- [SIENNA WebNDI](http://www.sienna-tv.com/ndi/webndi.html)<br/>
+  This is an iPad application providing a similar functionality than
+  the **Vingester** "headless" mode by capturing the Web Contents and
+  sending it out via NDI. Unfortunately, it does not support multiple
+  browser instances.
+
+- [Singular Recast for NDI](https://www.singular.live/ndi)<br/>
+  This is a Windows application providing a similar functionality than
+  the **Vingester** "headless" mode by capturing the Web Contents and
+  sending it out via NDI. Unfortunately, it does not support multiple
+  browser instances.
+
 Copyright & License
 -------------------
 
