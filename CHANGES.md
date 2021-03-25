@@ -6,6 +6,7 @@ Changes
     - BUGFIX: fixed distribution by keeping TypoPRO Overlock font 
     - CLEANUP: cleanup source code
     - IMPROVEMENT: extend the documentation
+    - IMPROVEMENT: improve optical appearance
     - REFACTORING: switch from plain CSS to LESS
 
 - 0.9.1
