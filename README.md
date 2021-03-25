@@ -171,8 +171,8 @@ the following modes of operation in practice:
 
 <b>Remember: in any case of operation modes of **Vingester** and OBS
 Studio, always ensure that the total CPU usage of your system never
-exceeds about 70-80% or you will will be certainly faced with quality
-problems in both audio (clipping, lip-unsyncing) and video (frame loss)
+exceeds about 70-80% or you certainly will be faced with quality
+problems in both audio (clipping, lip-unsync) and video (frame loss)
 streams.</b>
 
 Alternatives
