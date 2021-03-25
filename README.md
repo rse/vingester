@@ -192,25 +192,28 @@ video production software like OBS Studio:
   This is a Windows application providing a similar functionality than
   the **Vingester** "headless" mode by capturing the Web Contents and
   sending it out via NDI. Unfortunately, it does not support multiple
-  browser instances.
+  browser instances and preview functionality and hence its use-cases
+  are more limited.
 
 - [SIENNA WebNDI](http://www.sienna-tv.com/ndi/webndi.html):
   This is an iPad application providing a similar functionality than
   the **Vingester** "headless" mode by capturing the Web Contents and
   sending it out via NDI. Unfortunately, it does not support multiple
-  browser instances.
+  browser instances and hence its use-case are more limited.
 
 - [ElectronCapture](https://github.com/steveseguin/electroncapture):
   This is a similar but less feature-rich program of the OBS.Ninja
   author. It mainly provides the **Vingester** "frameless" mode, but
-  especially no NDI mode. And its multiple browser instance support and
-  corresponding window positioning management is rather simple.
+  especially no NDI-based "headless" mode. And its multiple browser
+  instance support and corresponding window positioning management is
+  very simple.
 
 - [ChromiCast](https://github.com/steveseguin/chomicast):
   This is a similar but less feature-rich program of the OBS.Ninja
   author. It mainly provides the **Vingester** "headless" mode, but
-  especially no screen capturing mode. And it is just a proof of concept
-  in the early stages.
+  especially no "frameless" screen-capturing mode. And it is just a
+  proof of concept in the early stages of development and hence not
+  ready for production.
 
 Copyright & License
 -------------------
