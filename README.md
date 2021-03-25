@@ -78,37 +78,43 @@ a particular application like **Vingester**.
 Performance Notice
 ------------------
 
-Performance in ingesting of Web Content is crucial. The following
+Performance is crucial in ingesting rendered Web Content. The following
 related aspects should be kept in mind:
 
 - *GPU Hardware Acceleration*:<br/>
   Both **Vingester** and OBS Studio use Chromium for the browser
   component in order to render Web Content. Chromium has the possibility
   to leverage from GPU Hardware Acceleration to speed up video decoding
-  and similar tasks. When rendering the Web Content into a desktop
-  window, GPU Hardware Acceleration should be *enabled*. But when
-  rendering the Web Content off-screen GPU Hardware Acceleration should
-  be *disabled*, as for off-screen rendering the use of the GPU slows
-  down at least the capturing process. Use the "GPU" toggle at the
-  top right corner of **Vingester** to enable/disable GPU Hardware
-  Acceleration.
+  and similar graphics intensive tasks. When rendering the Web Content
+  into a desktop window ("frameless" mode), GPU Hardware Acceleration
+  should be *enabled*. But when rendering the Web Content off-screen
+  ("headless" mode) GPU Hardware Acceleration should be *disabled*, as
+  for off-screen rendering the use of the GPU slows down at least the
+  capturing process. Use the "GPU" toggle at the top right corner of
+  **Vingester** to enable/disable GPU Hardware Acceleration according to
+  your prefered operation mode.
 
-- *Frameless/Headless Rendering*:<br/>
-  **Vingester** supports both "frameless" (desktop window based)
-  and "headless" (NDI network protocol based) modes of operation. The
+- *Frameless/Headless Rendering*:
+  <p/>
+  **Vingester** supports both "frameless" (desktop window based) and
+  "headless" (NDI network protocol based) modes of operation. The
   "frameless" mode means that **Vingester** lets Chromium render the Web
-  Content into a frameless desktop window which then should be captured
-  by OBS Studio. The "headless" mode means that **Vingester** lets
-  Chromium render the Web Content off-screen, internally captures the
-  contents and sends the results as a video stream via Network Display
-  Interface (NDI) protocol to the local network. The "frameless" mode is
-  best combined with GPU Hardware Acceleration enabled. The "headless"
-  mode is best combined with GPU Hardware Acceleration disabled. Also
-  keep in mind that although **Vingester** supports both "frameless" and
-  "headless" mode in parallel, using this combined mode means that the
-  (usually lower) NDI framerate has to be simulated by skipping frames
-  of the (usually higher) desktop framerate. As a result, this combined
-  mode can result is less stable NDI streams.
+  Content into a frameless desktop window which then should be externally captured
+  by OBS Studio (through its "Screen Capture" or "Window Capture"
+  sources). The "headless" mode means that **Vingester** lets Chromium
+  render the Web Content off-screen, internally captures the contents
+  and sends the results as a video multicast stream via Network Display Interface
+  (NDI) protocol to the local network. The "frameless" mode is best
+  combined with GPU Hardware Acceleration enabled. The "headless" mode
+  is best combined with GPU Hardware Acceleration disabled.
+
+  <p/>
+  Also keep in mind that although **Vingester**
+  supports both "frameless" and "headless" mode in parallel, using
+  this combined mode means that the (usually lower) NDI framerate has
+  to be simulated by skipping frames of the (usually higher) desktop
+  framerate. As a result, this combined mode can result is less stable
+  NDI streams.
 
 - *Content Previewing*:<br/>
   **Vingester** supports previewing the rendered Web Content in a small
