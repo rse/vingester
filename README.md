@@ -146,8 +146,8 @@ video production software like OBS Studio:
   This is OBS Studio's built-in "Browser Source". It is a decent
   implementation based on the Chromium Embedded Framework (CEF). The
   drawback (and the original motivation for **Vingester**) is that CPU
-  hogs like OBS.Ninja, running in a Browser Source, can cause OBS Studio
-  to degrade at least audio quality regularly.
+  intensive applications like OBS.Ninja, running in a Browser Source,
+  can cause OBS Studio to degrade at least audio quality regularly.
 
 - [Singular Recast for NDI](https://www.singular.live/ndi)<br/>
   This is a Windows application providing a similar functionality than
