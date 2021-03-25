@@ -424,7 +424,7 @@ electron.dialog.showErrorBox = (title, content) => {
         log.info("loading persistant settings")
         const x = store.get("control.x", null)
         const y = store.get("control.y", null)
-        const w = store.get("control.w", 810)
+        const w = store.get("control.w", 820)
         const h = store.get("control.h", 320)
         const pos = (x !== null && y !== null ? { x, y } : {})
 
@@ -434,7 +434,7 @@ electron.dialog.showErrorBox = (title, content) => {
             ...pos,
             width:           w,
             height:          h,
-            minWidth:        810,
+            minWidth:        820,
             minHeight:       320,
             title:           "Vingester",
             backgroundColor: "#333333",
