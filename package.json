@@ -24,6 +24,7 @@
     "dependencies": {
         "electron-log":                  "4.3.2",
         "electron-store":                "7.0.2",
+        "less":                          "4.1.1",
         "jimp":                          "0.16.1",
         "grandiose":                     "rse/grandiose#7d8742a",
         "throttle-debounce":             "3.0.1",

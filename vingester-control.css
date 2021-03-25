@@ -15,321 +15,321 @@ html, body {
     color: #ffffff;
     font-family: "TypoPRO Source Sans Pro";
     font-size: 11pt;
-}
-.ui .browser {
-    display: flex;
-    flex-direction: row;
-    justify-items: flex-start;
-}
-.ui .button {
-    width: 16px;
-    min-width: 16px;
-    max-width: 16px;
-    color: #cccccc;
-    cursor: pointer;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    margin: 4px 0px 0px 4px;
-    padding: 4px 8px 4px 8px;
-    background-color: #666666;
-}
-.ui .button:hover {
-    color: #ffffff;
-}
-.ui .browser.browser-global .button {
-    background-color: #b0a080;
-}
-.ui .browser .box {
-    flex-grow: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #666666;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    margin: 4px 4px 0px 2px;
-    padding: 4px 4px 4px 4px;
-    position: relative;
-}
-.ui .browser .box .preview {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    width: 128px;
-    height: 72px;
-    overflow: hidden;
-    border-radius: 4px;
-}
-.ui .browser .box .preview canvas {
-    width: 128px;
-    height: 72px;
-}
-.ui .browser.browser-global .box {
-    background-color: #b0a080;
-}
-.ui .browser .box .row {
-    display: flex;
-    flex-direction: row;
-}
-.ui .browser .box .row .row-left,
-.ui .browser .box .row .row-right {
-    display: flex;
-    flex-direction: row;
-}
-.ui .browser .box .row .row-middle {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-}
-.ui .browser .box .row .row-right {
-    padding-right: 8px;
-}
-.ui .browser .versions {
-    width: 100%;
-    text-align: center;
-    color: #fff8f0;
-}
-.ui .browser .title-icon {
-    height: 20px;
-    margin-top: 1px;
-    margin-left: 8px;
-    margin-right: 6px;
-}
-.ui .browser .title-text {
-    font-family: "TypoPRO Overlock";
-    font-style: italic;
-    font-size: 16pt;
-    font-weight: bold;
-    text-shadow: 0px 0px 4px #302000;
-    color: #ffffff;
-    line-height: 100%;
-}
-.ui .browser .box .row .cluster {
-    display: flex;
-    flex-direction: row;
-}
-.ui .browser .sep {
-    margin-left: 0px;
-    margin-right: 4px;
-}
-.ui .browser .label {
-    margin-left: 8px;
-    margin-right: 4px;
-}
-.ui .browser .label.label-title,
-.ui .browser .label.label-url {
-    width: 35px;
-}
-.ui .browser .label.label-output {
-    width: 105px;
-}
-.ui .browser .group {
-    margin-left: 8px;
-    margin-right: 4px;
-    font-weight: bold;
-    width: 70px;
-}
-.ui .browser .field input {
-    width: 40px;
-    height: 18px;
-    background-color: #888888;
-    color: #ffffff;
-    border: 0;
-    outline: none;
-    border-radius: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
-    margin-top: 2px;
-    margin-right: 4px;
-    user-select: text;
-}
-.ui .browser .field input:hover {
-    background-color: #ffffff;
-    color: #000000;
-}
-.ui .browser .field input:focus {
-    background-color: #ffffff;
-    color: #000000;
-}
-.ui .browser .field input.disabled:hover {
-    background-color: #888888;
-    color: #ffffff;
-}
-.ui .browser .field.field-url input {
-    width: 460px;
-}
-.ui .browser .field.field-title input {
-    width: 120px;
-}
-.ui .browser .field.field-color input {
-    width: 60px;
-}
-.ui .browser .field.field-mode .toggle {
-    width: 110px;
-}
-.ui .browser .field.field-start,
-.ui .browser .field.field-reload,
-.ui .browser .field.field-stop,
-.ui .browser .field.field-export,
-.ui .browser .field.field-import,
-.ui .browser .field.field-gpu,
-.ui .browser .field.field-usage,
-.ui .browser .field.field-preview {
-    width: 70px;
-    height: 18px;
-    color: #000000;
-    font-weight: bold;
-    font-size: 9pt;
-    border-radius: 4px;
-    padding: 2px 4px 0px 4px;
-    text-align: center;
-    margin-top: 2px;
-    margin-left: 8px;
-    margin-bottom: 2px;
-    cursor: pointer;
-    background-color: #e0e0e0;
-}
-.ui .browser .field.field-start {
-    background-color: #e0e0e0;
-}
-.ui .browser .field.field-reload {
-    background-color: #a0a0a0;
-}
-.ui .browser .field.field-stop {
-    background-color: #a0a0a0;
-}
-.ui .browser .field.field-start:hover {
-    background-color: #ffffff;
-    color: #000000;
-}
-.ui .browser .field.field-reload:hover {
-    cursor: default;
-}
-.ui .browser .field.field-stop:hover {
-    cursor: default;
-}
-.ui .browser.browser-global .button.button-info,
-.ui .browser.browser-global .button.button-plus {
-    color: #f0e0c0;
-}
-.ui .browser.browser-global .button.button-plus:hover {
-    color: #ffffff;
-}
-.ui .browser.browser-global .field.field-start,
-.ui .browser.browser-global .field.field-reload,
-.ui .browser.browser-global .field.field-stop,
-.ui .browser.browser-global .field.field-export,
-.ui .browser.browser-global .field.field-import,
-.ui .browser.browser-global .field.field-gpu {
-    background-color: #f0e0c0;
-}
-.ui .browser.browser-global .field.field-usage {
-    background-color: #d0c0a0;
-    cursor: default;
-}
-.ui .browser.browser-global .field.field-start:hover,
-.ui .browser.browser-global .field.field-reload:hover,
-.ui .browser.browser-global .field.field-stop:hover,
-.ui .browser.browser-global .field.field-export:hover,
-.ui .browser.browser-global .field.field-import:hover {
-    background-color: #ffffff;
-}
-.ui .browser.running .button,
-.ui .browser.running .box {
-    background-color: #336699;
-}
-.ui .browser.running .field input {
-    background-color: #5588bb;
-    color: #ffffff;
-}
-.ui .browser.running .field input:hover {
-    background-color: #ffffff;
-    color: #000000;
-}
-.ui .browser.running .field input:focus {
-    background-color: #ffffff;
-    color: #000000;
-}
-.ui .browser.running .field input.disabled:hover {
-    background-color: #5588bb;
-    color: #ffffff;
-}
-.ui .browser.running .button {
-    color: #99ccff;
-    cursor: default;
-}
-.ui .browser.running .field.field-start {
-    background-color: #6699cc;
-}
-.ui .browser.running .field.field-reload {
-    background-color: #99ccff;
-}
-.ui .browser.running .field.field-stop {
-    background-color: #99ccff;
-}
-.ui .browser.running .field.field-preview {
-    background-color: #99ccff;
-}
-.ui .browser.running .field.field-start:hover {
-    cursor: default;
-}
-.ui .browser.running .field.field-reload:hover {
-    background-color: #ffffff;
-    cursor: pointer;
-}
-.ui .browser.running .field.field-stop:hover {
-    background-color: #ffffff;
-    cursor: pointer;
-}
-.ui .browser.running .field.field-preview:hover {
-    background-color: #ffffff;
-    cursor: pointer;
-}
-.ui .browser .field.field-start.disabled {
-    background-color: #a0a0a0;
-    cursor: default;
-}
-.ui .browser .stat {
-    width: 350px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-.ui .browser .stat .stat-item {
-    width: 100px;
-    height: 20px;
-    text-align: left;
-    font-size: 9pt;
-    border-radius: 4px;
-    padding: 3px 4px 0px 8px;
-    background-color: #225588;
-    color: #c0d0e0;
-    margin-left: 4px;
-}
-.ui .browser .toggle {
-    width: 60px;
-    height: 18px;
-    border-radius: 4px;
-    padding: 0px 4px 0px 4px;
-    margin: 2px 0px 0px 2px;
-    background-color: #888888;
-    color: #ffffff;
-    display: flex;
-    text-align: center;
-    cursor: pointer;
-}
-.ui .browser.running .toggle {
-    background-color: #6699cc;
-    cursor: default;
-}
-.ui .browser .toggle .toggle-option {
-    position: relative;
-    top: -2px;
-    display: none;
-    width: 100%;
-}
-.ui .browser .toggle .toggle-option.selected {
-    display: block;
+    .button {
+        width: 16px;
+        min-width: 16px;
+        max-width: 16px;
+        color: #cccccc;
+        cursor: pointer;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        margin: 4px 0px 0px 4px;
+        padding: 4px 8px 4px 8px;
+        background-color: #666666;
+    }
+    .button:hover {
+        color: #ffffff;
+    }
+    .browser {
+        display: flex;
+        flex-direction: row;
+        justify-items: flex-start;
+    }
+    .browser.browser-global .button {
+        background-color: #b0a080;
+    }
+    .browser .box {
+        flex-grow: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #666666;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        margin: 4px 4px 0px 2px;
+        padding: 4px 4px 4px 4px;
+        position: relative;
+    }
+    .browser .box .preview {
+        position: absolute;
+        top: 8px;
+        right: 12px;
+        width: 128px;
+        height: 72px;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+    .browser .box .preview canvas {
+        width: 128px;
+        height: 72px;
+    }
+    .browser.browser-global .box {
+        background-color: #b0a080;
+    }
+    .browser .box .row {
+        display: flex;
+        flex-direction: row;
+    }
+    .browser .box .row .row-left,
+    .browser .box .row .row-right {
+        display: flex;
+        flex-direction: row;
+    }
+    .browser .box .row .row-middle {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+    .browser .box .row .row-right {
+        padding-right: 8px;
+    }
+    .browser .versions {
+        width: 100%;
+        text-align: center;
+        color: #fff8f0;
+    }
+    .browser .title-icon {
+        height: 20px;
+        margin-top: 1px;
+        margin-left: 8px;
+        margin-right: 6px;
+    }
+    .browser .title-text {
+        font-family: "TypoPRO Overlock";
+        font-style: italic;
+        font-size: 16pt;
+        font-weight: bold;
+        text-shadow: 0px 0px 4px #302000;
+        color: #ffffff;
+        line-height: 100%;
+    }
+    .browser .box .row .cluster {
+        display: flex;
+        flex-direction: row;
+    }
+    .browser .sep {
+        margin-left: 0px;
+        margin-right: 4px;
+    }
+    .browser .label {
+        margin-left: 8px;
+        margin-right: 4px;
+    }
+    .browser .label.label-title,
+    .browser .label.label-url {
+        width: 35px;
+    }
+    .browser .label.label-output {
+        width: 105px;
+    }
+    .browser .group {
+        margin-left: 8px;
+        margin-right: 4px;
+        font-weight: bold;
+        width: 70px;
+    }
+    .browser .field input {
+        width: 40px;
+        height: 18px;
+        background-color: #888888;
+        color: #ffffff;
+        border: 0;
+        outline: none;
+        border-radius: 4px;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin-top: 2px;
+        margin-right: 4px;
+        user-select: text;
+    }
+    .browser .field input:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .browser .field input:focus {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .browser .field input.disabled:hover {
+        background-color: #888888;
+        color: #ffffff;
+    }
+    .browser .field.field-url input {
+        width: 460px;
+    }
+    .browser .field.field-title input {
+        width: 120px;
+    }
+    .browser .field.field-color input {
+        width: 60px;
+    }
+    .browser .field.field-mode .toggle {
+        width: 110px;
+    }
+    .browser .field.field-start,
+    .browser .field.field-reload,
+    .browser .field.field-stop,
+    .browser .field.field-export,
+    .browser .field.field-import,
+    .browser .field.field-gpu,
+    .browser .field.field-usage,
+    .browser .field.field-preview {
+        width: 70px;
+        height: 18px;
+        color: #000000;
+        font-weight: bold;
+        font-size: 9pt;
+        border-radius: 4px;
+        padding: 2px 4px 0px 4px;
+        text-align: center;
+        margin-top: 2px;
+        margin-left: 8px;
+        margin-bottom: 2px;
+        cursor: pointer;
+        background-color: #e0e0e0;
+    }
+    .browser .field.field-start {
+        background-color: #e0e0e0;
+    }
+    .browser .field.field-reload {
+        background-color: #a0a0a0;
+    }
+    .browser .field.field-stop {
+        background-color: #a0a0a0;
+    }
+    .browser .field.field-start:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .browser .field.field-reload:hover {
+        cursor: default;
+    }
+    .browser .field.field-stop:hover {
+        cursor: default;
+    }
+    .browser.browser-global .button.button-info,
+    .browser.browser-global .button.button-plus {
+        color: #f0e0c0;
+    }
+    .browser.browser-global .button.button-plus:hover {
+        color: #ffffff;
+    }
+    .browser.browser-global .field.field-start,
+    .browser.browser-global .field.field-reload,
+    .browser.browser-global .field.field-stop,
+    .browser.browser-global .field.field-export,
+    .browser.browser-global .field.field-import,
+    .browser.browser-global .field.field-gpu {
+        background-color: #f0e0c0;
+    }
+    .browser.browser-global .field.field-usage {
+        background-color: #d0c0a0;
+        cursor: default;
+    }
+    .browser.browser-global .field.field-start:hover,
+    .browser.browser-global .field.field-reload:hover,
+    .browser.browser-global .field.field-stop:hover,
+    .browser.browser-global .field.field-export:hover,
+    .browser.browser-global .field.field-import:hover {
+        background-color: #ffffff;
+    }
+    .browser.running .button,
+    .browser.running .box {
+        background-color: #336699;
+    }
+    .browser.running .field input {
+        background-color: #5588bb;
+        color: #ffffff;
+    }
+    .browser.running .field input:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .browser.running .field input:focus {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .browser.running .field input.disabled:hover {
+        background-color: #5588bb;
+        color: #ffffff;
+    }
+    .browser.running .button {
+        color: #99ccff;
+        cursor: default;
+    }
+    .browser.running .field.field-start {
+        background-color: #6699cc;
+    }
+    .browser.running .field.field-reload {
+        background-color: #99ccff;
+    }
+    .browser.running .field.field-stop {
+        background-color: #99ccff;
+    }
+    .browser.running .field.field-preview {
+        background-color: #99ccff;
+    }
+    .browser.running .field.field-start:hover {
+        cursor: default;
+    }
+    .browser.running .field.field-reload:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+    }
+    .browser.running .field.field-stop:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+    }
+    .browser.running .field.field-preview:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+    }
+    .browser .field.field-start.disabled {
+        background-color: #a0a0a0;
+        cursor: default;
+    }
+    .browser .stat {
+        width: 350px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .browser .stat .stat-item {
+        width: 100px;
+        height: 20px;
+        text-align: left;
+        font-size: 9pt;
+        border-radius: 4px;
+        padding: 3px 4px 0px 8px;
+        background-color: #225588;
+        color: #c0d0e0;
+        margin-left: 4px;
+    }
+    .browser .toggle {
+        width: 60px;
+        height: 18px;
+        border-radius: 4px;
+        padding: 0px 4px 0px 4px;
+        margin: 2px 0px 0px 2px;
+        background-color: #888888;
+        color: #ffffff;
+        display: flex;
+        text-align: center;
+        cursor: pointer;
+    }
+    .browser.running .toggle {
+        background-color: #6699cc;
+        cursor: default;
+    }
+    .browser .toggle .toggle-option {
+        position: relative;
+        top: -2px;
+        display: none;
+        width: 100%;
+    }
+    .browser .toggle .toggle-option.selected {
+        display: block;
+    }
 }
 
