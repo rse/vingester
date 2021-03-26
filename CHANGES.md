@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 0.9.3
+    - BUGFIX: fixed big in font loading
+    - UPGRADE: upgrade minor dependencies
+
 - 0.9.2
     - EXTENSION: provide console tracing for Web Content
     - IMPROVEMENT: extend the documentation
