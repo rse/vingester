@@ -120,6 +120,9 @@ const app = Vue.createApp({
         log.info("created")
         electron.ipcRenderer.invoke("control-created")
     },
+    mounted () {
+        electron.ipcRenderer.invoke("control-mounted")
+    },
     methods: {
         async load () {
             let browsers = await electron.ipcRenderer.invoke("browsers-load")

@@ -434,6 +434,7 @@ electron.dialog.showErrorBox = (title, content) => {
         log.info("creating control user interface")
         const mainWin = new electron.BrowserWindow({
             ...pos,
+            show:            false,
             width:           w,
             height:          h,
             minWidth:        820,
@@ -672,6 +673,12 @@ electron.dialog.showErrorBox = (title, content) => {
             }
         })
 
+        /*  show the window once the DOM was mounted  */
+        electron.ipcMain.handle("control-mounted", (ev) => {
+            mainWin.show()
+            mainWin.focus()
+        })
+
         /*  load web content  */
         log.info("loading control user interface")
         mainWin.loadURL(`file://${path.join(__dirname, "vingester-control.html")}`)
@@ -682,7 +689,7 @@ electron.dialog.showErrorBox = (title, content) => {
         /*  wait until control UI is created  */
         log.info("awaiting control user interface to become ready")
         let controlReady = false
-        electron.ipcMain.handle("control-created", (event) => {
+        electron.ipcMain.handle("control-created", (ev) => {
             controlReady = true
         })
         await new Promise((resolve) => {
