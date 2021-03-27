@@ -21,7 +21,8 @@
         "eslint-plugin-import":          "2.22.1",
         "eslint-plugin-node":            "11.1.0",
         "stylelint":                     "13.12.0",
-        "stylelint-config-standard":     "21.0.0"
+        "stylelint-config-standard":     "21.0.0",
+        "htmllint-cli":                  "0.0.7"
     },
     "dependencies": {
         "electron-log":                  "4.3.2",
@@ -109,7 +110,7 @@
     },
     "scripts": {
         "postinstall":                   "electron-builder install-app-deps",
-        "lint":                          "eslint --config eslint.yaml --ext js *.js && stylelint --config stylelint.yaml *.css",
+        "lint":                          "eslint --config eslint.yaml --ext js *.js && stylelint --config stylelint.yaml *.css && htmllint --rc htmllint.json *.html",
         "start":                         "cross-env DEBUG=1 electron .",
         "package":                       "node npm-package.js",
         "clean":                         "rimraf ./dist",
