@@ -34,6 +34,7 @@ html, body {
             text-shadow: 0px 0px 4px #302000;
             color: #ffffff;
             line-height: 100%;
+            cursor: pointer;
         }
         .field {
             -webkit-app-region: no-drag;
