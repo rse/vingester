@@ -406,17 +406,17 @@ electron.dialog.showErrorBox = (title, content) => {
             })
             log.info("browser: stopped")
         }
-        destroy () {
+        async destroy () {
             log.info("browser: destroy")
             if (this.win === null)
                 throw new Error("still not started")
             this.destroying = true
-            this.win.destroy()
-            this.win = null
             if (this.ndiSender !== null) {
-                this.ndiSender.embedded = null
+                await this.ndiSender.destroy()
                 this.ndiSender = null
             }
+            this.win.destroy()
+            this.win = null
         }
     }
 
