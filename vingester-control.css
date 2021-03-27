@@ -60,7 +60,7 @@ html, body {
                 &:hover {
                     color: #ffffff;
                     cursor: pointer;
-                };
+                }
             }
         }
         .about {
@@ -422,6 +422,9 @@ html, body {
                 color: #c0d0e0;
                 margin-left: 4px;
                 overflow: hidden;
+                &.stat-item-trace {
+                    cursor: pointer;
+                }
             }
         }
         .console {

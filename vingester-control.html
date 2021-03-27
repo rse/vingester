@@ -325,7 +325,7 @@
                                         </span>
                                         <span
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (trace[browser.id].visible ? 'close' : 'open') + ' Web Content<br/>console output.' }"
-                                            class="stat-item" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
+                                            class="stat-item stat-item-trace" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
                                         CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
                                         </span>
                                     </div>
