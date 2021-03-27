@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 0.9.5
+    - IMPROVEMENT: improve optical appearance of user interface
+
 - 0.9.4
     - IMPROVEMENT: switch to a frameless window and improve scrolling
 
