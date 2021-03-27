@@ -38,13 +38,15 @@ html, body {
             color: #ffffff;
             line-height: 100%;
             cursor: pointer;
-            width: 400px;
-            span {
-                font-family: "TypoPRO Source Sans Pro";
-                font-style: normal;
-                font-size: 12pt;
-                font-weight: 300;
-            }
+            width: 86px;
+        }
+        .title-subtext {
+            color: #ffffff;
+            font-family: "TypoPRO Source Sans Pro";
+            font-style: normal;
+            font-size: 12pt;
+            font-weight: 300;
+            width: 320px;
         }
         .icons {
             margin-left: 16px;
@@ -228,6 +230,7 @@ html, body {
                 height: 72px;
                 overflow: hidden;
                 border-radius: 4px;
+                background-color: #225588;
                 canvas {
                     width: 128px;
                     height: 72px;
@@ -266,7 +269,8 @@ html, body {
                 border-radius: 4px;
                 padding-left: 4px;
                 padding-right: 4px;
-                margin-top: 2px;
+                margin-top: 1px;
+                margin-bottom: 1px;
                 margin-right: 4px;
                 user-select: text;
             }
@@ -551,3 +555,12 @@ html, body {
     opacity: 0.8;
     width: 6px;
 }
+
+/*  Tippy  */
+.tippy-box {
+    color: #ffffff;
+    font-family: "TypoPRO Source Sans Pro";
+    font-size: 9pt;
+    font-weight: normal;
+}
+

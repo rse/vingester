@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 0.9.6
+    - EXTENSION: add tooltips for all user interface elements for documentation
+
 - 0.9.5
     - IMPROVEMENT: improve optical appearance of user interface
 
