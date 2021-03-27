@@ -80,6 +80,11 @@ html, body {
     .ui-body {
         height: calc(100vh - 40px);
         overflow-x: hidden;
+        overflow-y: hidden;
+        position: relative;
+        .ps {
+            height: calc(100vh - 40px);
+        }
     }
     .row {
         display: flex;
@@ -467,8 +472,8 @@ html, body {
 
 /*  make scrollbars look like macOS scrollbars everywhere  */
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
     background-color: #00000020;
     -webkit-border-radius: 100px;
 }
@@ -487,4 +492,48 @@ html, body {
 }
 ::-webkit-scrollbar-thumb:horizontal {
     min-width: 10px;
+}
+
+/*  perfect scrollbar  */
+.ps__rail-x {
+    height: 10px;
+}
+.ps__rail-y {
+    width: 10px;
+}
+.ps--active-x > .ps__rail-x,
+.ps--active-y > .ps__rail-y {
+    background-color: transparent;
+}
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+    background-color: #90909080;
+}
+.ps__thumb-x {
+    background-color: #e0e0e0;
+    opacity: 0.5;
+    height: 6px;
+}
+.ps__thumb-y {
+    background-color: #e0e0e0;
+    opacity: 0.5;
+    width: 6px;
+}
+.ps__rail-x:hover > .ps__thumb-x,
+.ps__rail-x:focus > .ps__thumb-x,
+.ps__rail-x.ps--clicking .ps__thumb-x {
+    background-color: #e0e0e0;
+    opacity: 0.8;
+    height: 6px;
+}
+.ps__rail-y:hover > .ps__thumb-y,
+.ps__rail-y:focus > .ps__thumb-y,
+.ps__rail-y.ps--clicking .ps__thumb-y {
+    background-color: #e0e0e0;
+    opacity: 0.8;
+    width: 6px;
 }

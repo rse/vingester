@@ -4,10 +4,11 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
-const electron    = require("electron")
-const electronLog = require("electron-log")
-const debounce    = require("throttle-debounce").debounce
-const UUID        = require("pure-uuid")
+const electron         = require("electron")
+const electronLog      = require("electron-log")
+const debounce         = require("throttle-debounce").debounce
+const UUID             = require("pure-uuid")
+const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
@@ -26,7 +27,7 @@ electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}
 const log = electronLog.scope("UI")
 log.info("starting up")
 
-Vue.createApp({
+const app = Vue.createApp({
     data () {
         return {
             browsers: [],
@@ -213,5 +214,6 @@ Vue.createApp({
             electron.ipcRenderer.invoke("window-control", action)
         }
     }
-}).mount("body")
-
+})
+app.use(PerfectScrollbar)
+app.mount("body")
