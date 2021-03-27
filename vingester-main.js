@@ -261,14 +261,14 @@ electron.dialog.showErrorBox = (title, content) => {
 
             /*  receive statistics  */
             win.webContents.on("ipc-message", (ev, channel, msg) => {
-                if (channel === "stat" && this.mainWin !== null)
+                if (channel === "stat" && this.mainWin !== null && !this.mainWin.isDestroyed())
                     this.mainWin.webContents.send("stat", { ...msg, id: this.id })
             })
 
             /*  receive console outputs  */
             win.webContents.on("console-message", (ev, level, message, line, sourceId) => {
                 const trace = { level, message }
-                if (this.mainWin !== null)
+                if (this.mainWin !== null && !this.mainWin.isDestroyed())
                     this.mainWin.webContents.send("trace", { ...trace, id: this.id })
             })
 
