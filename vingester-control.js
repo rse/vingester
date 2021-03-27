@@ -226,7 +226,7 @@ app.use(VueTippy, {
         allowHTML: true,
         placement: "right",
         theme: "translucent",
-        delay: [ 600, 50 ],
+        delay: [ 600, 50 ]
     }
 })
 app.mount("body")

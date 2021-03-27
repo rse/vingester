@@ -626,7 +626,7 @@ electron.dialog.showErrorBox = (title, content) => {
                 if (browser.running())
                     throw new Error("browser already running")
                 mainWin.webContents.send("browser-start", id)
-                let success = await browser.start()
+                const success = await browser.start()
                 if (success)
                     mainWin.webContents.send("browser-started", id)
                 else {
