@@ -1,7 +1,7 @@
 {
     "name":                              "Vingester",
     "description":                       "Ingest Web Contents as Video Streams",
-    "version":                           "0.9.5",
+    "version":                           "0.9.6",
     "author":                            "Dr. Ralf S. Engelschall",
     "main":                              "vingester-main.js",
     "devDependencies": {
