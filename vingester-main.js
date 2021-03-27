@@ -675,6 +675,7 @@ electron.dialog.showErrorBox = (title, content) => {
 
         /*  show the window once the DOM was mounted  */
         electron.ipcMain.handle("control-mounted", (ev) => {
+            log.info("finally showing user interface")
             mainWin.show()
             mainWin.focus()
         })
