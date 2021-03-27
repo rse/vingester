@@ -413,8 +413,10 @@ electron.dialog.showErrorBox = (title, content) => {
             this.destroying = true
             this.win.destroy()
             this.win = null
-            this.ndiSender.embedded = null
-            this.ndiSender = null
+            if (this.ndiSender !== null) {
+                this.ndiSender.embedded = null
+                this.ndiSender = null
+            }
         }
     }
 
