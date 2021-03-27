@@ -3,6 +3,7 @@ Changes
 =======
 
 - 0.9.7
+    - IMPROVEMENT: open UI only once the DOM is ready to not flicker on startup
     - CLEANUP: cleanup source code through linting
 
 - 0.9.6
