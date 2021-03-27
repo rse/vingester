@@ -109,7 +109,7 @@
     },
     "scripts": {
         "postinstall":                   "electron-builder install-app-deps",
-        "lint":                          "eslint --config eslint.yaml --ext js *.js",
+        "lint":                          "eslint --config eslint.yaml --ext js *.js && stylelint --config stylelint.yaml *.css",
         "start":                         "cross-env DEBUG=1 electron .",
         "package":                       "node npm-package.js",
         "clean":                         "rimraf ./dist",

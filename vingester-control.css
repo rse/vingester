@@ -3,7 +3,6 @@
 **  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
-
 html,
 body {
     width: 100vw;
@@ -564,4 +563,3 @@ body {
     font-size: 9pt;
     font-weight: normal;
 }
-
