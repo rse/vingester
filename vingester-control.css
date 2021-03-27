@@ -26,6 +26,7 @@ html, body {
             margin-right: 6px;
         }
         .title-text {
+            -webkit-app-region: no-drag;
             font-family: "TypoPRO Overlock";
             font-style: italic;
             font-size: 16pt;
