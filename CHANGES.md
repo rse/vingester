@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 0.9.4
+    - IMPROVEMENT: switch to a frameless window and improve scrolling
+
 - 0.9.3
     - BUGFIX: fixed big in font loading
     - UPGRADE: upgrade minor dependencies
