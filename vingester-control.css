@@ -41,6 +41,7 @@ body {
             width: 86px;
         }
         .title-subtext {
+            margin-top: 2px;
             color: #ffffff;
             font-family: "TypoPRO Source Sans Pro", sans-serif;
             font-style: normal;
