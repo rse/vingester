@@ -245,7 +245,7 @@
                                     </div>
                                     <div class="sep">@</div>
                                     <div class="field"
-                                        v-tippy="{ placement: 'top', content: 'X/Y-Selection of display for relative positioning<br/>0,0 is primary display, -1,0 the display on the left side,<br/>0,-1 the display at the top, etc.' }">
+                                        v-tippy="{ placement: 'top', content: 'Selection of display for relative positioning. If empty or set to 0,0, X/Y-positions are relative to the primary display. Use -1,0 for the display on the left side, 0,-1 for the display at the top, etc.' }">
                                         <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
                                             v-bind:class="{ disabled: running[browser.id] }"
                                             v-bind:disabled="running[browser.id]">
