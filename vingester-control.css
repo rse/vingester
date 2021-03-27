@@ -9,13 +9,98 @@ html, body {
     height: 100vh;
     margin: 0;
     user-select: none;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .ui {
-    border: 1px solid #333333;
     color: #ffffff;
     font-family: "TypoPRO Source Sans Pro";
     font-size: 11pt;
+    .ui-head {
+        -webkit-app-region: drag;
+        background-color: #b8a080;
+        padding: 8px 8px 8px 8px;
+        height: 24px;
+        .title-icon {
+            height: 20px;
+            margin-top: 1px;
+            margin-right: 6px;
+        }
+        .title-text {
+            font-family: "TypoPRO Overlock";
+            font-style: italic;
+            font-size: 16pt;
+            font-weight: bold;
+            text-shadow: 0px 0px 4px #302000;
+            color: #ffffff;
+            line-height: 100%;
+        }
+        .field {
+            -webkit-app-region: no-drag;
+            width: 100px;
+            height: 18px;
+            color: #000000;
+            font-weight: bold;
+            font-size: 9pt;
+            border-radius: 4px;
+            padding: 2px 4px 0px 4px;
+            text-align: center;
+            margin-top: 2px;
+            margin-left: 8px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            &.field-gpu {
+                background-color: #f8e0c0;
+                &:hover {
+                    background-color: #ffffff;
+                }
+            }
+            &.field-usage {
+                background-color: #d8c0a0;
+                cursor: default;
+            }
+        }
+        .icons {
+            margin-left: 16px;
+            display: flex;
+            flex-direction: row;
+            .icon {
+                -webkit-app-region: no-drag;
+                font-size: 16px;
+                color: #f8e0c0;
+                margin-left: 8px;
+                &:hover {
+                    color: #ffffff;
+                    cursor: pointer;
+                };
+            }
+        }
+    }
+    .ui-body {
+        height: calc(100vh - 40px);
+        overflow-x: hidden;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        .row-left,
+        .row-right {
+            display: flex;
+            flex-direction: row;
+        }
+        .row-middle {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+        }
+        .row-right {
+            padding-right: 8px;
+        }
+        .cluster {
+            display: flex;
+            flex-direction: row;
+        }
+    }
     .button {
         width: 16px;
         min-width: 16px;
@@ -36,7 +121,7 @@ html, body {
         flex-direction: row;
         justify-items: flex-start;
         &.browser-global .button {
-            background-color: #b0a080;
+            background-color: #b8a080;
         }
         .box {
             flex-grow: 1;
@@ -62,31 +147,9 @@ html, body {
                     height: 72px;
                 }
             }
-            .row {
-                display: flex;
-                flex-direction: row;
-                .row-left,
-                .row-right {
-                    display: flex;
-                    flex-direction: row;
-                }
-                .row-middle {
-                    display: flex;
-                    flex-direction: row;
-                    width: 100%;
-                    justify-content: center;
-                }
-                .row-right {
-                    padding-right: 8px;
-                }
-                .cluster {
-                    display: flex;
-                    flex-direction: row;
-                }
-            }
         }
         &.browser-global .box {
-            background-color: #b0a080;
+            background-color: #b8a080;
         }
         .about {
             text-align: left;
@@ -113,21 +176,6 @@ html, body {
             td {
                 padding-right: 4px;
             }
-        }
-        .title-icon {
-            height: 20px;
-            margin-top: 1px;
-            margin-left: 8px;
-            margin-right: 6px;
-        }
-        .title-text {
-            font-family: "TypoPRO Overlock";
-            font-style: italic;
-            font-size: 16pt;
-            font-weight: bold;
-            text-shadow: 0px 0px 4px #302000;
-            color: #ffffff;
-            line-height: 100%;
         }
         .sep {
             margin-left: 0px;
@@ -194,8 +242,6 @@ html, body {
             &.field-stop,
             &.field-export,
             &.field-import,
-            &.field-gpu,
-            &.field-usage,
             &.field-preview {
                 width: 70px;
                 height: 18px;
@@ -242,7 +288,7 @@ html, body {
             .button {
                 &.button-info,
                 &.button-plus {
-                    color: #f0e0c0;
+                    color: #f8e0c0;
                 }
                 &.button-plus:hover {
                     color: #ffffff;
@@ -253,13 +299,8 @@ html, body {
                 &.field-reload,
                 &.field-stop,
                 &.field-export,
-                &.field-import,
-                &.field-gpu {
-                    background-color: #f0e0c0;
-                }
-                &.field-usage {
-                    background-color: #d0c0a0;
-                    cursor: default;
+                &.field-import {
+                    background-color: #f8e0c0;
                 }
                 &.field-start:hover,
                 &.field-reload:hover,
@@ -270,10 +311,10 @@ html, body {
                     cursor: pointer;
                 }
                 &.disabled {
-                    background-color: #d0c0a0;
+                    background-color: #d8c0a0;
                     cursor: default;
                     &:hover {
-                        background-color: #d0c0a0;
+                        background-color: #d8c0a0;
                         cursor: default;
                     }
                 }

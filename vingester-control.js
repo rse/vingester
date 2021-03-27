@@ -208,6 +208,9 @@ Vue.createApp({
         },
         toggleGPU () {
             electron.ipcRenderer.invoke("gpu", !this.gpu)
+        },
+        windowControl (action) {
+            electron.ipcRenderer.invoke("window-control", action)
         }
     }
 }).mount("body")

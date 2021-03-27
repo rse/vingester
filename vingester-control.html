@@ -35,221 +35,251 @@
     </head>
     <body>
         <div class="ui">
-            <div class="browser browser-global">
-                <div class="button button-plus" v-on:click="addBrowser">
-                    <i class="fas fa-plus-circle"></i>
-                </div>
-                <div class="box">
-                    <div class="row">
-                        <div class="row-left">
-                            <div class="field field-start"
-                                v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
-                                v-on:click="control('start-all', null)">
-                                <i class="fas fa-play"></i> &nbsp;START
-                            </div>
-                            <div class="field field-reload"
-                                v-bind:class="{ disabled: nRunning === 0 }"
-                                v-on:click="control('reload-all', null)">
-                                <i class="fas fa-redo"></i> &nbsp;RELOAD
-                            </div>
-                            <div class="field field-stop"
-                                v-bind:class="{ disabled: nRunning === 0 }"
-                                v-on:click="control('stop-all', null)">
-                                <i class="fas fa-pause"></i> &nbsp;STOP
-                            </div>
+            <div class="ui-head">
+                <div class="row">
+                    <div class="row-left">
+                        <img class="title-icon" src="vingester-icon.png">
+                        <div v-on:click="info = !info" class="title-text">Vingester</div>
+                    </div>
+                    <div class="row-middle">
+                    </div>
+                    <div class="row-right">
+                        <div class="field field-usage">
+                            <i class="fas fa-microchip"></i> &nbsp;CPU: {{ usage.toFixed(1) }}%
                         </div>
-                        <div class="row-middle">
-                            <img class="title-icon" src="vingester-icon.png">
-                            <div v-on:click="info = !info" class="title-text">Vingester</div>
+                        <div class="field field-gpu" v-on:click="toggleGPU">
+                            <span v-show="gpu"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;GPU: YES</span>
+                            <span v-show="!gpu"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;GPU: NO</span>
                         </div>
-                        <div class="row-right">
-                            <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>
-                            <div class="field field-import" v-on:click="importBrowsers"><i class="fas fa-download"></i> &nbsp;IMPORT</div>
-                            <div class="field field-gpu" v-on:click="toggleGPU">
-                                <span v-show="gpu"><i class="fas fa-check-circle"></i></span>
-                                <span v-show="!gpu"><i class="fas fa-circle"></i></span>
-                                &nbsp;GPU
+                        <div class="icons">
+                            <div class="icon" v-on:click="windowControl('minimize')">
+                                <i class="fas fa-window-minimize"></i>
                             </div>
-                            <div class="field field-usage"><i class="fas fa-microchip"></i> &nbsp;{{ usage.toFixed(1) }}%</div>
+                            <div class="icon" v-on:click="windowControl('maximize')">
+                                <i class="fas fa-window-maximize"></i>
+                            </div>
+                            <div class="icon" v-on:click="windowControl('standard')">
+                                <i class="fas fa-caret-square-down"></i>
+                            </div>
+                            <div class="icon" v-on:click="windowControl('fullscreen')">
+                                <i class="fas fa-caret-square-up"></i>
+                            </div>
+                            <div class="icon" v-on:click="windowControl('close')">
+                                <i class="fas fa-window-close"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="browser browser-global" v-show="info">
-                <div class="button button-info">
-                    <i class="fas fa-info-circle"></i>
-                </div>
-                <div class="box">
-                    <div class="row">
-                        <div class="row-left">
-                            <div class="about">
-                                <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
-                                Electron-based desktop application for
-                                use under Windows, macOS or Linux to
-                                run multiple Chromium-based Web browser
-                                instances and ingesting their rendered
-                                Web Contents as screen/window-captured or
-                                NDI-multicasted video streams for further
-                                use in video mixing applications.
-                             </div>
-                        </div>
-                        <div class="row-right">
-                            <table class="versions">
-                                <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
-                                <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
-                                <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
-                                <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
-                                <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
-                                <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
-                            </table>
-                        </div>
+            <div class="ui-body">
+                <div class="browser browser-global">
+                    <div class="button button-plus" v-on:click="addBrowser">
+                        <i class="fas fa-plus-circle"></i>
                     </div>
-                </div>
-            </div>
-            <div v-for="browser in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
-                <div class="button button-minus" v-on:click="delBrowser(browser)">
-                    <i class="fas fa-minus-circle"></i>
-                </div>
-                <div class="box">
-                    <div class="preview" v-show="browser.P === true && running[browser.id]">
-                        <canvas v-bind:ref="'canvas-' + browser.id" width="128" height="72"></canvas>
-                    </div>
-                    <div class="row">
-                        <div class="group">Browser:</div>
-                        <div class="label label-title">Title:</div>
-                        <div class="field field-title">
-                            <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
-                                v-bind:class="{ disabled: running[browser.id] }"
-                                v-bind:disabled="running[browser.id]">
-                        </div>
-                        <div class="label">Size:</div>
-                        <div class="field">
-                            <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
-                                v-bind:class="{ disabled: running[browser.id] }"
-                                v-bind:disabled="running[browser.id]">
-                        </div>
-                        <div class="sep">x</div>
-                        <div class="field">
-                            <input type="text" v-model="browser.h" v-on:keyup="changed(browser)"
-                                v-bind:class="{ disabled: running[browser.id] }"
-                                v-bind:disabled="running[browser.id]">
-                        </div>
-                        <div class="label">Color:</div>
-                        <div class="field field-color">
-                            <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
-                                v-bind:class="{ disabled: running[browser.id] }"
-                                v-bind:disabled="running[browser.id]">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="group">Input:</div>
-                        <div class="label label-url">URL:</div>
-                        <div class="field field-url">
-                            <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
-                                v-bind:class="{ disabled: running[browser.id] }"
-                                v-bind:disabled="running[browser.id]">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="group">Output 1:</div>
-                        <div class="label label-output">Frameless (WIN):</div>
-                        <div class="field">
-                            <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
-                                <div class="toggle-option" v-bind:class="{ selected: browser.D === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
-                                <div class="toggle-option" v-bind:class="{ selected: browser.D === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                    <div class="box">
+                        <div class="row">
+                            <div class="row-left">
+                                <div class="field field-start"
+                                    v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
+                                    v-on:click="control('start-all', null)">
+                                    <i class="fas fa-play"></i> &nbsp;START
+                                </div>
+                                <div class="field field-reload"
+                                    v-bind:class="{ disabled: nRunning === 0 }"
+                                    v-on:click="control('reload-all', null)">
+                                    <i class="fas fa-redo"></i> &nbsp;RELOAD
+                                </div>
+                                <div class="field field-stop"
+                                    v-bind:class="{ disabled: nRunning === 0 }"
+                                    v-on:click="control('stop-all', null)">
+                                    <i class="fas fa-pause"></i> &nbsp;STOP
+                                </div>
+                            </div>
+                            <div class="row-middle">
+                            </div>
+                            <div class="row-right">
+                                <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>
+                                <div class="field field-import" v-on:click="importBrowsers"><i class="fas fa-download"></i> &nbsp;IMPORT</div>
                             </div>
                         </div>
-                        <div class="cluster" v-show="browser.D">
-                            <div class="label">Pos:</div>
+                    </div>
+                </div>
+                <div class="browser browser-global" v-show="info">
+                    <div class="button button-info">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="box">
+                        <div class="row">
+                            <div class="row-left">
+                                <div class="about">
+                                    <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
+                                    Electron-based desktop application for
+                                    use under Windows, macOS or Linux to
+                                    run multiple Chromium-based Web browser
+                                    instances and ingesting their rendered
+                                    Web Contents as screen/window-captured or
+                                    NDI-multicasted video streams for further
+                                    use in video mixing applications.
+                                 </div>
+                            </div>
+                            <div class="row-right">
+                                <table class="versions">
+                                    <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
+                                    <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
+                                    <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
+                                    <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
+                                    <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
+                                    <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-for="browser in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
+                    <div class="button button-minus" v-on:click="delBrowser(browser)">
+                        <i class="fas fa-minus-circle"></i>
+                    </div>
+                    <div class="box">
+                        <div class="preview" v-show="browser.P === true && running[browser.id]">
+                            <canvas v-bind:ref="'canvas-' + browser.id" width="128" height="72"></canvas>
+                        </div>
+                        <div class="row">
+                            <div class="group">Browser:</div>
+                            <div class="label label-title">Title:</div>
+                            <div class="field field-title">
+                                <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                            <div class="label">Size:</div>
                             <div class="field">
-                                <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"
+                                <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
                                     v-bind:class="{ disabled: running[browser.id] }"
                                     v-bind:disabled="running[browser.id]">
                             </div>
                             <div class="sep">x</div>
                             <div class="field">
-                                <input type="text" v-model="browser.y" v-on:keyup="changed(browser)"
+                                <input type="text" v-model="browser.h" v-on:keyup="changed(browser)"
                                     v-bind:class="{ disabled: running[browser.id] }"
                                     v-bind:disabled="running[browser.id]">
                             </div>
-                            <div class="sep">@</div>
-                            <div class="field">
-                                <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
+                            <div class="label">Color:</div>
+                            <div class="field field-color">
+                                <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
                                     v-bind:class="{ disabled: running[browser.id] }"
                                     v-bind:disabled="running[browser.id]">
                             </div>
-                            <div class="label">Pin:</div>
+                        </div>
+                        <div class="row">
+                            <div class="group">Input:</div>
+                            <div class="label label-url">URL:</div>
+                            <div class="field field-url">
+                                <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
+                                    v-bind:class="{ disabled: running[browser.id] }"
+                                    v-bind:disabled="running[browser.id]">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="group">Output 1:</div>
+                            <div class="label label-output">Frameless (WIN):</div>
                             <div class="field">
-                                <div class="toggle" v-on:click="toggle(browser, 'p', [ true, false ])">
-                                    <div class="toggle-option toggle-option-pin"   v-bind:class="{ selected: browser.p === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
-                                    <div class="toggle-option toggle-option-nopin" v-bind:class="{ selected: browser.p === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
+                                    <div class="toggle-option" v-bind:class="{ selected: browser.D === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
+                                    <div class="toggle-option" v-bind:class="{ selected: browser.D === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                </div>
+                            </div>
+                            <div class="cluster" v-show="browser.D">
+                                <div class="label">Pos:</div>
+                                <div class="field">
+                                    <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"
+                                        v-bind:class="{ disabled: running[browser.id] }"
+                                        v-bind:disabled="running[browser.id]">
+                                </div>
+                                <div class="sep">x</div>
+                                <div class="field">
+                                    <input type="text" v-model="browser.y" v-on:keyup="changed(browser)"
+                                        v-bind:class="{ disabled: running[browser.id] }"
+                                        v-bind:disabled="running[browser.id]">
+                                </div>
+                                <div class="sep">@</div>
+                                <div class="field">
+                                    <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
+                                        v-bind:class="{ disabled: running[browser.id] }"
+                                        v-bind:disabled="running[browser.id]">
+                                </div>
+                                <div class="label">Pin:</div>
+                                <div class="field">
+                                    <div class="toggle" v-on:click="toggle(browser, 'p', [ true, false ])">
+                                        <div class="toggle-option toggle-option-pin"   v-bind:class="{ selected: browser.p === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
+                                        <div class="toggle-option toggle-option-nopin" v-bind:class="{ selected: browser.p === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="group">Output 2:</div>
-                        <div class="label label-output">Headless (NDI):</div>
-                        <div class="field">
-                            <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
-                                <div class="toggle-option" v-bind:class="{ selected: browser.N === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
-                                <div class="toggle-option" v-bind:class="{ selected: browser.N === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
-                            </div>
-                        </div>
-                        <div class="cluster" v-show="browser.N">
-                            <div class="label">FPS:</div>
+                        <div class="row">
+                            <div class="group">Output 2:</div>
+                            <div class="label label-output">Headless (NDI):</div>
                             <div class="field">
-                                <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
-                                    v-bind:class="{ disabled: running[browser.id] }"
-                                    v-bind:disabled="running[browser.id]">
+                                <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
+                                    <div class="toggle-option" v-bind:class="{ selected: browser.N === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
+                                    <div class="toggle-option" v-bind:class="{ selected: browser.N === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                </div>
+                            </div>
+                            <div class="cluster" v-show="browser.N">
+                                <div class="label">FPS:</div>
+                                <div class="field">
+                                    <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
+                                        v-bind:class="{ disabled: running[browser.id] }"
+                                        v-bind:disabled="running[browser.id]">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="row-left">
-                            <div class="field field-start"
-                                v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.u === '' }"
-                                v-on:click="control('start', browser.id)">
-                                <i class="fas fa-play"></i> &nbsp;START
+                        <div class="row">
+                            <div class="row-left">
+                                <div class="field field-start"
+                                    v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.u === '' }"
+                                    v-on:click="control('start', browser.id)">
+                                    <i class="fas fa-play"></i> &nbsp;START
+                                </div>
+                                <div class="field field-reload"
+                                    v-on:click="control('reload', browser.id)">
+                                    <i class="fas fa-redo"></i> &nbsp;RELOAD
+                                </div>
+                                <div class="field field-stop"
+                                    v-on:click="control('stop', browser.id)">
+                                    <i class="fas fa-pause"></i> &nbsp;STOP
+                                </div>
+                                <div class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
+                                    <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
+                                    <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
+                                    &nbsp;PREVIEW
+                                </div>
                             </div>
-                            <div class="field field-reload"
-                                v-on:click="control('reload', browser.id)">
-                                <i class="fas fa-redo"></i> &nbsp;RELOAD
+                            <div class="row-middle">
                             </div>
-                            <div class="field field-stop"
-                                v-on:click="control('stop', browser.id)">
-                                <i class="fas fa-pause"></i> &nbsp;STOP
-                            </div>
-                            <div class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
-                                <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
-                                <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
-                                &nbsp;PREVIEW
+                            <div class="row-right">
+                                <div class="stat" v-if="running[browser.id]">
+                                    <span class="stat-item" v-if="browser.N || browser.P">
+                                    CPU: {{ Math.round(burst[browser.id].avg) }}/{{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
+                                    </span>
+                                    <span class="stat-item">
+                                    GFX: {{ Math.round(stat[browser.id].fps) }} f/s
+                                    </span>
+                                    <span class="stat-item">
+                                    RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
+                                    </span>
+                                    <span class="stat-item" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
+                                    CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="row-middle">
-                        </div>
-                        <div class="row-right">
-                            <div class="stat" v-if="running[browser.id]">
-                                <span class="stat-item" v-if="browser.N || browser.P">
-                                CPU: {{ Math.round(burst[browser.id].avg) }}/{{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
-                                </span>
-                                <span class="stat-item">
-                                GFX: {{ Math.round(stat[browser.id].fps) }} f/s
-                                </span>
-                                <span class="stat-item">
-                                RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
-                                </span>
-                                <span class="stat-item" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
-                                CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" v-show="running[browser.id] && trace[browser.id].visible">
-                        <div class="console" v-bind:ref="'console-' + browser.id">
-                            <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
-                                <div class="console-level">{{ message.level }}:</div>
-                                <div class="console-message">{{ message.message }}</div>
+                        <div class="row" v-show="running[browser.id] && trace[browser.id].visible">
+                            <div class="console" v-bind:ref="'console-' + browser.id">
+                                <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
+                                    <div class="console-level">{{ message.level }}:</div>
+                                    <div class="console-message">{{ message.message }}</div>
+                                </div>
                             </div>
                         </div>
                     </div>

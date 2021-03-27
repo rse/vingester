@@ -425,7 +425,7 @@ electron.dialog.showErrorBox = (title, content) => {
         const x = store.get("control.x", null)
         const y = store.get("control.y", null)
         const w = store.get("control.w", 820)
-        const h = store.get("control.h", 320)
+        const h = store.get("control.h", 340)
         const pos = (x !== null && y !== null ? { x, y } : {})
 
         /*  create main window  */
@@ -435,7 +435,8 @@ electron.dialog.showErrorBox = (title, content) => {
             width:           w,
             height:          h,
             minWidth:        820,
-            minHeight:       320,
+            minHeight:       340,
+            frame:           false,
             title:           "Vingester",
             backgroundColor: "#333333",
             useContentSize:  false,
@@ -471,6 +472,59 @@ electron.dialog.showErrorBox = (title, content) => {
         mainWin.on("move", debounce(1000, () => {
             updateBounds()
         }))
+
+        /*  window control  */
+        let minimized  = false
+        let maximized  = false
+        let fullscreen = false
+        mainWin.on("minimize",          () => { minimized  = true  })
+        mainWin.on("restore",           () => { minimized  = false })
+        mainWin.on("maximize",          () => { maximized  = true  })
+        mainWin.on("unmaximize",        () => { maximized  = false })
+        mainWin.on("enter-full-screen", () => { fullscreen = true  })
+        mainWin.on("leave-full-screen", () => { fullscreen = false })
+        electron.ipcMain.handle("window-control", async (ev, action) => {
+            if (action === "minimize") {
+                if (minimized) {
+                    mainWin.restore()
+                    mainWin.focus()
+                }
+                else
+                    mainWin.minimize()
+            }
+            else if (action === "maximize") {
+                if (fullscreen)
+                    mainWin.setFullScreen(false)
+                if (maximized)
+                    mainWin.unmaximize()
+                else
+                    mainWin.maximize()
+            }
+            else if (action === "fullscreen") {
+                if (maximized)
+                    mainWin.unmaximize()
+                if (fullscreen)
+                    mainWin.setFullScreen(false)
+                else
+                    mainWin.setFullScreen(true)
+            }
+            else if (action === "standard") {
+                if (fullscreen)
+                    mainWin.setFullScreen(false)
+                else if (maximized)
+                    mainWin.unmaximize()
+                mainWin.setSize(820, 340)
+            }
+            else if (action === "close") {
+                if (fullscreen)
+                    mainWin.setFullScreen(false)
+                else if (maximized)
+                    mainWin.unmaximize()
+                setTimeout(() => {
+                    mainWin.close()
+                }, 100)
+            }
+        })
 
         /*  provide IPC hooks for store access  */
         log.info("provide IPC hooks for control user interface")
