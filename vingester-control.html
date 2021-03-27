@@ -297,7 +297,7 @@
                                         <i class="fas fa-pause"></i> &nbsp;STOP
                                     </div>
                                     <div
-                                        v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview mode on the right side.' }"
+                                        v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview thumbnail image.' }"
                                         class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
                                         <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
                                         <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
