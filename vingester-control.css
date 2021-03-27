@@ -166,6 +166,8 @@ html, body {
     .row {
         display: flex;
         flex-direction: row;
+        padding-top: 1px;
+        padding-bottom: 1px;
         .row-left,
         .row-right {
             display: flex;
