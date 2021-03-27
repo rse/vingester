@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 0.9.7
+    - CLEANUP: cleanup source code through linting
+
 - 0.9.6
     - EXTENSION: add tooltips for all user interface elements for documentation
 
