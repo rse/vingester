@@ -184,7 +184,7 @@
                                         v-bind:class="{ disabled: running[browser.id] }"
                                         v-bind:disabled="running[browser.id]">
                                 </div>
-                                <div class="label">Size:</div>
+                                <div class="label label-size">Size:</div>
                                 <div class="field"
                                     v-tippy="{ placement: 'top', content: 'Width of browser canvas in pixels.<br/>Use 854 for 480p, 1280 for 720p or 1920 for 1080p.' }">
                                     <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
@@ -227,7 +227,7 @@
                                     </div>
                                 </div>
                                 <div class="cluster" v-show="browser.D">
-                                    <div class="label">Pos:</div>
+                                    <div class="label label-pos">Pos:</div>
                                     <div class="field"
                                         v-tippy="{ placement: 'top', content: 'X-Position of desktop window (0 is at left border)<br/>(absolute or relative to display).' }">
                                         <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"

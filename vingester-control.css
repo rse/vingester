@@ -250,6 +250,10 @@ body {
             &.label-output {
                 width: 105px;
             }
+            &.label-size,
+            &.label-pos {
+                width: 30px;
+            }
         }
         .group {
             margin-left: 8px;
@@ -289,7 +293,7 @@ body {
                 width: 460px;
             }
             &.field-title input {
-                width: 120px;
+                width: 134px;
             }
             &.field-color input {
                 width: 60px;
@@ -457,7 +461,7 @@ body {
             height: 18px;
             border-radius: 4px;
             padding: 2px 4px 1px 4px;
-            margin: 2px 0 0 2px;
+            margin: 2px 4px 0 2px;
             background-color: #888888;
             color: #ffffff;
             display: flex;
