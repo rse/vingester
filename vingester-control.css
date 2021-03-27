@@ -19,11 +19,15 @@ html, body {
         -webkit-app-region: drag;
         background-color: #b8a080;
         padding: 8px 8px 8px 8px;
-        height: 24px;
+        .row-2,
+        .row-3 {
+            margin-top: 4px;
+        }
         .title-icon {
             height: 20px;
             margin-top: 1px;
-            margin-right: 6px;
+            margin-left: 2px;
+            margin-right: 18px;
         }
         .title-text {
             -webkit-app-region: no-drag;
@@ -35,31 +39,6 @@ html, body {
             color: #ffffff;
             line-height: 100%;
             cursor: pointer;
-        }
-        .field {
-            -webkit-app-region: no-drag;
-            width: 100px;
-            height: 18px;
-            color: #000000;
-            font-weight: bold;
-            font-size: 9pt;
-            border-radius: 4px;
-            padding: 2px 4px 0px 4px;
-            text-align: center;
-            margin-top: 2px;
-            margin-left: 8px;
-            margin-bottom: 2px;
-            cursor: pointer;
-            &.field-gpu {
-                background-color: #f8e0c0;
-                &:hover {
-                    background-color: #ffffff;
-                }
-            }
-            &.field-usage {
-                background-color: #d8c0a0;
-                cursor: default;
-            }
         }
         .icons {
             margin-left: 16px;
@@ -76,9 +55,97 @@ html, body {
                 };
             }
         }
+        .about {
+            text-align: left;
+            color: #ffffff;
+            padding-left: 8px;
+            padding-right: 30px;
+            width: 100%;
+            font-size: 12pt;
+            line-height: 120%;
+        }
+        .versions {
+            width: 350px;
+            text-align: left;
+            color: #fff8f0;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            padding-right: 8px;
+            tr, td {
+                margin: 0;
+                padding: 0;
+            }
+            td {
+                padding-right: 4px;
+            }
+        }
+        .button-info,
+        .button-plus {
+            color: #f8e0c0;
+            padding-left: 4px;
+            padding-right: 15px;
+            -webkit-app-region: no-drag;
+        }
+        .button-plus:hover {
+            color: #ffffff;
+        }
+        .field {
+            -webkit-app-region: no-drag;
+            width: 70px;
+            height: 18px;
+            color: #000000;
+            font-weight: bold;
+            font-size: 9pt;
+            border-radius: 4px;
+            padding: 2px 4px 0px 4px;
+            text-align: center;
+            margin-top: 2px;
+            margin-left: 8px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            &.field-gpu {
+                width: 70px;
+                background-color: #f8e0c0;
+                &:hover {
+                    background-color: #ffffff;
+                }
+            }
+            &.field-usage {
+                width: 100px;
+                background-color: #d8c0a0;
+                cursor: default;
+            }
+        }
+        .field {
+            &.field-start,
+            &.field-reload,
+            &.field-stop,
+            &.field-export,
+            &.field-import {
+                background-color: #f8e0c0;
+            }
+            &.field-start:hover,
+            &.field-reload:hover,
+            &.field-stop:hover,
+            &.field-export:hover,
+            &.field-import:hover {
+                background-color: #ffffff;
+                cursor: pointer;
+            }
+            &.disabled {
+                background-color: #d8c0a0;
+                cursor: default;
+                &:hover {
+                    background-color: #d8c0a0;
+                    cursor: default;
+                }
+            }
+        }
     }
     .ui-body {
-        height: calc(100vh - 40px);
+        height: 100%;
         overflow-x: hidden;
         overflow-y: hidden;
         position: relative;
@@ -153,35 +220,6 @@ html, body {
                     width: 128px;
                     height: 72px;
                 }
-            }
-        }
-        &.browser-global .box {
-            background-color: #b8a080;
-        }
-        .about {
-            text-align: left;
-            color: #ffffff;
-            padding-left: 8px;
-            padding-right: 30px;
-            width: 100%;
-            font-size: 12pt;
-            line-height: 120%;
-        }
-        .versions {
-            width: 350px;
-            text-align: left;
-            color: #fff8f0;
-            border-spacing: 0;
-            border-collapse: collapse;
-            margin: 0;
-            padding: 0;
-            padding-right: 8px;
-            tr, td {
-                margin: 0;
-                padding: 0;
-            }
-            td {
-                padding-right: 4px;
             }
         }
         .sep {
@@ -288,42 +326,6 @@ html, body {
                 cursor: default;
                 &.disabled:hover {
                     background-color: #a0a0a0;
-                }
-            }
-        }
-        &.browser-global {
-            .button {
-                &.button-info,
-                &.button-plus {
-                    color: #f8e0c0;
-                }
-                &.button-plus:hover {
-                    color: #ffffff;
-                }
-            }
-            .field {
-                &.field-start,
-                &.field-reload,
-                &.field-stop,
-                &.field-export,
-                &.field-import {
-                    background-color: #f8e0c0;
-                }
-                &.field-start:hover,
-                &.field-reload:hover,
-                &.field-stop:hover,
-                &.field-export:hover,
-                &.field-import:hover {
-                    background-color: #ffffff;
-                    cursor: pointer;
-                }
-                &.disabled {
-                    background-color: #d8c0a0;
-                    cursor: default;
-                    &:hover {
-                        background-color: #d8c0a0;
-                        cursor: default;
-                    }
                 }
             }
         }

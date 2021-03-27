@@ -37,7 +37,7 @@
     <body>
         <div class="ui">
             <div class="ui-head">
-                <div class="row">
+                <div class="row row-1">
                     <div class="row-left">
                         <img class="title-icon" src="vingester-icon.png">
                         <div v-on:click="info = !info" class="title-text">Vingester</div>
@@ -45,13 +45,6 @@
                     <div class="row-middle">
                     </div>
                     <div class="row-right">
-                        <div class="field field-usage">
-                            <i class="fas fa-microchip"></i> &nbsp;CPU: {{ usage.toFixed(1) }}%
-                        </div>
-                        <div class="field field-gpu" v-on:click="toggleGPU">
-                            <span v-show="gpu"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;GPU: YES</span>
-                            <span v-show="!gpu"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;GPU: NO</span>
-                        </div>
                         <div class="icons">
                             <div class="icon" v-on:click="windowControl('minimize')">
                                 <i class="fas fa-window-minimize"></i>
@@ -71,72 +64,79 @@
                         </div>
                     </div>
                 </div>
+                <div class="" v-show="info">
+                    <div class="box">
+                        <div class="row row-2">
+                            <div class="row-left">
+                                <div class="button-info">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="about">
+                                    <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
+                                    Electron-based desktop application for
+                                    use under Windows, macOS or Linux to
+                                    run multiple Chromium-based Web browser
+                                    instances and ingesting their rendered
+                                    Web Contents as screen/window-captured or
+                                    NDI-multicasted video streams for further
+                                    use in video mixing applications.
+                                 </div>
+                            </div>
+                            <div class="row-right">
+                                <table class="versions">
+                                    <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
+                                    <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
+                                    <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
+                                    <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
+                                    <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
+                                    <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="box">
+                        <div class="row row-3">
+                            <div class="row-left">
+                                <div class="button-plus" v-on:click="addBrowser">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <div class="field field-start"
+                                    v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
+                                    v-on:click="control('start-all', null)">
+                                    <i class="fas fa-play"></i> &nbsp;START
+                                </div>
+                                <div class="field field-reload"
+                                    v-bind:class="{ disabled: nRunning === 0 }"
+                                    v-on:click="control('reload-all', null)">
+                                    <i class="fas fa-redo"></i> &nbsp;RELOAD
+                                </div>
+                                <div class="field field-stop"
+                                    v-bind:class="{ disabled: nRunning === 0 }"
+                                    v-on:click="control('stop-all', null)">
+                                    <i class="fas fa-pause"></i> &nbsp;STOP
+                                </div>
+                            </div>
+                            <div class="row-middle">
+                                <div class="field field-usage">
+                                    <i class="fas fa-microchip"></i> &nbsp;CPU: {{ usage.toFixed(1) }}%
+                                </div>
+                                <div class="field field-gpu" v-on:click="toggleGPU">
+                                    <span v-show="gpu"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;GPU: YES</span>
+                                    <span v-show="!gpu"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;GPU: NO</span>
+                                </div>
+                            </div>
+                            <div class="row-right">
+                                <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>
+                                <div class="field field-import" v-on:click="importBrowsers"><i class="fas fa-download"></i> &nbsp;IMPORT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="ui-body">
                 <perfect-scrollbar>
-                    <div class="browser browser-global" v-show="info">
-                        <div class="button button-info">
-                            <i class="fas fa-info-circle"></i>
-                        </div>
-                        <div class="box">
-                            <div class="row">
-                                <div class="row-left">
-                                    <div class="about">
-                                        <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
-                                        Electron-based desktop application for
-                                        use under Windows, macOS or Linux to
-                                        run multiple Chromium-based Web browser
-                                        instances and ingesting their rendered
-                                        Web Contents as screen/window-captured or
-                                        NDI-multicasted video streams for further
-                                        use in video mixing applications.
-                                     </div>
-                                </div>
-                                <div class="row-right">
-                                    <table class="versions">
-                                        <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
-                                        <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
-                                        <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
-                                        <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
-                                        <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
-                                        <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="browser browser-global">
-                        <div class="button button-plus" v-on:click="addBrowser">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="box">
-                            <div class="row">
-                                <div class="row-left">
-                                    <div class="field field-start"
-                                        v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
-                                        v-on:click="control('start-all', null)">
-                                        <i class="fas fa-play"></i> &nbsp;START
-                                    </div>
-                                    <div class="field field-reload"
-                                        v-bind:class="{ disabled: nRunning === 0 }"
-                                        v-on:click="control('reload-all', null)">
-                                        <i class="fas fa-redo"></i> &nbsp;RELOAD
-                                    </div>
-                                    <div class="field field-stop"
-                                        v-bind:class="{ disabled: nRunning === 0 }"
-                                        v-on:click="control('stop-all', null)">
-                                        <i class="fas fa-pause"></i> &nbsp;STOP
-                                    </div>
-                                </div>
-                                <div class="row-middle">
-                                </div>
-                                <div class="row-right">
-                                    <div class="field field-export" v-on:click="exportBrowsers"><i class="fas fa-upload"></i> &nbsp;EXPORT</div>
-                                    <div class="field field-import" v-on:click="importBrowsers"><i class="fas fa-download"></i> &nbsp;IMPORT</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div v-for="browser in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
                         <div class="button button-minus" v-on:click="delBrowser(browser)">
                             <i class="fas fa-minus-circle"></i>
