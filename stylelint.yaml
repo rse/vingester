@@ -1,0 +1,19 @@
+##
+##  Vingester ~ Ingest Web Contents as Video Streams
+##  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+##  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
+##
+
+---
+
+extends: "stylelint-config-standard"
+
+syntax: "less"
+
+rules:
+    indentation: 4
+    rule-empty-line-before: "never"
+    color-hex-length: "long"
+    max-empty-lines: 10
+    no-descending-specificity: null
+
