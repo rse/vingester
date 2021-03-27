@@ -35,10 +35,16 @@ html, body {
             font-style: italic;
             font-size: 16pt;
             font-weight: bold;
-            text-shadow: 0px 0px 4px #302000;
             color: #ffffff;
             line-height: 100%;
             cursor: pointer;
+            width: 400px;
+            span {
+                font-family: "TypoPRO Source Sans Pro";
+                font-style: normal;
+                font-size: 12pt;
+                font-weight: 300;
+            }
         }
         .icons {
             margin-left: 16px;
@@ -62,7 +68,11 @@ html, body {
             padding-right: 30px;
             width: 100%;
             font-size: 12pt;
+            font-weight: 300;
             line-height: 120%;
+            b {
+                font-weight: 400;
+            }
         }
         .versions {
             width: 350px;
@@ -106,7 +116,7 @@ html, body {
             margin-bottom: 2px;
             cursor: pointer;
             &.field-gpu {
-                width: 70px;
+                width: 100px;
                 background-color: #f8e0c0;
                 &:hover {
                     background-color: #ffffff;
@@ -240,7 +250,7 @@ html, body {
         .group {
             margin-left: 8px;
             margin-right: 4px;
-            font-weight: bold;
+            font-weight: 300;
             width: 70px;
         }
         .field {

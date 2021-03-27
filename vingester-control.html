@@ -40,7 +40,7 @@
                 <div class="row row-1">
                     <div class="row-left">
                         <img class="title-icon" src="vingester-icon.png">
-                        <div v-on:click="info = !info" class="title-text">Vingester</div>
+                        <div v-on:click="info = !info" class="title-text">Vingester <span>&mdash; INGEST WEB CONTENTS AS VIDEO STREAMS</span></div>
                     </div>
                     <div class="row-middle">
                     </div>
@@ -146,7 +146,7 @@
                                 <canvas v-bind:ref="'canvas-' + browser.id" width="128" height="72"></canvas>
                             </div>
                             <div class="row">
-                                <div class="group">Browser:</div>
+                                <div class="group">BROWSER:</div>
                                 <div class="label label-title">Title:</div>
                                 <div class="field field-title">
                                     <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="group">Input:</div>
+                                <div class="group">INPUT:</div>
                                 <div class="label label-url">URL:</div>
                                 <div class="field field-url">
                                     <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="group">Output 1:</div>
+                                <div class="group">OUTPUT 1:</div>
                                 <div class="label label-output">Frameless (WIN):</div>
                                 <div class="field">
                                     <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
@@ -219,7 +219,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="group">Output 2:</div>
+                                <div class="group">OUTPUT 2:</div>
                                 <div class="label label-output">Headless (NDI):</div>
                                 <div class="field">
                                     <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
