@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 0.9.8
+    - BUGFIX: fixed NDI sender destruction
+    - BUGFIX: fixed browser instance destruction
+
 - 0.9.7
     - IMPROVEMENT: open UI only once the DOM is ready to not flicker on startup
     - CLEANUP: cleanup source code through linting
