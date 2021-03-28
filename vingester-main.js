@@ -275,7 +275,6 @@ electron.dialog.showErrorBox = (title, content) => {
             /*  react on window events  */
             win.on("close", (ev) => {
                 ev.preventDefault()
-                this.destroy()
             })
             win.on("page-title-updated", (ev) => {
                 ev.preventDefault()
@@ -286,12 +285,12 @@ electron.dialog.showErrorBox = (title, content) => {
 
             /*  finally load the Web Content  */
             return new Promise((resolve, reject) => {
-                win.webContents.on("did-fail-load", (ev, errorCode, errorDescription) => {
+                win.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
                     ev.preventDefault()
                     log.info("browser: failed")
                     resolve(false)
                 })
-                win.webContents.on("did-finish-load", (ev) => {
+                win.webContents.once("did-finish-load", (ev) => {
                     ev.preventDefault()
                     log.info("browser: started")
                     resolve(true)
@@ -392,26 +391,6 @@ electron.dialog.showErrorBox = (title, content) => {
             log.info("browser: stop")
             if (this.win === null)
                 throw new Error("still not started")
-            this.destroying = true
-            this.win.close()
-            /*
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    if (this.win !== null) {
-                        if (!this.win.isDestroyed())
-                            this.win.destroy()
-                        this.win = null
-                    }
-                    resolve()
-                }, 1000)
-            })
-            */
-            log.info("browser: stopped")
-        }
-        async destroy () {
-            log.info("browser: destroy")
-            if (this.win === null)
-                throw new Error("still not started")
 
             /*  set flag and wait until processFrame is at least done one last time  */
             this.destroying = true
@@ -419,17 +398,21 @@ electron.dialog.showErrorBox = (title, content) => {
                 setTimeout(() => { resolve() }, 50)
             })
 
-            /*  destroy NDI sender and browser window  */
+            /*  destroy NDI sender  */
             if (this.ndiSender !== null)
                 await this.ndiSender.destroy()
-            this.win.destroy()
 
-            /*  wait some more time to give browser destruction time to shutdown  */
+            /*  destroy browser  */
+            this.win.close()
             await new Promise((resolve) => {
-                setTimeout(() => { resolve() }, 50)
+                setTimeout(() => {
+                    if (!this.win.isDestroyed())
+                        this.win.destroy()
+                    resolve()
+                }, 1000)
             })
 
-            /*  refresh the internal state  */
+            /*  reset the internal state  */
             this.win             = null
             this.subscribed      = false
             this.ndiSender       = null
@@ -439,7 +422,7 @@ electron.dialog.showErrorBox = (title, content) => {
             this.factor          = 1.0
             this.framerate       = 30
             this.destroying      = false
-            log.info("browser: destroyed")
+            log.info("browser: stopped")
         }
     }
 
