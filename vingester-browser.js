@@ -36,6 +36,18 @@ module.exports = class Browser {
         this.stopping        = false
     }
 
+    /*  explicitly allow capturing our browser windows  */
+    static prepare () {
+        const session = electron.session.fromPartition("vingester-browser")
+        const allowedPermissions = [ "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental" ]
+        session.setPermissionRequestHandler((webContents, permission, callback) => {
+            if (allowedPermissions.includes(permission))
+                callback(true)
+            else
+                callback(false)
+        })
+    }
+
     /*  reconfigure browser  */
     reconfigure (cfg) {
         this.log.info("browser: reconfigure")
@@ -111,6 +123,7 @@ module.exports = class Browser {
             ...opts1,
             webPreferences: {
                 ...opts2,
+                partition:                  "vingester-browser",
                 devTools:                   (typeof process.env.DEBUG !== "undefined"),
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),

@@ -234,6 +234,9 @@ electron.dialog.showErrorBox = (title, content) => {
             })
         })
 
+        /*  at least once prepare the browser abstraction  */
+        Browser.prepare()
+
         /*  provide IPC hooks for browsers control  */
         log.info("provide IPC hooks for browser control")
         const browsers = {}
@@ -312,19 +315,6 @@ electron.dialog.showErrorBox = (title, content) => {
         electron.ipcMain.handle("control", (ev, action, id, browser) => {
             browser = browser !== undefined && browser !== null ? JSON.parse(browser) : undefined
             return control(action, id, browser)
-        })
-
-        /*  explicitly allow capturing our windows  */
-        log.info("provide hook for permissions checking")
-        electron.session.fromPartition("default").setPermissionRequestHandler((webContents, permission, callback) => {
-            const allowedPermissions = [ "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental" ]
-            if (allowedPermissions.includes(permission))
-                callback(true)
-            else {
-                log.error(`The application tried to request permission for '${permission}'.` +
-                    "This permission was not whitelisted and has been blocked.")
-                callback(false)
-            }
         })
 
         /*  show the window once the DOM was mounted  */
