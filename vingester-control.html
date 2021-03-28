@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="field field-start"
-                                    v-tippy="{ placement: 'bottom', content: 'Start all (still) not<br/>running browsers.' }"
+                                    v-tippy="{ placement: 'bottom', content: 'Start all not<br/>running browsers.' }"
                                     v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
                                     v-on:click="control('start-all', null)">
                                     <i class="fas fa-play"></i> &nbsp;START
@@ -132,7 +132,7 @@
                                     <i class="fas fa-redo"></i> &nbsp;RELOAD
                                 </div>
                                 <div class="field field-stop"
-                                    v-tippy="{ placement: 'bottom', content: 'Stop all (still)<br/>running browsers.' }"
+                                    v-tippy="{ placement: 'bottom', content: 'Stop all<br/>running browsers.' }"
                                     v-bind:class="{ disabled: nRunning === 0 }"
                                     v-on:click="control('stop-all', null)">
                                     <i class="fas fa-pause"></i> &nbsp;STOP
@@ -299,7 +299,7 @@
                                         <i class="fas fa-pause"></i> &nbsp;STOP
                                     </div>
                                     <div
-                                        v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview thumbnail image.' }"
+                                        v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview thumbnail image' + (!running[browser.id] ? '<br/>once the browser is running' : '') + '.' }"
                                         class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
                                         <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
                                         <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
@@ -321,12 +321,12 @@
                                         GFX: {{ Math.round(stat[browser.id].fps) }} f/s
                                         </span>
                                         <span
-                                            v-tippy="{ placement: 'top', content: 'Shows the memory consumption (megabytes)<br/>of the Web Content rendering.' }"
+                                            v-tippy="{ placement: 'top', content: 'Shows the memory consumption (MB)<br/>of the Web Content rendering.' }"
                                             class="stat-item">
                                         RAM: {{ stat[browser.id].memUsed.toFixed(1) }}/{{ stat[browser.id].memAvail.toFixed(0) }} MB
                                         </span>
                                         <span
-                                            v-tippy="{ placement: 'top', content: 'Click to ' + (trace[browser.id].visible ? 'close' : 'open') + ' Web Content<br/>console output.' }"
+                                            v-tippy="{ placement: 'top', content: 'Shows number of warnings and<br/>errors on Web Content console.<br/>Click to ' + (trace[browser.id].visible ? 'close' : 'open') + ' console output.' }"
                                             class="stat-item stat-item-trace" v-on:click="trace[browser.id].visible = !trace[browser.id].visible">
                                         CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
                                         </span>
