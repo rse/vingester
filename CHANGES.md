@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 0.9.9
+    - CLEANUP: factor out code into own modules
+
 - 0.9.8
     - BUGFIX: fixed NDI sender destruction
     - BUGFIX: fixed browser instance destruction
