@@ -222,7 +222,7 @@
                                 <div class="group">OUTPUT 1:</div>
                                 <div class="label label-output">Frameless (WIN):</div>
                                 <div class="field"
-                                    v-tippy="{ placement: 'top', content: 'Click to ' + (browser.D ? 'disable' : 'enable') + ' Frameless mode, i.e.,<br/>Web Content is rendered into a desktop window.' }">
+                                    v-tippy="{ placement: 'top', content: 'Click to ' + (browser.D ? 'disable' : 'enable') + ' Frameless mode, where<br/>Web Content is rendered into a desktop window.' }">
                                     <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
                                         <div class="toggle-option" v-bind:class="{ selected: browser.D === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
                                         <div class="toggle-option" v-bind:class="{ selected: browser.D === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
@@ -264,7 +264,7 @@
                                 <div class="group">OUTPUT 2:</div>
                                 <div class="label label-output">Headless (NDI):</div>
                                 <div class="field"
-                                    v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, i.e.,<br/>Web Content is multicasted via NDI.' }">
+                                    v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, where<br/>Web Content is multicasted via NDI.' }">
                                     <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
                                         <div class="toggle-option" v-bind:class="{ selected: browser.N === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
                                         <div class="toggle-option" v-bind:class="{ selected: browser.N === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
