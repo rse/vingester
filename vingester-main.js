@@ -118,6 +118,7 @@ electron.dialog.showErrorBox = (title, content) => {
             log.info("browser: constructor")
             this.id              = id
             this.cfg             = cfg
+            this.mainWin         = mainWin
             this.win             = null
             this.subscribed      = false
             this.ndiSender       = null
@@ -126,7 +127,6 @@ electron.dialog.showErrorBox = (title, content) => {
             this.burst           = null
             this.factor          = 1.0
             this.framerate       = 30
-            this.mainWin         = mainWin
             this.destroying      = false
         }
         reconfigure (cfg) {
@@ -394,6 +394,7 @@ electron.dialog.showErrorBox = (title, content) => {
                 throw new Error("still not started")
             this.destroying = true
             this.win.close()
+            /*
             await new Promise((resolve) => {
                 setTimeout(() => {
                     if (this.win !== null) {
@@ -404,19 +405,41 @@ electron.dialog.showErrorBox = (title, content) => {
                     resolve()
                 }, 1000)
             })
+            */
             log.info("browser: stopped")
         }
         async destroy () {
             log.info("browser: destroy")
             if (this.win === null)
                 throw new Error("still not started")
+
+            /*  set flag and wait until processFrame is at least done one last time  */
             this.destroying = true
-            if (this.ndiSender !== null) {
+            await new Promise((resolve) => {
+                setTimeout(() => { resolve() }, 50)
+            })
+
+            /*  destroy NDI sender and browser window  */
+            if (this.ndiSender !== null)
                 await this.ndiSender.destroy()
-                this.ndiSender = null
-            }
             this.win.destroy()
-            this.win = null
+
+            /*  wait some more time to give browser destruction time to shutdown  */
+            await new Promise((resolve) => {
+                setTimeout(() => { resolve() }, 50)
+            })
+
+            /*  refresh the internal state  */
+            this.win             = null
+            this.subscribed      = false
+            this.ndiSender       = null
+            this.ndiFramesToSkip = 0
+            this.frames          = 0
+            this.burst           = null
+            this.factor          = 1.0
+            this.framerate       = 30
+            this.destroying      = false
+            log.info("browser: destroyed")
         }
     }
 
