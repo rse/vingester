@@ -215,17 +215,6 @@ video production software like OBS Studio:
   proof of concept in the early stages of development and hence not
   ready for production.
 
-ATTENTION: KNOWN ISSUES
------------------------
-
-The NDI support works just fine the first time for a particular browser.
-Unfortunately, the NDI sender object destruction in the underlying NDI
-binding package Grandiose still does not work as expected. As a result,
-if you start an NDI-based browser, stop it and try to restart it again,
-it will fail. After a restart of Vingester it will work (once) just fine
-again. This bug in Grandiose is already under investigation. Just don't
-be confused if NDI support stops working after a start/stop cycle.
-
 Copyright & License
 -------------------
 
