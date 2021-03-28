@@ -66,8 +66,8 @@
                 margin-bottom: 40px;
             }
             .content-1 .about {
-                width: 450px;
-                margin-right: 20px;
+                width: 440px;
+                margin-right: 40px;
                 font-size: 12pt;
                 line-height: 120%;
                 color: #c0c0c0;
@@ -92,12 +92,12 @@
             }
             .content-1 .download {
                 line-height: 120%;
-                margin-left: 20px;
-                width: 340px;
+                margin-left: 10px;
+                width: 350px;
                 font-size: 14pt;
                 border: 1px solid #6699cc;
                 border-radius: 10px;
-                padding: 20px;
+                padding: 15px;
                 color: #6699cc;
             }
             .content-1 .download p {
@@ -117,6 +117,11 @@
             .content-1 .download a:hover {
                 color: #ffffff;
                 text-decoration: none;
+            }
+            .content-1 .footnote {
+                color: #4477aa;
+                font-size: 9pt;
+                line-height: 120%;
             }
             .screenshot {
                 width: 880px;
@@ -171,13 +176,24 @@
                     Download <a v-bind:href="'https://github.com/rse/vingester/releases/tag/' + current.version">Vingester {{ current.version }}</a> ({{ current.date }})<br/>
                     for <a v-bind:href="'https://github.oscdn.org/rse/vingester/' + current.version + '/Vingester-win-x64.zip'">Windows/x64</a>,
                     <a v-bind:href="'https://github.oscdn.org/rse/vingester/' + current.version + '/Vingester-mac-x64.zip'">macOS/x64</a>, or
-                    <a v-bind:href="'https://github.oscdn.org/rse/vingester/' + current.version + '/Vingester-lnx-x64.zip'">Linux/x64</a>.<br/>
+                    <a v-bind:href="'https://github.oscdn.org/rse/vingester/' + current.version + '/Vingester-lnx-x64.zip'">Linux/x64</a> *
                     </p>
                     <p>
                     Find the <a href="https://github.com/rse/vingester">source code</a>,
                     <a href="https://github.com/rse/vingester/releases">all releases</a>, and the<br/>
                     <a href="https://github.com/rse/vingester/issues">issue tracker</a> of Vingester on Github.
                     <p/>
+                    <div class="footnote">
+                    * These are ZIP archive distributions of all-in-one
+                    programs which do not have to be installed and can
+                    be directly executed. They were built under Windows
+                    10 20H2 (x64), macOS 11.2 (x64) and Ubuntu Linux
+                    20.04 (x64) and could be not compatible to your
+                    particular version of Windows, macOS or Linux. The
+                    programs are not signed, so you have to explicitly
+                    grant your operating system to access them on first
+                    start.
+                    </div>
                 </div>
             </div>
             <div class="content-2">
