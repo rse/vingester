@@ -65,8 +65,8 @@
                 margin-bottom: 40px;
             }
             .content-1 .about {
-                width: 460px;
-                margin-right: 10px;
+                width: 450px;
+                margin-right: 20px;
                 font-size: 12pt;
                 line-height: 120%;
                 color: #c0c0c0;
@@ -79,6 +79,15 @@
             .content-1 .about a:hover {
                 color: #ffffff;
                 text-decoration: none;
+            }
+            .content-1 .about p {
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .content-1 .about p + p {
+                margin-top: 4px;
+                margin-bottom: 0px;
+                text-indent: 30px;
             }
             .content-1 .download {
                 line-height: 120%;
@@ -140,17 +149,21 @@
             </div>
             <div class="content-1">
                 <div class="about">
+                    <p>
                     <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small, Open Source licensed, and
                     <a href="https://www.electronjs.org/">Electron</a>-based, desktop application
                     for use under Windows, macOS or Linux to run multiple <a href="https://www.chromium.org/">Chromium</a>-based
                     Web browser instances and ingesting their rendered Web Contents as screen/window-captured or
                     <a href="https://www.ndi.tv/">NDI</a>-multicasted video streams for further use in
                     video mixing applications.
+                    </p>
+                    <p>
                     The primary use-case of <b>Vingester</b> is to ingest
                     <a href="http://obs.ninja/">OBS.Ninja</a> meeting participants as individual video-streams
                     into <a href="http://obsproject.com/">OBS Studio</a> via NDI to reduce performance drains within OBS Studio.
                     The OBS.Ninja URLs of the ingested video-streams can be generated with the opinionated companion tool
                     <a href="https://rse.github.io/obs-ninja-trampoline/">OBS.Ninja Trampoline</a>.
+                    </p>
                 </div>
                 <div class="download">
                     <p>
