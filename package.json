@@ -55,38 +55,44 @@
             "identity":                  null,
             "icon":                      "vingester-icon.png",
             "files": [                   "!node_modules/electron-builder/**",
+                                         "!node_modules/electron-notarize/**",
+                                         "!node_modules/execa/**",
                                          "!node_modules/shelljs/**",
                                          "!node_modules/eslint*/**",
+                                         "!node_modules/@eslint*/**",
                                          "!node_modules/stylelint*/**",
+                                         "!node_modules/@stylelint*/**",
                                          "!node_modules/htmllint*/**",
                                          "!node_modules/cross-env/**",
                                          "!node_modules/cross-zip/**",
-                                         "!node_modules/npm-run-all/**",
                                          "!node_modules/electron/dist/**",
                                          "!node_modules/dmg-builder/**",
                                          "!node_modules/app-builder-bin/**",
                                          "!node_modules/app-builder-lib/**",
                                          "!node_modules/7zip-bin/**",
-                                         "!node_modules/npm/**" ]
+                                         "!node_modules/npm-install-fetch/**" ]
         },
         "win": {
             "target":                    [ { "target": "portable", "arch": [ "x64" ] } ],
             "icon":                      "vingester-icon.png",
             "files": [                   "!*.ai",
                                          "!node_modules/electron-builder/**",
+                                         "!node_modules/electron-notarize/**",
+                                         "!node_modules/execa/**",
                                          "!node_modules/shelljs/**",
                                          "!node_modules/eslint*/**",
+                                         "!node_modules/@eslint*/**",
                                          "!node_modules/stylelint*/**",
+                                         "!node_modules/@stylelint*/**",
                                          "!node_modules/htmllint*/**",
                                          "!node_modules/cross-env/**",
                                          "!node_modules/cross-zip/**",
-                                         "!node_modules/npm-run-all/**",
                                          "!node_modules/electron/dist/**",
                                          "!node_modules/dmg-builder/**",
                                          "!node_modules/app-builder-bin/**",
                                          "!node_modules/app-builder-lib/**",
                                          "!node_modules/7zip-bin/**",
-                                         "!node_modules/npm/**" ]
+                                         "!node_modules/npm-install-fetch/**" ]
         },
         "linux": {
             "category":                  "AudioVideo",
@@ -95,19 +101,22 @@
             "icon":                      "vingester-icon.png",
             "files": [                   "!*.ai",
                                          "!node_modules/electron-builder/**",
+                                         "!node_modules/electron-notarize/**",
+                                         "!node_modules/execa/**",
                                          "!node_modules/shelljs/**",
                                          "!node_modules/eslint*/**",
+                                         "!node_modules/@eslint*/**",
                                          "!node_modules/stylelint*/**",
+                                         "!node_modules/@stylelint*/**",
                                          "!node_modules/htmllint*/**",
                                          "!node_modules/cross-env/**",
                                          "!node_modules/cross-zip/**",
-                                         "!node_modules/npm-run-all/**",
                                          "!node_modules/electron/dist/**",
                                          "!node_modules/dmg-builder/**",
                                          "!node_modules/app-builder-bin/**",
                                          "!node_modules/app-builder-lib/**",
                                          "!node_modules/7zip-bin/**",
-                                         "!node_modules/npm/**" ]
+                                         "!node_modules/npm-install-fetch/**" ]
         },
         "portable": {
             "useZip":                    true,
@@ -119,7 +128,6 @@
         "lint":                          "eslint --config cfg-eslint.yaml --ext js *.js && stylelint --config cfg-stylelint.yaml *.css && htmllint --rc cfg-htmllint.json *.html",
         "start":                         "cross-env DEBUG=1 electron .",
         "package":                       "node npm-package.js",
-        "clean":                         "rimraf ./dist",
-        "release":                       "electron-builder --publish always"
+        "clean":                         "rimraf ./dist"
     }
 }
