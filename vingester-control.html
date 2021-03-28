@@ -202,7 +202,7 @@
                                 </div>
                                 <div class="label">Color:</div>
                                 <div class="field field-color"
-                                    v-tippy="{ placement: 'top', content: 'RGB hexadecimal background<br/>color of browser canvas.' }">
+                                    v-tippy="{ placement: 'top', content: 'Background color of browser canvas.<br/>Use \'#RRGGBB\' or \'transparent\'.' }">
                                     <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
                                         v-bind:class="{ disabled: running[browser.id] }"
                                         v-bind:disabled="running[browser.id]">
