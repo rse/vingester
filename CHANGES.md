@@ -4,6 +4,8 @@ Changes
 
 - 0.9.9
     - CLEANUP: factor out code into own modules
+    - CLEANUP: cleanup packaging list
+    - CLEANUP: cleanup browser abstraction
 
 - 0.9.8
     - BUGFIX: fixed NDI sender destruction
