@@ -1,8 +1,8 @@
 
 <img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="150" align="right" alt=""/>
 
-Vingester
-=========
+[Vingester](https://vingester.app)
+==================================
 
 **Ingest Web Contents as Video Streams**
 
