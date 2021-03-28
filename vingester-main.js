@@ -127,7 +127,7 @@ electron.dialog.showErrorBox = (title, content) => {
             this.burst           = null
             this.factor          = 1.0
             this.framerate       = 30
-            this.destroying      = false
+            this.stopping        = false
         }
         reconfigure (cfg) {
             log.info("browser: reconfigure")
@@ -315,7 +315,7 @@ electron.dialog.showErrorBox = (title, content) => {
             }
         }
         async processFrame (image, dirty) {
-            if (!(this.cfg.N || this.cfg.P) || this.destroying)
+            if (!(this.cfg.N || this.cfg.P) || this.stopping)
                 return
             const t0 = Date.now()
 
@@ -388,12 +388,14 @@ electron.dialog.showErrorBox = (title, content) => {
             this.win.reload()
         }
         async stop () {
-            log.info("browser: stop")
+            if (this.stopping)
+                return
             if (this.win === null)
                 throw new Error("still not started")
 
             /*  set flag and wait until processFrame is at least done one last time  */
-            this.destroying = true
+            log.info("browser: stop")
+            this.stopping = true
             await new Promise((resolve) => {
                 setTimeout(() => { resolve() }, 50)
             })
@@ -421,7 +423,7 @@ electron.dialog.showErrorBox = (title, content) => {
             this.burst           = null
             this.factor          = 1.0
             this.framerate       = 30
-            this.destroying      = false
+            this.stopping        = false
             log.info("browser: stopped")
         }
     }
