@@ -256,19 +256,19 @@ electron.dialog.showErrorBox = (title, content) => {
                 /*  start all browsers  */
                 for (const id of Object.keys(browsers))
                     if (!browsers[id].running())
-                        control("start", id)
+                        await control("start", id)
             }
             else if (action === "reload-all") {
                 /*  reload all browsers  */
                 for (const id of Object.keys(browsers))
                     if (browsers[id].running())
-                        control("reload", id)
+                        await control("reload", id)
             }
             else if (action === "stop-all") {
                 /*  stop all browsers  */
                 for (const id of Object.keys(browsers))
                     if (browsers[id].running())
-                        control("stop", id)
+                        await control("stop", id)
             }
             else if (action === "start") {
                 /*  start a particular browser  */
