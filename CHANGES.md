@@ -3,6 +3,7 @@ Changes
 =======
 
 - 0.9.9
+    - EXTENSION: added update functionality (still disabled)
     - CLEANUP: factor out code into own modules
     - CLEANUP: cleanup packaging list
     - CLEANUP: cleanup browser abstraction
