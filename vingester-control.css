@@ -293,15 +293,19 @@ body {
                 row-gap: 0;
                 .col-1 {
                     grid-column-start: 1;
+                    height: 20px;
                 }
                 .col-2 {
                     grid-column-start: 2;
+                    height: 20px;
                 }
                 .col-3 {
                     grid-column-start: 3;
+                    height: 20px;
                 }
                 .col-4 {
                     grid-column-start: 4;
+                    height: 20px;
                 }
                 .version {
                     font-weight: bold;
