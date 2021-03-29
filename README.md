@@ -42,7 +42,7 @@ its Browser Source. Additionally, **Vingester** does not throttle its
 browser performance if it is backgrounded like a regular Chrome browser
 does. And **Vingester** windows can be pinned to be always on top of
 others windows and determine the correct window sizes if the display
-uses a high DPi mode.
+uses a high DPI mode.
 
 Sneak Preview
 -------------
