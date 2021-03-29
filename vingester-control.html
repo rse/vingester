@@ -42,9 +42,7 @@
                 <div class="row row-1">
                     <div class="row-left">
                         <img class="title-icon" src="vingester-icon.png" alt="Vingester"/>
-                        <div
-                            v-tippy="{ placement: 'bottom', content: 'Click to ' + (info ? 'close' : 'open') + ' program information.' }"
-                            v-on:click="info = !info" class="title-text">
+                        <div class="title-text">
                             Vingester
                         </div>
                         <div class="title-subtext">
@@ -55,6 +53,19 @@
                     </div>
                     <div class="row-right">
                         <div class="icons">
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to ' + (info ? 'close' : 'open') + ' the<br/>application information.' }"
+                                class="icon" v-on:click="modalToggle('info')">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <!--
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to check for<br/>application updates.' }"
+                                class="icon" v-bind:class='{ blink: updateNotifyBlink }'
+                                v-on:click="modalToggle('update')">
+                                <i class="fas fa-cloud-download-alt"></i>
+                            </div>
+                            -->
+                            <div class="icon-sep">
+                            </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Minimize window.' }"
                                 class="icon" v-on:click="windowControl('minimize')">
                                 <i class="fas fa-window-minimize"></i>
@@ -74,37 +85,6 @@
                             <div v-tippy="{ placement: 'bottom', content: 'Quit application.' }"
                                 class="icon" v-on:click="windowControl('close')">
                                 <i class="fas fa-window-close"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="" v-show="info">
-                    <div class="box">
-                        <div class="row row-2">
-                            <div class="row-left">
-                                <div class="button-info">
-                                    <i class="fas fa-info-circle"></i>
-                                </div>
-                                <div class="about">
-                                    <b>Vingester</b> (<b>V</b>ideo <b>ingester</b>) is a small
-                                    Electron-based desktop application for
-                                    use under Windows, macOS or Linux to
-                                    run multiple Chromium-based Web browser
-                                    instances and ingesting their rendered
-                                    Web Contents as screen/window-captured or
-                                    NDI-multicasted video streams for further
-                                    use in video mixing applications.
-                                </div>
-                            </div>
-                            <div class="row-right">
-                                <table class="versions">
-                                    <tr><td>Vingester</td><td><b>{{version.vingester}}</b></td><td>&copy; Dr. Ralf S. Engelschall</td></tr>
-                                    <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td>&copy; Github, Inc.</td></tr>
-                                    <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td>&copy; Google LLC</td></tr>
-                                    <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td>&copy; Google LLC</td></tr>
-                                    <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td>&copy; Ryan Dahl et al.</td></tr>
-                                    <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td>&copy; NewTek, Inc.</td></tr>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -162,6 +142,215 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="ui-modal" v-show="modal !== ''">
+                <div class="ui-modal-info" v-show="modal === 'info'">
+                    <div class="about">
+                        <p>
+                        <a href="https://vingester.app/" v-on:click="openURL">Vingester</a> (<b>V</b>ideo <b>ingester</b>) is a small,
+                        <a href="https://spdx.org/licenses/GPL-3.0-only" v-on:click="openURL">Open Source licensed</a>, and
+                        <a href="https://www.electronjs.org/" v-on:click="openURL">Electron</a>-based desktop
+                        application for use under Windows, macOS or Linux to run multiple
+                        <a href="https://www.chromium.org/" v-on:click="openURL">Chromium</a>-based
+                        Web browser instances and ingesting their rendered Web Contents as screen/window-captured or
+                        <a href="https://ndi.tv" v-on:click="openURL">NDI</a>-multicasted video streams for further
+                        use in video mixing applications.
+                        </p>
+                        <p>
+                        Although not technically tied to it, the primary use-case of Vingester is to ingest
+                        the individual meeting participants of the awesome WebRTC-based <a href="https://obs.ninja" v-on:click="openURL">OBS.Ninja</a> solution as
+                        individual NDI-based video-streams into the mixing application <a href="https://obsproject.com" v-on:click="openURL">OBS Studio</a>
+                        in order to reduce performance drains within OBS Studio. The OBS.Ninja URLs
+                        of the ingested video-streams can be best generated with the opinionated companion tool
+                        <a href="https://rse.github.io/obs-ninja-trampoline/" v-on:click="openURL">OBS.Ninja Trampoline</a>.
+                        </p>
+                    </div>
+                    <div class="about-2">
+                        <div class="logo">
+                            <img class="icon" src="vingester-icon.png" alt="Vingester"/>
+                            <div class="name"><a href="https://vingester.app" v-on:click="openURL">Vingester</a></div>
+                        </div>
+                        <div class="version"><a v-bind:href="'https://github.com/rse/vingester/releases/tag/' + version.vingester" v-on:click="openURL">{{version.vingester}}</a></div>
+                        <div class="url"><a href="https://vingester.app" v-on:click="openURL">https://vingester.app</a></div>
+                        <div class="copyright">
+                            Copyright &copy; 2021 <a href="https://engelschall.com" v-on:click="openURL">Dr. Ralf S. Engelschall</a><br/>
+                            Licensed under <a href="https://spdx.org/licenses/GPL-3.0-only" v-on:click="openURL">GPL 3.0</a>
+                        </div>
+                        <table class="versions">
+                            <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td class="copyright">&copy; Github, Inc.</td></tr>
+                            <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td class="copyright">&copy; Google LLC</td></tr>
+                            <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td class="copyright">&copy; Google LLC</td></tr>
+                            <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td class="copyright">&copy; Ryan Dahl et al.</td></tr>
+                            <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td class="copyright">&copy; NewTek, Inc.</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="ui-modal-update" v-if="modal === 'update'">
+                    <div class="recheck-button update-button"
+                        v-bind:class="{ disabled: updateProgress !== null }"
+                        v-on:click="updateCheck">
+                        <i class="fas fa-sync-alt"></i>
+                        &nbsp;
+                        RE-CHECK
+                    </div>
+                    <div class="versions">
+                        <div class="versions-row headline">
+                            <div class="col-1 type">Type</div>
+                            <div class="col-2 version">Version</div>
+                            <div class="col-3 date">Date</div>
+                        </div>
+                        <div v-if="updateVersions.forthcoming.version" class="versions-row">
+                            <div class="col-1 type">Forthcoming:</div>
+                            <div class="col-2 version">
+                                <a v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.forthcoming.version"
+                                    v-on:click="openURL">
+                                    {{ updateVersions.forthcoming.version }}
+                                </a>
+                            </div>
+                            <div class="col-3 date">{{ updateVersions.forthcoming.date }}</div>
+                            <div class="col-4 update-button"
+                                v-if="updateUpdateable"
+                                v-show="updateProgress === null && updateVersions.forthcoming.version !== updateVersions.running.version"
+                                v-on:click="updateToVersion(updateVersions.forthcoming.version)">
+                                <i class="fas fa-cloud-download-alt"></i>
+                                &nbsp;
+                                Update
+                            </div>
+                            <div class="col-4"
+                                v-if="!updateUpdateable"
+                                v-show="updateProgress === null && updateVersions.forthcoming.version !== updateVersions.running.version">
+                                <a class="update-button" v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.forthcoming.version"
+                                    v-on:click="openURL">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    &nbsp;
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                        <div v-if="updateVersions.current.version" class="versions-row">
+                            <div class="col-1 type">Current:</div>
+                            <div class="col-2 version">
+                                <a v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.current.version"
+                                    v-on:click="openURL">
+                                    {{ updateVersions.current.version }}
+                                </a>
+                            </div>
+                            <div class="col-3 date">{{ updateVersions.current.date }}</div>
+                            <div class="col-4 update-button"
+                                v-if="updateUpdateable"
+                                v-show="updateProgress === null && updateVersions.current.version !== updateVersions.running.version"
+                                v-on:click="updateToVersion(updateVersions.current.version)">
+                                <i class="fas fa-cloud-download-alt"></i>
+                                &nbsp;
+                                Update
+                            </div>
+                            <div class="col-4"
+                                v-if="!updateUpdateable"
+                                v-show="updateProgress === null && updateVersions.current.version !== updateVersions.running.version">
+                                <a class="update-button" v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.current.version"
+                                    v-on:click="openURL">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    &nbsp;
+                                    Download
+                                </a>
+                            </div>
+                        </div>
+                        <div v-if="!updateVersions.current.version" class="versions-row">
+                            <div class="col-1 type">Current:</div>
+                            <div class="col-2 version">N.A.</div>
+                            <div class="col-3 date">N.A.</div>
+                        </div>
+                        <div v-if="updateVersions.running.version" class="versions-row">
+                            <div class="col-1 type">Running:</div>
+                            <div class="col-2 version">
+                                <a v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.running.version"
+                                    v-on:click="openURL">
+                                    {{ updateVersions.running.version }}
+                                </a>
+                            </div>
+                            <div class="col-3 date">{{ updateVersions.running.date }}</div>
+                        </div>
+                        <div v-if="!updateVersions.running.version" class="versions-row">
+                            <div class="col-1 type">Running:</div>
+                            <div class="col-2 version">N.A.</div>
+                            <div class="col-3 date">N.A.</div>
+                        </div>
+                    </div>
+                    <div class="desc" v-if="updateVersions.running.type">
+                        You are currently running Vingester version {{ updateVersions.running.version }}.<br/>
+                        <span v-if="updateVersions.forthcoming.version === updateVersions.running.version">
+                            This <b>running</b> version is already the <b>forthcoming</b> version.<br/>
+                            Currently, there is still no update necessary.<br/>
+                        </span>
+                        <span v-if="updateVersions.current.version === updateVersions.running.version">
+                            This <b>running</b> version is still the <b>current</b> version.<br/>
+                            Currently, there is still no update necessary.<br/>
+                        </span>
+                        <span v-if="updateVersions.current.version !== updateVersions.running.version">
+                            This <b>running</b> version is in state <b>{{ updateVersions.running.type }}</b>.<br/>
+                            Please switch to the <b>current</b> version <b>{{ updateVersions.current.version }}</b>!<br/>
+                        </span>
+                        <span v-if="updateVersions.forthcoming.version && updateVersions.forthcoming.version !== versions.running.version">
+                            At your option, you can even switch to the <b>forthcoming</b> version
+                            <b>{{ updateVersions.forthcoming.version }}</b>.<br/>
+                        </span>
+                    </div>
+                    <div class="desc" v-if="!updateVersions.running.type">
+                        There is still no information available about the
+                        running, current and optionally forthcoming version.
+                        Please wait for the information to be gathered automatically
+                        once at program start or manually trigger an update check!
+                    </div>
+                    <div class="hint">
+                        <span v-if="updateUpdateable">
+                            <b>Hint:</b>&nbsp;
+                            Vingester is automatically updateable from this dialog.
+                            <span v-if="updateVersions.current.version !== updateVersions.running.version">
+                                Just press the "<b>Update!</b>" button above
+                                for updating to the particular version, please!
+                            </span>
+                        </span>
+                        <span v-if="!updateUpdateable">
+                            <b>Hint:</b>&nbsp;
+                            <a href="https://github.com/rse/vingester" v-on:click="openURL">Vingester</a>
+                            unfortunately is <u>not</u> automatically updateable
+                            from this dialog, because you are <u>not</u>
+                            running a packaged version or the application files can
+                            <u>not</u> be overwritten with the current user permissions.
+                            <span v-if="updateVersions.current.version !== updateVersions.running.version">
+                                For updating, either re-start Vingester
+                                with elevated user privileges or press the "<b>Download</b>" button
+                                above to just open the updated version in your Browser and then perform the
+                                download and update manually, please!
+                            </span>
+                        </span>
+                    </div>
+                    <div class="progress" v-if="updateProgress !== null">
+                        <b>Progress:</b>
+                        <div class="spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                        {{ updateProgress.task }}
+                        <div class="completion">
+                            <div class="total"></div>
+                            <div class="completed" v-bind:style="{ width: (updateProgress.completed * 100) + '%' }"></div>
+                            <div class="caption">{{ (updateProgress.completed * 100).toFixed(0) + '%' }}</div>
+                        </div>
+                    </div>
+                    <div class="progress" v-if="updateProgress === null">
+                        <b>Progress:</b>
+                        none
+                        <div class="completion">
+                            <div class="total disabled"></div>
+                        </div>
+                    </div>
+                    <div class="error" v-if="updateError !== null">
+                        <b>ERROR:</b>
+                        {{ updateError }}
+                    </div>
+                </div>
+            </div>
+            <div class="ui-head-placeholder">
             </div>
             <div class="ui-body">
                 <perfect-scrollbar>

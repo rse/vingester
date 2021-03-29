@@ -15,10 +15,12 @@ const electronLog = require("electron-log")
 const grandiose   = require("grandiose")
 const Store       = require("electron-store")
 const debounce    = require("throttle-debounce").debounce
+const throttle    = require("throttle-debounce").throttle
 const jsYAML      = require("js-yaml")
 
 /*  require own modules  */
 const Browser     = require("./vingester-browser.js")
+const Update      = require("./vingester-update.js")
 const util        = require("./vingester-util.js")
 const pkg         = require("./package.json")
 
@@ -74,12 +76,15 @@ if (!store.get("gpu")) {
 electron.app.on("ready", async () => {
     log.info("Electron is now ready")
 
+    /*  establish update process  */
+    const update = new Update()
+
     /*  determine main window position and size  */
     log.info("loading persistant settings")
     const x = store.get("control.x", null)
     const y = store.get("control.y", null)
     const w = store.get("control.w", 820)
-    const h = store.get("control.h", 340)
+    const h = store.get("control.h", 420)
     const pos = (x !== null && y !== null ? { x, y } : {})
 
     /*  create main window  */
@@ -90,7 +95,7 @@ electron.app.on("ready", async () => {
         width:           w,
         height:          h,
         minWidth:        820,
-        minHeight:       340,
+        minHeight:       420,
         frame:           false,
         title:           "Vingester",
         backgroundColor: "#333333",
@@ -168,7 +173,7 @@ electron.app.on("ready", async () => {
                 mainWin.setFullScreen(false)
             else if (maximized)
                 mainWin.unmaximize()
-            mainWin.setSize(820, 340)
+            mainWin.setSize(820, 420)
         }
         else if (action === "close") {
             if (fullscreen)
@@ -231,6 +236,35 @@ electron.app.on("ready", async () => {
             return false
         })
     })
+
+    /*  handle update check request from UI  */
+    electron.ipcMain.handle("update-check", async () => {
+        /*  check whether we are updateable at all  */
+        const updateable = await update.updateable()
+        mainWin.webContents.send("update-updateable", updateable)
+
+        /*  check for update versions  */
+        const versions = await update.check(throttle(1000 / 60, (task, completed) => {
+            mainWin.webContents.send("update-progress", { task, completed })
+        }))
+        setTimeout(() => {
+            mainWin.webContents.send("update-progress", null)
+        }, 2 * (1000 / 60))
+        mainWin.webContents.send("update-versions", versions)
+    })
+
+    /*  handle update request from UI  */
+    electron.ipcMain.handle("update-to-version", (event, version) => {
+        update.update(version, throttle(1000 / 60, (task, completed) => {
+            mainWin.webContents.send("update-progress", { task, completed })
+        })).catch((err) => {
+            mainWin.webContents.send("update-error", err)
+            log.error(`update: ERROR: ${err}`)
+        })
+    })
+
+    /*  cleanup from old update  */
+    await update.cleanup()
 
     /*  at least once prepare the browser abstraction  */
     Browser.prepare()

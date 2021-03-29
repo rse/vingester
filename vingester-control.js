@@ -40,7 +40,15 @@ const app = Vue.createApp({
             usage:    0,
             gpu:      false,
             info:     false,
-            version:  {}
+            version:  {},
+            modal:             "",
+            updateUpdateable:  false,
+            updateVersions:    {},
+            updateNotify:      "",
+            updateNotifyTimer: null,
+            updateNotifyBlink: false,
+            updateProgress:    0,
+            updateError:       null
         }
     },
     computed: {
@@ -116,12 +124,58 @@ const app = Vue.createApp({
         electron.ipcRenderer.on("gpu", (ev, gpu) => {
             this.gpu = gpu
         })
+        electron.ipcRenderer.on("update-updateable", (ev, updateable) => {
+            log.info("update-updateable: ", updateable)
+            this.updateUpdateable = updateable
+        })
+        electron.ipcRenderer.on("update-versions", (ev, versions) => {
+            log.info("update-versions: ", versions)
+            this.updateVersions.running     = versions.running     ? versions.running     : {}
+            this.updateVersions.current     = versions.current     ? versions.current     : {}
+            this.updateVersions.forthcoming = versions.forthcoming ? versions.forthcoming : {}
+            if (!(     this.updateVersions.running
+                    && this.updateVersions.running.version
+                    && ((      this.updateVersions.current
+                            && this.updateVersions.current.version
+                            && this.updateVersions.running.version === this.updateVersions.current.version)
+                        || (   this.updateVersions.forthcoming
+                            && this.updateVersions.forthcoming.version
+                            && this.updateVersions.running.version === this.updateVersions.forthcoming.version)))) {
+                if (this.updateVersions.running.type === "deprecated")
+                    this.updateNotify = "hard"
+                else
+                    this.updateNotify = "soft"
+            }
+            else
+                this.updateNotify = ""
+            if (this.updateNotify !== "" && this.updateNotifyTimer === null)
+                this.updateNotifyTimer = setInterval(() => {
+                    this.updateNotifyBlink = !this.updateNotifyBlink
+                }, this.updateNotify === "soft" ? 1200 : 300)
+            else if (this.updateNotify === "" && this.updateTimer !== null) {
+                clearTimeout(this.updateNotifyTimer)
+                this.updateNotifyTimer = null
+                this.updateNotifyBlink = false
+            }
+        })
+        electron.ipcRenderer.on("update-progress", (ev, progress) => {
+            this.updateProgress = progress
+        })
+        electron.ipcRenderer.on("update-error", (ev, error) => {
+            this.updateProgress = null
+            this.updateError    = error.toString()
+            setTimeout(() => {
+                this.updateProgress = null
+                this.updateError    = null
+            }, 5000)
+        })
         this.version = await electron.ipcRenderer.invoke("version")
         log.info("created")
         electron.ipcRenderer.invoke("control-created")
     },
     mounted () {
         electron.ipcRenderer.invoke("control-mounted")
+        this.updateCheck()
     },
     methods: {
         async load () {
@@ -217,6 +271,23 @@ const app = Vue.createApp({
         },
         windowControl (action) {
             electron.ipcRenderer.invoke("window-control", action)
+        },
+        modalToggle (id) {
+            if (this.modal === id)
+                this.modal = ""
+            else
+                this.modal = id
+        },
+        updateCheck () {
+            electron.ipcRenderer.invoke("update-check")
+        },
+        updateToVersion (version) {
+            electron.ipcRenderer.invoke("update-to-version", version)
+        },
+        openURL (ev) {
+            ev.preventDefault()
+            const url = ev.target.getAttribute("href")
+            electron.shell.openExternal(url)
         }
     }
 })
