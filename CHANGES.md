@@ -4,6 +4,7 @@ Changes
 
 - 0.9.9
     - EXTENSION: added update functionality (still disabled)
+    - IMPROVEMENT: move info/about dialog into an own sub-dialog
     - CLEANUP: factor out code into own modules
     - CLEANUP: cleanup packaging list
     - CLEANUP: cleanup browser abstraction
