@@ -125,11 +125,9 @@ const app = Vue.createApp({
             this.gpu = gpu
         })
         electron.ipcRenderer.on("update-updateable", (ev, updateable) => {
-            log.info("update-updateable: ", updateable)
             this.updateUpdateable = updateable
         })
         electron.ipcRenderer.on("update-versions", (ev, versions) => {
-            log.info("update-versions: ", versions)
             this.updateVersions.running     = versions.running     ? versions.running     : {}
             this.updateVersions.current     = versions.current     ? versions.current     : {}
             this.updateVersions.forthcoming = versions.forthcoming ? versions.forthcoming : {}
