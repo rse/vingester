@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.0.0
+    - EXTENSION: activated update functionality
+    - CLEANUP: cleanup update functionality
+
 - 0.9.9
     - EXTENSION: added update functionality (still disabled)
     - IMPROVEMENT: move info/about dialog into an own sub-dialog
