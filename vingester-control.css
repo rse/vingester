@@ -293,19 +293,19 @@ body {
                 row-gap: 0;
                 .col-1 {
                     grid-column-start: 1;
-                    height: 20px;
+                    height: 24px;
                 }
                 .col-2 {
                     grid-column-start: 2;
-                    height: 20px;
+                    height: 24px;
                 }
                 .col-3 {
                     grid-column-start: 3;
-                    height: 20px;
+                    height: 24px;
                 }
                 .col-4 {
                     grid-column-start: 4;
-                    height: 20px;
+                    height: 24px;
                 }
                 .version {
                     font-weight: bold;
@@ -319,7 +319,8 @@ body {
             }
             .desc {
                 margin-top: 10px;
-                color: #fff8f0;
+                color: #ffffff;
+                font-weight: bold;
                 a {
                     color: #ffffff;
                 }
@@ -332,6 +333,7 @@ body {
             .update-button {
                 display: block;
                 height: 18px;
+                max-height: 18px;
                 width: 120px;
                 background-color: #f8e0c0;
                 color: #000000;
@@ -364,8 +366,8 @@ body {
             .progress {
                 margin-top: 10px;
                 color: #fff8f0;
-                border-radius: 5px;
-                background-color: #a89070;
+                border-radius: 4px;
+                border: 1px solid #d8c0b0;
                 padding: 8px 10px 12px 10px;
                 position: relative;
                 .spinner {
@@ -385,9 +387,9 @@ body {
                         top: 0;
                         left: 0;
                         border-radius: 5px;
-                        background-color: #988060;
+                        background-color: #a89070;
                         &.disabled {
-                            background-color: #988060;
+                            background-color: #a89070;
                         }
                     }
                     .completed {
@@ -396,7 +398,7 @@ body {
                         top: 0;
                         left: 0;
                         border-radius: 5px;
-                        background-color: #d8c0a0;
+                        background-color: #e8d0b0;
                     }
                     .caption {
                         position: absolute;
