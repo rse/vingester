@@ -38,7 +38,7 @@
         "electron-store":                "7.0.2",
         "less":                          "4.1.1",
         "jimp":                          "0.16.1",
-        "grandiose":                     "rse/grandiose#030cba6",
+        "grandiose":                     "rse/grandiose#b350995",
         "throttle-debounce":             "3.0.1",
         "tesladon":                      "0.1.1",
         "js-yaml":                       "4.0.0",
