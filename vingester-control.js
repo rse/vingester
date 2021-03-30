@@ -10,7 +10,6 @@ const debounce         = require("throttle-debounce").debounce
 const UUID             = require("pure-uuid")
 const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 const VueTippy         = require("vue-tippy").default
-console.log(VueTippy)
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
