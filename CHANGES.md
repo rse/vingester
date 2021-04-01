@@ -5,6 +5,7 @@ Changes
 - 1.0.1
     - BUGFIX: fix linking of Grandiose NDI SDK binding under Linux
     - BUGFIX: fix linking of Grandiose NDI SDK binding under macOS
+    - CLEANUP: cleanup code
 
 - 1.0.0
     - EXTENSION: activated update functionality
