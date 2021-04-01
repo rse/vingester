@@ -58,23 +58,6 @@ captured by OBS Studio through a "Screen Capture" or "Window Capture"
 source while the "headless" NDI stream usually is directly consumed by
 OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
-Audio Ingesting Notice
-----------------------
-
-Usually, the Web Content produces both audio and video outputs. **Vingester**
-currently is only able to ingest video, as the underlying Electron
-technology still does not provide an API for capturing the audio output
-of Web Content. As a consequence, **Vingester** can play audio
-to the selected audio output device of the operation system
-only. For ingesting audio from **Vingester** into the audio/video mixing
-application like OBS Studio, you have to use a virtual audio output device
-like [Virtual Audio Cable](https://vac.muzychenko.net/en/) or
-[VB-Cable](https://vb-audio.com/Cable/) and tell the operating system to
-direct the audio output of **Vingester** to this device. Under Windows 10
-open the "Sound Settings" and choose "App volume device preferences"
-under "Advanced sound options" for configuring the default audio output device of
-a particular application like **Vingester**.
-
 Performance Notice
 ------------------
 
