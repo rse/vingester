@@ -153,6 +153,12 @@ module.exports = class Browser {
             }
         })
 
+        /*  control audio (for desktop window we unmute, for NDI we mute)  */
+        if (this.cfg.D)
+            win.webContents.setAudioMuted(false)
+        else
+            win.webContents.setAudioMuted(true)
+
         /*  force aspect ratio  */
         win.setAspectRatio(parseInt(this.cfg.w) / parseInt(this.cfg.h))
 
