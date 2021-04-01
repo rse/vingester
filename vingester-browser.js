@@ -430,10 +430,8 @@ module.exports = class Browser {
         })
 
         /*  destroy NDI sender  */
-        console.log("FUCK1")
         if (this.ndiSender !== null)
             await this.ndiSender.destroy()
-        console.log("FUCK2")
 
         /*  destroy browser  */
         this.win.close()
