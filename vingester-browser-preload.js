@@ -7,43 +7,14 @@
 (async function () {
     const electron = require("electron")
 
-    /*  at least once send stats initially  */
-    electron.ipcRenderer.send("stat", { fps: 0, memUsed: 0, memAvail: 0 })
-
-    /*  once per animation frame (usually 60 times per second)
-        determine and send statistic information  */
-    let last = null
-    let n = 0
-    const animate = function () {
-        if (last === null)
-            last = performance.now()
-        else {
-            /*  determine frames per second  */
-            const now = performance.now()
-            const delta = now - last
-            const fps = 1000 / delta
-            last = now
-
-            /*  determine memory usage  */
-            const memory   = performance.memory
-            const memUsed  = memory.usedJSHeapSize  / (1024 * 1024)
-            const memAvail = memory.jsHeapSizeLimit / (1024 * 1024)
-
-            /*  send 2-4 times per second only  */
-            if (n++ > 15) {
-                n = 0
-                electron.ipcRenderer.send("stat", { fps, memUsed, memAvail })
-            }
-        }
-        requestAnimationFrame(animate)
-    }
-    requestAnimationFrame(animate)
-
     /*  provide global "vingester" environment (for postload)  */
     electron.contextBridge.exposeInMainWorld("vingester", {
         cfg: JSON.parse(process.argv[process.argv.length - 1]),
         log (...args) {
             electron.ipcRenderer.invoke("postload-log", ...args)
+        },
+        stat (data) {
+            electron.ipcRenderer.send("stat", data)
         },
         async audioCapture (data) {
             electron.ipcRenderer.send("audio-capture", data)

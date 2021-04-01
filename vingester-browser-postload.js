@@ -6,6 +6,41 @@
 
 /* global vingester */
 (async function () {
+    /*  capture statistics  */
+    const captureStats = () => {
+        /*  at least once send stats initially  */
+        vingester.stat({ fps: 0, memUsed: 0, memAvail: 0 })
+
+        /*  once per animation frame (usually 60 times per second)
+            determine and send statistic information  */
+        let last = null
+        let n = 0
+        const animate = function () {
+            if (last === null)
+                last = performance.now()
+            else {
+                /*  determine frames per second  */
+                const now = performance.now()
+                const delta = now - last
+                const fps = 1000 / delta
+                last = now
+
+                /*  determine memory usage  */
+                const memory   = performance.memory
+                const memUsed  = memory.usedJSHeapSize  / (1024 * 1024)
+                const memAvail = memory.jsHeapSizeLimit / (1024 * 1024)
+
+                /*  send 2-4 times per second only  */
+                if (n++ > 15) {
+                    n = 0
+                    vingester.stat({ fps, memUsed, memAvail })
+                }
+            }
+            requestAnimationFrame(animate)
+        }
+        requestAnimationFrame(animate)
+    }
+
     /*  capture audio from the DOM audio/video elements  */
     const captureAudio = () => {
         try {
@@ -123,7 +158,11 @@
         }
     }
 
-    /*  we have to capture the audio just for NDI and more than zero channels  */
+    /*  always capture statistics  */
+    captureStats()
+
+    /*  optionally capture audio
+        (just for requested NDI output and more than zero audio channels)  */
     if (vingester.cfg.N && vingester.cfg.C > 0)
         captureAudio()
 })()
