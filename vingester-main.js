@@ -357,7 +357,7 @@ electron.app.on("ready", async () => {
     })
 
     electron.ipcMain.handle("postload-log", async (ev, ...args) => {
-        log.info("postload:", ...args)
+        log.info("browser: postload:", ...args)
     })
 
     /*  load web content  */
