@@ -52,8 +52,9 @@
 
             /*  create a stereo audio destination  */
             const dest = ac.createMediaStreamDestination()
-            dest.channelCountMode = "explicit"
-            dest.channelCount = parseInt(vingester.cfg.C)
+            dest.channelCount          = parseInt(vingester.cfg.C)
+            dest.channelCountMode      = "explicit"
+            dest.channelInterpretation = "speakers"
 
             /*  create media recorder  */
             const recorder = new MediaRecorder(dest.stream, { mimeType: "audio/webm;codecs=pcm" })
