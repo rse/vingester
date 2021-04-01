@@ -356,6 +356,10 @@ electron.app.on("ready", async () => {
         mainWin.focus()
     })
 
+    electron.ipcMain.handle("postload-log", async (ev, ...args) => {
+        log.info("postload:", ...args)
+    })
+
     /*  load web content  */
     log.info("loading control user interface")
     mainWin.loadURL(`file://${path.join(__dirname, "vingester-control.html")}`)

@@ -6,13 +6,15 @@
 
 /*  require internal modules  */
 const os          = require("os")
+const fs          = require("fs")
 const path        = require("path")
 
 /*  require external modules  */
 const electron    = require("electron")
 const grandiose   = require("grandiose")
-const tesladon    = require("tesladon")
 const Jimp        = require("jimp")
+const pcmconvert  = require("pcm-convert")
+const ebml        = require("ebml")
 
 /*  require own modules  */
 const util        = require("./vingester-util.js")
@@ -25,6 +27,11 @@ module.exports = class Browser {
         this.id              = id
         this.cfg             = cfg
         this.mainWin         = mainWin
+        this.reset()
+    }
+
+    /*  reset internal state  */
+    reset () {
         this.win             = null
         this.subscribed      = false
         this.ndiSender       = null
@@ -34,6 +41,13 @@ module.exports = class Browser {
         this.factor          = 1.0
         this.framerate       = 30
         this.stopping        = false
+        this.ebmlDecoder     = null
+        this.timeStart       = (BigInt(Date.now()) * BigInt(1e6) - process.hrtime.bigint())
+    }
+
+    /*  return current time in nanoseconds since Unix epoch time as a BigInt  */
+    timeNow () {
+        return this.timeStart + process.hrtime.bigint()
     }
 
     /*  explicitly allow capturing our browser windows  */
@@ -134,7 +148,8 @@ module.exports = class Browser {
                 disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false,
-                zoomFactor:                 1.0 / this.factor
+                zoomFactor:                 1.0 / this.factor,
+                additionalArguments:        [ JSON.stringify(this.cfg) ]
             }
         })
 
@@ -158,7 +173,7 @@ module.exports = class Browser {
         this.framerate = (this.cfg.N ? parseInt(this.cfg.f) : D.displayFrequency)
         this.ndiSender = (this.cfg.N ? await grandiose.send({
             name:       title,
-            clockVideo: true,
+            clockVideo: false,
             clockAudio: false
         }) : null)
         this.burst = new util.WeightedAverage(this.framerate, this.framerate / 2)
@@ -184,10 +199,21 @@ module.exports = class Browser {
             win.webContents.startPainting()
         }
 
-        /*  receive statistics  */
+        /*  capture and send browser audio stream
+            Chromium provides a Webm/Matroska/EBML container with
+            embedded(!) "interleaved PCM float32 little-endian" data,
+            so we here first have to decode the EBML container chunks  */
+        this.ebmlDecoder = new ebml.Decoder()
+        this.ebmlDecoder.on("data", (chunk) => {
+            this.processAudio(chunk)
+        })
+
+        /*  receive statistics and audio capture data  */
         win.webContents.on("ipc-message", (ev, channel, msg) => {
             if (channel === "stat" && this.mainWin !== null && !this.mainWin.isDestroyed())
                 this.mainWin.webContents.send("stat", { ...msg, id: this.id })
+            else if (channel === "audio-capture")
+                this.ebmlDecoder.write(Buffer.from(msg.buffer))
         })
 
         /*  receive console outputs  */
@@ -207,6 +233,13 @@ module.exports = class Browser {
 
         /*  remember window object  */
         this.win = win
+
+        win.webContents.on("dom-ready", async (ev) => {
+            const code = await fs.promises.readFile(
+                path.join(__dirname, "vingester-browser-postload.js"),
+                { encoding: "utf8" })
+            win.webContents.executeJavaScript(code)
+        })
 
         /*  finally load the Web Content  */
         return new Promise((resolve, reject) => {
@@ -286,19 +319,23 @@ module.exports = class Browser {
         if (this.cfg.N) {
             if (this.frames++ > this.ndiFramesToSkip) {
                 this.frames = 0
-                const ptp = tesladon.tsTimeToPTPTime(t0)
+                const now = this.timeNow()
                 const frame = {
+                    /*  base information  */
                     type:               "video",
+                    timecode:           now / BigInt(100),
+
+                    /*  type-specific information  */
                     xres:               size.width,
                     yres:               size.height,
                     frameRateN:         this.framerate * 1000,
                     frameRateD:         1000,
-                    fourCC:             grandiose.FOURCC_BGRA,
                     pictureAspectRatio: image.getAspectRatio(this.factor),
-                    timestamp:          ptp,
-                    timecode:           [ ptp[0] / 100, ptp[1] / 100 ],
                     frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
                     lineStrideBytes:    size.width * 4,
+
+                    /*  the data itself  */
+                    fourCC:             grandiose.FOURCC_BGRA,
                     data:               buffer
                 }
                 await this.ndiSender.video(frame)
@@ -310,6 +347,64 @@ module.exports = class Browser {
         this.burst.record(t1 - t0, (stat) => {
             this.mainWin.webContents.send("burst", { ...stat, id: this.id })
         })
+    }
+
+    /*  process a single captured audio data  */
+    async processAudio (data) {
+        if (!(this.cfg.N) || this.stopping)
+            return
+
+        /*  we here receive EBML chunks  */
+        if (data[0] === "tag" && data[1].type === "b" && data[1].name === "SimpleBlock") {
+            /*  and just extract the data chunks containing the PCM data  */
+            let buffer = data[1].payload
+
+            /*  send NDI audio frame  */
+            if (this.cfg.N) {
+                /*  optionally delay the processing  */
+                const offset = parseInt(this.cfg.o)
+                if (offset > 0)
+                    await new Promise((resolve) => setTimeout(resolve, offset))
+
+                /*  determine frame information  */
+                const sampleRate = parseInt(this.cfg.r)
+                const noChannels = parseInt(this.cfg.C)
+
+                /*  optionally convert data from Chromium's "interleaved PCM float32 little-endian"
+                    to NDI's "planar PCM float32 little-endian" format  */
+                if (noChannels > 1) {
+                    buffer = pcmconvert(buffer, {
+                        channels:    noChannels,
+                        dtype:       "float32",
+                        endianness:  "le",
+                        interleaved: true
+                    }, {
+                        dtype:       "float32",
+                        endianness:  "le",
+                        interleaved: false
+                    })
+                }
+
+                /*  create frame  */
+                const now = this.timeNow()
+                const frame = {
+                    /*  base information  */
+                    type:               "audio",
+                    timecode:           now / BigInt(100),
+
+                    /*  type-specific information  */
+                    sampleRate:         sampleRate,
+                    noChannels:         noChannels,
+                    noSamples:          Math.trunc(buffer.byteLength / noChannels / 4),
+                    channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
+
+                    /*  the data itself  */
+                    fourCC:             grandiose.FOURCC_FLTp,
+                    data:               Buffer.from(buffer.buffer)
+                }
+                await this.ndiSender.audio(frame)
+            }
+        }
     }
 
     /*  reload browser  */
@@ -335,8 +430,10 @@ module.exports = class Browser {
         })
 
         /*  destroy NDI sender  */
+        console.log("FUCK1")
         if (this.ndiSender !== null)
             await this.ndiSender.destroy()
+        console.log("FUCK2")
 
         /*  destroy browser  */
         this.win.close()
@@ -349,15 +446,7 @@ module.exports = class Browser {
         })
 
         /*  reset the internal state  */
-        this.win             = null
-        this.subscribed      = false
-        this.ndiSender       = null
-        this.ndiFramesToSkip = 0
-        this.frames          = 0
-        this.burst           = null
-        this.factor          = 1.0
-        this.framerate       = 30
-        this.stopping        = false
+        this.reset()
         this.log.info("browser: stopped")
     }
 }

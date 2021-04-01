@@ -4,7 +4,7 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
-(() => {
+(async function () {
     const electron = require("electron")
 
     /*  at least once send stats initially  */
@@ -38,5 +38,16 @@
         requestAnimationFrame(animate)
     }
     requestAnimationFrame(animate)
+
+    /*  provide global "vingester" environment (for postload)  */
+    electron.contextBridge.exposeInMainWorld("vingester", {
+        cfg: JSON.parse(process.argv[process.argv.length - 1]),
+        log (...args) {
+            electron.ipcRenderer.invoke("postload-log", ...args)
+        },
+        async audioCapture (data) {
+            electron.ipcRenderer.send("audio-capture", data)
+        }
+    })
 })()
 

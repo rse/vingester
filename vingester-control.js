@@ -207,7 +207,7 @@ const app = Vue.createApp({
                 t: "Sample", w: "1280", h: "720", c: "#00ff00",
                 u: "",
                 D: true, d: "", x: "0", y: "0", p: false,
-                N: false, f: "30",
+                N: false, f: "30", C: "1", r: "48000", o: "0",
                 P: false
             }
             this.running[id] = false

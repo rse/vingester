@@ -58,7 +58,7 @@
                                 <i class="fas fa-info-circle"></i>
                             </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Click to check for<br/>application updates.' }"
-                                class="icon" v-bind:class='{ blink: updateNotifyBlink }'
+                                class="icon" v-bind:class="{ blink: updateNotifyBlink }"
                                 v-on:click="modalToggle('update')">
                                 <i class="fas fa-cloud-download-alt"></i>
                             </div>
@@ -459,9 +459,30 @@
                                 </div>
                                 <div class="cluster" v-show="browser.N">
                                     <div class="label">FPS:</div>
-                                    <div class="field"
+                                    <div class="field field-fps"
                                         v-tippy="{ placement: 'top', content: 'Frames per second for the NDI video-stream.<br/>Usually you want to use 30 or 60.' }">
                                         <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
+                                            v-bind:class="{ disabled: running[browser.id] }"
+                                            v-bind:disabled="running[browser.id]">
+                                    </div>
+                                    <div class="label">ACC:</div>
+                                    <div class="field field-channels"
+                                        v-tippy="{ placement: 'top', content: 'Number of channels for the NDI audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
+                                        <input type="text" v-model="browser.C" v-on:keyup="changed(browser)"
+                                            v-bind:class="{ disabled: running[browser.id] }"
+                                            v-bind:disabled="running[browser.id]">
+                                    </div>
+                                    <div class="label">SPS:</div>
+                                    <div class="field field-sps"
+                                        v-tippy="{ placement: 'top', content: 'Samples per second for the NDI audio-stream.<br/>Usually you want to use 44100 or 48000.' }">
+                                        <input type="text" v-model="browser.r" v-on:keyup="changed(browser)"
+                                            v-bind:class="{ disabled: running[browser.id] }"
+                                            v-bind:disabled="running[browser.id]">
+                                    </div>
+                                    <div class="label">Delay:</div>
+                                    <div class="field field-delay"
+                                        v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the NDI audio-stream.<br/>Usually you want to use 0 or up to about 150.' }">
+                                        <input type="text" v-model="browser.o" v-on:keyup="changed(browser)"
                                             v-bind:class="{ disabled: running[browser.id] }"
                                             v-bind:disabled="running[browser.id]">
                                     </div>

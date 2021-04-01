@@ -36,11 +36,12 @@
     "dependencies": {
         "electron-log":                  "4.3.2",
         "electron-store":                "7.0.2",
+        "pcm-convert":                   "1.6.5",
+        "ebml":                          "3.0.0",
         "less":                          "4.1.1",
         "jimp":                          "0.16.1",
-        "grandiose":                     "rse/grandiose#3404104",
+        "grandiose":                     "rse/grandiose#693b784",
         "throttle-debounce":             "3.0.1",
-        "tesladon":                      "0.1.1",
         "js-yaml":                       "4.0.0",
         "pure-uuid":                     "1.6.2",
         "got":                           "11.8.2",
@@ -140,7 +141,7 @@
     "scripts": {
         "postinstall":                   "electron-builder install-app-deps",
         "lint":                          "eslint --config cfg-eslint.yaml --ext js *.js && stylelint --config cfg-stylelint.yaml *.css && htmllint --rc cfg-htmllint.json *.html",
-        "start":                         "cross-env DEBUG=1 electron .",
+        "start":                         "cross-env DEBUG=1 electron --trace-warnings .",
         "package":                       "node npm-package.js",
         "clean":                         "rimraf ./dist"
     }

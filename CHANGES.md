@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.1.0
+    - EXTENSION: capture audio and ingest into NDI output-stream
+
 - 1.0.1
     - BUGFIX: fix linking of Grandiose NDI SDK binding under Linux
     - BUGFIX: fix linking of Grandiose NDI SDK binding under macOS

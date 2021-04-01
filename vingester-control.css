@@ -572,6 +572,15 @@ body {
             &.field-mode .toggle {
                 width: 110px;
             }
+            &.field-fps input {
+                width: 30px;
+            }
+            &.field-channels input {
+                width: 20px;
+            }
+            &.field-delay input {
+                width: 30px;
+            }
             &.field-start,
             &.field-reload,
             &.field-stop,
