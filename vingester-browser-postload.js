@@ -5,7 +5,7 @@
 */
 
 /* global vingester */
-(async function () {
+(function () {
     /*  capture statistics  */
     const captureStats = () => {
         /*  at least once send stats initially  */
@@ -75,7 +75,7 @@
                 if (track.kind !== "audio")
                     return
                 if (!tracks.has(track)) {
-                    vingester.log("ADD", when, track.enabled, track.muted, track.label, track.readyState)
+                    vingester.log(`on ${when} capture ${track.readyState} audio track`)
                     const source = ac.createMediaStreamSource(new MediaStream([ track ]))
                     source.connect(dest)
                     tracks.set(track, source)
@@ -88,7 +88,7 @@
                 if (track.kind !== "audio")
                     return
                 if (tracks.has(track)) {
-                    vingester.log("REMOVE", when, track.enabled, track.muted, track.label, track.readyState)
+                    vingester.log(`on ${when} uncapture ${track.readyState} audio track`)
                     const source = tracks.get(track)
                     source.disconnect(dest)
                     tracks.delete(track)
@@ -100,10 +100,9 @@
             const onAddTrack    = (ev) => { trackAdd("listener", ev.track) }
             const onRemoveTrack = (ev) => { trackRemove("listener", ev.track) }
             const attach = (when, node) => {
-                vingester.log("ATTACH", when, node.tagName)
                 if (!nodes.has(node)) {
+                    vingester.log(`on ${when} attach to ${node.tagName}`)
                     const stream = node.captureStream()
-                    vingester.log("ATTACH", stream.active, stream.ended, stream.id)
                     const audiotracks = stream.getAudioTracks()
                     for (let i = 0; i < audiotracks.length; i++)
                         trackAdd(when, audiotracks[i])
@@ -113,8 +112,8 @@
                 }
             }
             const detach = (when, node) => {
-                vingester.log("DETACH", when, node.tagName)
                 if (nodes.has(node)) {
+                    vingester.log(`on ${when} detach from ${node.tagName} node`)
                     const stream = nodes.get(node)
                     stream.removeEventListener("addtrack",    onAddTrack)
                     stream.removeEventListener("removetrack", onRemoveTrack)
