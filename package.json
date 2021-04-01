@@ -44,7 +44,7 @@
         "js-yaml":                       "4.0.0",
         "pure-uuid":                     "1.6.2",
         "got":                           "11.8.2",
-        "adm-zip":                       "0.5.4",
+        "adm-zip":                       "0.5.5",
         "dayjs":                         "1.10.4",
         "update-helper":                 "1.1.5",
         "tmp":                           "0.2.1",
