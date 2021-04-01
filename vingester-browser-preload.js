@@ -4,7 +4,7 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
-(async function () {
+(function () {
     const electron = require("electron")
 
     /*  provide global "vingester" environment (for postload)  */
