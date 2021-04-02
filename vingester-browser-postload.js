@@ -163,6 +163,6 @@
 
     /*  optionally capture audio
         (just for requested NDI output and more than zero audio channels)  */
-    if (vingester.cfg.N && vingester.cfg.C > 0)
+    if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0)
         captureAudio()
 })()

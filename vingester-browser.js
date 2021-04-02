@@ -157,7 +157,7 @@ module.exports = class Browser {
         })
 
         /*  control audio (for desktop window we unmute, for NDI we mute)  */
-        if (this.cfg.D)
+        if (this.cfg.D || (this.cfg.N && this.cfgParsed.C === 0))
             win.webContents.setAudioMuted(false)
         else
             win.webContents.setAudioMuted(true)
