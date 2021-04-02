@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.1.1
+    - CLEANUP: cleanup source code
+
 - 1.1.0
     - EXTENSION: capture audio and ingest into NDI output-stream
 
