@@ -39,7 +39,8 @@ module.exports = class Browser {
         this.ndiSender       = null
         this.ndiFramesToSkip = 0
         this.frames          = 0
-        this.burst           = null
+        this.burst1          = null
+        this.burst2          = null
         this.factor          = 1.0
         this.framerate       = 30
         this.stopping        = false
@@ -184,7 +185,8 @@ module.exports = class Browser {
             clockVideo: false,
             clockAudio: false
         }) : null)
-        this.burst = new util.WeightedAverage(this.framerate, this.framerate / 2)
+        this.burst1 = new util.WeightedAverage(this.framerate * 2, this.framerate)
+        this.burst2 = new util.WeightedAverage(this.framerate * 2, this.framerate)
         if (this.cfg.D) {
             /*  use Frame subscription where framerate cannot be controlled
                 (but which is available also for onscreen rendering)  */
@@ -364,8 +366,8 @@ module.exports = class Browser {
 
         /*  record processing time  */
         const t1 = Date.now()
-        this.burst.record(t1 - t0, (stat) => {
-            this.mainWin.webContents.send("burst", { ...stat, id: this.id })
+        this.burst1.record(t1 - t0, (stat) => {
+            this.mainWin.webContents.send("burst", { ...stat, type: "video", id: this.id })
         })
     }
 
@@ -373,6 +375,7 @@ module.exports = class Browser {
     async processAudio (data) {
         if (!(this.cfg.N) || this.stopping)
             return
+        const t0 = Date.now()
 
         /*  we here receive EBML chunks  */
         if (data[0] === "tag" && data[1].type === "b" && data[1].name === "SimpleBlock") {
@@ -425,6 +428,12 @@ module.exports = class Browser {
                 await this.ndiSender.audio(frame)
             }
         }
+
+        /*  record processing time  */
+        const t1 = Date.now()
+        this.burst2.record(t1 - t0, (stat) => {
+            this.mainWin.webContents.send("burst", { ...stat, type: "audio", id: this.id })
+        })
     }
 
     /*  reload browser  */

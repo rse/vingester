@@ -110,7 +110,9 @@ const app = Vue.createApp({
             this.usage = usage
         })
         electron.ipcRenderer.on("burst", (ev, stat) => {
-            this.burst[stat.id] = stat
+            if (this.burst[stat.id] === undefined)
+                this.burst[stat.id] = { video: {}, audio: {} }
+            this.burst[stat.id][stat.type] = stat
         })
         electron.ipcRenderer.on("capture", async (ev, capture) => {
             const canvas = this.$refs[`canvas-${capture.id}`]
@@ -184,7 +186,10 @@ const app = Vue.createApp({
                 await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
                 this.running[browser.id] = false
                 this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
-                this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+                this.burst[browser.id] = {
+                    video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
+                    audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+                }
                 this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
             }
             this.browsers = B
@@ -212,7 +217,10 @@ const app = Vue.createApp({
             }
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
-            this.burst[browser.id] = { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+            this.burst[browser.id] = {
+                video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
+                audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+            }
             this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()

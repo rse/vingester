@@ -521,7 +521,7 @@
                                         <span
                                             v-tippy="{ placement: 'top', content: 'Shows the CPU performance (milliseconds per frame)<br/>of the browser Web Content rendering.' }"
                                             class="stat-item" v-if="browser.N || browser.P">
-                                        CPU: {{ Math.round(burst[browser.id].avg) }}/{{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
+                                        CPU: {{ Math.round(burst[browser.id].video.avg) }}+{{ Math.round(burst[browser.id].audio.avg) }}={{ Math.round(burst[browser.id].video.avg + burst[browser.id].audio.avg) }}/{{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
                                         </span>
                                         <span
                                             v-tippy="{ placement: 'top', content: 'Shows the graphics performance (frames per second)<br/>of the browser Web Content rendering.' }"
