@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.1.2
+    - IMPROVEMENT: allow 0 audio channels for NDI (for virtual audio cable usage)
+    - IMPROVEMENT: show audio processing CPU bursts, too
+
 - 1.1.1
     - CLEANUP: cleanup source code
 
