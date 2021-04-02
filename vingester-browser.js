@@ -314,7 +314,7 @@ module.exports = class Browser {
             this.mainWin.webContents.send("capture", {
                 buffer: img.bitmap.data,
                 size: {
-                    width: img.bitmap.width,
+                    width:  img.bitmap.width,
                     height: img.bitmap.height
                 },
                 id: this.id
@@ -328,7 +328,6 @@ module.exports = class Browser {
                 const now = this.timeNow()
                 const frame = {
                     /*  base information  */
-                    type:               "video",
                     timecode:           now / BigInt(100),
 
                     /*  type-specific information  */
@@ -375,6 +374,7 @@ module.exports = class Browser {
                 /*  determine frame information  */
                 const sampleRate = parseInt(this.cfg.r)
                 const noChannels = parseInt(this.cfg.C)
+                const bytesForFloat32 = 4
 
                 /*  optionally convert data from Chromium's "interleaved PCM float32 little-endian"
                     to NDI's "planar PCM float32 little-endian" format  */
@@ -395,18 +395,17 @@ module.exports = class Browser {
                 const now = this.timeNow()
                 const frame = {
                     /*  base information  */
-                    type:               "audio",
                     timecode:           now / BigInt(100),
 
                     /*  type-specific information  */
                     sampleRate:         sampleRate,
                     noChannels:         noChannels,
-                    noSamples:          Math.trunc(buffer.byteLength / noChannels / 4),
+                    noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
                     channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
 
                     /*  the data itself  */
                     fourCC:             grandiose.FOURCC_FLTp,
-                    data:               Buffer.from(buffer.buffer)
+                    data:               buffer
                 }
                 await this.ndiSender.audio(frame)
             }
