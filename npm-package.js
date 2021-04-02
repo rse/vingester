@@ -95,6 +95,6 @@ const PromptPW  = require("prompt-password")
         await sign("dist/Vingester-lnx-x64.zip")
     }
 })().catch((err) => {
-    console.log(`** package: ERROR: ${err}`)
+    console.log(`** npm: package: ERROR: ${err}`)
 })
 
