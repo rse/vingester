@@ -26,7 +26,9 @@ module.exports = class Browser {
         this.log             = log
         this.id              = id
         this.cfg             = cfg
+        this.cfgParsed       = {}
         this.mainWin         = mainWin
+        this.update()
         this.reset()
     }
 
@@ -83,8 +85,8 @@ module.exports = class Browser {
 
         /*  determine scale factor and width/height  */
         this.factor = electron.screen.getPrimaryDisplay().scaleFactor
-        const width  = Math.round(parseInt(this.cfg.w) / this.factor)
-        const height = Math.round(parseInt(this.cfg.h) / this.factor)
+        const width  = Math.round(this.cfgParsed.w / this.factor)
+        const height = Math.round(this.cfgParsed.h / this.factor)
 
         /*  determine display  */
         const point = electron.screen.getCursorScreenPoint()
@@ -104,8 +106,8 @@ module.exports = class Browser {
         /*  determine position  */
         let pos = {}
         if (this.cfg.x !== null && this.cfg.y !== null) {
-            const x = Math.round(D.bounds.x + (parseInt(this.cfg.x) / this.factor))
-            const y = Math.round(D.bounds.y + (parseInt(this.cfg.y) / this.factor))
+            const x = Math.round(D.bounds.x + (this.cfgParsed.x / this.factor))
+            const y = Math.round(D.bounds.y + (this.cfgParsed.y / this.factor))
             pos = { x, y }
         }
 
@@ -160,7 +162,7 @@ module.exports = class Browser {
             win.webContents.setAudioMuted(true)
 
         /*  force aspect ratio  */
-        win.setAspectRatio(parseInt(this.cfg.w) / parseInt(this.cfg.h))
+        win.setAspectRatio(this.cfgParsed.w / this.cfgParsed.h)
 
         /*  force always on top  */
         if (this.cfg.p) {
@@ -176,7 +178,7 @@ module.exports = class Browser {
         }
 
         /*  capture and send browser frame content  */
-        this.framerate = (this.cfg.N ? parseInt(this.cfg.f) : D.displayFrequency)
+        this.framerate = (this.cfg.N ? this.cfgParsed.f : D.displayFrequency)
         this.ndiSender = (this.cfg.N ? await grandiose.send({
             name:       title,
             clockVideo: false,
@@ -266,6 +268,18 @@ module.exports = class Browser {
     /*  update browser (after reconfiguration)  */
     update () {
         this.log.info("browser: update")
+
+        /*  pre-parse configuration strings  */
+        this.cfgParsed.w = parseInt(this.cfg.w)
+        this.cfgParsed.h = parseInt(this.cfg.h)
+        this.cfgParsed.x = parseInt(this.cfg.x)
+        this.cfgParsed.y = parseInt(this.cfg.y)
+        this.cfgParsed.f = parseInt(this.cfg.f)
+        this.cfgParsed.o = parseInt(this.cfg.o)
+        this.cfgParsed.r = parseInt(this.cfg.r)
+        this.cfgParsed.C = parseInt(this.cfg.C)
+
+        /*  optionally update already running browser instance  */
         if (this.win !== null) {
             if (this.cfg.D) {
                 if (this.subscribed && !this.cfg.P) {
@@ -367,13 +381,13 @@ module.exports = class Browser {
             /*  send NDI audio frame  */
             if (this.cfg.N) {
                 /*  optionally delay the processing  */
-                const offset = parseInt(this.cfg.o)
+                const offset = this.cfgParsed.o
                 if (offset > 0)
                     await new Promise((resolve) => setTimeout(resolve, offset))
 
                 /*  determine frame information  */
-                const sampleRate = parseInt(this.cfg.r)
-                const noChannels = parseInt(this.cfg.C)
+                const sampleRate = this.cfgParsed.r
+                const noChannels = this.cfgParsed.C
                 const bytesForFloat32 = 4
 
                 /*  optionally convert data from Chromium's "interleaved PCM float32 little-endian"
