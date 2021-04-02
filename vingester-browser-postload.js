@@ -59,11 +59,9 @@
             /*  create media recorder  */
             const recorder = new MediaRecorder(dest.stream, { mimeType: "audio/webm;codecs=pcm" })
             recorder.addEventListener("dataavailable", async (ev) => {
-                if (ev.data.size > 0) {
-                    const ab = await ev.data.arrayBuffer()
-                    const u8 = new Uint8Array(ab, 0, ab.byteLength)
-                    vingester.audioCapture(u8)
-                }
+                const ab = await ev.data.arrayBuffer()
+                const u8 = new Uint8Array(ab, 0, ab.byteLength)
+                vingester.audioCapture(u8)
             })
 
             /*  internal state  */
