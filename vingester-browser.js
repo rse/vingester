@@ -340,6 +340,7 @@ module.exports = class Browser {
             if (this.frames++ > this.ndiFramesToSkip) {
                 this.frames = 0
                 const now = this.timeNow()
+                const bytesForBGRA = 4
                 const frame = {
                     /*  base information  */
                     timecode:           now / BigInt(100),
@@ -351,7 +352,7 @@ module.exports = class Browser {
                     frameRateD:         1000,
                     pictureAspectRatio: image.getAspectRatio(this.factor),
                     frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
-                    lineStrideBytes:    size.width * 4,
+                    lineStrideBytes:    size.width * bytesForBGRA,
 
                     /*  the data itself  */
                     fourCC:             grandiose.FOURCC_BGRA,
