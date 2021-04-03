@@ -57,7 +57,9 @@
             dest.channelInterpretation = "speakers"
 
             /*  create media recorder  */
-            const recorder = new MediaRecorder(dest.stream, { mimeType: "audio/webm;codecs=pcm" })
+            const recorder = new MediaRecorder(dest.stream, {
+                mimeType: "audio/webm; codecs=\"pcm\""
+            })
             recorder.addEventListener("dataavailable", async (ev) => {
                 const ab = await ev.data.arrayBuffer()
                 const u8 = new Uint8Array(ab, 0, ab.byteLength)
