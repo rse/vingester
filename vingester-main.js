@@ -17,6 +17,7 @@ const Store       = require("electron-store")
 const debounce    = require("throttle-debounce").debounce
 const throttle    = require("throttle-debounce").throttle
 const jsYAML      = require("js-yaml")
+const UUID        = require("pure-uuid")
 
 /*  require own modules  */
 const Browser     = require("./vingester-browser.js")
@@ -205,9 +206,13 @@ electron.app.on("ready", async () => {
                 return
             if (result.filePath) {
                 const file = result.filePath
-                const browsers = JSON.parse(store.get("browsers"))
+                const browsers = JSON.parse(store.get("browsers")).map((browser) => {
+                    delete browser.id
+                    return browser
+                })
                 const yaml = jsYAML.dump(browsers)
                 await fs.promises.writeFile(file, yaml, { encoding: "utf8" })
+                log.info(`exported browsers configuration (${browsers.length} browser entries)`)
                 return true
             }
             return false
@@ -227,8 +232,14 @@ electron.app.on("ready", async () => {
             if (result.filePaths && result.filePaths.length === 1) {
                 const file = result.filePaths[0]
                 const yaml = await fs.promises.readFile(file, { encoding: "utf8" })
-                const browsers = jsYAML.load(yaml)
+                const browsers = jsYAML.load(yaml).map((browser) => {
+                    if (browser.id === undefined)
+                        browser.id = new UUID(1).fold(2).map((num) =>
+                            num.toString(16).toUpperCase().padStart(2, "0")).join("")
+                    return browser
+                })
                 store.set("browsers", JSON.stringify(browsers))
+                log.info(`imported browsers configuration (${browsers.length} browser entries)`)
                 return true
             }
             return false
@@ -354,10 +365,6 @@ electron.app.on("ready", async () => {
         log.info("finally showing user interface")
         mainWin.show()
         mainWin.focus()
-    })
-
-    electron.ipcMain.handle("postload-log", async (ev, ...args) => {
-        log.info("browser: postload:", ...args)
     })
 
     /*  load web content  */

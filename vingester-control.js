@@ -25,7 +25,7 @@ else {
 electronLog.transports.remote.level   = false
 electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
 electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
-const log = electronLog.scope("UI")
+const log = electronLog.scope("control")
 log.info("starting up")
 
 const app = Vue.createApp({
@@ -206,7 +206,8 @@ const app = Vue.createApp({
                 this.load()
         },
         async addBrowser () {
-            const id = new UUID(1).format("std")
+            const id = new UUID(1).fold(2).map((num) =>
+                num.toString(16).toUpperCase().padStart(2, "0")).join("")
             const browser = {
                 id,
                 t: "Sample", w: "1280", h: "720", c: "#00ff00",
