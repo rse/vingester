@@ -316,6 +316,8 @@ module.exports = class Browser {
         const offset = this.cfgParsed.O
         if (offset > 0)
             await new Promise((resolve) => setTimeout(resolve, offset))
+        if (this.stopping)
+            return
 
         /*  start time-keeping  */
         const t0 = Date.now()
@@ -396,6 +398,8 @@ module.exports = class Browser {
         const offset = this.cfgParsed.o
         if (offset > 0)
             await new Promise((resolve) => setTimeout(resolve, offset))
+        if (this.stopping)
+            return
 
         /*  start time-keeping  */
         const t0 = Date.now()
