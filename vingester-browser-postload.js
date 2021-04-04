@@ -8,37 +8,48 @@
 (function () {
     /*  capture statistics  */
     const captureStats = () => {
-        /*  at least once send stats initially  */
-        vingester.stat({ fps: 0, memUsed: 0, memAvail: 0 })
-
-        /*  once per animation frame (usually 60 times per second)
-            determine and send statistic information  */
+        /*  determine actual frames per second  */
+        let FPS = 0
+        const FPSwa = []
+        for (let i = 0; i < 60; i++)
+            FPSwa[i] = 0
         let last = null
-        let n = 0
-        const animate = function () {
+        const animate = (now) => {
             if (last === null)
-                last = performance.now()
+                last = now
             else {
-                /*  determine frames per second  */
-                const now = performance.now()
                 const delta = now - last
                 const fps = 1000 / delta
                 last = now
-
-                /*  determine memory usage  */
-                const memory   = performance.memory
-                const memUsed  = memory.usedJSHeapSize  / (1024 * 1024)
-                const memAvail = memory.jsHeapSizeLimit / (1024 * 1024)
-
-                /*  send 2-4 times per second only  */
-                if (n++ > 15) {
-                    n = 0
-                    vingester.stat({ fps, memUsed, memAvail })
+                FPSwa.pop()
+                FPSwa.unshift(fps)
+                let avg = 0
+                let div = 0
+                for (let i = 0; i < FPSwa.length; i++) {
+                    const k = FPSwa.length - i
+                    avg += FPSwa[i] * k
+                    div += k
                 }
+                avg /= div
+                FPS = Math.round(avg)
             }
             requestAnimationFrame(animate)
         }
         requestAnimationFrame(animate)
+
+        /*  determine current memory usage  */
+        let memUsed  = 0
+        let memAvail = 0
+        setInterval(() => {
+            memUsed  = performance.memory.usedJSHeapSize  / (1024 * 1024)
+            memAvail = performance.memory.jsHeapSizeLimit / (1024 * 1024)
+        }, 1000)
+
+        /*  regularly send statistics  */
+        vingester.stat({ id: vingester.cfg.id, fps: FPS, memUsed, memAvail })
+        setInterval(() => {
+            vingester.stat({ id: vingester.cfg.id, fps: FPS, memUsed, memAvail })
+        }, 500)
     }
 
     /*  capture audio from the DOM audio/video elements  */
@@ -150,15 +161,19 @@
             observer.observe(body, { attributes: false, childList: true, subtree: true })
 
             /*  attach to initially existing nodes  */
+            vingester.log("loading")
             const els = document.querySelectorAll("audio, video")
             for (const el of els)
                 attach("load", el)
+            vingester.log("loaded")
 
             /*  pure all existing nodes on document unload  */
             window.addEventListener("beforeunload", () => {
+                vingester.log("unloading")
                 const els = document.querySelectorAll("audio, video")
                 for (const el of els)
                     detach("unload", el)
+                vingester.log("unloaded")
             }, { capture: true })
         }
         catch (ex) {

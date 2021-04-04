@@ -5,20 +5,12 @@
 */
 
 /*  require internal modules  */
-const os          = require("os")
 const fs          = require("fs")
 const path        = require("path")
 
 /*  require external modules  */
 const electron    = require("electron")
-const grandiose   = require("grandiose")
-const Jimp        = require("jimp")
-const pcmconvert  = require("pcm-convert")
-const ebml        = require("ebml")
-const Opus        = require("@discordjs/opus")
-
-/*  require own modules  */
-const util        = require("./vingester-util.js")
+const bluebird    = require("bluebird")
 
 /*  browser abstraction  */
 module.exports = class Browser {
@@ -35,30 +27,19 @@ module.exports = class Browser {
 
     /*  reset internal state  */
     reset () {
-        this.win             = null
+        this.worker          = null
+        this.content         = null
         this.subscribed      = false
-        this.ndiSender       = null
-        this.ndiFramesToSkip = 0
-        this.frames          = 0
-        this.burst1          = null
-        this.burst2          = null
-        this.factor          = 1.0
-        this.framerate       = 30
+        this.subscriber      = null
         this.stopping        = false
-        this.ebmlDecoder     = null
-        this.timeStart       = (BigInt(Date.now()) * BigInt(1e6) - process.hrtime.bigint())
-        this.opusEncoder     = null
     }
 
-    /*  return current time in nanoseconds since Unix epoch time as a BigInt  */
-    timeNow () {
-        return this.timeStart + process.hrtime.bigint()
-    }
-
-    /*  explicitly allow capturing our browser windows  */
+    /*  explicitly allow capturing our content browser windows  */
     static prepare () {
-        const session = electron.session.fromPartition("vingester-browser")
-        const allowedPermissions = [ "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental" ]
+        const session = electron.session.fromPartition("vingester-browser-content")
+        const allowedPermissions = [
+            "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental"
+        ]
         session.setPermissionRequestHandler((webContents, permission, callback) => {
             if (allowedPermissions.includes(permission))
                 callback(true)
@@ -76,20 +57,70 @@ module.exports = class Browser {
 
     /*  check whether browser is running  */
     running () {
-        return (this.win !== null)
+        return (this.content !== null && this.worker !== null)
     }
 
     /*  start browser  */
     async start () {
         this.log.info("browser: start")
 
+        /*  create worker browser window (offscreen only)  */
+        const debug = (typeof process.env.DEBUG !== "undefined")
+        const worker = new electron.BrowserWindow({
+            offscreen:       true,
+            show:            false,
+            width:           200,
+            height:          200,
+            title:           "Vingester Browser Worker",
+            webPreferences: {
+                devTools:                   debug,
+                backgroundThrottling:       false,
+                nodeIntegration:            true,
+                nodeIntegrationInWorker:    true,
+                contextIsolation:           false,
+                enableRemoteModule:         false,
+                disableDialogs:             true,
+                autoplayPolicy:             "no-user-gesture-required",
+                spellcheck:                 false,
+                additionalArguments:        [ JSON.stringify({
+                    ...this.cfg,
+                    ...this.cfgParsed,
+                    mainId: this.mainWin.webContents.id
+                }) ]
+            }
+        })
+        worker.removeMenu()
+        if (debug) {
+            setTimeout(() => {
+                worker.webContents.openDevTools()
+            }, 1000)
+        }
+
+        /*  load content into worker browser window  */
+        await new Promise((resolve, reject) => {
+            worker.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
+                ev.preventDefault()
+                this.log.info("browser: worker: failed")
+                resolve(false)
+            })
+            worker.webContents.once("did-finish-load", (ev) => {
+                ev.preventDefault()
+                this.log.info("browser: worker: started")
+                resolve(true)
+            })
+            worker.loadURL(`file://${path.join(__dirname, "vingester-browser-worker.html")}`)
+        })
+
+        /*  remember worker object  */
+        this.worker = worker
+
         /*  determine window title  */
         const title = (this.cfg.t == null ? "Vingester" : this.cfg.t)
 
         /*  determine scale factor and width/height  */
-        this.factor = electron.screen.getPrimaryDisplay().scaleFactor
-        const width  = Math.round(this.cfgParsed.w / this.factor)
-        const height = Math.round(this.cfgParsed.h / this.factor)
+        const factor = electron.screen.getPrimaryDisplay().scaleFactor
+        const width  = Math.round(this.cfgParsed.w / factor)
+        const height = Math.round(this.cfgParsed.h / factor)
 
         /*  determine display  */
         const point = electron.screen.getCursorScreenPoint()
@@ -109,12 +140,12 @@ module.exports = class Browser {
         /*  determine position  */
         let pos = {}
         if (this.cfg.x !== null && this.cfg.y !== null) {
-            const x = Math.round(D.bounds.x + (this.cfgParsed.x / this.factor))
-            const y = Math.round(D.bounds.y + (this.cfgParsed.y / this.factor))
+            const x = Math.round(D.bounds.x + (this.cfgParsed.x / factor))
+            const y = Math.round(D.bounds.y + (this.cfgParsed.y / factor))
             pos = { x, y }
         }
 
-        /*  create new browser window  */
+        /*  create content browser window (visible or offscreen)  */
         const opts1 = (this.cfg.D ? {
             ...pos,
             width:           width,
@@ -138,11 +169,11 @@ module.exports = class Browser {
         } : {
             offscreen:       true
         })
-        const win = new electron.BrowserWindow({
+        const content = new electron.BrowserWindow({
             ...opts1,
             webPreferences: {
                 ...opts2,
-                partition:                  "vingester-browser",
+                partition:                  "vingester-browser-content",
                 devTools:                   (typeof process.env.DEBUG !== "undefined"),
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
@@ -153,122 +184,118 @@ module.exports = class Browser {
                 disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false,
-                zoomFactor:                 1.0 / this.factor,
-                additionalArguments:        [ JSON.stringify(this.cfg) ]
+                zoomFactor:                 1.0 / factor,
+                additionalArguments:        [ JSON.stringify({
+                    ...this.cfg,
+                    ...this.cfgParsed,
+                    mainId: this.mainWin.webContents.id,
+                    workerId: this.worker.webContents.id
+                }) ]
             }
         })
 
         /*  control audio (for desktop window we unmute, for NDI we mute)  */
         if (this.cfg.D || (this.cfg.N && this.cfgParsed.C === 0))
-            win.webContents.setAudioMuted(false)
+            content.webContents.setAudioMuted(false)
         else
-            win.webContents.setAudioMuted(true)
+            content.webContents.setAudioMuted(true)
 
         /*  force aspect ratio  */
-        win.setAspectRatio(this.cfgParsed.w / this.cfgParsed.h)
+        content.setAspectRatio(this.cfgParsed.w / this.cfgParsed.h)
 
         /*  force always on top  */
         if (this.cfg.p) {
             /*  show window higher than all regular windows, but still behind
                 things like spotlight or the screen saver and allow the window to
                 show over a fullscreen window  */
-            win.setAlwaysOnTop(true, "floating", 1)
-            win.setVisibleOnAllWorkspaces(true)
+            content.setAlwaysOnTop(true, "floating", 1)
+            content.setVisibleOnAllWorkspaces(true)
         }
         else {
-            win.setAlwaysOnTop(false)
-            win.setVisibleOnAllWorkspaces(false)
+            content.setAlwaysOnTop(false)
+            content.setVisibleOnAllWorkspaces(false)
         }
 
         /*  capture and send browser frame content  */
-        this.framerate = (this.cfg.N ? this.cfgParsed.f : D.displayFrequency)
-        this.ndiSender = (this.cfg.N ? await grandiose.send({
-            name:       title,
-            clockVideo: false,
-            clockAudio: false
-        }) : null)
-        this.burst1 = new util.WeightedAverage(this.framerate * 2, this.framerate)
-        this.burst2 = new util.WeightedAverage(this.framerate * 2, this.framerate)
+        const framerate = (this.cfg.N ? this.cfgParsed.f : D.displayFrequency)
         if (this.cfg.D) {
             /*  use Frame subscription where framerate cannot be controlled
                 (but which is available also for onscreen rendering)  */
-            this.ndiFramesToSkip = Math.trunc((D.displayFrequency / this.framerate) - 1)
+            const framesToSkip = Math.trunc((D.displayFrequency / framerate) - 1)
             if (this.cfg.N || this.cfg.P) {
-                win.webContents.beginFrameSubscription(false, (image, dirty) => {
-                    return this.processFrame(image, dirty)
-                })
+                this.subscriber = (image, dirty) => {
+                    if (this.worker === null || this.worker.isDestroyed())
+                        return
+                    const size   = image.getSize()
+                    const ratio  = image.getAspectRatio(factor)
+                    const buffer = image.getBitmap()
+                    this.worker.webContents.send("video-capture",
+                        { size, ratio, buffer, dirty, framesToSkip: framesToSkip })
+                }
+                content.webContents.beginFrameSubscription(false, this.subscriber)
                 this.subscribed = true
             }
         }
         else if (this.cfg.N) {
             /*  use Paint hook where framerate can be controlled
                 (but which is available for offscreen rendering only)  */
-            this.ndiFramesToSkip = 0
-            win.webContents.on("paint", (ev, dirty, image) => {
-                return this.processFrame(image, dirty)
-            })
-            win.webContents.setFrameRate(this.framerate)
-            win.webContents.startPainting()
+            this.subscriber = (ev, dirty, image) => {
+                if (this.worker === null || this.worker.isDestroyed())
+                    return
+                const size   = image.getSize()
+                const ratio  = image.getAspectRatio(factor)
+                const buffer = image.getBitmap()
+                this.worker.webContents.send("video-capture",
+                    { size, ratio, buffer, dirty, framesToSkip: 0 })
+            }
+            content.webContents.on("paint", this.subscriber)
+            content.webContents.setFrameRate(framerate)
+            content.webContents.startPainting()
         }
 
-        /*  capture and send browser audio stream Chromium provides a
-            Webm/Matroska/EBML container with embedded(!) OPUS data,
-            so we here first have to decode the EBML container chunks  */
-        this.ebmlDecoder = new ebml.Decoder()
-        this.ebmlDecoder.on("data", (data) => {
-            /*  we receive EBML chunks...  */
-            if (data[0] === "tag" && data[1].type === "b" && data[1].name === "SimpleBlock") {
-                /*  ...and just process the data chunks containing the OPUS data  */
-                this.processAudio(data[1].payload)
-            }
-        })
-
-        /*  receive statistics and audio capture data  */
-        win.webContents.on("ipc-message", (ev, channel, msg) => {
-            if (channel === "stat" && this.mainWin !== null && !this.mainWin.isDestroyed())
-                this.mainWin.webContents.send("stat", { ...msg, id: this.id })
-            else if (channel === "audio-capture")
-                this.ebmlDecoder.write(Buffer.from(msg.buffer))
-        })
-
         /*  receive console outputs  */
-        win.webContents.on("console-message", (ev, level, message, line, sourceId) => {
+        content.webContents.on("console-message", (ev, level, message, line, sourceId) => {
             const trace = { level, message }
             if (this.mainWin !== null && !this.mainWin.isDestroyed())
                 this.mainWin.webContents.send("trace", { ...trace, id: this.id })
         })
 
         /*  react on window events  */
-        win.on("close", (ev) => {
+        content.on("close", (ev) => {
             ev.preventDefault()
         })
-        win.on("page-title-updated", (ev) => {
+        content.on("page-title-updated", (ev) => {
             ev.preventDefault()
+        })
+
+        /*  provide logging for browser  */
+        content.webContents.on("ipc-message", (ev, channel, ...args) => {
         })
 
         /*  remember window object  */
-        this.win = win
+        this.content = content
 
-        win.webContents.on("dom-ready", async (ev) => {
+        /*  load postload script once the DOM is ready  */
+        content.webContents.on("dom-ready", async (ev) => {
             const code = await fs.promises.readFile(
                 path.join(__dirname, "vingester-browser-postload.js"),
                 { encoding: "utf8" })
-            win.webContents.executeJavaScript(code)
+            content.webContents.executeJavaScript(code)
         })
 
         /*  finally load the Web Content  */
         return new Promise((resolve, reject) => {
-            win.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
+            content.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
                 ev.preventDefault()
-                this.log.info("browser: failed")
+                this.log.info("browser: content: failed")
                 resolve(false)
             })
-            win.webContents.once("did-finish-load", (ev) => {
+            content.webContents.once("did-finish-load", (ev) => {
                 ev.preventDefault()
-                this.log.info("browser: started")
+                this.log.info("browser: content: started")
                 resolve(true)
             })
-            win.loadURL(this.cfg.u)
+            content.loadURL(this.cfg.u)
         })
     }
 
@@ -288,217 +315,63 @@ module.exports = class Browser {
         this.cfgParsed.C = parseInt(this.cfg.C)
 
         /*  optionally update already running browser instance  */
-        if (this.win !== null) {
+        if (this.content !== null) {
             if (this.cfg.D) {
                 if (this.subscribed && !this.cfg.P) {
-                    this.win.webContents.endFrameSubscription()
+                    this.content.webContents.endFrameSubscription()
                     this.subscribed = false
                 }
                 else if (!this.subscribed && this.cfg.P) {
-                    this.win.webContents.beginFrameSubscription(false, (image, dirty) => {
-                        return this.processFrame(image, dirty)
-                    })
+                    this.content.webContents.beginFrameSubscription(false, this.subscriber)
                     this.subscribed = true
                 }
             }
         }
-
-        /*  reset OPUS encoder in case the sample rate or channels have changed  */
-        this.opusEncoder = null
-    }
-
-    /*  process a single captured frame  */
-    async processFrame (image, dirty) {
-        if (!(this.cfg.N || this.cfg.P) || this.stopping)
-            return
-
-        /*  optionally delay the processing  */
-        const offset = this.cfgParsed.O
-        if (offset > 0)
-            await new Promise((resolve) => setTimeout(resolve, offset))
-        if (this.stopping)
-            return
-
-        /*  start time-keeping  */
-        const t0 = Date.now()
-
-        /*  fetch image  */
-        const size   = image.getSize()
-        const buffer = image.getBitmap()
-
-        /*  send preview capture frame  */
-        if (this.cfg.P) {
-            const img = await new Promise((resolve, reject) => {
-                new Jimp({ data: buffer, width: size.width, height: size.height }, (err, image) => {
-                    if (err)
-                        reject(err)
-                    else
-                        resolve(image)
-                })
-            })
-            img.resize(128, 72, Jimp.RESIZE_BILINEAR)
-            if (os.endianness() === "LE") {
-                /*  convert from BGRA (chrome "paint") to RGBA (canvas) if necessary  */
-                img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
-                    const B = this.bitmap.data[idx]
-                    this.bitmap.data[idx] = this.bitmap.data[idx + 2]
-                    this.bitmap.data[idx + 2] = B
-                })
-            }
-            this.mainWin.webContents.send("capture", {
-                buffer: img.bitmap.data,
-                size: {
-                    width:  img.bitmap.width,
-                    height: img.bitmap.height
-                },
-                id: this.id
-            })
-        }
-
-        /*  send NDI video frame  */
-        if (this.cfg.N) {
-            if (this.frames++ > this.ndiFramesToSkip) {
-                this.frames = 0
-                const now = this.timeNow()
-                const bytesForBGRA = 4
-                const frame = {
-                    /*  base information  */
-                    timecode:           now / BigInt(100),
-
-                    /*  type-specific information  */
-                    xres:               size.width,
-                    yres:               size.height,
-                    frameRateN:         this.framerate * 1000,
-                    frameRateD:         1000,
-                    pictureAspectRatio: image.getAspectRatio(this.factor),
-                    frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
-                    lineStrideBytes:    size.width * bytesForBGRA,
-
-                    /*  the data itself  */
-                    fourCC:             grandiose.FOURCC_BGRA,
-                    data:               buffer
-                }
-                await this.ndiSender.video(frame)
-            }
-        }
-
-        /*  end time-keeping  */
-        const t1 = Date.now()
-        this.burst1.record(t1 - t0, (stat) => {
-            this.mainWin.webContents.send("burst", { ...stat, type: "video", id: this.id })
-        })
-    }
-
-    /*  process a single captured audio data  */
-    async processAudio (buffer) {
-        if (!(this.cfg.N) || this.stopping)
-            return
-
-        /*  optionally delay the processing  */
-        const offset = this.cfgParsed.o
-        if (offset > 0)
-            await new Promise((resolve) => setTimeout(resolve, offset))
-        if (this.stopping)
-            return
-
-        /*  start time-keeping  */
-        const t0 = Date.now()
-
-        /*  send NDI audio frame  */
-        if (this.cfg.N) {
-            /*  determine frame information  */
-            const sampleRate = this.cfgParsed.r
-            const noChannels = this.cfgParsed.C
-            const bytesForFloat32 = 4
-
-            /*  decode raw OPUS packets into raw
-                PCM/interleaved/signed-int16/little-endian data  */
-            if (this.opusEncoder === null)
-                this.opusEncoder = new Opus.OpusEncoder(sampleRate, noChannels)
-            buffer = this.opusEncoder.decode(buffer)
-
-            /*  convert from PCM/signed-16-bit/little-endian data
-                to NDI's "PCM/planar/signed-float32/little-endian  */
-            buffer = pcmconvert(buffer, {
-                channels:    noChannels,
-                dtype:       "int16",
-                endianness:  "le",
-                interleaved: true
-            }, {
-                dtype:       "float32",
-                endianness:  "le",
-                interleaved: false
-            })
-
-            /*  create frame  */
-            const now = this.timeNow()
-            const frame = {
-                /*  base information  */
-                timecode:           now / BigInt(100),
-
-                /*  type-specific information  */
-                sampleRate:         sampleRate,
-                noChannels:         noChannels,
-                noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
-                channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
-
-                /*  the data itself  */
-                fourCC:             grandiose.FOURCC_FLTp,
-                data:               buffer
-            }
-            await this.ndiSender.audio(frame)
-        }
-
-        /*  end time-keeping  */
-        const t1 = Date.now()
-        this.burst2.record(t1 - t0, (stat) => {
-            this.mainWin.webContents.send("burst", { ...stat, type: "audio", id: this.id })
-        })
     }
 
     /*  reload browser  */
     reload () {
         this.log.info("browser: reload")
-        if (this.win === null)
+        if (this.content === null)
             throw new Error("still not started")
-        this.win.reload()
+        this.content.reload()
     }
 
     /*  stop browser  */
     async stop () {
+        /*  stop just once  */
         if (this.stopping)
             return
-        if (this.win === null)
-            throw new Error("still not started")
-
-        /*  set flag and wait until processFrame is at least done one last time  */
-        this.log.info("browser: stop")
         this.stopping = true
-        await new Promise((resolve) => {
-            setTimeout(() => { resolve() }, 50)
-        })
 
-        /*  destroy OPUS encoder  */
-        if (this.opusEncoder !== null)
-            this.opusEncoder = null
+        /*  sanity check situation  */
+        if (this.content === null || this.worker === null)
+            throw new Error("browser still not started")
 
-        /*  destroy NDI sender  */
-        if (this.ndiSender !== null)
-            await this.ndiSender.destroy()
+        /*  notify worker and wait until its processVideo/processAudio
+            callbacks were at least done one last time  */
+        this.log.info("browser: stop")
+        this.worker.webContents.send("browser-worker-stop")
+        await new Promise((resolve) => setTimeout(resolve, 100))
 
-        /*  destroy browser  */
-        this.win.close()
-        await new Promise((resolve) => {
-            setTimeout(() => {
-                if (!this.win.isDestroyed())
-                    this.win.destroy()
-                resolve()
-            }, 1000)
-        })
+        /*  destroy content and worker browsers the soft way  */
+        const p1 = new Promise((resolve) => this.worker.once("closed",  resolve))
+        const p2 = new Promise((resolve) => this.content.once("closed", resolve))
+        const p3 = new Promise((resolve) => setTimeout(resolve, 1000))
+        this.worker.close()
+        this.content.close()
+        await bluebird.any([ Promise.all([ p1, p2 ]), p3 ])
+
+        /*  destroy content and worker browsers the hard way  */
+        if (!this.worker.isDestroyed())
+            this.worker.destroy()
+        if (!this.content.isDestroyed())
+            this.content.destroy()
 
         /*  reset the internal state  */
         this.reset()
         this.log.info("browser: stopped")
+        return true
     }
 }
 

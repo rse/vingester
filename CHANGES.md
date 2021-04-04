@@ -2,6 +2,12 @@
 Changes
 =======
 
+- 1.3.0
+    - IMPROVEMENT: move NDI video/audio encoding from main process to dedicated per-browser processes
+    - IMPROVEMENT: directly communicate between processes instead of relaying via main process
+    - IMPROVEMENT: improve FPS calculation in browsers
+    - CLEANUP: use more consistent debug logging
+
 - 1.2.0
     - IMPROVEMENT: from internal PCM-only to OPUS/PCM processing to get rid of audio distortions
     - EXTENSION: allow NDI video frames to be delayed similar to the audio sample set
