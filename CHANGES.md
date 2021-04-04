@@ -6,6 +6,7 @@ Changes
     - IMPROVEMENT: move NDI video/audio encoding from main process to dedicated per-browser processes
     - IMPROVEMENT: directly communicate between processes instead of relaying via main process
     - IMPROVEMENT: improve FPS calculation in browsers
+    - IMPROVEMENT: parallelize start/reload/stop of all browsers
     - CLEANUP: use more consistent debug logging
 
 - 1.2.0

@@ -300,21 +300,27 @@ electron.app.on("ready", async () => {
         }
         else if (action === "start-all") {
             /*  start all browsers  */
+            const p = []
             for (const id of Object.keys(browsers))
                 if (!browsers[id].running())
-                    await control("start", id)
+                    p.push(control("start", id))
+            await Promise.all(p)
         }
         else if (action === "reload-all") {
             /*  reload all browsers  */
+            const p = []
             for (const id of Object.keys(browsers))
                 if (browsers[id].running())
-                    await control("reload", id)
+                    p.push(control("reload", id))
+            await Promise.all(p)
         }
         else if (action === "stop-all") {
             /*  stop all browsers  */
+            const p = []
             for (const id of Object.keys(browsers))
                 if (browsers[id].running())
-                    await control("stop", id)
+                    p.push(control("stop", id))
+            await Promise.all(p)
         }
         else if (action === "start") {
             /*  start a particular browser  */
