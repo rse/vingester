@@ -465,7 +465,7 @@
                                             v-bind:class="{ disabled: running[browser.id] }"
                                             v-bind:disabled="running[browser.id]">
                                     </div>
-                                    <div class="label">ACC:</div>
+                                    <div class="label">AC:</div>
                                     <div class="field field-channels"
                                         v-tippy="{ placement: 'top', content: 'Number of channels for the NDI audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
                                         <input type="text" v-model="browser.C" v-on:keyup="changed(browser)"
@@ -474,12 +474,23 @@
                                     </div>
                                     <div class="label">SPS:</div>
                                     <div class="field field-sps"
-                                        v-tippy="{ placement: 'top', content: 'Samples per second for the NDI audio-stream.<br/>Usually you want to use 44100 or 48000.' }">
-                                        <input type="text" v-model="browser.r" v-on:keyup="changed(browser)"
+                                        v-tippy="{ placement: 'top', content: 'Samples per second for the NDI audio-stream.<br/>Only sample rates of underlying OPUS technology supported.' }">
+                                        <div class="toggle" v-on:click="toggle(browser, 'r', [ 8000, 12000, 16000, 24000, 48000 ])">
+                                            <div class="toggle-option" v-bind:class="{ selected: browser.r === 8000 }">8kHz</div>
+                                            <div class="toggle-option" v-bind:class="{ selected: browser.r === 12000 }">12kHz</div>
+                                            <div class="toggle-option" v-bind:class="{ selected: browser.r === 16000 }">16kHz</div>
+                                            <div class="toggle-option" v-bind:class="{ selected: browser.r === 24000 }">24kHz</div>
+                                            <div class="toggle-option" v-bind:class="{ selected: browser.r === 48000 }">48kHz</div>
+                                        </div>
+                                    </div>
+                                    <div class="label">Delay:</div>
+                                    <div class="field field-delay"
+                                        v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the NDI video-stream.<br/>Usually you want to use 0 or up to about 150.' }">
+                                        <input type="text" v-model="browser.O" v-on:keyup="changed(browser)"
                                             v-bind:class="{ disabled: running[browser.id] }"
                                             v-bind:disabled="running[browser.id]">
                                     </div>
-                                    <div class="label">Delay:</div>
+                                    <div class="sep">/</div>
                                     <div class="field field-delay"
                                         v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the NDI audio-stream.<br/>Usually you want to use 0 or up to about 150.' }">
                                         <input type="text" v-model="browser.o" v-on:keyup="changed(browser)"

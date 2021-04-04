@@ -572,6 +572,9 @@ body {
             &.field-mode .toggle {
                 width: 110px;
             }
+            &.field-sps .toggle {
+                width: 40px;
+            }
             &.field-fps input {
                 width: 30px;
             }
@@ -579,7 +582,7 @@ body {
                 width: 20px;
             }
             &.field-delay input {
-                width: 30px;
+                width: 25px;
             }
             &.field-start,
             &.field-reload,

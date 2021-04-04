@@ -56,9 +56,17 @@
             dest.channelCountMode      = "explicit"
             dest.channelInterpretation = "speakers"
 
-            /*  create media recorder  */
+            /*  create media recorder to create an WebM/OPUS stream as the output.
+                NOTICE: we could use the Chromium-supported "audio/webm; codecs=\"pcm\"" here
+                and receive lossless PCM/interleaved/signed-float32/little-endian and then during
+                later processing completely avoid the lossy OPUS to lossless PCM decoding.
+                Unfortunately, the MediaEncoder in Chromium (at least until version 90) causes
+                noticable distortions in the audio output for lossless PCM encoding while for its
+                standard OPUS encoding it does not. So, we intentionally have to stay with OPUS here,
+                even if it causes extra decoding performance and theoretically (but not noticable)
+                is also a lossy intermediate step.  */
             const recorder = new MediaRecorder(dest.stream, {
-                mimeType: "audio/webm; codecs=\"pcm\""
+                mimeType: "audio/webm; codecs=\"opus\""
             })
             recorder.addEventListener("dataavailable", async (ev) => {
                 const ab = await ev.data.arrayBuffer()

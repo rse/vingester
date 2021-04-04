@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.2.0
+    - IMPROVEMENT: from internal PCM-only to OPUS/PCM processing to get rid of audio distortions
+    - EXTENSION: allow NDI video frames to be delayed similar to the audio sample set
+
 - 1.1.2
     - IMPROVEMENT: allow 0 audio channels for NDI (for virtual audio cable usage)
     - IMPROVEMENT: show audio processing CPU bursts, too

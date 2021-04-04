@@ -15,6 +15,7 @@ const grandiose   = require("grandiose")
 const Jimp        = require("jimp")
 const pcmconvert  = require("pcm-convert")
 const ebml        = require("ebml")
+const Opus        = require("@discordjs/opus")
 
 /*  require own modules  */
 const util        = require("./vingester-util.js")
@@ -46,6 +47,7 @@ module.exports = class Browser {
         this.stopping        = false
         this.ebmlDecoder     = null
         this.timeStart       = (BigInt(Date.now()) * BigInt(1e6) - process.hrtime.bigint())
+        this.opusEncoder     = null
     }
 
     /*  return current time in nanoseconds since Unix epoch time as a BigInt  */
@@ -209,13 +211,16 @@ module.exports = class Browser {
             win.webContents.startPainting()
         }
 
-        /*  capture and send browser audio stream
-            Chromium provides a Webm/Matroska/EBML container with
-            embedded(!) "interleaved PCM float32 little-endian" data,
+        /*  capture and send browser audio stream Chromium provides a
+            Webm/Matroska/EBML container with embedded(!) OPUS data,
             so we here first have to decode the EBML container chunks  */
         this.ebmlDecoder = new ebml.Decoder()
-        this.ebmlDecoder.on("data", (chunk) => {
-            this.processAudio(chunk)
+        this.ebmlDecoder.on("data", (data) => {
+            /*  we receive EBML chunks...  */
+            if (data[0] === "tag" && data[1].type === "b" && data[1].name === "SimpleBlock") {
+                /*  ...and just process the data chunks containing the OPUS data  */
+                this.processAudio(data[1].payload)
+            }
         })
 
         /*  receive statistics and audio capture data  */
@@ -277,6 +282,7 @@ module.exports = class Browser {
         this.cfgParsed.x = parseInt(this.cfg.x)
         this.cfgParsed.y = parseInt(this.cfg.y)
         this.cfgParsed.f = parseInt(this.cfg.f)
+        this.cfgParsed.O = parseInt(this.cfg.O)
         this.cfgParsed.o = parseInt(this.cfg.o)
         this.cfgParsed.r = parseInt(this.cfg.r)
         this.cfgParsed.C = parseInt(this.cfg.C)
@@ -296,12 +302,22 @@ module.exports = class Browser {
                 }
             }
         }
+
+        /*  reset OPUS encoder in case the sample rate or channels have changed  */
+        this.opusEncoder = null
     }
 
     /*  process a single captured frame  */
     async processFrame (image, dirty) {
         if (!(this.cfg.N || this.cfg.P) || this.stopping)
             return
+
+        /*  optionally delay the processing  */
+        const offset = this.cfgParsed.O
+        if (offset > 0)
+            await new Promise((resolve) => setTimeout(resolve, offset))
+
+        /*  start time-keeping  */
         const t0 = Date.now()
 
         /*  fetch image  */
@@ -364,7 +380,7 @@ module.exports = class Browser {
             }
         }
 
-        /*  record processing time  */
+        /*  end time-keeping  */
         const t1 = Date.now()
         this.burst1.record(t1 - t0, (stat) => {
             this.mainWin.webContents.send("burst", { ...stat, type: "video", id: this.id })
@@ -372,64 +388,64 @@ module.exports = class Browser {
     }
 
     /*  process a single captured audio data  */
-    async processAudio (data) {
+    async processAudio (buffer) {
         if (!(this.cfg.N) || this.stopping)
             return
+
+        /*  optionally delay the processing  */
+        const offset = this.cfgParsed.o
+        if (offset > 0)
+            await new Promise((resolve) => setTimeout(resolve, offset))
+
+        /*  start time-keeping  */
         const t0 = Date.now()
 
-        /*  we here receive EBML chunks  */
-        if (data[0] === "tag" && data[1].type === "b" && data[1].name === "SimpleBlock") {
-            /*  and just extract the data chunks containing the PCM data  */
-            let buffer = data[1].payload
+        /*  send NDI audio frame  */
+        if (this.cfg.N) {
+            /*  determine frame information  */
+            const sampleRate = this.cfgParsed.r
+            const noChannels = this.cfgParsed.C
+            const bytesForFloat32 = 4
 
-            /*  send NDI audio frame  */
-            if (this.cfg.N) {
-                /*  optionally delay the processing  */
-                const offset = this.cfgParsed.o
-                if (offset > 0)
-                    await new Promise((resolve) => setTimeout(resolve, offset))
+            /*  decode raw OPUS packets into raw
+                PCM/interleaved/signed-int16/little-endian data  */
+            if (this.opusEncoder === null)
+                this.opusEncoder = new Opus.OpusEncoder(sampleRate, noChannels)
+            buffer = this.opusEncoder.decode(buffer)
 
-                /*  determine frame information  */
-                const sampleRate = this.cfgParsed.r
-                const noChannels = this.cfgParsed.C
-                const bytesForFloat32 = 4
+            /*  convert from PCM/signed-16-bit/little-endian data
+                to NDI's "PCM/planar/signed-float32/little-endian  */
+            buffer = pcmconvert(buffer, {
+                channels:    noChannels,
+                dtype:       "int16",
+                endianness:  "le",
+                interleaved: true
+            }, {
+                dtype:       "float32",
+                endianness:  "le",
+                interleaved: false
+            })
 
-                /*  optionally convert data from Chromium's "interleaved PCM float32 little-endian"
-                    to NDI's "planar PCM float32 little-endian" format  */
-                if (noChannels > 1) {
-                    buffer = pcmconvert(buffer, {
-                        channels:    noChannels,
-                        dtype:       "float32",
-                        endianness:  "le",
-                        interleaved: true
-                    }, {
-                        dtype:       "float32",
-                        endianness:  "le",
-                        interleaved: false
-                    })
-                }
+            /*  create frame  */
+            const now = this.timeNow()
+            const frame = {
+                /*  base information  */
+                timecode:           now / BigInt(100),
 
-                /*  create frame  */
-                const now = this.timeNow()
-                const frame = {
-                    /*  base information  */
-                    timecode:           now / BigInt(100),
+                /*  type-specific information  */
+                sampleRate:         sampleRate,
+                noChannels:         noChannels,
+                noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
+                channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
 
-                    /*  type-specific information  */
-                    sampleRate:         sampleRate,
-                    noChannels:         noChannels,
-                    noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
-                    channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
-
-                    /*  the data itself  */
-                    fourCC:             grandiose.FOURCC_FLTp,
-                    data:               buffer
-                }
-                await this.ndiSender.audio(frame)
+                /*  the data itself  */
+                fourCC:             grandiose.FOURCC_FLTp,
+                data:               buffer
             }
+            await this.ndiSender.audio(frame)
         }
 
-        /*  record processing time  */
+        /*  end time-keeping  */
         const t1 = Date.now()
         this.burst2.record(t1 - t0, (stat) => {
             this.mainWin.webContents.send("burst", { ...stat, type: "audio", id: this.id })
@@ -457,6 +473,10 @@ module.exports = class Browser {
         await new Promise((resolve) => {
             setTimeout(() => { resolve() }, 50)
         })
+
+        /*  destroy OPUS encoder  */
+        if (this.opusEncoder !== null)
+            this.opusEncoder = null
 
         /*  destroy NDI sender  */
         if (this.ndiSender !== null)
