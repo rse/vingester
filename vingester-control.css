@@ -699,9 +699,9 @@ body {
             flex-direction: row;
             justify-content: flex-end;
             .stat-item {
-                width: 85px;
-                min-width: 85px;
-                max-width: 85px;
+                width: 90px;
+                min-width: 90px;
+                max-width: 90px;
                 height: 20px;
                 text-align: left;
                 font-size: 9pt;
