@@ -90,7 +90,7 @@ electron.app.on("ready", async () => {
 
     /*  create main window  */
     log.info("creating control user interface")
-    const mainWin = new electron.BrowserWindow({
+    const control = new electron.BrowserWindow({
         ...pos,
         show:            false,
         width:           w,
@@ -112,25 +112,25 @@ electron.app.on("ready", async () => {
             spellcheck:                 false
         }
     })
-    mainWin.removeMenu()
+    control.removeMenu()
     if (typeof process.env.DEBUG !== "undefined") {
         setTimeout(() => {
-            mainWin.webContents.openDevTools()
+            control.webContents.openDevTools()
         }, 1000)
     }
 
     /*  persist main window position and size  */
     const updateBounds = () => {
-        const bounds = mainWin.getBounds()
+        const bounds = control.getBounds()
         store.set("control.x", bounds.x)
         store.set("control.y", bounds.y)
         store.set("control.w", bounds.width)
         store.set("control.h", bounds.height)
     }
-    mainWin.on("resize", debounce(1000, () => {
+    control.on("resize", debounce(1000, () => {
         updateBounds()
     }))
-    mainWin.on("move", debounce(1000, () => {
+    control.on("move", debounce(1000, () => {
         updateBounds()
     }))
 
@@ -138,51 +138,51 @@ electron.app.on("ready", async () => {
     let minimized  = false
     let maximized  = false
     let fullscreen = false
-    mainWin.on("minimize",          () => { minimized  = true  })
-    mainWin.on("restore",           () => { minimized  = false })
-    mainWin.on("maximize",          () => { maximized  = true  })
-    mainWin.on("unmaximize",        () => { maximized  = false })
-    mainWin.on("enter-full-screen", () => { fullscreen = true  })
-    mainWin.on("leave-full-screen", () => { fullscreen = false })
+    control.on("minimize",          () => { minimized  = true  })
+    control.on("restore",           () => { minimized  = false })
+    control.on("maximize",          () => { maximized  = true  })
+    control.on("unmaximize",        () => { maximized  = false })
+    control.on("enter-full-screen", () => { fullscreen = true  })
+    control.on("leave-full-screen", () => { fullscreen = false })
     electron.ipcMain.handle("window-control", async (ev, action) => {
         if (action === "minimize") {
             if (minimized) {
-                mainWin.restore()
-                mainWin.focus()
+                control.restore()
+                control.focus()
             }
             else
-                mainWin.minimize()
+                control.minimize()
         }
         else if (action === "maximize") {
             if (fullscreen)
-                mainWin.setFullScreen(false)
+                control.setFullScreen(false)
             if (maximized)
-                mainWin.unmaximize()
+                control.unmaximize()
             else
-                mainWin.maximize()
+                control.maximize()
         }
         else if (action === "fullscreen") {
             if (maximized)
-                mainWin.unmaximize()
+                control.unmaximize()
             if (fullscreen)
-                mainWin.setFullScreen(false)
+                control.setFullScreen(false)
             else
-                mainWin.setFullScreen(true)
+                control.setFullScreen(true)
         }
         else if (action === "standard") {
             if (fullscreen)
-                mainWin.setFullScreen(false)
+                control.setFullScreen(false)
             else if (maximized)
-                mainWin.unmaximize()
-            mainWin.setSize(820, 420)
+                control.unmaximize()
+            control.setSize(820, 420)
         }
         else if (action === "close") {
             if (fullscreen)
-                mainWin.setFullScreen(false)
+                control.setFullScreen(false)
             else if (maximized)
-                mainWin.unmaximize()
+                control.unmaximize()
             setTimeout(() => {
-                mainWin.close()
+                control.close()
             }, 100)
         }
     })
@@ -252,24 +252,24 @@ electron.app.on("ready", async () => {
     electron.ipcMain.handle("update-check", async () => {
         /*  check whether we are updateable at all  */
         const updateable = await update.updateable()
-        mainWin.webContents.send("update-updateable", updateable)
+        control.webContents.send("update-updateable", updateable)
 
         /*  check for update versions  */
         const versions = await update.check(throttle(1000 / 60, (task, completed) => {
-            mainWin.webContents.send("update-progress", { task, completed })
+            control.webContents.send("update-progress", { task, completed })
         }))
         setTimeout(() => {
-            mainWin.webContents.send("update-progress", null)
+            control.webContents.send("update-progress", null)
         }, 2 * (1000 / 60))
-        mainWin.webContents.send("update-versions", versions)
+        control.webContents.send("update-versions", versions)
     })
 
     /*  handle update request from UI  */
     electron.ipcMain.handle("update-to-version", (event, version) => {
         update.update(version, throttle(1000 / 60, (task, completed) => {
-            mainWin.webContents.send("update-progress", { task, completed })
+            control.webContents.send("update-progress", { task, completed })
         })).catch((err) => {
-            mainWin.webContents.send("update-error", err)
+            control.webContents.send("update-error", err)
             log.error(`update: ERROR: ${err}`)
         })
     })
@@ -283,10 +283,10 @@ electron.app.on("ready", async () => {
     /*  provide IPC hooks for browsers control  */
     log.info("provide IPC hooks for browser control")
     const browsers = {}
-    const control = async (action, id, cfg) => {
+    const controlBrowser = async (action, id, cfg) => {
         if (action === "add") {
             /*  add browser configuration  */
-            browsers[id] = new Browser(log, id, cfg, mainWin)
+            browsers[id] = new Browser(log, id, cfg, control)
         }
         else if (action === "mod") {
             /*  modify browser configuration  */
@@ -303,7 +303,7 @@ electron.app.on("ready", async () => {
             const p = []
             for (const id of Object.keys(browsers))
                 if (!browsers[id].running())
-                    p.push(control("start", id))
+                    p.push(controlBrowser("start", id))
             await Promise.all(p)
         }
         else if (action === "reload-all") {
@@ -311,7 +311,7 @@ electron.app.on("ready", async () => {
             const p = []
             for (const id of Object.keys(browsers))
                 if (browsers[id].running())
-                    p.push(control("reload", id))
+                    p.push(controlBrowser("reload", id))
             await Promise.all(p)
         }
         else if (action === "stop-all") {
@@ -319,7 +319,7 @@ electron.app.on("ready", async () => {
             const p = []
             for (const id of Object.keys(browsers))
                 if (browsers[id].running())
-                    p.push(control("stop", id))
+                    p.push(controlBrowser("stop", id))
             await Promise.all(p)
         }
         else if (action === "start") {
@@ -329,12 +329,12 @@ electron.app.on("ready", async () => {
                 throw new Error("invalid browser id")
             if (browser.running())
                 throw new Error("browser already running")
-            mainWin.webContents.send("browser-start", id)
+            control.webContents.send("browser-start", id)
             const success = await browser.start()
             if (success)
-                mainWin.webContents.send("browser-started", id)
+                control.webContents.send("browser-started", id)
             else {
-                mainWin.webContents.send("browser-failed", id)
+                control.webContents.send("browser-failed", id)
                 browser.stop()
             }
         }
@@ -345,9 +345,9 @@ electron.app.on("ready", async () => {
                 throw new Error("invalid browser id")
             if (!browser.running())
                 throw new Error("browser still not running")
-            mainWin.webContents.send("browser-reload", id)
+            control.webContents.send("browser-reload", id)
             browser.reload()
-            mainWin.webContents.send("browser-reloaded", id)
+            control.webContents.send("browser-reloaded", id)
         }
         else if (action === "stop") {
             /*  stop a particular browser  */
@@ -356,27 +356,27 @@ electron.app.on("ready", async () => {
                 throw new Error("invalid browser id")
             if (!browser.running())
                 throw new Error("browser still not running")
-            mainWin.webContents.send("browser-stop", id)
+            control.webContents.send("browser-stop", id)
             await browser.stop()
-            mainWin.webContents.send("browser-stopped", id)
+            control.webContents.send("browser-stopped", id)
         }
     }
     electron.ipcMain.handle("control", (ev, action, id, browser) => {
         browser = browser !== undefined && browser !== null ? JSON.parse(browser) : undefined
-        return control(action, id, browser)
+        return controlBrowser(action, id, browser)
     })
 
     /*  show the window once the DOM was mounted  */
     electron.ipcMain.handle("control-mounted", (ev) => {
         log.info("finally showing user interface")
-        mainWin.show()
-        mainWin.focus()
+        control.show()
+        control.focus()
     })
 
     /*  load web content  */
     log.info("loading control user interface")
-    mainWin.loadURL(`file://${path.join(__dirname, "vingester-control.html")}`)
-    mainWin.webContents.on("did-fail-load", (ev) => {
+    control.loadURL(`file://${path.join(__dirname, "vingester-control.html")}`)
+    control.webContents.on("did-fail-load", (ev) => {
         electron.app.quit()
     })
 
@@ -398,9 +398,9 @@ electron.app.on("ready", async () => {
 
     /*  toggle GPU hardware acceleration  */
     log.info("send GPU status and provide IPC hook for GPU status change")
-    mainWin.webContents.send("gpu", !!store.get("gpu"))
+    control.webContents.send("gpu", !!store.get("gpu"))
     electron.ipcMain.handle("gpu", async (ev, gpu) => {
-        const choice = electron.dialog.showMessageBoxSync(mainWin, {
+        const choice = electron.dialog.showMessageBoxSync(control, {
             message: `${gpu ? "Enabling" : "Disabling"} GPU hardware acceleration ` +
                 "requires an application restart.",
             type: "question",
@@ -410,7 +410,7 @@ electron.app.on("ready", async () => {
         if (choice === 1)
             return
         store.set("gpu", gpu)
-        mainWin.webContents.send("gpu", gpu)
+        control.webContents.send("gpu", gpu)
         electron.app.relaunch()
         electron.app.exit()
     })
@@ -426,22 +426,22 @@ electron.app.on("ready", async () => {
         for (const metric of metrics)
             usage += metric.cpu.percentCPUUsage
         usages.record(usage, (stat) => {
-            mainWin.webContents.send("usage", stat.avg)
+            control.webContents.send("usage", stat.avg)
         })
     }, 100)
 
     /*  gracefully shutdown application  */
     log.info("hook into control user interface window states")
-    mainWin.on("close", async (ev) => {
+    control.on("close", async (ev) => {
         log.info("shuting down")
         ev.preventDefault()
         if (timer !== null) {
             clearTimeout(timer)
             timer = null
         }
-        await control("stop-all", null)
+        await controlBrowser("stop-all", null)
         updateBounds()
-        mainWin.destroy()
+        control.destroy()
     })
     electron.app.on("window-all-closed", () => {
         electron.app.quit()

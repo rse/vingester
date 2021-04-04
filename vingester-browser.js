@@ -15,12 +15,12 @@ const bluebird    = require("bluebird")
 /*  browser abstraction  */
 module.exports = class Browser {
     /*  create new browser  */
-    constructor (log, id, cfg, mainWin) {
+    constructor (log, id, cfg, control) {
         this.log             = log
         this.id              = id
         this.cfg             = cfg
         this.cfgParsed       = {}
-        this.mainWin         = mainWin
+        this.control         = control
         this.update()
         this.reset()
     }
@@ -85,7 +85,7 @@ module.exports = class Browser {
                 additionalArguments:        [ JSON.stringify({
                     ...this.cfg,
                     ...this.cfgParsed,
-                    mainId: this.mainWin.webContents.id
+                    controlId: this.control.webContents.id
                 }) ]
             }
         })
@@ -188,7 +188,7 @@ module.exports = class Browser {
                 additionalArguments:        [ JSON.stringify({
                     ...this.cfg,
                     ...this.cfgParsed,
-                    mainId: this.mainWin.webContents.id,
+                    controlId: this.control.webContents.id,
                     workerId: this.worker.webContents.id
                 }) ]
             }
@@ -256,8 +256,8 @@ module.exports = class Browser {
         /*  receive console outputs  */
         content.webContents.on("console-message", (ev, level, message, line, sourceId) => {
             const trace = { level, message }
-            if (this.mainWin !== null && !this.mainWin.isDestroyed())
-                this.mainWin.webContents.send("trace", { ...trace, id: this.id })
+            if (this.control !== null && !this.control.isDestroyed())
+                this.control.webContents.send("trace", { ...trace, id: this.id })
         })
 
         /*  react on window events  */

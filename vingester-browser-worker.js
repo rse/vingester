@@ -147,7 +147,7 @@ class BrowserWorker {
                     this.bitmap.data[idx + 2] = B
                 })
             }
-            electron.ipcRenderer.sendTo(this.cfg.mainId, "capture", {
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "capture", {
                 buffer: img.bitmap.data,
                 size: {
                     width:  img.bitmap.width,
@@ -187,7 +187,7 @@ class BrowserWorker {
         /*  end time-keeping  */
         const t1 = Date.now()
         this.burst1.record(t1 - t0, (stat) => {
-            electron.ipcRenderer.sendTo(this.cfg.mainId, "burst",
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "burst",
                 { ...stat, type: "video", id: this.id })
         })
     }
@@ -255,7 +255,7 @@ class BrowserWorker {
         /*  end time-keeping  */
         const t1 = Date.now()
         this.burst2.record(t1 - t0, (stat) => {
-            electron.ipcRenderer.sendTo(this.cfg.mainId, "burst",
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "burst",
                 { ...stat, type: "audio", id: this.id })
         })
     }
