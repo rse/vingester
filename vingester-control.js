@@ -40,6 +40,7 @@ const app = Vue.createApp({
             gpu:      false,
             info:     false,
             version:  {},
+            support:  {},
             modal:             "",
             updateUpdateable:  false,
             updateVersions:    {},
@@ -170,6 +171,7 @@ const app = Vue.createApp({
             }, 5000)
         })
         this.version = await electron.ipcRenderer.invoke("version")
+        this.support = await electron.ipcRenderer.invoke("support")
         log.info("created")
         electron.ipcRenderer.invoke("control-created")
     },

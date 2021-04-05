@@ -56,13 +56,17 @@ const version = {
     node:      process.versions.node,
     ndi:       grandiose.version().replace(/^.+\s+/, "")
 }
+const support = {
+    ndi:       grandiose.isSupportedCPU()
+}
 electron.ipcMain.handle("version", (ev) => { return version })
+electron.ipcMain.handle("support", (ev) => { return support })
 log.info(`starting Vingester: ${version.vingester}`)
 log.info(`using Electron: ${version.electron}`)
 log.info(`using Chromium: ${version.chromium}`)
 log.info(`using V8: ${version.v8}`)
 log.info(`using Node: ${version.node}`)
-log.info(`using NDI: ${version.ndi}`)
+log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "no"})`)
 
 /*  initialize store  */
 const store = new Store()
