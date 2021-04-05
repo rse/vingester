@@ -231,6 +231,24 @@ const app = Vue.createApp({
         async modBrowser (browser) {
             await electron.ipcRenderer.invoke("control", "mod", browser.id, JSON.stringify(browser))
         },
+        async moveBrowser (browser, direction) {
+            /*  find location  */
+            let i = this.browsers.findIndex((b) => b.id === browser.id)
+            if (direction === "up") {
+                if (i === 0)
+                    return
+                this.browsers.splice(i, 1)
+                this.browsers.splice(i - 1, 0, browser)
+                this.save()
+            }
+            else if (direction === "down") {
+                if (i === this.browsers.length - 1)
+                    return
+                this.browsers.splice(i, 1)
+                this.browsers.splice(i + 1, 0, browser)
+                this.save()
+            }
+        },
         async delBrowser (browser) {
             if (this.running[browser.id])
                 return

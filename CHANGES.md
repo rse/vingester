@@ -9,6 +9,7 @@ Changes
     - IMPROVEMENT: parallelize start/reload/stop of all browsers
     - IMPROVEMENT: better logging by using mainly IPC mechanism and catching also worker console
     - IMPROVEMENT: fix preview better into the canvas
+    - EXTENSION: add buttons to move browser entries
     - CLEANUP: use more consistent debug logging
 
 - 1.2.0

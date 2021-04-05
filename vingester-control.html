@@ -353,11 +353,19 @@
             <div class="ui-body">
                 <perfect-scrollbar>
                     <div class="browsers">
-                        <div v-for="browser in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
-                            <div class="button button-minus">
-                                <div v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
+                        <div v-for="(browser, i) in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
+                            <div class="button-control">
+                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
                                     v-on:click="delBrowser(browser)">
                                     <i class="fas fa-minus-circle"></i>
+                                </div>
+                                <div class="button" v-bind:class="{ disabled: i === 0 }" v-tippy="{ placement: 'bottom', content: 'Move this browser<br/>configuration entry upward.' }"
+                                    v-on:click="moveBrowser(browser, 'up')">
+                                    <i class="fas fa-arrow-alt-circle-up"></i>
+                                </div>
+                                <div class="button" v-bind:class="{ disabled: i === browsers.length - 1 }" v-tippy="{ placement: 'bottom', content: 'Move this browser<br/>configuration entry downward.' }"
+                                    v-on:click="moveBrowser(browser, 'down')">
+                                    <i class="fas fa-arrow-alt-circle-down"></i>
                                 </div>
                             </div>
                             <div class="box">

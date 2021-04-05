@@ -462,20 +462,25 @@ body {
             flex-direction: row;
         }
     }
-    .button {
+    .button-control {
         width: 16px;
         min-width: 16px;
         max-width: 16px;
-        color: #cccccc;
-        cursor: pointer;
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
         margin: 4px 0 0 4px;
         padding: 4px 8px 4px 8px;
         background-color: #666666;
-    }
-    .button:hover {
-        color: #ffffff;
+        .button {
+            color: #cccccc;
+            cursor: pointer;
+            &:hover {
+                color: #ffffff;
+            }
+            &.disabled {
+                color: #999999;
+            }
+        }
     }
     .browser {
         display: flex;
