@@ -47,10 +47,16 @@ class BrowserWorker {
         this.stopping        = false
         this.timeStart       = (BigInt(Date.now()) * BigInt(1e6) - process.hrtime.bigint())
         this.ndiSender       = null
+        this.ndiTimer        = null
         this.opusEncoder     = null
         this.burst1          = null
         this.burst2          = null
         this.frames          = 0
+    }
+
+    /*  reconfigure running worker  */
+    reconfigure (cfg) {
+        this.cfg = cfg
     }
 
     /*  return current time in nanoseconds since Unix epoch time as a BigInt  */
@@ -66,11 +72,33 @@ class BrowserWorker {
         const title = (this.cfg.t == null ? "Vingester" : this.cfg.t)
 
         /*  create NDI sender  */
-        this.ndiSender = (this.cfg.N ? await grandiose.send({
-            name:       title,
-            clockVideo: false,
-            clockAudio: false
-        }) : null)
+        this.ndiSender = null
+        this.ndiTimer  = null
+        if (this.cfg.N) {
+            this.ndiSender = await grandiose.send({
+                name:       title,
+                clockVideo: false,
+                clockAudio: false
+            })
+            this.ndiTimer = setInterval(() => {
+                if (this.stopping)
+                    return
+
+                /*  poll NDI for connections and tally status  */
+                const conns = this.ndiSender.connections()
+                const tally = this.ndiSender.tally()
+
+                /*  determine our Vingester "tally status"  */
+                let status = "unconnected"
+                if      (tally.on_program) status = "program"
+                else if (tally.on_preview) status = "preview"
+                else if (conns > 0)        status = "connected"
+
+                /*  send tally status  */
+                electron.ipcRenderer.sendTo(this.cfg.controlId, "tally",
+                    { status, id: this.id })
+            }, 1 * 500)
+        }
         this.burst1 = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
         this.burst2 = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
 
@@ -106,6 +134,12 @@ class BrowserWorker {
         /*  destroy OPUS encoder  */
         if (this.opusEncoder !== null)
             this.opusEncoder = null
+
+        /*  destroy NDI timer  */
+        if (this.ndiTimer !== null) {
+            clearTimeout(this.ndiTimer)
+            this.ndiTimer = null
+        }
 
         /*  destroy NDI sender  */
         if (this.ndiSender !== null)
@@ -264,6 +298,11 @@ class BrowserWorker {
 /*  boot worker  */
 const browserWorker = new BrowserWorker(log, cfg.id, cfg)
 browserWorker.start()
+
+/*  reconfigure worker  */
+electron.ipcRenderer.on("browser-worker-reconfigure", async (ev, cfg) => {
+    browserWorker.reconfigure(cfg)
+})
 
 /*  shutdown worker  */
 electron.ipcRenderer.on("browser-worker-stop", async (ev) => {

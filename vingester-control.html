@@ -369,9 +369,13 @@
                                 </div>
                             </div>
                             <div class="box">
-                                <div class="preview" v-show="browser.P === true && running[browser.id]"
+                                <div class="preview" v-show="browser.P && running[browser.id]"
                                     v-tippy="{ placement: 'bottom', content: 'Shows a thumbnail preview (128x72px)<br/>of the Web Content rendering.' }">
                                     <canvas v-bind:ref="'canvas-' + browser.id" width="128" height="72"></canvas>
+                                </div>
+                                <div class="tally" v-show="browser.N && running[browser.id]"
+                                    v-bind:class="[ 'tally-' + tally[browser.id] ]"
+                                    v-tippy="{ placement: 'bottom', content: 'NDI stream is ' + tally[browser.id] }">
                                 </div>
                                 <div class="row">
                                     <div class="group">BROWSER:</div>

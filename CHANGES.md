@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.4.0
+    - IMPROVEMENT: add tally light for NDI streaming
+
 - 1.3.0
     - IMPROVEMENT: move NDI video/audio encoding from main process to dedicated per-browser processes
     - IMPROVEMENT: directly communicate between processes instead of relaying via main process

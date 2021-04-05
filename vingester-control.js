@@ -35,6 +35,7 @@ const app = Vue.createApp({
             running:  {},
             stat:     {},
             burst:    {},
+            tally:    {},
             trace:    {},
             usage:    0,
             gpu:      false,
@@ -115,6 +116,9 @@ const app = Vue.createApp({
                 this.burst[stat.id] = { video: {}, audio: {} }
             this.burst[stat.id][stat.type] = stat
         })
+        electron.ipcRenderer.on("tally", (ev, msg) => {
+            this.tally[msg.id] = msg.status
+        })
         electron.ipcRenderer.on("capture", async (ev, capture) => {
             const canvas = this.$refs[`canvas-${capture.id}`]
             const ctx = canvas.getContext("2d")
@@ -193,6 +197,7 @@ const app = Vue.createApp({
                     video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
                     audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
                 }
+                this.tally[browser.id] = "unconnected"
                 this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
             }
             this.browsers = B
@@ -225,6 +230,7 @@ const app = Vue.createApp({
                 video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
                 audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
             }
+            this.tally[browser.id] = "unconnected"
             this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()

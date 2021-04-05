@@ -53,6 +53,16 @@ module.exports = class Browser {
         this.log.info("browser: reconfigure")
         Object.assign(this.cfg, cfg)
         this.update()
+
+        /*  optionally reconfigure already running worker instance  */
+        if (this.worker !== null) {
+            this.worker.webContents.send("browser-worker-reconfigure", {
+                ...this.cfg,
+                ...this.cfgParsed,
+                controlId: this.control.webContents.id,
+                workerId: this.worker.webContents.id
+            })
+        }
     }
 
     /*  check whether browser is running  */
