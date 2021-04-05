@@ -4,6 +4,7 @@ Changes
 
 - 1.4.0
     - IMPROVEMENT: add tally light for NDI streaming
+    - BUGFIX: "START" button no longer can be pressed if no outputs are enabled
 
 - 1.3.0
     - IMPROVEMENT: move NDI video/audio encoding from main process to dedicated per-browser processes

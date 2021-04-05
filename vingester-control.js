@@ -279,7 +279,7 @@ const app = Vue.createApp({
                 || (action === "reload" && !this.running[id])
                 || (action === "stop"   && !this.running[id]))
                 return
-            if (action === "start" && browser !== undefined && !browser.D && !browser.N && !browser.u)
+            if (action === "start" && browser !== undefined && ((!browser.D && !browser.N) || browser.u === ""))
                 return
             await electron.ipcRenderer.invoke("control", action, id)
         },
