@@ -232,7 +232,8 @@ const app = Vue.createApp({
             await electron.ipcRenderer.invoke("control", "mod", browser.id, JSON.stringify(browser))
         },
         async moveBrowser (browser, direction) {
-            /*  find location  */
+            if (this.running[browser.id])
+                return
             let i = this.browsers.findIndex((b) => b.id === browser.id)
             if (direction === "up") {
                 if (i === 0)

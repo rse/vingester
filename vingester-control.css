@@ -640,12 +640,12 @@ body {
             }
         }
         &.running {
-            .button,
+            .button-control,
             .box {
                 background-color: #336699;
             }
             .button {
-                color: #99ccff;
+                color: #6699cc;
                 cursor: default;
             }
             .field {
