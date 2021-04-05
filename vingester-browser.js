@@ -21,8 +21,8 @@ module.exports = class Browser {
         this.cfg             = cfg
         this.cfgParsed       = {}
         this.control         = control
-        this.update()
         this.reset()
+        this.update()
     }
 
     /*  reset internal state  */
