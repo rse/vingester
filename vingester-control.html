@@ -151,7 +151,7 @@
                         application for use under Windows, macOS or Linux to run multiple
                         <a href="https://www.chromium.org/" v-on:click="openURL">Chromium</a>-based
                         Web browser instances and ingesting their rendered Web Contents as screen/window-captured or
-                        <a href="https://ndi.tv" v-on:click="openURL">NDI</a>-multicasted video streams for further
+                        <a href="https://ndi.tv" v-on:click="openURL">NDI&reg;</a>-multicasted video streams for further
                         use in video mixing applications.
                         </p>
                         <p>
@@ -178,8 +178,8 @@
                             <tr><td>Electron</td> <td><b>{{version.electron}}</b></td> <td class="copyright">&copy; Github, Inc.</td></tr>
                             <tr><td>Chromium</td> <td><b>{{version.chromium}}</b></td> <td class="copyright">&copy; Google LLC</td></tr>
                             <tr><td>V8</td>       <td><b>{{version.v8}}</b></td>       <td class="copyright">&copy; Google LLC</td></tr>
-                            <tr><td>Node</td>     <td><b>{{version.node}}</b></td>     <td class="copyright">&copy; Ryan Dahl et al.</td></tr>
-                            <tr><td>NDI</td>      <td><b>{{version.ndi}}</b></td>      <td class="copyright">&copy; NewTek, Inc.</td></tr>
+                            <tr><td>Node.js&trade;</td>     <td><b>{{version.node}}</b></td>     <td class="copyright">&copy; OpenJS Foundation</td></tr>
+                            <tr><td>NDI&reg;</td>      <td><b>{{version.ndi}}</b></td>      <td class="copyright">&copy; NewTek, Inc.</td></tr>
                         </table>
                     </div>
                 </div>
@@ -458,7 +458,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="group">OUTPUT 2:</div>
-                                    <div class="label label-output">Headless (NDI):</div>
+                                    <div class="label label-output">Headless (NDI&reg;):</div>
                                     <div class="field"
                                         v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, where<br/>Web Content is multicasted via NDI.' }">
                                         <div v-if="!support.ndi">
