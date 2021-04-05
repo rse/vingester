@@ -160,15 +160,15 @@ streams.</b>
 
 As two reference points for you:
 
-- In **"Frameless"** mode and with **enabled** GPU
-  Hardware Acceleration a PC based on a 6-core i5-10600K CPU and running
-  under Windows 10 can ingest **9** OBS.Ninja sessions with 720p30 at about
-  80% average system load.
+- In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
+  and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
+  running under Windows 10 can ingest **9** OBS.Ninja sessions with 720p30
+  at about 80% average system load.
 
-- In **"Headless"** mode and with **disabled** GPU
-  Hardware Acceleration a PC based on a 6-core i5-10600K CPU and running
-  under Windows 10 can ingest **4** OBS.Ninja sessions with 720p30 at about
-  80% average system load.
+- In **"Headless"** mode, with **disabled** GPU Hardware Acceleration
+  and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
+  running under Windows 10 can ingest **4** OBS.Ninja sessions with 720p30
+  at about 80% average system load.
 
 So, while the Headless mode is more flexible than the Frameless mode, it
 has just about half the performance. Keep this in mind!
