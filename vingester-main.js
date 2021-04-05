@@ -68,6 +68,10 @@ log.info(`using V8: ${version.v8}`)
 log.info(`using Node: ${version.node}`)
 log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "no"})`)
 
+/*  optionally initialize NDI library  */
+if (grandiose.isSupportedCPU())
+    grandiose.initialize()
+
 /*  initialize store  */
 const store = new Store()
 
@@ -448,6 +452,11 @@ electron.app.on("ready", async () => {
         control.destroy()
     })
     electron.app.on("window-all-closed", () => {
+        /*  optionally destroy NDI library  */
+        if (grandiose.isSupportedCPU())
+            grandiose.destroy()
+
+        /*  finally destroy electron  */
         electron.app.quit()
     })
     electron.app.on("will-quit", () => {
