@@ -120,6 +120,7 @@ const app = Vue.createApp({
             const arr    = new Uint8ClampedArray(capture.buffer)
             const pixels = new ImageData(arr, capture.size.width, capture.size.height)
             const bitmap = await createImageBitmap(pixels)
+            ctx.clearRect(0, 0, 128, 72)
             ctx.drawImage(bitmap, 0, 0)
         })
         electron.ipcRenderer.on("gpu", (ev, gpu) => {
