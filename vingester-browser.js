@@ -65,7 +65,7 @@ module.exports = class Browser {
         this.log.info("browser: start")
 
         /*  create worker browser window (offscreen only)  */
-        const debug = (typeof process.env.DEBUG !== "undefined")
+        const debug = false && (typeof process.env.DEBUG !== "undefined")
         const worker = new electron.BrowserWindow({
             offscreen:       true,
             show:            false,
@@ -95,6 +95,18 @@ module.exports = class Browser {
                 worker.webContents.openDevTools()
             }, 1000)
         }
+
+        /*  receive worker browser console outputs  */
+        worker.webContents.on("console-message", (ev, level, message, line, sourceId) => {
+            let method = "debug"
+            switch (level) {
+                case 0: method = "debug"; break
+                case 1: method = "info";  break
+                case 2: method = "warn";  break
+                case 3: method = "error"; break
+            }
+            this.log[method](`browser/worker-${this.id}: console: ${message.replace(/\s+/g, " ")}`)
+        })
 
         /*  load content into worker browser window  */
         await new Promise((resolve, reject) => {
@@ -253,11 +265,21 @@ module.exports = class Browser {
             content.webContents.startPainting()
         }
 
-        /*  receive console outputs  */
+        /*  receive content browser console outputs  */
         content.webContents.on("console-message", (ev, level, message, line, sourceId) => {
-            const trace = { level, message }
+            /*  log centrally  */
+            let method = "debug"
+            switch (level) {
+                case 0: method = "debug"; break
+                case 1: method = "info";  break
+                case 2: method = "warn";  break
+                case 3: method = "error"; break
+            }
+            this.log[method](`browser/content-${this.id}: console: ${message.replace(/\s+/g, " ")}`)
+
+            /*  optionally send to control user interface  */
             if (this.control !== null && !this.control.isDestroyed())
-                this.control.webContents.send("trace", { ...trace, id: this.id })
+                this.control.webContents.send("trace", { level, message, id: this.id })
         })
 
         /*  react on window events  */
@@ -266,10 +288,6 @@ module.exports = class Browser {
         })
         content.on("page-title-updated", (ev) => {
             ev.preventDefault()
-        })
-
-        /*  provide logging for browser  */
-        content.webContents.on("ipc-message", (ev, channel, ...args) => {
         })
 
         /*  remember window object  */

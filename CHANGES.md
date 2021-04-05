@@ -7,6 +7,7 @@ Changes
     - IMPROVEMENT: directly communicate between processes instead of relaying via main process
     - IMPROVEMENT: improve FPS calculation in browsers
     - IMPROVEMENT: parallelize start/reload/stop of all browsers
+    - IMPROVEMENT: better logging by using mainly IPC mechanism and catching also worker console
     - CLEANUP: use more consistent debug logging
 
 - 1.2.0

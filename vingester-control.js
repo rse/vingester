@@ -13,14 +13,14 @@ const VueTippy         = require("vue-tippy").default
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
-    electronLog.transports.file.level    = "debug"
-    electronLog.transports.console.level = "debug"
+    electronLog.transports.file.level    = false
+    electronLog.transports.console.level = false
     electronLog.transports.ipc.level     = "debug"
 }
 else {
-    electronLog.transports.file.level    = "info"
+    electronLog.transports.file.level    = false
     electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = false
+    electronLog.transports.ipc.level     = "info"
 }
 electronLog.transports.remote.level   = false
 electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"

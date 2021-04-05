@@ -29,7 +29,7 @@ const pkg         = require("./package.json")
 if (typeof process.env.DEBUG !== "undefined") {
     electronLog.transports.file.level    = "debug"
     electronLog.transports.console.level = "debug"
-    electronLog.transports.ipc.level     = "debug"
+    electronLog.transports.ipc.level     = false
 }
 else {
     electronLog.transports.file.level    = "info"
