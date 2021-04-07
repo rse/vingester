@@ -4,6 +4,7 @@ Changes
 
 - 1.4.0
     - IMPROVEMENT: add tally light for NDI streaming
+    - IMPROVEMENT: for "frameless" mode, also get rid of the standard window buttons under macOS
     - BUGFIX: "START" button no longer can be pressed if no outputs are enabled
 
 - 1.3.0

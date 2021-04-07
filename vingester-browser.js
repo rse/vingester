@@ -178,7 +178,7 @@ module.exports = class Browser {
             hasShadow:       false,
             backgroundColor: this.cfg.c,
             fullscreenable:  true,
-            titleBarStyle:   "hidden",
+            titleBarStyle:   "customButtonsOnHover",
             thickFrame:      false,
             title:           title
         } : {
