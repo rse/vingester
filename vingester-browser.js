@@ -175,6 +175,7 @@ module.exports = class Browser {
             useContentSize:  false,
             autoHideMenuBar: true,
             frame:           false,
+            roundedCorners:  false,
             hasShadow:       false,
             backgroundColor: this.cfg.c,
             fullscreenable:  true,
