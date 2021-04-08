@@ -4,11 +4,12 @@ Version History
 
 | VERSION | DATE       | STATE       |
 | ------- | ---------- | ----------- |
-| 1.3.0   | 2021-04-05 | current     |
+| 1.4.0   | 2021-04-09 | current     |
+| 1.3.0   | 2021-04-05 | obsolete    |
 | 1.2.0   | 2021-04-04 | obsolete    |
-| 1.1.1   | 2021-04-02 | obsolete    |
+| 1.1.1   | 2021-04-02 | deprecated  |
 | 1.1.0   | 2021-04-02 | deprecated  |
-| 1.0.1   | 2021-03-29 | obsolete    |
+| 1.0.1   | 2021-03-29 | deprecated  |
 | 1.0.0   | 2021-03-29 | deprecated  |
 | 0.9.9   | 2021-03-29 | deprecated  |
 | 0.9.8   | 2021-03-29 | deprecated  |
