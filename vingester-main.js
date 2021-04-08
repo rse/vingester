@@ -441,7 +441,7 @@ electron.app.on("ready", async () => {
     /*  gracefully shutdown application  */
     log.info("hook into control user interface window states")
     control.on("close", async (ev) => {
-        log.info("shuting down")
+        log.info("shutting down")
         ev.preventDefault()
         if (timer !== null) {
             clearTimeout(timer)
