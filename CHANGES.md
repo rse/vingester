@@ -7,6 +7,7 @@ Changes
     - IMPROVEMENT: for "frameless" mode, also get rid of the standard window buttons under macOS
     - BUGFIX: "START" button no longer can be pressed if no outputs are enabled
     - BUGFIX: ignore interactions like CMD+Q on worker and content browser windows to correctly shutdown
+    - UPGRADE: upgraded some dependencies
 
 - 1.3.0
     - IMPROVEMENT: move NDI video/audio encoding from main process to dedicated per-browser processes
