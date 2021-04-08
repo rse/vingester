@@ -293,10 +293,13 @@ module.exports = class Browser {
                 this.control.webContents.send("trace", { level, message, id: this.id })
         })
 
-        /*  react on window events  */
-        content.on("close", (ev) => {
-            ev.preventDefault()
-        })
+        /*  ignore interactions like CMD+Q on worker and content browser windows  */
+        worker.setMenu(null)
+        worker.on("close", (ev) => { ev.preventDefault() })
+        content.setMenu(null)
+        content.on("close", (ev) => { ev.preventDefault() })
+
+        /*  ignore certain window events  */
         content.on("page-title-updated", (ev) => {
             ev.preventDefault()
         })
