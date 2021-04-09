@@ -2,7 +2,7 @@
 Changes
 =======
 
-- 1.5.0
+- 1.4.1
     - IMPROVEMENT: use a custom menu under macOS to get rid of standard menu
 
 - 1.4.0
