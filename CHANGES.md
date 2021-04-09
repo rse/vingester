@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.5.0
+    - IMPROVEMENT: use a custom menu under macOS to get rid of standard menu
+
 - 1.4.0
     - IMPROVEMENT: add tally light for NDI streaming
     - IMPROVEMENT: for "frameless" mode, also get rid of the standard window buttons under macOS

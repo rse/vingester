@@ -195,6 +195,46 @@ electron.app.on("ready", async () => {
         }
     })
 
+    /*  configure application menu  */
+    const openURL = (url) =>
+        async () => { await electron.shell.openExternal(url) }
+    const menuTemplate = [
+        {
+            label: electron.app.name,
+            submenu: [
+                { role: "about" },
+                { type: "separator" },
+                { role: "hide" },
+                { role: "hideothers" },
+                { role: "unhide" },
+                { type: "separator" },
+                { role: "quit" }
+            ]
+        }, {
+            label: "Edit",
+            submenu: [
+                { role: "cut" },
+                { role: "copy" },
+                { role: "paste" }
+            ]
+        }, {
+            role: "window",
+            submenu: [
+                { role: "minimize" },
+                { role: "zoom" },
+                { role: "togglefullscreen" },
+                { role: "front" }
+            ]
+        }, {
+            role: "help",
+            submenu: [
+                { label: "More about Vingester", click: openURL("https://vintester.app") }
+            ]
+        }
+    ]
+    const menu = electron.Menu.buildFromTemplate(menuTemplate)
+    electron.Menu.setApplicationMenu(menu)
+
     /*  provide IPC hooks for store access  */
     log.info("provide IPC hooks for control user interface")
     electron.ipcMain.handle("browsers-load", async (ev) => {
