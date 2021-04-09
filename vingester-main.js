@@ -228,7 +228,7 @@ electron.app.on("ready", async () => {
         }, {
             role: "help",
             submenu: [
-                { label: "More about Vingester", click: openURL("https://vintester.app") }
+                { label: "More about Vingester", click: openURL("https://vingester.app") }
             ]
         }
     ]
