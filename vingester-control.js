@@ -242,7 +242,7 @@ const app = Vue.createApp({
         async moveBrowser (browser, direction) {
             if (this.running[browser.id])
                 return
-            let i = this.browsers.findIndex((b) => b.id === browser.id)
+            const i = this.browsers.findIndex((b) => b.id === browser.id)
             if (direction === "up") {
                 if (i === 0)
                     return
