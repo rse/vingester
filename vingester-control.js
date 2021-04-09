@@ -258,6 +258,22 @@ const app = Vue.createApp({
                 this.save()
             }
         },
+        async cloneBrowser (browserTemplate) {
+            const id = new UUID(1).fold(2).map((num) =>
+                num.toString(16).toUpperCase().padStart(2, "0")).join("")
+            const browser = { ...browserTemplate, id }
+            this.running[id] = false
+            this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
+            this.burst[browser.id] = {
+                video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
+                audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+            }
+            this.tally[browser.id] = "unconnected"
+            this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
+            this.browsers.push(browser)
+            this.save()
+            await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
+        },
         async delBrowser (browser) {
             if (this.running[browser.id])
                 return

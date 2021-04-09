@@ -4,6 +4,7 @@ Changes
 
 - 1.4.1
     - IMPROVEMENT: use a custom menu under macOS to get rid of standard menu
+    - EXTENSION: allow a browser entry to be duplicated/cloned
 
 - 1.4.0
     - IMPROVEMENT: add tally light for NDI streaming
