@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.4.4
+    - BUGFIX: allow preview to be enabled after start
+
 - 1.4.3
     - BUGFIX: prevent browsers from starting twice when pressing START too quickly twice
     - IMPROVEMENT: remove also remaining window "traffic light" buttons on hover (under macOS)
