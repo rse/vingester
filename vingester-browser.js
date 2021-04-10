@@ -5,6 +5,7 @@
 */
 
 /*  require internal modules  */
+const os          = require("os")
 const fs          = require("fs")
 const path        = require("path")
 
@@ -31,6 +32,7 @@ module.exports = class Browser {
         this.content         = null
         this.subscribed      = false
         this.subscriber      = null
+        this.starting        = false
         this.stopping        = false
     }
 
@@ -70,6 +72,9 @@ module.exports = class Browser {
 
     /*  start browser  */
     async start () {
+        if (this.starting)
+            return
+        this.starting = true
         this.log.info("browser: start")
 
         /*  create worker browser window (offscreen only)  */
@@ -170,6 +175,11 @@ module.exports = class Browser {
             ...pos,
             width:           width,
             height:          height,
+            resizable:       false,
+            movable:         false,
+            minimizable:     false,
+            maximizable:     false,
+            closable:        false,
             useContentSize:  false,
             autoHideMenuBar: true,
             frame:           false,
@@ -177,7 +187,7 @@ module.exports = class Browser {
             hasShadow:       false,
             backgroundColor: this.cfg.c,
             fullscreenable:  true,
-            titleBarStyle:   "customButtonsOnHover",
+            titleBarStyle:   "hidden",
             thickFrame:      false,
             title:           title
         } : {
@@ -214,6 +224,8 @@ module.exports = class Browser {
                 }) ]
             }
         })
+        if (os.platform() === "darwin")
+            content.setWindowButtonVisibility(false)
 
         /*  control audio (for desktop window we unmute, for NDI we mute)  */
         if (this.cfg.D || (this.cfg.N && this.cfgParsed.C === 0))
@@ -288,11 +300,23 @@ module.exports = class Browser {
                 this.control.webContents.send("trace", { level, message, id: this.id })
         })
 
-        /*  ignore interactions like CMD+Q on worker and content browser windows  */
+        /*  ignore any interactions on worker and content browser windows  */
         worker.setMenu(null)
-        worker.on("close", (ev) => { ev.preventDefault() })
+        worker.on("close",              (ev) => { ev.preventDefault() })
+        worker.on("minimize",           (ev) => { ev.preventDefault() })
+        worker.on("restore",            (ev) => { ev.preventDefault() })
+        worker.on("maximize",           (ev) => { ev.preventDefault() })
+        worker.on("unmaximize",         (ev) => { ev.preventDefault() })
+        worker.on("enter-full-screen",  (ev) => { ev.preventDefault() })
+        worker.on("leave-full-screen",  (ev) => { ev.preventDefault() })
         content.setMenu(null)
-        content.on("close", (ev) => { ev.preventDefault() })
+        content.on("close",             (ev) => { ev.preventDefault() })
+        content.on("minimize",          (ev) => { ev.preventDefault() })
+        content.on("restore",           (ev) => { ev.preventDefault() })
+        content.on("maximize",          (ev) => { ev.preventDefault() })
+        content.on("unmaximize",        (ev) => { ev.preventDefault() })
+        content.on("enter-full-screen", (ev) => { ev.preventDefault() })
+        content.on("leave-full-screen", (ev) => { ev.preventDefault() })
 
         /*  ignore certain window events  */
         content.on("page-title-updated", (ev) => {
@@ -315,6 +339,7 @@ module.exports = class Browser {
             content.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
                 ev.preventDefault()
                 this.log.info("browser: content: failed")
+                this.starting = false
                 resolve(false)
             })
             content.webContents.once("did-finish-load", (ev) => {
@@ -329,6 +354,7 @@ module.exports = class Browser {
                 else if (this.cfg.N)
                     content.webContents.startPainting()
 
+                this.starting = false
                 resolve(true)
             })
             content.loadURL(this.cfg.u)
@@ -407,6 +433,7 @@ module.exports = class Browser {
         /*  reset the internal state  */
         this.reset()
         this.log.info("browser: stopped")
+        this.stopping = false
         return true
     }
 }

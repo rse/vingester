@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.4.3
+    - BUGFIX: prevent browsers from starting twice when pressing START too quickly twice
+    - IMPROVEMENT: remove also remaining window "traffic light" buttons on hover (under macOS)
+
 - 1.4.2
     - BUGFIX: support frameless and headless mode in parallel again
     - BUGFIX: fix names of Web Contents permissions which are allowed
