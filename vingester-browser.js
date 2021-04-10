@@ -255,16 +255,14 @@ module.exports = class Browser {
             /*  use Frame subscription where framerate cannot be controlled
                 (but which is available also for onscreen rendering)  */
             const framesToSkip = Math.trunc((D.displayFrequency / framerate) - 1)
-            if (this.cfg.N || this.cfg.P) {
-                this.subscriber = (image, dirty) => {
-                    if (this.worker === null || this.worker.isDestroyed())
-                        return
-                    const size   = image.getSize()
-                    const ratio  = image.getAspectRatio(factor)
-                    const buffer = image.getBitmap()
-                    this.worker.webContents.send("video-capture",
-                        { size, ratio, buffer, dirty, framesToSkip: framesToSkip })
-                }
+            this.subscriber = (image, dirty) => {
+                if (this.worker === null || this.worker.isDestroyed())
+                    return
+                const size   = image.getSize()
+                const ratio  = image.getAspectRatio(factor)
+                const buffer = image.getBitmap()
+                this.worker.webContents.send("video-capture",
+                    { size, ratio, buffer, dirty, framesToSkip: framesToSkip })
             }
         }
         else if (this.cfg.N) {
