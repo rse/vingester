@@ -37,9 +37,7 @@ module.exports = class Browser {
     /*  explicitly allow capturing our content browser windows  */
     static prepare () {
         const session = electron.session.fromPartition("vingester-browser-content")
-        const allowedPermissions = [
-            "audioCapture", "desktopCapture", "pageCapture", "tabCapture", "experimental"
-        ]
+        const allowedPermissions = [ "media", "mediaKeySystem", "geolocation" ]
         session.setPermissionRequestHandler((webContents, permission, callback) => {
             if (allowedPermissions.includes(permission))
                 callback(true)
@@ -255,8 +253,6 @@ module.exports = class Browser {
                     this.worker.webContents.send("video-capture",
                         { size, ratio, buffer, dirty, framesToSkip: framesToSkip })
                 }
-                content.webContents.beginFrameSubscription(false, this.subscriber)
-                this.subscribed = true
             }
         }
         else if (this.cfg.N) {
@@ -273,7 +269,6 @@ module.exports = class Browser {
             }
             content.webContents.on("paint", this.subscriber)
             content.webContents.setFrameRate(framerate)
-            content.webContents.startPainting()
         }
 
         /*  receive content browser console outputs  */
@@ -325,6 +320,15 @@ module.exports = class Browser {
             content.webContents.once("did-finish-load", (ev) => {
                 ev.preventDefault()
                 this.log.info("browser: content: started")
+
+                /*  lazy subscribe to frames  */
+                if (this.cfg.D && (this.cfg.N || this.cfg.P)) {
+                    this.content.webContents.beginFrameSubscription(false, this.subscriber)
+                    this.subscribed = true
+                }
+                else if (this.cfg.N)
+                    content.webContents.startPainting()
+
                 resolve(true)
             })
             content.loadURL(this.cfg.u)
@@ -349,11 +353,11 @@ module.exports = class Browser {
         /*  optionally update already running browser instance  */
         if (this.content !== null) {
             if (this.cfg.D) {
-                if (this.subscribed && !this.cfg.P) {
+                if (this.subscribed && !(this.cfg.N || this.cfg.P)) {
                     this.content.webContents.endFrameSubscription()
                     this.subscribed = false
                 }
-                else if (!this.subscribed && this.cfg.P) {
+                else if (!this.subscribed && (this.cfg.N || this.cfg.P)) {
                     this.content.webContents.beginFrameSubscription(false, this.subscriber)
                     this.subscribed = true
                 }
