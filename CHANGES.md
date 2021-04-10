@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.4.5
+    - BUGFIX: fix packaging under Linux where Electron ASAR unpacking has to be explicitly configured
+
 - 1.4.4
     - BUGFIX: allow preview to be enabled after start
 

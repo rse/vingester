@@ -1,7 +1,7 @@
 {
     "name":                              "Vingester",
     "homepage":                          "https://vingester.app",
-    "version":                           "1.4.4",
+    "version":                           "1.4.5",
     "description":                       "Ingest Web Contents as Video Streams",
     "author":                            "Dr. Ralf S. Engelschall",
     "keywords":                          [ "web", "contents", "video", "audio", "stream", "capture", "ndi" ],
@@ -65,7 +65,7 @@
         "appId":                         "com.engelschall.apps.vingester",
         "productName":                   "Vingester",
         "asar":                          true,
-        "asarUnpack":                    [],
+        "asarUnpack":                    [ "node_modules/grandiose/**", "node_modules/@discordjs/opus/**" ],
         "removePackageScripts":          true,
         "compression":                   "normal",
         "directories": {
