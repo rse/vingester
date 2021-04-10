@@ -2,9 +2,10 @@
 Changes
 =======
 
-- x.x.x
+- 1.4.2
     - BUGFIX: support frameless and headless mode in parallel again
     - BUGFIX: fix names of Web Contents permissions which are allowed
+    - UPGRADE: upgraded some dependencies
 
 - 1.4.1
     - IMPROVEMENT: use a custom menu under macOS to get rid of standard menu
