@@ -92,7 +92,7 @@ electron.app.on("ready", async () => {
     log.info("loading persistant settings")
     const x = store.get("control.x", null)
     const y = store.get("control.y", null)
-    const w = store.get("control.w", 840)
+    const w = store.get("control.w", 850)
     const h = store.get("control.h", 420)
     const pos = (x !== null && y !== null ? { x, y } : {})
 
@@ -103,7 +103,7 @@ electron.app.on("ready", async () => {
         show:            false,
         width:           w,
         height:          h,
-        minWidth:        840,
+        minWidth:        850,
         minHeight:       420,
         frame:           false,
         title:           "Vingester",

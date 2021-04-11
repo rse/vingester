@@ -31,17 +31,17 @@ log.info("starting up")
 const app = Vue.createApp({
     data () {
         return {
-            browsers: [],
-            running:  {},
-            stat:     {},
-            burst:    {},
-            tally:    {},
-            trace:    {},
-            usage:    0,
-            gpu:      false,
-            info:     false,
-            version:  {},
-            support:  {},
+            browsers:          [],
+            running:           {},
+            stat:              {},
+            burst:             {},
+            tally:             {},
+            trace:             {},
+            usage:             0,
+            gpu:               false,
+            info:              false,
+            version:           {},
+            support:           {},
             modal:             "",
             updateUpdateable:  false,
             updateVersions:    {},
@@ -49,7 +49,8 @@ const app = Vue.createApp({
             updateNotifyTimer: null,
             updateNotifyBlink: false,
             updateProgress:    0,
-            updateError:       null
+            updateError:       null,
+            audioDevices:      []
         }
     },
     computed: {
@@ -64,6 +65,8 @@ const app = Vue.createApp({
     },
     async created () {
         log.info("creating")
+        await this.updateAudioDevices()
+        navigator.mediaDevices.addEventListener("devicechange", () => { this.updateAudioDevices() })
         this.load()
         electron.ipcRenderer.on("browser-start", (ev, id) => {
             log.info("browser-start", id)
@@ -188,8 +191,22 @@ const app = Vue.createApp({
             let browsers = await electron.ipcRenderer.invoke("browsers-load")
             if (browsers === undefined)
                 browsers = "[]"
+            const defaults = {
+                t: "Sample", w: "1280", h: "720", c: "transparent",
+                u: "",
+                D: true, d: "", x: "0", y: "0", p: false, A: "default",
+                N: false, f: "30", C: "2", r: "48000", O: "0", o: "0",
+                P: false, T: false
+            }
             const B = JSON.parse(browsers)
+            let changed = false
             for (const browser of B) {
+                for (const field of Object.keys(defaults)) {
+                    if (browser[field] === undefined) {
+                        browser[field] = defaults[field]
+                        changed = true
+                    }
+                }
                 await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
                 this.running[browser.id] = false
                 this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
@@ -198,9 +215,11 @@ const app = Vue.createApp({
                     audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
                 }
                 this.tally[browser.id] = "unconnected"
-                this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
+                this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             }
             this.browsers = B
+            if (changed)
+                this.save()
         },
         save: debounce(1000, async function () {
             const browsers = JSON.stringify(this.browsers)
@@ -218,11 +237,11 @@ const app = Vue.createApp({
                 num.toString(16).toUpperCase().padStart(2, "0")).join("")
             const browser = {
                 id,
-                t: "Sample", w: "1280", h: "720", c: "#00ff00",
+                t: "Sample", w: "1280", h: "720", c: "transparent",
                 u: "",
-                D: true, d: "", x: "0", y: "0", p: false,
+                D: true, d: "", x: "0", y: "0", p: false, A: "default",
                 N: false, f: "30", C: "2", r: "48000", O: "0", o: "0",
-                P: false
+                P: false, T: false
             }
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
@@ -231,7 +250,7 @@ const app = Vue.createApp({
                 audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
             }
             this.tally[browser.id] = "unconnected"
-            this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
+            this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
@@ -269,7 +288,7 @@ const app = Vue.createApp({
                 audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
             }
             this.tally[browser.id] = "unconnected"
-            this.trace[browser.id] = { visible: false, warning: 0, error: 0, messages: [] }
+            this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
@@ -300,7 +319,7 @@ const app = Vue.createApp({
             await electron.ipcRenderer.invoke("control", action, id)
         },
         toggle (browser, field, options) {
-            if (field !== "P" && this.running[browser.id])
+            if (field !== "P" && field !== "T" && this.running[browser.id])
                 return
             const val = browser[field]
             let i = 0
@@ -338,6 +357,15 @@ const app = Vue.createApp({
             ev.preventDefault()
             const url = ev.target.getAttribute("href")
             electron.shell.openExternal(url)
+        },
+        async updateAudioDevices () {
+            const devices = await navigator.mediaDevices.enumerateDevices()
+            this.audioDevices = devices
+                .filter((device) => device.kind === "audiooutput")
+                .map((device) => { return device.label })
+        },
+        changeOption (browser, field, value) {
+            this.changed(browser)
         }
     }
 })
@@ -350,5 +378,6 @@ app.use(VueTippy, {
         delay: [ 600, 50 ]
     }
 })
+app.component("vue-select", VueNextSelect)
 app.mount("body")
 

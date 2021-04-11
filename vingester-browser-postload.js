@@ -56,16 +56,22 @@
     const captureAudio = () => {
         try {
             /*  create offline audio context  */
-            const ac = new AudioContext({
-                latencyHint: "interactive",
-                sampleRate:  parseInt(vingester.cfg.r)
-            })
+            let ac = null
+            if (vingester.cfg.N) {
+                ac = new AudioContext({
+                    latencyHint: "interactive",
+                    sampleRate:  parseInt(vingester.cfg.r)
+                })
+            }
 
             /*  create a stereo audio destination  */
-            const dest = ac.createMediaStreamDestination()
-            dest.channelCount          = parseInt(vingester.cfg.C)
-            dest.channelCountMode      = "explicit"
-            dest.channelInterpretation = "speakers"
+            let dest = null
+            if (vingester.cfg.N) {
+                dest = ac.createMediaStreamDestination()
+                dest.channelCount          = parseInt(vingester.cfg.C)
+                dest.channelCountMode      = "explicit"
+                dest.channelInterpretation = "speakers"
+            }
 
             /*  create media recorder to create an WebM/OPUS stream as the output.
                 NOTICE: we could use the Chromium-supported "audio/webm; codecs=\"pcm\"" here
@@ -76,14 +82,17 @@
                 standard OPUS encoding it does not. So, we intentionally have to stay with OPUS here,
                 even if it causes extra decoding performance and theoretically (but not noticable)
                 is also a lossy intermediate step.  */
-            const recorder = new MediaRecorder(dest.stream, {
-                mimeType: "audio/webm; codecs=\"opus\""
-            })
-            recorder.addEventListener("dataavailable", async (ev) => {
-                const ab = await ev.data.arrayBuffer()
-                const u8 = new Uint8Array(ab, 0, ab.byteLength)
-                vingester.audioCapture(u8)
-            })
+            let recorder = null
+            if (vingester.cfg.N) {
+                recorder = new MediaRecorder(dest.stream, {
+                    mimeType: "audio/webm; codecs=\"opus\""
+                })
+                recorder.addEventListener("dataavailable", async (ev) => {
+                    const ab = await ev.data.arrayBuffer()
+                    const u8 = new Uint8Array(ab, 0, ab.byteLength)
+                    vingester.audioCapture(u8)
+                })
+            }
 
             /*  internal state  */
             let attached = 0
@@ -119,27 +128,43 @@
             }
             const onAddTrack    = (ev) => { trackAdd("listener", ev.track) }
             const onRemoveTrack = (ev) => { trackRemove("listener", ev.track) }
-            const attach = (when, node) => {
+            const attach = async (when, node) => {
                 if (!nodes.has(node)) {
-                    vingester.log(`on ${when} attach to ${node.tagName}`)
-                    const stream = node.captureStream()
-                    const audiotracks = stream.getAudioTracks()
-                    for (let i = 0; i < audiotracks.length; i++)
-                        trackAdd(when, audiotracks[i])
-                    stream.addEventListener("addtrack",    onAddTrack)
-                    stream.addEventListener("removetrack", onRemoveTrack)
-                    nodes.set(node, stream)
+                    if (vingester.cfg.D) {
+                        vingester.log(`on ${when} redirect audio of ${node.tagName} to device "${vingester.cfg.A}"`)
+                        const devices = (await navigator.mediaDevices.enumerateDevices())
+                            .filter((d) => d.kind === "audiooutput" && d.label === vingester.cfg.A)
+                        if (devices.length === 1)
+                            await node.setSinkId(devices[0].deviceId).catch((ex) => void (0))
+                        nodes.set(node, true)
+                    }
+                    if (vingester.cfg.N) {
+                        vingester.log(`on ${when} attach to ${node.tagName}`)
+                        const stream = node.captureStream()
+                        const audiotracks = stream.getAudioTracks()
+                        for (let i = 0; i < audiotracks.length; i++)
+                            trackAdd(when, audiotracks[i])
+                        stream.addEventListener("addtrack",    onAddTrack)
+                        stream.addEventListener("removetrack", onRemoveTrack)
+                        nodes.set(node, stream)
+                    }
                 }
             }
             const detach = (when, node) => {
                 if (nodes.has(node)) {
-                    vingester.log(`on ${when} detach from ${node.tagName} node`)
-                    const stream = nodes.get(node)
-                    stream.removeEventListener("addtrack",    onAddTrack)
-                    stream.removeEventListener("removetrack", onRemoveTrack)
-                    const audiotracks = stream.getAudioTracks()
-                    for (let i = 0; i < audiotracks.length; i++)
-                        trackRemove(when, audiotracks[i])
+                    if (vingester.cfg.D) {
+                        vingester.log(`on ${when} unredirect audio of ${node.tagName}`)
+                        node.setSinkId("default").catch((ex) => void (0))
+                    }
+                    if (vingester.cfg.N) {
+                        vingester.log(`on ${when} detach from ${node.tagName} node`)
+                        const stream = nodes.get(node)
+                        stream.removeEventListener("addtrack",    onAddTrack)
+                        stream.removeEventListener("removetrack", onRemoveTrack)
+                        const audiotracks = stream.getAudioTracks()
+                        for (let i = 0; i < audiotracks.length; i++)
+                            trackRemove(when, audiotracks[i])
+                    }
                     nodes.delete(node)
                 }
             }
@@ -184,8 +209,7 @@
     /*  always capture statistics  */
     captureStats()
 
-    /*  optionally capture audio
-        (just for requested NDI output and more than zero audio channels)  */
-    if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0)
+    /*  optionally capture audio  */
+    if (vingester.cfg.D || (vingester.cfg.N && parseInt(vingester.cfg.C) > 0))
         captureAudio()
 })()

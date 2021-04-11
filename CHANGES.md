@@ -2,6 +2,13 @@
 Changes
 =======
 
+- 1.5.0
+    - IMPROVEMENT: allow an individual audio device per frameless browser window
+    - IMPROVEMENT: better align the user interface elements of browsers
+    - IMPROVEMENT: increase console output by one additional line and provide button to toggle
+    - IMPROVEMENT: use default values for missing fields when loading browser configurations
+    - IMPROVEMENT: use vue-next-select for optically pleasant (enough) dropdowns
+
 - 1.4.5
     - BUGFIX: fix packaging under Linux where Electron ASAR unpacking has to be explicitly configured
 
