@@ -147,6 +147,7 @@
         "lint":                          "eslint --config cfg-eslint.yaml --ext js *.js && stylelint --config cfg-stylelint.yaml *.css && htmllint --rc cfg-htmllint.json *.html",
         "start":                         "cross-env DEBUG=1 electron --trace-warnings .",
         "package":                       "node npm-package.js",
-        "clean":                         "rimraf ./dist"
+        "clean":                         "rimraf dist",
+        "distclean":                     "rimraf dist node_modules"
     }
 }
