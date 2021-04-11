@@ -27,6 +27,7 @@ env:
 globals:
     process:        true
     Vue:            true
+    VueNextSelect:  true
 
 rules:
     #   modified rules
