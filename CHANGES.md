@@ -5,6 +5,7 @@ Changes
 - 1.5.2
     - BUGFIX: do not allow START button to be pressed if no title is given
     - BUGFIX: treat the audio sample rate as an integer internally
+    - CLEANUP: improve form appearance
 
 - 1.5.1
     - BUGFIX: fix update dialog in case of an existing forthcoming version
