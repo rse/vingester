@@ -3,7 +3,8 @@ Changes
 =======
 
 - 1.5.0
-    - IMPROVEMENT: allow an individual audio device per frameless browser window
+    - EXTENSION: provide adaptive FPS for NDI based on tally information
+    - EXTENSION: allow an individual audio device per frameless browser window
     - IMPROVEMENT: better align the user interface elements of browsers
     - IMPROVEMENT: increase console output by one additional line and provide button to toggle
     - IMPROVEMENT: use default values for missing fields when loading browser configurations

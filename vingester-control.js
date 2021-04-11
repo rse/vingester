@@ -195,7 +195,7 @@ const app = Vue.createApp({
                 t: "Sample", w: "1280", h: "720", c: "transparent",
                 u: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "default",
-                N: false, f: "30", C: "2", r: "48000", O: "0", o: "0",
+                N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
                 P: false, T: false
             }
             const B = JSON.parse(browsers)
@@ -240,7 +240,7 @@ const app = Vue.createApp({
                 t: "Sample", w: "1280", h: "720", c: "transparent",
                 u: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "default",
-                N: false, f: "30", C: "2", r: "48000", O: "0", o: "0",
+                N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
                 P: false, T: false
             }
             this.running[id] = false

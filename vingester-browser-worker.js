@@ -74,6 +74,7 @@ class BrowserWorker {
         /*  create NDI sender  */
         this.ndiSender = null
         this.ndiTimer  = null
+        this.ndiStatus = "unconnected"
         if (this.cfg.N) {
             this.ndiSender = await grandiose.send({
                 name:       title,
@@ -89,14 +90,16 @@ class BrowserWorker {
                 const tally = this.ndiSender.tally()
 
                 /*  determine our Vingester "tally status"  */
-                let status = "unconnected"
-                if      (tally.on_program) status = "program"
-                else if (tally.on_preview) status = "preview"
-                else if (conns > 0)        status = "connected"
+                this.ndiStatus = "unconnected"
+                if      (tally.on_program) this.ndiStatus = "program"
+                else if (tally.on_preview) this.ndiStatus = "preview"
+                else if (conns > 0)        this.ndiStatus = "connected"
 
                 /*  send tally status  */
                 electron.ipcRenderer.sendTo(this.cfg.controlId, "tally",
-                    { status, id: this.id })
+                    { status: this.ndiStatus, id: this.id })
+                electron.ipcRenderer.send("tally",
+                    { status: this.ndiStatus, id: this.id })
             }, 1 * 500)
         }
         this.burst1 = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
@@ -148,7 +151,7 @@ class BrowserWorker {
     }
 
     /*  process a single captured frame  */
-    async processVideo ({ size, ratio, buffer, dirty, framesToSkip }) {
+    async processVideo ({ size, ratio, buffer, dirty }) {
         if (!(this.cfg.N || this.cfg.P) || this.stopping)
             return
 
@@ -193,29 +196,26 @@ class BrowserWorker {
 
         /*  send NDI video frame  */
         if (this.cfg.N) {
-            if (this.frames++ > framesToSkip) {
-                this.frames = 0
-                const now = this.timeNow()
-                const bytesForBGRA = 4
-                const frame = {
-                    /*  base information  */
-                    timecode:           now / BigInt(100),
+            const now = this.timeNow()
+            const bytesForBGRA = 4
+            const frame = {
+                /*  base information  */
+                timecode:           now / BigInt(100),
 
-                    /*  type-specific information  */
-                    xres:               size.width,
-                    yres:               size.height,
-                    frameRateN:         this.cfg.f * 1000,
-                    frameRateD:         1000,
-                    pictureAspectRatio: ratio,
-                    frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
-                    lineStrideBytes:    size.width * bytesForBGRA,
+                /*  type-specific information  */
+                xres:               size.width,
+                yres:               size.height,
+                frameRateN:         this.cfg.f * 1000,
+                frameRateD:         1000,
+                pictureAspectRatio: ratio,
+                frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
+                lineStrideBytes:    size.width * bytesForBGRA,
 
-                    /*  the data itself  */
-                    fourCC:             grandiose.FOURCC_BGRA,
-                    data:               buffer
-                }
-                await this.ndiSender.video(frame)
+                /*  the data itself  */
+                fourCC:             grandiose.FOURCC_BGRA,
+                data:               buffer
             }
+            await this.ndiSender.video(frame)
         }
 
         /*  end time-keeping  */

@@ -569,6 +569,10 @@ body {
             &.label-delay {
                 width: 40px;
             }
+            &.label-adaptive,
+            &.label-channels {
+                width: 60px;
+            }
         }
         .group {
             margin-left: 8px;
@@ -640,6 +644,9 @@ body {
             &.field-mode .toggle {
                 width: 110px;
             }
+            &.field-adaptive .toggle {
+                width: 50px;
+            }
             &.field-samplerate .toggle {
                 width: 40px;
             }
@@ -647,7 +654,7 @@ body {
                 width: 40px;
             }
             &.field-channels > input {
-                width: 20px;
+                width: 50px;
             }
             &.field-delay > input {
                 width: 25px;
