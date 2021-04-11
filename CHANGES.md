@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.5.1
+    - BUGFIX: fix update dialog on case of an existing forthcoming version
+
 - 1.5.0
     - EXTENSION: provide adaptive FPS for NDI based on tally information
     - EXTENSION: allow an individual audio device per frameless browser window
