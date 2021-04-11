@@ -427,7 +427,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">OUTPUT 1:</div>
-                                        <div class="label label-output">Frameless (WIN):</div>
+                                        <div class="label label-output">Frameless / WIN:</div>
                                         <div class="field"
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (browser.D ? 'disable' : 'enable') + ' Frameless mode, where<br/>Web Content is rendered into a desktop window.' }">
                                             <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
@@ -493,7 +493,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">OUTPUT 2:</div>
-                                        <div class="label label-output">Headless (NDI&reg;):</div>
+                                        <div class="label label-output">Headless / NDI&reg;:</div>
                                         <div class="field"
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, where<br/>Web Content is multicasted via NDI.' }">
                                             <div v-if="!support.ndi">
