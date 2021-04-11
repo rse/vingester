@@ -1015,7 +1015,7 @@ body {
                 color: #999999;
             }
             &.selected {
-                background-color: #999999;
+                background-color: #aaaaaa;
                 color: #ffffff;
             }
             &.selected.highlighted {

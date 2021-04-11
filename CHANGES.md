@@ -6,6 +6,7 @@ Changes
     - BUGFIX: do not allow START button to be pressed if no title is given
     - BUGFIX: treat the audio sample rate as an integer internally
     - IMPROVEMENT: use a better description for the standard audio output device selection
+    - IMPROVEMENT: make audio device selection searchable and make selected item more clear
     - CLEANUP: improve form appearance
 
 - 1.5.1
