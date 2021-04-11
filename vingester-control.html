@@ -515,7 +515,7 @@
                                             <div class="unit unit-fps">fps</div>
                                             <div class="label label-adaptive">Adaptive:</div>
                                             <div class="field field-adaptive"
-                                                v-tippy="{ placement: 'top', content: 'Click to ' + (browser.a ? 'disable' : 'enable') + ' adaptive frame rate adjustment<br/>i.e., reduce FPS based on NDI receiver Tally information.' }">
+                                                v-tippy="{ placement: 'top', content: 'Click to ' + (browser.a ? 'disable' : 'enable') + ' adaptive frame rate adjustment<br/>by reducing FPS based on NDI Tally information.' }">
                                                 <div class="toggle" v-on:click="toggle(browser, 'a', [ true, false ])">
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.a === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.a === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
