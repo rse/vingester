@@ -692,7 +692,9 @@ body {
             &.field-stop {
                 background-color: #a0a0a0;
             }
-            &.field-start:hover {
+            &.field-start:hover,
+            &.field-preview:hover,
+            &.field-console:hover {
                 background-color: #ffffff;
                 color: #000000;
             }
