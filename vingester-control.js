@@ -194,7 +194,7 @@ const app = Vue.createApp({
             const defaults = {
                 t: "Sample", w: "1280", h: "720", c: "transparent",
                 u: "",
-                D: true, d: "", x: "0", y: "0", p: false, A: "default",
+                D: true, d: "", x: "0", y: "0", p: false, A: "",
                 N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
                 P: false, T: false
             }
@@ -239,7 +239,7 @@ const app = Vue.createApp({
                 id,
                 t: "Sample", w: "1280", h: "720", c: "transparent",
                 u: "",
-                D: true, d: "", x: "0", y: "0", p: false, A: "default",
+                D: true, d: "", x: "0", y: "0", p: false, A: "",
                 N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
                 P: false, T: false
             }

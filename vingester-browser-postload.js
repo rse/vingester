@@ -131,11 +131,15 @@
             const attach = async (when, node) => {
                 if (!nodes.has(node)) {
                     if (vingester.cfg.D) {
-                        vingester.log(`on ${when} redirect audio of ${node.tagName} to device "${vingester.cfg.A}"`)
-                        const devices = (await navigator.mediaDevices.enumerateDevices())
-                            .filter((d) => d.kind === "audiooutput" && d.label === vingester.cfg.A)
-                        if (devices.length === 1)
+                        let devices = await navigator.mediaDevices.enumerateDevices()
+                        if (vingester.cfg.A === "")
+                            devices = devices.filter((d) => d.kind === "audiooutput" && d.deviceId === "default")
+                        else
+                            devices = devices.filter((d) => d.kind === "audiooutput" && d.label === vingester.cfg.A)
+                        if (devices.length === 1) {
+                            vingester.log(`on ${when} redirect audio of ${node.tagName} to device "${devices[0].label}"`)
                             await node.setSinkId(devices[0].deviceId).catch((ex) => void (0))
+                        }
                         nodes.set(node, true)
                     }
                     if (vingester.cfg.N) {

@@ -481,7 +481,7 @@
                                                 v-tippy="{ placement: 'top', content: 'Click to select<br/>audio output device.' }"
                                                 v-bind:options="audioDevices"
                                                 v-model="browser.A"
-                                                v-bind:empty-model-value="'default'"
+                                                v-bind:empty-model-value="''"
                                                 v-on:update:model-value="changeOption(browser, 'A', $event)"
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]"></vue-select>
