@@ -881,3 +881,107 @@ body {
     font-size: 9pt;
     font-weight: normal;
 }
+
+/*  vue-select  */
+.vue-select {
+    background-color: #888888;
+    color: #ffffff;
+    .vue-select-header {
+        background-color: #888888;
+        color: #ffffff;
+        .vue-input {
+            padding: 2px 4px 2px 4px;
+            background-color: #888888;
+            color: #ffffff;
+            input {
+                background-color: #888888;
+                color: #ffffff;
+                font-size: 10pt;
+                &::placeholder {
+                    background-color: #888888;
+                    color: #ffffff;
+                    font-size: 10pt;
+                }
+            }
+        }
+        .icon {
+            border-color: #c0c0c0 transparent transparent;
+        }
+    }
+    &:hover {
+        border-radius: 4px;
+        background-color: #ffffff;
+        color: #000000;
+        .vue-select-header {
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000000;
+            .vue-input {
+                background-color: #ffffff;
+                color: #000000;
+                input {
+                    background-color: #ffffff;
+                    color: #000000;
+                    &::placeholder {
+                        background-color: #ffffff;
+                        color: #000000;
+                    }
+                }
+            }
+            .icon {
+                border-color: #000000 transparent transparent;
+            }
+        }
+    }
+    .vue-dropdown {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border: 0;
+        box-shadow: 0 8px 8px 4px #00000050;
+        .vue-dropdown-item {
+            font-size: 11pt;
+            background-color: #888888;
+            color: #ffffff;
+            height: 18px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            &.highlighted {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            &.disabled {
+                background-color: #888888;
+                color: #999999;
+            }
+            &.selected {
+                background-color: #999999;
+                color: #ffffff;
+            }
+            &.selected.highlighted {
+                background-color: #ffffff;
+                color: #000000;
+            }
+        }
+    }
+    &.disabled {
+        background-color: #6699cc;
+        border-color: #6699cc;
+        .vue-select-header {
+            background-color: #6699cc;
+            .vue-input {
+                background-color: #6699cc;
+                input {
+                    background-color: #6699cc;
+                    &::placeholder {
+                        background-color: #6699cc;
+                    }
+                }
+            }
+            .icon {
+                border-color: #88bbee transparent transparent;
+            }
+        }
+    }
+}
+
