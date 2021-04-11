@@ -278,19 +278,19 @@
                     </div>
                     <div class="desc" v-if="updateVersions.running.type">
                         You are currently running Vingester version {{ updateVersions.running.version }}.<br/>
-                        <span v-if="updateVersions.forthcoming.version === updateVersions.running.version">
+                        <span v-if="updateVersions.running.version === updateVersions.forthcoming.version">
                             This <b>running</b> version is already the <b>forthcoming</b> version.<br/>
                             Currently, there is still no update necessary.<br/>
                         </span>
-                        <span v-if="updateVersions.current.version === updateVersions.running.version">
+                        <span v-if="updateVersions.running.version === updateVersions.current.version">
                             This <b>running</b> version is still the <b>current</b> version.<br/>
                             Currently, there is still no update necessary.<br/>
                         </span>
-                        <span v-if="updateVersions.current.version !== updateVersions.running.version">
+                        <span v-if="updateVersions.running.version !== updateVersions.current.version">
                             This <b>running</b> version is in state <b>{{ updateVersions.running.type }}</b>.<br/>
                             Please switch to the <b>current</b> version <b>{{ updateVersions.current.version }}</b>!<br/>
                         </span>
-                        <span v-if="updateVersions.forthcoming.version && updateVersions.forthcoming.version !== versions.running.version">
+                        <span v-if="updateVersions.forthcoming.version && updateVersions.running.version !== updateVersions.forthcoming.version">
                             At your option, you can even switch to the <b>forthcoming</b> version
                             <b>{{ updateVersions.forthcoming.version }}</b>.<br/>
                         </span>
