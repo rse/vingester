@@ -624,22 +624,25 @@ body {
             }
             &.field-device {
                 margin-left: 0;
-                width: 348px;
+                width: 364px;
                 .vue-select {
-                    width: 348px;
+                    width: 364px;
                 }
                 .vue-dropdown {
-                    width: 348px;
+                    width: 364px;
                 }
             }
             &.field-url > input {
-                width: 410px;
+                width: 430px;
             }
             &.field-title > input {
                 width: 134px;
             }
             &.field-color > input {
-                width: 60px;
+                width: 80px;
+            }
+            &.field-pin .toggle {
+                width: 50px;
             }
             &.field-mode .toggle {
                 width: 110px;
