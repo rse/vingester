@@ -192,10 +192,10 @@ const app = Vue.createApp({
             if (browsers === undefined)
                 browsers = "[]"
             const defaults = {
-                t: "Sample", w: "1280", h: "720", c: "transparent",
+                t: "", w: "1280", h: "720", c: "transparent",
                 u: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "",
-                N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
+                N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
                 P: false, T: false
             }
             const B = JSON.parse(browsers)
@@ -237,10 +237,10 @@ const app = Vue.createApp({
                 num.toString(16).toUpperCase().padStart(2, "0")).join("")
             const browser = {
                 id,
-                t: "Sample", w: "1280", h: "720", c: "transparent",
+                t: "", w: "1280", h: "720", c: "transparent",
                 u: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "",
-                N: false, f: "30", C: "2", a: false, r: "48000", O: "0", o: "0",
+                N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
                 P: false, T: false
             }
             this.running[id] = false
@@ -314,7 +314,7 @@ const app = Vue.createApp({
                 || (action === "reload" && !this.running[id])
                 || (action === "stop"   && !this.running[id]))
                 return
-            if (action === "start" && browser !== undefined && ((!browser.D && !browser.N) || browser.u === ""))
+            if (action === "start" && browser !== undefined && ((!browser.D && !browser.N) || browser.t === "" || browser.u === ""))
                 return
             await electron.ipcRenderer.invoke("control", action, id)
         },

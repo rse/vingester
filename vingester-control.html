@@ -568,7 +568,7 @@
                                         <div class="row-left">
                                             <div class="field field-start"
                                                 v-tippy="{ placement: 'top', content: 'Start browser.' }"
-                                                v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.u === '' }"
+                                                v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.t === '' || browser.u === '' }"
                                                 v-on:click="control('start', browser.id)">
                                                 <i class="fas fa-play"></i> &nbsp;START
                                             </div>

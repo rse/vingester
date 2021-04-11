@@ -55,7 +55,6 @@ module.exports = class Browser {
         this.cfg.f = parseInt(this.cfg.f)
         this.cfg.O = parseInt(this.cfg.O)
         this.cfg.o = parseInt(this.cfg.o)
-        this.cfg.r = parseInt(this.cfg.r)
         this.cfg.C = parseInt(this.cfg.C)
 
         /*  recalculate capture framerate  */
