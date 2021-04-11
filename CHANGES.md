@@ -3,7 +3,8 @@ Changes
 =======
 
 - 1.5.1
-    - BUGFIX: fix update dialog on case of an existing forthcoming version
+    - BUGFIX: fix update dialog in case of an existing forthcoming version
+    - BUGFIX: fixed adaptive FPS handling
 
 - 1.5.0
     - EXTENSION: provide adaptive FPS for NDI based on tally information

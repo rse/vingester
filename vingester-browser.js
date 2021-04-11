@@ -58,8 +58,8 @@ module.exports = class Browser {
         this.cfg.r = parseInt(this.cfg.r)
         this.cfg.C = parseInt(this.cfg.C)
 
-        /*  recalculate framerate information  */
-        this.recalcFramerates()
+        /*  recalculate capture framerate  */
+        this.recalcCaptureFramerate()
 
         /*  optionally reconfigure already running worker instance  */
         this.update()
@@ -77,15 +77,17 @@ module.exports = class Browser {
         })
     }
 
-    /*  recalculate framerates based on tally status  */
-    recalcFramerates () {
+    /*  recalculate capturing framerate  */
+    recalcCaptureFramerate () {
         /*  determine framerate  */
         let framerate = this.framerateTarget
-        if (framerate < 1)
-            framerate = 1
+        if (framerate < 0)
+            framerate = 0
 
         /*  optionally adapt framerate  */
-        if (this.cfg.a) {
+        if (this.cfg.D && !this.cfg.N && !this.cfg.P)
+            framerate = 0
+        else if (this.cfg.N && this.cfg.a) {
             if (this.tally === "unconnected" && !this.cfg.P)
                 framerate = 1
             else if (this.tally === "unconnected" && this.cfg.P)
@@ -94,15 +96,14 @@ module.exports = class Browser {
                 framerate = Math.trunc(framerate / 3)
         }
 
-        /*  set framerate (if changed)  */
+        /*  set capture framerate (if changed)  */
         if (framerate !== this.framerateNow && this.framerateTarget !== -1 && this.framerateSource !== -1) {
             if (this.framerateNow === -1)
                 this.log.info(`browser/worker-${this.id}: setting capture framerate to ` +
-                    `${framerate}/${this.framerateTarget}/${this.framerateSource}`)
+                    `${framerate}/${this.framerateTarget}/${this.framerateSource} (initially)`)
             else
-                this.log.info(`browser/worker-${this.id}: switching capture framerate from ` +
-                    `${this.framerateNow}/${this.framerateTarget}/${this.framerateSource} to ` +
-                    `${framerate}/${this.framerateTarget}/${this.framerateSource}`)
+                this.log.info(`browser/worker-${this.id}: setting capture framerate to ` +
+                    `${framerate}/${this.framerateTarget}/${this.framerateSource} (subsequently)`)
             this.framerateNow = framerate
         }
     }
@@ -170,7 +171,7 @@ module.exports = class Browser {
                 this.tally = msg.status
                 if (this.tally !== tallyLast) {
                     tallyLast = this.tally
-                    this.recalcFramerates()
+                    this.recalcCaptureFramerate()
                     this.update()
                 }
             }
@@ -310,7 +311,7 @@ module.exports = class Browser {
             this.framerateSource = D.displayFrequency
             this.framerateTarget = this.cfg.f
             this.framerateNow    = -1
-            this.recalcFramerates()
+            this.recalcCaptureFramerate()
             let framesSkipped = 0
             this.subscriber = (image, dirty) => {
                 if (this.worker === null || this.worker.isDestroyed())
@@ -330,7 +331,7 @@ module.exports = class Browser {
             this.framerateSource = 240
             this.framerateTarget = this.cfg.f
             this.framerateNow    = -1
-            this.recalcFramerates()
+            this.recalcCaptureFramerate()
             this.subscriber = (ev, dirty, image) => {
                 if (this.worker === null || this.worker.isDestroyed())
                     return
@@ -339,8 +340,6 @@ module.exports = class Browser {
                 const buffer = image.getBitmap()
                 this.worker.webContents.send("video-capture", { size, ratio, buffer, dirty })
             }
-            content.webContents.on("paint", this.subscriber)
-            content.webContents.setFrameRate(this.framerateNow)
         }
 
         /*  receive content browser console outputs  */
@@ -405,18 +404,7 @@ module.exports = class Browser {
             content.webContents.once("did-finish-load", (ev) => {
                 ev.preventDefault()
                 this.log.info("browser: content: started")
-
-                /*  lazy subscribe to frames  */
-                if (this.cfg.D) {
-                    this.log.info("browser: initially starting frame capturing (method: frame)")
-                    this.content.webContents.beginFrameSubscription(false, this.subscriber)
-                    this.subscribed = true
-                }
-                else if (this.cfg.N) {
-                    this.log.info("browser: initially starting frame capturing (method: paint)")
-                    content.webContents.startPainting()
-                }
-
+                this.update()
                 this.starting = false
                 resolve(true)
             })
@@ -442,7 +430,7 @@ module.exports = class Browser {
             if (this.cfg.D) {
                 if (this.framerateNow <= 0) {
                     if (this.subscribed) {
-                        this.log.info("browser: subsequently stopping frame capturing (method: frame)")
+                        this.log.info("browser: stopping frame capturing (method: frame)")
                         this.framesToSkip = this.framerateSource
                         this.content.webContents.endFrameSubscription()
                         this.subscribed = false
@@ -451,12 +439,12 @@ module.exports = class Browser {
                 else {
                     const framesToSkip = Math.trunc((this.framerateSource / this.framerateNow) - 1)
                     if (this.framesToSkip !== framesToSkip) {
-                        this.log.info("browser: subsequently changing capturing frame rate to " +
+                        this.log.info("browser: changing capturing frame rate to " +
                             `${this.framerateNow} (method: frame)`)
                         this.framesToSkip = framesToSkip
                     }
                     if (!this.subscribed) {
-                        this.log.info("browser: subsequently starting frame capturing (method: frame)")
+                        this.log.info("browser: starting frame capturing (method: frame)")
                         this.content.webContents.beginFrameSubscription(false, this.subscriber)
                         this.subscribed = true
                     }
@@ -464,20 +452,24 @@ module.exports = class Browser {
             }
             else if (this.cfg.N) {
                 if (this.framerateNow <= 0) {
-                    if (this.content.webContents.isPainting()) {
-                        this.log.info("browser: subsequently stopping frame capturing (method: paint)")
+                    if (this.subscribed) {
+                        this.log.info("browser: stopping frame capturing (method: paint)")
                         this.content.webContents.stopPainting()
+                        this.content.webContents.off("paint", this.subscriber)
+                        this.subscribed = false
                     }
                 }
                 else {
                     if (this.content.webContents.getFrameRate() !== this.framerateNow) {
-                        this.log.info("browser: subsequently changing capturing frame rate to " +
+                        this.log.info("browser: changing capturing frame rate to " +
                             `${this.framerateNow} (method: paint)`)
                         this.content.webContents.setFrameRate(this.framerateNow)
                     }
-                    if (!this.content.webContents.isPainting()) {
-                        this.log.info("browser: subsequently starting frame capturing (method: paint)")
+                    if (!this.subscribed) {
+                        this.log.info("browser: starting frame capturing (method: paint)")
+                        this.content.webContents.on("paint", this.subscriber)
                         this.content.webContents.startPainting()
+                        this.subscribed = true
                     }
                 }
             }
@@ -511,8 +503,11 @@ module.exports = class Browser {
             }
         }
         else if (this.cfg.N) {
-            if (this.content.webContents.isPainting())
+            if (this.subscribed) {
+                this.content.webContents.off("paint", this.subscriber)
                 this.content.webContents.stopPainting()
+                this.subscribed = false
+            }
         }
 
         /*  notify worker and wait until its processVideo/processAudio
