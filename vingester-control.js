@@ -44,7 +44,7 @@ const app = Vue.createApp({
             support:           {},
             modal:             "",
             updateUpdateable:  false,
-            updateVersions:    {},
+            updateVersions:    { running: {}, current: {}, forthcoming: {} },
             updateNotify:      "",
             updateNotifyTimer: null,
             updateNotifyBlink: false,
