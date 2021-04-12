@@ -241,6 +241,7 @@ module.exports = class Browser {
             roundedCorners:  false,
             hasShadow:       false,
             backgroundColor: this.cfg.c,
+            enableLargerThanScreen: true,
             fullscreenable:  true,
             titleBarStyle:   "hidden",
             thickFrame:      false,
@@ -295,7 +296,7 @@ module.exports = class Browser {
             /*  show window higher than all regular windows, but still behind
                 things like spotlight or the screen saver and allow the window to
                 show over a fullscreen window  */
-            content.setAlwaysOnTop(true, "floating", 1)
+            content.setAlwaysOnTop(true, "pop-up-menu", 1)
             content.setVisibleOnAllWorkspaces(true)
         }
         else {

@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.5.3
+    - IMPROVEMENT: allow browser windows to be really placed on top (even over the dock of macOS)
+
 - 1.5.2
     - BUGFIX: do not allow START button to be pressed if no title is given
     - BUGFIX: treat the audio sample rate as an integer internally
