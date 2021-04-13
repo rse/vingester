@@ -4,6 +4,7 @@ Changes
 
 - 1.5.5
     - BUGFIX: global "start" button now no longer starts invalid browser configurations
+    - BUGFIX: use the scale factor of the actually used and not the primary display
 
 - 1.5.4
     - BUGFIX: allow arbitrary displays to be addressed in the Display field (including ones like "+2,0")

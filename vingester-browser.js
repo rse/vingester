@@ -206,12 +206,7 @@ module.exports = class Browser {
         /*  determine window title  */
         const title = (this.cfg.t == null ? "Vingester" : this.cfg.t)
 
-        /*  determine scale factor and width/height  */
-        const factor = electron.screen.getPrimaryDisplay().scaleFactor
-        const width  = Math.round(this.cfg.w / factor)
-        const height = Math.round(this.cfg.h / factor)
-
-        /*  determine display  */
+        /*  determine target display of browser window  */
         const point = electron.screen.getCursorScreenPoint()
         let D = electron.screen.getDisplayNearestPoint(point)
         let m
@@ -227,7 +222,14 @@ module.exports = class Browser {
             D = electron.screen.getDisplayNearestPoint(point)
         }
 
-        /*  determine position  */
+        /*  determine scale factor of browser window (on its target display)  */
+        const factor = D.scaleFactor
+
+        /*  determine width/height of browser window (on its target display)  */
+        const width  = Math.round(this.cfg.w / factor)
+        const height = Math.round(this.cfg.h / factor)
+
+        /*  determine position of browser window (on its target display)  */
         let pos = {}
         if (this.cfg.x !== null && this.cfg.y !== null) {
             const x = Math.round(D.bounds.x + (this.cfg.x / factor))
