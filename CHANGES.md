@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.5.5
+    - BUGFIX: global "start" button now no longer starts invalid browser configurations
+
 - 1.5.4
     - BUGFIX: allow arbitrary displays to be addressed in the Display field (including ones like "+2,0")
     - BUGFIX: correctly calculate the display heights when addressing a display

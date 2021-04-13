@@ -350,10 +350,7 @@ electron.app.on("ready", async () => {
             /*  start all browsers  */
             const p = []
             for (const id of Object.keys(browsers))
-                if (!browsers[id].running()
-                    && (browsers[id].D || browsers[id].N)
-                    && browsers[id].t !== ""
-                    && browsers[id].u !== "")
+                if (!browsers[id].running() && browsers[id].valid())
                     p.push(controlBrowser("start", id))
             await Promise.all(p)
         }
@@ -380,6 +377,8 @@ electron.app.on("ready", async () => {
                 throw new Error("invalid browser id")
             if (browser.running())
                 throw new Error("browser already running")
+            if (!browser.valid())
+                throw new Error("browser configuration not valid")
             control.webContents.send("browser-start", id)
             const success = await browser.start()
             if (success)

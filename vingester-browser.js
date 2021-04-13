@@ -112,6 +112,15 @@ module.exports = class Browser {
         return (this.content !== null && this.worker !== null)
     }
 
+    /*  check whether browser has a valid configuration  */
+    valid () {
+        return (
+            (this.cfg.D || this.cfg.N)
+            && this.cfg.t !== ""
+            && this.cfg.u !== ""
+        )
+    }
+
     /*  start browser  */
     async start () {
         if (this.starting)
