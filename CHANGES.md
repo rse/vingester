@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.5.4
+    - BUGFIX: allow arbitrary displays to be addressed in the Display field (including ones like "+2,0")
+    - BUGFIX: correctly calculate the display heights when addressing a display
+
 - 1.5.3
     - IMPROVEMENT: allow browser windows to be really placed on top (even over the dock of macOS)
 

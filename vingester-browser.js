@@ -206,13 +206,14 @@ module.exports = class Browser {
         const point = electron.screen.getCursorScreenPoint()
         let D = electron.screen.getDisplayNearestPoint(point)
         let m
-        if (this.cfg.d !== null && (m = this.cfg.d.match(/^([-+]?[01]),([-+]?[01])$/))) {
+        if (this.cfg.d !== null && (m = this.cfg.d.match(/^([-+]?\d+),([-+]?\d+)$/))) {
+            const select = { x: parseInt(m[1]), y: parseInt(m[2]) }
             const d = electron.screen.getPrimaryDisplay()
             const w = d.size.width
             const h = d.size.height
             const point = {
-                x: (w * 0.5) + parseInt(m[1]) * w,
-                y: (w * 0.5) + parseInt(m[2]) * h
+                x: (select.x * w) + (0.5 * w),
+                y: (select.y * h) + (0.5 * h)
             }
             D = electron.screen.getDisplayNearestPoint(point)
         }
