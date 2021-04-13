@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.5.6
+    - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
+
 - 1.5.5
     - BUGFIX: global "start" button now no longer starts invalid browser configurations
     - BUGFIX: use the scale factor of the actually used and not the primary display

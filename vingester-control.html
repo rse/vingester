@@ -112,7 +112,7 @@
                                     <i class="fas fa-redo"></i> &nbsp;RELOAD
                                 </div>
                                 <div class="field field-stop"
-                                    v-tippy="{ placement: 'bottom', content: 'Stop all<br/>running browsers.' }"
+                                    v-tippy="{ placement: 'bottom', content: 'Stop all running browsers.<br/>(Global Hotkey: CTRL+ALT+SHIFT+ESC)' }"
                                     v-bind:class="{ disabled: nRunning === 0 }"
                                     v-on:click="control('stop-all', null)">
                                     <i class="fas fa-pause"></i> &nbsp;STOP

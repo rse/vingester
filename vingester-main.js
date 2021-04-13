@@ -480,6 +480,12 @@ electron.app.on("ready", async () => {
         })
     }, 100)
 
+    /*  register some global shortcuts  */
+    electron.globalShortcut.register("Control+Alt+Shift+Escape", () => {
+        log.info("catched global hotkey for stopping all browsers")
+        controlBrowser("stop-all")
+    })
+
     /*  gracefully shutdown application  */
     log.info("hook into control user interface window states")
     control.on("close", async (ev) => {
