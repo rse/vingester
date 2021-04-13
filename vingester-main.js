@@ -350,7 +350,10 @@ electron.app.on("ready", async () => {
             /*  start all browsers  */
             const p = []
             for (const id of Object.keys(browsers))
-                if (!browsers[id].running())
+                if (!browsers[id].running()
+                    && (browsers[id].D || browsers[id].N)
+                    && browsers[id].t !== ""
+                    && browsers[id].u !== "")
                     p.push(controlBrowser("start", id))
             await Promise.all(p)
         }
