@@ -336,10 +336,10 @@ module.exports = class Browser {
                 if (framesSkipped++ < this.framesToSkip)
                     return
                 framesSkipped = 0
+                const buffer = image.getBitmap()
                 const size   = image.getSize()
                 const ratio  = image.getAspectRatio(factor)
-                const buffer = image.getBitmap()
-                this.worker.webContents.send("video-capture", { size, ratio, buffer, dirty })
+                this.worker.webContents.send("video-capture", buffer, size, ratio, dirty)
             }
         }
         else if (this.cfg.N) {
@@ -352,10 +352,10 @@ module.exports = class Browser {
             this.subscriber = (ev, dirty, image) => {
                 if (this.worker === null || this.worker.isDestroyed())
                     return
+                const buffer = image.getBitmap()
                 const size   = image.getSize()
                 const ratio  = image.getAspectRatio(factor)
-                const buffer = image.getBitmap()
-                this.worker.webContents.send("video-capture", { size, ratio, buffer, dirty })
+                this.worker.webContents.send("video-capture", buffer, size, ratio, dirty)
             }
         }
 

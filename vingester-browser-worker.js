@@ -123,8 +123,8 @@ class BrowserWorker {
         })
 
         /*  receive video capture data  */
-        electron.ipcRenderer.on("video-capture", (ev, data) => {
-            this.processVideo(data)
+        electron.ipcRenderer.on("video-capture", (ev, data, size, ratio, dirty) => {
+            this.processVideo(data, size, ratio, dirty)
         })
         this.log.info("started")
     }
@@ -151,7 +151,7 @@ class BrowserWorker {
     }
 
     /*  process a single captured frame  */
-    async processVideo ({ size, ratio, buffer, dirty }) {
+    async processVideo (buffer, size, ratio, dirty) {
         if (!(this.cfg.N || this.cfg.P) || this.stopping)
             return
 
