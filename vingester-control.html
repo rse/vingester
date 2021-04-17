@@ -426,6 +426,16 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="group"></div>
+                                        <div class="label label-info">Info:</div>
+                                        <div class="field field-info"
+                                            v-tippy="{ placement: 'top', content: 'Arbitrary meta information of the user.<br/>This is not used by Vingester itself.' }">
+                                            <input type="text" v-model="browser.i" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="group">OUTPUT 1:</div>
                                         <div class="label label-output">Frameless / WIN:</div>
                                         <div class="field"

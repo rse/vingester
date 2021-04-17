@@ -555,6 +555,9 @@ body {
             &.label-url {
                 width: 35px;
             }
+            &.label-info {
+                width: 35px;
+            }
             &.label-output {
                 width: 107px;
             }
@@ -633,6 +636,9 @@ body {
                 }
             }
             &.field-url > input {
+                width: 430px;
+            }
+            &.field-info > input {
                 width: 430px;
             }
             &.field-title > input {
