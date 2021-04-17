@@ -110,7 +110,7 @@
                     tracks.set(track, source)
                     attached++
                     if (attached === 1)
-                        recorder.start(Math.trunc(1000 / parseInt(vingester.cfg.f)))
+                        recorder.start(Math.round(1000 / vingester.cfg.f))
                 }
             }
             const trackRemove = (when, track) => {
