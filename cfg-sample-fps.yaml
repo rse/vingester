@@ -1,0 +1,73 @@
+%YAML 1.2
+##
+##  Vingester Sample Configuration
+##
+
+---
+
+-   BrowserTitle:                  "Sample-FPS-24"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    InputURL:                      "https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1"
+    InputInfo:                     "Sample Video with 24 FPS"
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           ""
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         24
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+
+-   BrowserTitle:                  "Sample-FPS-30"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    InputURL:                      "https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1"
+    InputInfo:                     "Sample Video with 30 FPS"
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           ""
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         30
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+
+-   BrowserTitle:                  "Sample-FPS-60"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    InputURL:                      "https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1"
+    InputInfo:                     "Sample Video with 60 FPS"
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           ""
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         60
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+
