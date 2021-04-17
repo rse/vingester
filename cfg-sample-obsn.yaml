@@ -8,11 +8,11 @@
 
 ---
 
--   BrowserTitle:                  "OBSN-Person-1"
+-   BrowserTitle:                  "OBSN-P01"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-1"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01"
     InputInfo:                     "OBS.Ninja Session, Person No. 1"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -30,11 +30,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-2"
+-   BrowserTitle:                  "OBSN-P02"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-2"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P02"
     InputInfo:                     "OBS.Ninja Session, Person No. 2"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -52,11 +52,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-3"
+-   BrowserTitle:                  "OBSN-P03"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-3"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P03"
     InputInfo:                     "OBS.Ninja Session, Person No. 3"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -74,11 +74,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-4"
+-   BrowserTitle:                  "OBSN-P04"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-4"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P04"
     InputInfo:                     "OBS.Ninja Session, Person No. 4"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -96,11 +96,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-5"
+-   BrowserTitle:                  "OBSN-P05"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-5"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P05"
     InputInfo:                     "OBS.Ninja Session, Person No. 5"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -118,11 +118,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-6"
+-   BrowserTitle:                  "OBSN-P06"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-6"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P06"
     InputInfo:                     "OBS.Ninja Session, Person No. 6"
     Output1Enabled:                false
     Output1VideoPositionX:         0
@@ -140,11 +140,11 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "OBSN-Person-7"
+-   BrowserTitle:                  "OBSN-P07"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/Person-7"
+    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P07"
     InputInfo:                     "OBS.Ninja Session, Person No. 7"
     Output1Enabled:                false
     Output1VideoPositionX:         0
