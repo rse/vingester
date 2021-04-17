@@ -34,6 +34,7 @@ const app = Vue.createApp({
             browsers:          [],
             running:           {},
             stat:              {},
+            rate:              {},
             burst:             {},
             tally:             {},
             trace:             {},
@@ -90,6 +91,11 @@ const app = Vue.createApp({
         })
         electron.ipcRenderer.on("stat", (ev, stat) => {
             this.stat[stat.id] = stat
+        })
+        electron.ipcRenderer.on("rate", (ev, rate) => {
+            if (this.rate[rate.id] === undefined)
+                this.rate[rate.id] = { video: 0, audio: 0 }
+            this.rate[rate.id][rate.type] = rate.pps
         })
         electron.ipcRenderer.on("trace", (ev, trace) => {
             if (trace.level === 2)

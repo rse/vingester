@@ -51,6 +51,8 @@ class BrowserWorker {
         this.opusEncoder     = null
         this.burst1          = null
         this.burst2          = null
+        this.videopps        = null
+        this.audiopps        = null
         this.frames          = 0
     }
 
@@ -102,8 +104,10 @@ class BrowserWorker {
                     { status: this.ndiStatus, id: this.id })
             }, 1 * 500)
         }
-        this.burst1 = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
-        this.burst2 = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
+        this.burst1   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
+        this.burst2   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
+        this.videopps = new util.ActionsPerTime(1000)
+        this.audiopps = new util.ActionsPerTime(1000)
 
         /*  capture and send browser audio stream Chromium provides a
             Webm/Matroska/EBML container with embedded(!) OPUS data,
@@ -224,6 +228,12 @@ class BrowserWorker {
             electron.ipcRenderer.sendTo(this.cfg.controlId, "burst",
                 { ...stat, type: "video", id: this.id })
         })
+
+        /*  track packets per second  */
+        this.videopps.record((pps) => {
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "rate",
+                { pps, type: "video", id: this.id })
+        })
     }
 
     /*  process a single captured audio data  */
@@ -291,6 +301,12 @@ class BrowserWorker {
         this.burst2.record(t1 - t0, (stat) => {
             electron.ipcRenderer.sendTo(this.cfg.controlId, "burst",
                 { ...stat, type: "audio", id: this.id })
+        })
+
+        /*  track packets per second  */
+        this.audiopps.record((pps) => {
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "rate",
+                { pps, type: "audio", id: this.id })
         })
     }
 }

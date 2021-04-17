@@ -603,6 +603,13 @@
                                         </div>
                                     </div>
                                     <div class="stat" v-if="running[browser.id]">
+                                        <div class="stat-row" v-if="browser.N && rate[browser.id]">
+                                            <span
+                                                v-tippy="{ placement: 'top', content: 'Shows the NDI sending performance<br/>(video+audio network packets per second).' }"
+                                                class="stat-item">
+                                            NDI: {{ Math.round(rate[browser.id].video) }}+{{ Math.round(rate[browser.id].audio) }} p/s
+                                            </span>
+                                        </div>
                                         <div class="stat-row">
                                             <span
                                                 v-tippy="{ placement: 'top', content: 'Shows the CPU performance (milliseconds per frame)<br/>of the browser Web Content rendering.' }"

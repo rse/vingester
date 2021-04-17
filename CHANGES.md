@@ -5,6 +5,7 @@ Changes
 - 1.5.6
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
     - IMPROVEMENT: pass data between main and renderer threads with less overhead
+    - IMPROVEMENT: show a NDI packets/second performance meter
 
 - 1.5.5
     - BUGFIX: global "start" button now no longer starts invalid browser configurations
