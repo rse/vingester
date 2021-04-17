@@ -49,7 +49,7 @@
         vingester.stat({ id: vingester.cfg.id, fps: FPS, memUsed, memAvail })
         setInterval(() => {
             vingester.stat({ id: vingester.cfg.id, fps: FPS, memUsed, memAvail })
-        }, 500)
+        }, 2000)
     }
 
     /*  capture audio from the DOM audio/video elements  */
