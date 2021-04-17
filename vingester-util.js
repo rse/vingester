@@ -43,7 +43,26 @@ class WeightedAverage {
     }
 }
 
+/*  helper class for actions per time  */
+class ActionsPerTime {
+    constructor (ms) {
+        this.ms    = ms
+        this.last  = Math.round(Date.now() / this.ms)
+        this.count = 0
+    }
+    record (callback) {
+        this.count++
+        const now = Math.round(Date.now() / this.ms)
+        if (now > this.last) {
+            callback(this.count)
+            this.last  = now
+            this.count = 0
+        }
+    }
+}
+
 module.exports = {
-    WeightedAverage
+    WeightedAverage,
+    ActionsPerTime
 }
 
