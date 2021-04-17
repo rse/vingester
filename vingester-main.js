@@ -19,6 +19,7 @@ const throttle    = require("throttle-debounce").throttle
 const jsYAML      = require("js-yaml")
 const UUID        = require("pure-uuid")
 const moment      = require("moment")
+const mkdirp      = require("mkdirp")
 
 /*  require own modules  */
 const Browser     = require("./vingester-browser.js")
@@ -88,6 +89,27 @@ electron.app.on("ready", async () => {
 
     /*  establish update process  */
     const update = new Update()
+
+    /*  ensure that the configuration export/import area exists
+        and that the sample configurations are provided  */
+    const pathExists = (p) =>
+        fs.promises.access(p, fs.constants.F_OK).then(() => true).catch(() => false)
+    const userData = electron.app.getPath("userData")
+    const appPath  = electron.app.getAppPath()
+    const cfgDir = path.join(userData, "Configurations")
+    if (!(await pathExists(cfgDir)))
+        await mkdirp(cfgDir, { mode: 0o755 })
+    const sampleConfigs = [
+        { iname: "cfg-sample-expert.yaml", ename: "Sample-Expert.yaml" },
+        { iname: "cfg-sample-fps.yaml",    ename: "Sample-FPS.yaml" },
+        { iname: "cfg-sample-obsn.yaml",   ename: "Sample-OBSN.yaml" }
+    ]
+    for (const sampleConfig of sampleConfigs) {
+        let iname = path.join(appPath, sampleConfig.iname)
+        let ename = path.join(cfgDir,  sampleConfig.ename)
+        if (!(await pathExists(ename)))
+            await fs.promises.copyFile(iname, ename)
+    }
 
     /*  determine main window position and size  */
     log.info("loading persistant settings")
@@ -272,7 +294,7 @@ electron.app.on("ready", async () => {
             title:       "Choose Export File (YAML)",
             properties:  [ "openFile" ],
             filters:     [ { name: "YAML", extensions: [ "yaml" ] } ],
-            defaultPath: electron.app.getPath("userData")
+            defaultPath: cfgDir
         }).then(async (result) => {
             if (result.canceled)
                 return
@@ -329,7 +351,7 @@ electron.app.on("ready", async () => {
             title:       "Choose Import File (YAML)",
             properties:  [ "openFile" ],
             filters:     [ { name: "YAML", extensions: [ "yaml" ] } ],
-            defaultPath: electron.app.getPath("userData")
+            defaultPath: cfgDir
         }).then(async (result) => {
             if (result.canceled)
                 return

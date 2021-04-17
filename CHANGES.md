@@ -5,6 +5,7 @@ Changes
 - 1.6.0
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
     - EXTENSION: provide an "Info" field for attaching arbitrary meta information of the user to a browser
+    - EXTENSION: use a dedicated config directory and provide three sample files for importing
     - IMPROVEMENT: pass data between main and renderer threads with less overhead
     - IMPROVEMENT: show a NDI packets/second performance meter
     - IMPROVEMENT: change the export format to be more human readable
