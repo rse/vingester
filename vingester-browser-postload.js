@@ -11,7 +11,7 @@
         /*  determine actual frames per second  */
         let FPS = 0
         const FPSwa = []
-        for (let i = 0; i < 60; i++)
+        for (let i = 0; i < 120; i++)
             FPSwa[i] = 0
         let last = null
         const animate = (now) => {
