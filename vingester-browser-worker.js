@@ -179,7 +179,7 @@ class BrowserWorker {
                         resolve(image)
                 })
             })
-            img.contain(128, 72, Jimp.RESIZE_BILINEAR)
+            img.contain(128, 72, Jimp.RESIZE_NEAREST_NEIGHBOR)
             if (os.endianness() === "LE") {
                 /*  convert from BGRA (chrome "paint") to RGBA (canvas) if necessary  */
                 img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
