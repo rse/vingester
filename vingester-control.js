@@ -114,7 +114,7 @@ const app = Vue.createApp({
             this.trace[trace.id].messages.push({ level, message: trace.message })
             this.$nextTick(() => {
                 const console = this.$refs[`console-${trace.id}`]
-                if (console !== undefined)
+                if (console !== null)
                     console.scrollTop = console.scrollHeight
             })
         })
