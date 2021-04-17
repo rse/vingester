@@ -10,7 +10,7 @@ Changes
     - IMPROVEMENT: show a NDI packets/second performance meter
     - IMPROVEMENT: change the export format to be more human readable
     - IMPROVEMENT: improve internal debugging by splitting into three levels
-    - UPGRADE: upgrade to Electron 12.0.4
+    - UPGRADE: upgrade to Electron 13.0.0-beta.14 for macOS non-rounded corner support and higher speeds
     - UPGRADE: upgrade minor dependencies
 
 - 1.5.5
