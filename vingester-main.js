@@ -18,6 +18,7 @@ const debounce    = require("throttle-debounce").debounce
 const throttle    = require("throttle-debounce").throttle
 const jsYAML      = require("js-yaml")
 const UUID        = require("pure-uuid")
+const moment      = require("moment")
 
 /*  require own modules  */
 const Browser     = require("./vingester-browser.js")
@@ -243,6 +244,28 @@ electron.app.on("ready", async () => {
     electron.ipcMain.handle("browsers-save", async (ev, browsers) => {
         store.set("browsers", browsers)
     })
+    const fields = [
+        { iname: "t", itype: "string",  etype: "string",  ename: "BrowserTitle" },
+        { iname: "w", itype: "string",  etype: "number",  ename: "BrowserWidth" },
+        { iname: "h", itype: "string",  etype: "number",  ename: "BrowserHeight" },
+        { iname: "c", itype: "string",  etype: "string",  ename: "BrowserColor" },
+        { iname: "u", itype: "string",  etype: "string",  ename: "InputURL" },
+        { iname: "D", itype: "boolean", etype: "boolean", ename: "Output1Enabled" },
+        { iname: "x", itype: "string",  etype: "number",  ename: "Output1VideoPositionX" },
+        { iname: "y", itype: "string",  etype: "number",  ename: "Output1VideoPositionY" },
+        { iname: "d", itype: "string",  etype: "string",  ename: "Output1VideoDisplay" },
+        { iname: "p", itype: "boolean", etype: "boolean", ename: "Output1VideoPinTop" },
+        { iname: "A", itype: "string",  etype: "string",  ename: "Output1AudioDevice" },
+        { iname: "N", itype: "boolean", etype: "boolean", ename: "Output2Enabled" },
+        { iname: "f", itype: "string",  etype: "number",  ename: "Output2VideoFrameRate" },
+        { iname: "a", itype: "boolean", etype: "boolean", ename: "Output2VideoAdaptive" },
+        { iname: "O", itype: "string",  etype: "number",  ename: "Output2VideoDelay" },
+        { iname: "r", itype: "number",  etype: "number",  ename: "Output2AudioSampleRate" },
+        { iname: "C", itype: "string",  etype: "number",  ename: "Output2AudioChannels" },
+        { iname: "o", itype: "string",  etype: "number",  ename: "Output2AudioDelay" },
+        { iname: "P", itype: "boolean", etype: "boolean", ename: "PreviewEnabled" },
+        { iname: "T", itype: "boolean", etype: "boolean", ename: "ConsoleEnabled" }
+    ]
     electron.ipcMain.handle("browsers-export", async (ev) => {
         electron.dialog.showSaveDialog({
             title:       "Choose Export File (YAML)",
@@ -258,7 +281,37 @@ electron.app.on("ready", async () => {
                     delete browser.id
                     return browser
                 })
-                const yaml = jsYAML.dump(browsers)
+                let yaml =
+                   "%YAML 1.2\n" +
+                   "##\n" +
+                   "##  Vingester Configuration\n" +
+                   `##  Version: Vingester ${version.vingester}\n` +
+                   `##  Date:    ${moment().format("YYYY-MM-DD HH:mm")}\n` +
+                   "##\n" +
+                   "\n"
+                for (const browser of browsers) {
+                    let line = 1
+                    for (const field of fields) {
+                        yaml += (line++ === 1 ? "-   " : "    ")
+                        let value = browser[field.iname]
+                        if (field.etype === "boolean" && typeof value !== "boolean")
+                            value = Boolean(value)
+                        else if (field.etype === "number" && typeof value !== "number")
+                            value = Number(value)
+                        else if (field.etype === "string" && typeof value !== "string")
+                            value = String(value)
+                        value = jsYAML.dump(value, {
+                            forceQuotes: true,
+                            quotingType: "\"",
+                            condenseFlow: true,
+                            lineWidth: -1,
+                            indent: 0
+                        })
+                        value = value.replace(/\r?\n$/, "")
+                        yaml += `${(field.ename + ":").padEnd(30, " ")} ${value}\n`
+                    }
+                    yaml += "\n"
+                }
                 await fs.promises.writeFile(file, yaml, { encoding: "utf8" })
                 log.info(`exported browsers configuration (${browsers.length} browser entries)`)
                 return true
@@ -286,6 +339,19 @@ electron.app.on("ready", async () => {
                             num.toString(16).toUpperCase().padStart(2, "0")).join("")
                     return browser
                 })
+                for (const browser of browsers) {
+                    for (const field of fields) {
+                        let value = browser[field.ename]
+                        if (field.itype === "boolean" && typeof value !== "boolean")
+                            value = Boolean(value)
+                        else if (field.itype === "number" && typeof value !== "number")
+                            value = Number(value)
+                        else if (field.itype === "string" && typeof value !== "string")
+                            value = String(value)
+                        delete browser[field.ename]
+                        browser[field.iname] = value
+                    }
+                }
                 store.set("browsers", JSON.stringify(browsers))
                 log.info(`imported browsers configuration (${browsers.length} browser entries)`)
                 return true

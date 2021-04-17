@@ -2,10 +2,11 @@
 Changes
 =======
 
-- 1.5.6
+- 1.6.0
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
     - IMPROVEMENT: pass data between main and renderer threads with less overhead
     - IMPROVEMENT: show a NDI packets/second performance meter
+    - IMPROVEMENT: change the export format to be more human readable
     - UPGRADE: upgrade to Electron 12.0.4
     - UPGRADE: upgrade minor dependencies
 
