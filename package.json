@@ -147,7 +147,9 @@
     "scripts": {
         "postinstall":                   "electron-builder install-app-deps",
         "lint":                          "eslint --config etc-eslint.yaml --ext js *.js && stylelint --config etc-stylelint.yaml *.css && htmllint --rc etc-htmllint.json *.html",
-        "start":                         "cross-env DEBUG=1 electron --inspect --trace-warnings .",
+        "start-prod":                    "electron .",
+        "start":                         "cross-env DEBUG=1 electron --trace-warnings .",
+        "start-debug":                   "cross-env DEBUG=2 electron --inspect --trace-warnings .",
         "package":                       "node npm-package.js",
         "clean":                         "rimraf dist",
         "distclean":                     "rimraf dist node_modules"

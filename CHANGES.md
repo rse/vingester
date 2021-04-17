@@ -9,6 +9,7 @@ Changes
     - IMPROVEMENT: pass data between main and renderer threads with less overhead
     - IMPROVEMENT: show a NDI packets/second performance meter
     - IMPROVEMENT: change the export format to be more human readable
+    - IMPROVEMENT: improve internal debugging by splitting into three levels
     - UPGRADE: upgrade to Electron 12.0.4
     - UPGRADE: upgrade minor dependencies
 

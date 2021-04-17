@@ -133,7 +133,7 @@ electron.app.on("ready", async () => {
         backgroundColor: "#333333",
         useContentSize:  false,
         webPreferences: {
-            devTools:                   (typeof process.env.DEBUG !== "undefined"),
+            devTools:                   (process.env.DEBUG === "2"),
             nodeIntegration:            true,
             nodeIntegrationInWorker:    true,
             contextIsolation:           false,
@@ -144,7 +144,7 @@ electron.app.on("ready", async () => {
         }
     })
     control.removeMenu()
-    if (typeof process.env.DEBUG !== "undefined") {
+    if (process.env.DEBUG === "2") {
         setTimeout(() => {
             control.webContents.openDevTools()
         }, 1000)

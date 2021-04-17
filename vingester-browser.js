@@ -129,7 +129,6 @@ module.exports = class Browser {
         this.log.info("browser: start")
 
         /*  create worker browser window (offscreen only)  */
-        const debug = (typeof process.env.DEBUG !== "undefined")
         const worker = new electron.BrowserWindow({
             offscreen:       true,
             show:            false,
@@ -137,7 +136,7 @@ module.exports = class Browser {
             height:          200,
             title:           "Vingester Browser Worker",
             webPreferences: {
-                devTools:                   debug,
+                devTools:                   (process.env.DEBUG === "2"),
                 backgroundThrottling:       false,
                 nodeIntegration:            true,
                 nodeIntegrationInWorker:    true,
@@ -153,7 +152,7 @@ module.exports = class Browser {
             }
         })
         worker.removeMenu()
-        if (debug) {
+        if (process.env.DEBUG === "2") {
             setTimeout(() => {
                 worker.webContents.openDevTools()
             }, 1000)
@@ -273,7 +272,7 @@ module.exports = class Browser {
             webPreferences: {
                 ...opts2,
                 partition:                  "vingester-browser-content",
-                devTools:                   debug,
+                devTools:                   (process.env.DEBUG === "2"),
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
                 nodeIntegration:            false,
@@ -293,7 +292,7 @@ module.exports = class Browser {
         })
         if (os.platform() === "darwin")
             content.setWindowButtonVisibility(false)
-        if (debug) {
+        if (process.env.DEBUG === "2") {
             setTimeout(() => {
                 content.webContents.openDevTools()
             }, 1000)
