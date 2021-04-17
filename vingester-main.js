@@ -288,6 +288,8 @@ electron.app.on("ready", async () => {
                    `##  Version: Vingester ${version.vingester}\n` +
                    `##  Date:    ${moment().format("YYYY-MM-DD HH:mm")}\n` +
                    "##\n" +
+                   "\n" +
+                   "---\n" +
                    "\n"
                 for (const browser of browsers) {
                     let line = 1
@@ -333,13 +335,18 @@ electron.app.on("ready", async () => {
             if (result.filePaths && result.filePaths.length === 1) {
                 const file = result.filePaths[0]
                 const yaml = await fs.promises.readFile(file, { encoding: "utf8" })
-                const browsers = jsYAML.load(yaml).map((browser) => {
+                let browsers = null
+                try {
+                    browsers = jsYAML.load(yaml)
+                }
+                catch (ex) {
+                    log.info(`importing browsers configuration failed: ${ex}`)
+                    return false
+                }
+                for (const browser of browsers) {
                     if (browser.id === undefined)
                         browser.id = new UUID(1).fold(2).map((num) =>
                             num.toString(16).toUpperCase().padStart(2, "0")).join("")
-                    return browser
-                })
-                for (const browser of browsers) {
                     for (const field of fields) {
                         let value = browser[field.ename]
                         if (field.itype === "boolean" && typeof value !== "boolean")
