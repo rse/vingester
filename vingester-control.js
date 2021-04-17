@@ -114,7 +114,8 @@ const app = Vue.createApp({
             this.trace[trace.id].messages.push({ level, message: trace.message })
             this.$nextTick(() => {
                 const console = this.$refs[`console-${trace.id}`]
-                console.scrollTop = console.scrollHeight
+                if (console !== undefined)
+                    console.scrollTop = console.scrollHeight
             })
         })
         electron.ipcRenderer.on("usage", (ev, usage) => {
