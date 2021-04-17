@@ -182,10 +182,11 @@ class BrowserWorker {
             img.contain(128, 72, Jimp.RESIZE_NEAREST_NEIGHBOR)
             if (os.endianness() === "LE") {
                 /*  convert from BGRA (chrome "paint") to RGBA (canvas) if necessary  */
-                img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
-                    const B = this.bitmap.data[idx]
-                    this.bitmap.data[idx] = this.bitmap.data[idx + 2]
-                    this.bitmap.data[idx + 2] = B
+                const D = img.bitmap.data
+                img.scan(0, 0, img.bitmap.width, img.bitmap.height, (x, y, idx) => {
+                    const B = D[idx]
+                    D[idx] = D[idx + 2]
+                    D[idx + 2] = B
                 })
             }
             electron.ipcRenderer.sendTo(this.cfg.controlId, "capture", {
