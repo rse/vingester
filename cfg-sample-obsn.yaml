@@ -8,7 +8,7 @@
 
 ---
 
--   BrowserTitle:                  "Person-1"
+-   BrowserTitle:                  "OBSN-Person-1"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -30,7 +30,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-2"
+-   BrowserTitle:                  "OBSN-Person-2"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -52,7 +52,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-3"
+-   BrowserTitle:                  "OBSN-Person-3"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -74,7 +74,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-4"
+-   BrowserTitle:                  "OBSN-Person-4"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -96,7 +96,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-5"
+-   BrowserTitle:                  "OBSN-Person-5"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -118,7 +118,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-6"
+-   BrowserTitle:                  "OBSN-Person-6"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -140,7 +140,7 @@
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
--   BrowserTitle:                  "Person-7"
+-   BrowserTitle:                  "OBSN-Person-7"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
