@@ -439,7 +439,7 @@ electron.app.on("ready", async () => {
         else if (action === "del") {
             /*  delete browser configuration  */
             if (browsers[id] !== undefined && browsers[id].running())
-                browsers[id].stop()
+                await controlBrowser("stop", id)
             delete browsers[id]
         }
         else if (action === "start-all") {
