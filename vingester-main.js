@@ -44,6 +44,12 @@ electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}
 const log = electronLog.scope("main")
 log.debug(`(find persistent log under ${electronLog.transports.file.getFile()})`)
 
+/*  get rid of unnecessary security warnings when debugging  */
+if (typeof process.env.DEBUG !== "undefined") {
+    delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS
+    process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+}
+
 /*  redirect exception error boxes to the console  */
 electron.dialog.showErrorBox = (title, content) => {
     log.info(`UI: exception: ${title}: ${content}`)
