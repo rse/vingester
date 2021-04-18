@@ -953,6 +953,7 @@ body {
 /*  vue-select  */
 .vue-select {
     background-color: #777777;
+    border: 1px solid #777777;
     color: #ffffff;
     .vue-select-header {
         background-color: #777777;
@@ -979,6 +980,7 @@ body {
     &:hover {
         border-radius: 4px;
         background-color: #ffffff;
+        border: 1px solid #ffffff;
         color: #000000;
         .vue-select-header {
             border-radius: 4px;
