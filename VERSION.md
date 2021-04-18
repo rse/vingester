@@ -4,11 +4,12 @@ Version History
 
 | VERSION | DATE       | STATE       |
 | ------- | ---------- | ----------- |
-| 1.5.5   | 2021-04-13 | current     |
-| 1.5.4   | 2021-04-13 | obsolete    |
-| 1.5.3   | 2021-04-12 | obsolete    |
-| 1.5.2   | 2021-04-11 | obsolete    |
-| 1.5.1   | 2021-04-11 | obsolete    |
+| 1.6.0   | 2021-04-18 | current     |
+| 1.5.5   | 2021-04-13 | obsolete    |
+| 1.5.4   | 2021-04-13 | deprecated  |
+| 1.5.3   | 2021-04-12 | deprecated  |
+| 1.5.2   | 2021-04-11 | deprecated  |
+| 1.5.1   | 2021-04-11 | deprecated  |
 | 1.5.0   | 2021-04-11 | deprecated  |
 | 1.4.5   | 2021-04-11 | obsolete    |
 | 1.4.4   | 2021-04-11 | deprecated  |
@@ -16,8 +17,8 @@ Version History
 | 1.4.2   | 2021-04-10 | deprecated  |
 | 1.4.1   | 2021-04-09 | deprecated  |
 | 1.4.0   | 2021-04-09 | deprecated  |
-| 1.3.0   | 2021-04-05 | obsolete    |
-| 1.2.0   | 2021-04-04 | obsolete    |
+| 1.3.0   | 2021-04-05 | deprecated  |
+| 1.2.0   | 2021-04-04 | deprecated  |
 | 1.1.1   | 2021-04-02 | deprecated  |
 | 1.1.0   | 2021-04-02 | deprecated  |
 | 1.0.1   | 2021-03-29 | deprecated  |
