@@ -105,8 +105,8 @@ electron.app.on("ready", async () => {
         { iname: "cfg-sample-obsn.yaml",   ename: "Sample-OBSN.yaml" }
     ]
     for (const sampleConfig of sampleConfigs) {
-        let iname = path.join(appPath, sampleConfig.iname)
-        let ename = path.join(cfgDir,  sampleConfig.ename)
+        const iname = path.join(appPath, sampleConfig.iname)
+        const ename = path.join(cfgDir,  sampleConfig.ename)
         if (!(await pathExists(ename)))
             await fs.promises.copyFile(iname, ename)
     }
