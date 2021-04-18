@@ -123,6 +123,15 @@ related aspects should be kept in mind:
   but does not require a large or even spare monitor (all browser
   windows even can overlap).
 
+- **Adaptive Framerate**:
+
+  For the "headless" NDI mode, **Vingester** supports a tally light
+  based adaptive framerate adjustment. When enabled, the framerate is
+  reduced to 1 fps if the video stream is not received by any peer,
+  reduced to 1/3 of the target framerate if the video stream is received
+  by any peer and set to the target framerate if the video stream is
+  part of the preview or program at any receiving peer.
+
 These performance aspects all together mean, you should use only one of
 the following modes of operation in practice:
 
@@ -141,7 +150,7 @@ the following modes of operation in practice:
 
 - **Mode 2: "Headless"**
 
-  Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode**<br/>
+  Vingester: **disabled GPU Hardware Acceleration** + **Headless Mode** + **Adaptive Framerate**<br/>
   OBS Studio: **NDI Source**
 
   In this mode you intentionally disable GPU Hardware Acceleration
@@ -154,9 +163,11 @@ the following modes of operation in practice:
 
 <b>Remember: in any case of operation modes of **Vingester** and OBS
 Studio, always ensure that the total CPU usage of your system never
-exceeds about 70-80% or you certainly will be faced with quality
+exceeds about 80-90% or you certainly will be faced with quality
 problems in both audio (clipping, lip-unsync) and video (frame loss)
-streams.</b>
+streams. Also Vingester in a CPU overload situation will be no longer
+responsible enough and internally queue more data than it is able to
+send out.</b>
 
 As two reference points for you:
 
@@ -173,8 +184,8 @@ As two reference points for you:
 So, while the Headless mode is more flexible than the Frameless mode, it
 has just about half the performance. Keep this in mind!
 
-Finally, for NDI output ensure that your Web Contents is really
-producing at least the Frames-Per-Second (FPS) you requested from
+Finally, for "headless" NDI output ensure that your Web Contents is
+really producing at least the Frames-Per-Second (FPS) you requested from
 Vingester. For instance, compare the following three YouTube videos as
 the Web Contents:
 
@@ -182,11 +193,11 @@ the Web Contents:
 - [YouTube Video 30fps](https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1)
 - [YouTube Video 60fps](https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1)
 
-If you tell Vingester you want 30fps, the first will effectively just
-output as a 24fps stream (the reason is that the underlying Chromium
+If you tell Vingester you want 30 fps, the first will effectively just
+output as a 24 fps stream (the reason is that the underlying Chromium
 rendering engine will dynamically reduce the FPS if the content does not
 change as much as the requesting FPS wishes), the second and third will
-both output as a 30fps stream.
+both output as a 30 fps stream.
 
 Alternatives
 ------------
