@@ -521,9 +521,9 @@ body {
                 position: absolute;
                 top: 12px;
                 right: 16px;
-                width: 12px;
-                height: 12px;
-                border-radius: 7px;
+                width: 16px;
+                height: 16px;
+                border-radius: 9px;
                 border: 1px solid #00000080;
                 &.tally-unconnected {
                     background-color: #666666;
