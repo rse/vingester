@@ -4,6 +4,7 @@ Changes
 
 - 1.6.1
     - CLEANUP: somewhat darken the grey parts of the UI
+    - CLEANUP: remove security warnings when debugging
 
 - 1.6.0
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
