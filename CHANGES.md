@@ -10,6 +10,7 @@ Changes
     - IMPROVEMENT: show a NDI packets/second performance meter
     - IMPROVEMENT: change the export format to be more human readable
     - IMPROVEMENT: improve internal debugging by splitting into three levels
+    - IMPROVEMENT: enlarge the preview thumbnail view from 128x72px to 160x90px
     - UPGRADE: upgrade to Electron 12.0.4
     - UPGRADE: upgrade minor dependencies
 

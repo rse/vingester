@@ -507,14 +507,14 @@ body {
                 position: absolute;
                 top: 4px;
                 right: 10px;
-                width: 128px;
-                height: 72px;
+                width: 160px;
+                height: 90px;
                 overflow: hidden;
                 border-radius: 4px;
                 background-color: #225588;
                 canvas {
-                    width: 128px;
-                    height: 72px;
+                    width: 160px;
+                    height: 90px;
                 }
             }
             .tally {
