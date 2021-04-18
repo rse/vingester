@@ -6,6 +6,7 @@ Changes
     - BUGFIX: stop started browser only if it fails in the main frame
     - CLEANUP: somewhat darken the grey parts of the UI
     - CLEANUP: remove security warnings when debugging
+    - CLEANUP: remove all listeners when stopping a browser instance
 
 - 1.6.0
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option

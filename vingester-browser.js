@@ -506,6 +506,7 @@ module.exports = class Browser {
         if (this.stopping)
             return
         this.stopping = true
+        this.log.info("browser: stop")
 
         /*  sanity check situation  */
         if (this.content === null || this.worker === null)
@@ -526,9 +527,14 @@ module.exports = class Browser {
             }
         }
 
+        /*  remove all listeners  */
+        this.worker.removeAllListeners()
+        this.worker.webContents.removeAllListeners()
+        this.content.removeAllListeners()
+        this.content.webContents.removeAllListeners()
+
         /*  notify worker and wait until its processVideo/processAudio
             callbacks were at least done one last time  */
-        this.log.info("browser: stop")
         this.worker.webContents.send("browser-worker-stop")
         await new Promise((resolve) => setTimeout(resolve, 100))
 
