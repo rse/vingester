@@ -169,17 +169,27 @@ streams. Also Vingester in a CPU overload situation will be no longer
 responsible enough and internally queue more data than it is able to
 send out.</b>
 
-As two reference points for you:
+As four reference points for you:
 
 - In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
   running under Windows 10 can ingest **9** OBS.Ninja sessions with 720p30
-  at about 80% average system load.
+  at about 80% average system load and without performance penalties.
+
+- In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
+  and **disabled** previews, a PC based on a 8-core i7-11700KF CPU and
+  running under Windows 10 can ingest **18** OBS.Ninja sessions with 720p30
+  at about 40% average system load and without performance penalties.
 
 - In **"Headless"** mode, with **disabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
   running under Windows 10 can ingest **4** OBS.Ninja sessions with 720p30
-  at about 80% average system load.
+  at about 80% average system load and without performance penalties.
+
+- In **"Headless"** mode, with **disabled** GPU Hardware Acceleration
+  and **disabled** previews, a PC based on a 8-core i7-11700KF CPU and
+  running under Windows 10 can ingest **8** OBS.Ninja sessions with 720p30
+  at about 60% average system load and without performance penalties.
 
 So, while the Headless mode is more flexible than the Frameless mode, it
 has just about half the performance. Keep this in mind!
