@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.6.1
+    - CLEANUP: somewhat darken the grey parts of the UI
+
 - 1.6.0
     - EXTENSION: provide global hotkey CTRL+ALT+SHIFT+ESCAPE for stopping all browsers as rescue option
     - EXTENSION: provide an "Info" field for attaching arbitrary meta information of the user to a browser

@@ -473,7 +473,7 @@ body {
         border-bottom-left-radius: 4px;
         margin: 4px 0 0 4px;
         padding: 4px 8px 4px 8px;
-        background-color: #666666;
+        background-color: #555555;
         .button {
             color: #cccccc;
             cursor: pointer;
@@ -497,7 +497,7 @@ body {
             width: 100%;
             display: flex;
             flex-direction: column;
-            background-color: #666666;
+            background-color: #555555;
             border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
             margin: 4px 4px 0 2px;
@@ -526,7 +526,7 @@ body {
                 border-radius: 9px;
                 border: 1px solid #00000080;
                 &.tally-unconnected {
-                    background-color: #666666;
+                    background-color: #555555;
                 }
                 &.tally-connected {
                     background-color: #00e000;
@@ -601,7 +601,7 @@ body {
             > input {
                 width: 40px;
                 height: 18px;
-                background-color: #888888;
+                background-color: #777777;
                 color: #ffffff;
                 border: 0;
                 outline: none;
@@ -622,7 +622,7 @@ body {
                 color: #000000;
             }
             > input.disabled:hover {
-                background-color: #888888;
+                background-color: #777777;
                 color: #ffffff;
             }
             &.field-device {
@@ -844,7 +844,7 @@ body {
             border-radius: 4px;
             padding: 1px 4px 1px 4px;
             margin: 1px 4px 0 0;
-            background-color: #888888;
+            background-color: #777777;
             color: #ffffff;
             display: flex;
             text-align: center;
@@ -952,21 +952,21 @@ body {
 
 /*  vue-select  */
 .vue-select {
-    background-color: #888888;
+    background-color: #777777;
     color: #ffffff;
     .vue-select-header {
-        background-color: #888888;
+        background-color: #777777;
         color: #ffffff;
         .vue-input {
             padding: 2px 4px 2px 4px;
-            background-color: #888888;
+            background-color: #777777;
             color: #ffffff;
             input {
-                background-color: #888888;
+                background-color: #777777;
                 color: #ffffff;
                 font-size: 10pt;
                 &::placeholder {
-                    background-color: #888888;
+                    background-color: #777777;
                     color: #ffffff;
                     font-size: 10pt;
                 }
@@ -1008,7 +1008,7 @@ body {
         box-shadow: 0 8px 8px 4px #00000050;
         .vue-dropdown-item {
             font-size: 11pt;
-            background-color: #888888;
+            background-color: #777777;
             color: #ffffff;
             height: 18px;
             text-overflow: ellipsis;
@@ -1019,7 +1019,7 @@ body {
                 color: #000000;
             }
             &.disabled {
-                background-color: #888888;
+                background-color: #777777;
                 color: #999999;
             }
             &.selected {
