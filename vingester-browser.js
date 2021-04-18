@@ -186,9 +186,9 @@ module.exports = class Browser {
 
         /*  load content into worker browser window  */
         await new Promise((resolve, reject) => {
-            worker.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
+            worker.webContents.once("did-fail-load", (ev, code, desc, url, isMainFrame) => {
                 ev.preventDefault()
-                this.log.info("browser: worker: failed")
+                this.log.info(`browser: worker: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
                 resolve(false)
             })
             worker.webContents.once("did-finish-load", (ev) => {
@@ -411,11 +411,11 @@ module.exports = class Browser {
 
         /*  finally load the Web Content  */
         return new Promise((resolve, reject) => {
-            content.webContents.once("did-fail-load", (ev, errorCode, errorDescription) => {
+            content.webContents.once("did-fail-load", (ev, code, desc, url, isMainFrame) => {
                 ev.preventDefault()
-                this.log.info("browser: content: failed")
+                this.log.info(`browser: content: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
                 this.starting = false
-                resolve(false)
+                resolve(isMainFrame ? false : true)
             })
             content.webContents.once("did-finish-load", (ev) => {
                 ev.preventDefault()

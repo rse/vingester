@@ -3,6 +3,7 @@ Changes
 =======
 
 - 1.6.1
+    - BUGFIX: stop started browser only if it fails in the main frame
     - CLEANUP: somewhat darken the grey parts of the UI
     - CLEANUP: remove security warnings when debugging
 
