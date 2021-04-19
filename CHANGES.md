@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.6.2
+    - IMPROVEMENT: support particular profiles/configuration with the option "--profile=<name>"
+
 - 1.6.1
     - BUGFIX: stop started browser only if it fails in the main frame
     - CLEANUP: somewhat darken the grey parts of the UI

@@ -76,6 +76,19 @@ log.info(`using V8: ${version.v8}`)
 log.info(`using Node: ${version.node}`)
 log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "no"})`)
 
+/*  support particular profiles  */
+if (electron.app.commandLine.hasSwitch("profile")) {
+    const profile = electron.app.commandLine.getSwitchValue("profile")
+    let userData = electron.app.getPath("userData")
+    userData += `-${profile}`
+    electron.app.setPath("userData", userData)
+    log.info(`using profile: "${userData}" [custom]`)
+}
+else {
+    const userData = electron.app.getPath("userData")
+    log.info(`using profile: "${userData}" [default]`)
+}
+
 /*  optionally initialize NDI library  */
 if (grandiose.isSupportedCPU())
     grandiose.initialize()
