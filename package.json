@@ -35,7 +35,7 @@
     },
     "dependencies": {
         "electron-log":                  "4.3.4",
-        "electron-store":                "7.0.3",
+        "electron-store":                "8.0.0",
         "bluebird":                      "3.7.2",
         "pcm-convert":                   "1.6.5",
         "@discordjs/opus":               "0.5.0",

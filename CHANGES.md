@@ -7,6 +7,7 @@ Changes
     - IMPROVEMENT: support particular auto-imported/exported external configuration with option "--config=<file>"
     - IMPROVEMENT: support optically tagging the user interface with option "--tag=<string>"
     - BUGFIX: correctly initialize the "Info" field for new browser entries
+    - UPGRADE: upgrade minor dependencies
 
 - 1.6.1
     - BUGFIX: stop started browser only if it fails in the main frame
