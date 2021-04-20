@@ -3,7 +3,7 @@ Changes
 =======
 
 - 1.6.2
-    - IMPROVEMENT: support particular profiles/configuration with the option "--profile=<name>"
+    - BUGFIX: correctly initialize the "Info" field for new browser entries
 
 - 1.6.1
     - BUGFIX: stop started browser only if it fails in the main frame
