@@ -200,7 +200,7 @@ const app = Vue.createApp({
                 browsers = "[]"
             const defaults = {
                 t: "", w: "1280", h: "720", c: "transparent",
-                u: "",
+                u: "", i: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "",
                 N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
                 P: false, T: false
@@ -245,7 +245,7 @@ const app = Vue.createApp({
             const browser = {
                 id,
                 t: "", w: "1280", h: "720", c: "transparent",
-                u: "",
+                u: "", i: "",
                 D: true, d: "", x: "0", y: "0", p: false, A: "",
                 N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
                 P: false, T: false
