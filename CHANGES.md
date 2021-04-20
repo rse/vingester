@@ -5,7 +5,7 @@ Changes
 - 1.7.0
     - IMPROVEMENT: support particular profile with the option "--profile=<id>|<directory>"
     - IMPROVEMENT: support particular auto-imported/exported external configuration with option "--config=<file>"
-    - IMPROVEMENT: support tagging the user interface with option "--tag=<string>"
+    - IMPROVEMENT: support optically tagging the user interface with option "--tag=<string>"
     - BUGFIX: correctly initialize the "Info" field for new browser entries
 
 - 1.6.1
