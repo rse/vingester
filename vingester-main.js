@@ -80,13 +80,30 @@ log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "
 if (electron.app.commandLine.hasSwitch("profile")) {
     const profile = electron.app.commandLine.getSwitchValue("profile")
     let userData = electron.app.getPath("userData")
-    userData += `-${profile}`
+    if (profile.match(/^[a-zA-Z][a-zA-Z0-9-]+$/))
+        userData += `-${profile}`
+    else
+        userData = path.resolve(process.cwd(), profile)
     electron.app.setPath("userData", userData)
     log.info(`using profile: "${userData}" [custom]`)
 }
 else {
     const userData = electron.app.getPath("userData")
     log.info(`using profile: "${userData}" [default]`)
+}
+
+/*  support configuration auto-import/export  */
+let configFile = null
+if (electron.app.commandLine.hasSwitch("config")) {
+    configFile = electron.app.commandLine.getSwitchValue("config")
+    log.info(`using auto-import/export configuration: "${configFile}"`)
+}
+
+/*  support user interface tagging  */
+let tag = null
+if (electron.app.commandLine.hasSwitch("tag")) {
+    tag = electron.app.commandLine.getSwitchValue("tag")
+    log.info(`using user interface tag: "${tag}"`)
 }
 
 /*  optionally initialize NDI library  */
@@ -308,6 +325,81 @@ electron.app.on("ready", async () => {
         { iname: "P", itype: "boolean", etype: "boolean", ename: "PreviewEnabled" },
         { iname: "T", itype: "boolean", etype: "boolean", ename: "ConsoleEnabled" }
     ]
+    const exportConfig = async (file) => {
+        let cfg = store.get("browsers")
+        if (cfg === undefined)
+            cfg = "[]"
+        const browsers = JSON.parse(cfg).map((browser) => {
+            delete browser.id
+            return browser
+        })
+        let yaml =
+           "%YAML 1.2\n" +
+           "##\n" +
+           "##  Vingester Configuration\n" +
+           `##  Version: Vingester ${version.vingester}\n` +
+           `##  Date:    ${moment().format("YYYY-MM-DD HH:mm")}\n` +
+           "##\n" +
+           "\n" +
+           "---\n" +
+           "\n"
+        for (const browser of browsers) {
+            let line = 1
+            for (const field of fields) {
+                yaml += (line++ === 1 ? "-   " : "    ")
+                let value = browser[field.iname]
+                if (field.etype === "boolean" && typeof value !== "boolean")
+                    value = Boolean(value)
+                else if (field.etype === "number" && typeof value !== "number")
+                    value = Number(value)
+                else if (field.etype === "string" && typeof value !== "string")
+                    value = String(value)
+                value = jsYAML.dump(value, {
+                    forceQuotes: true,
+                    quotingType: "\"",
+                    condenseFlow: true,
+                    lineWidth: -1,
+                    indent: 0
+                })
+                value = value.replace(/\r?\n$/, "")
+                yaml += `${(field.ename + ":").padEnd(30, " ")} ${value}\n`
+            }
+            yaml += "\n"
+        }
+        await fs.promises.writeFile(file, yaml, { encoding: "utf8" })
+        log.info(`exported browsers configuration (${browsers.length} browser entries)`)
+    }
+    const importConfig = async (file) => {
+        const yaml = await fs.promises.readFile(file, { encoding: "utf8" })
+        let browsers = null
+        try {
+            browsers = jsYAML.load(yaml)
+        }
+        catch (ex) {
+            log.info(`importing browsers configuration failed: ${ex}`)
+            return false
+        }
+        if (browsers === null)
+            browsers = []
+        for (const browser of browsers) {
+            if (browser.id === undefined)
+                browser.id = new UUID(1).fold(2).map((num) =>
+                    num.toString(16).toUpperCase().padStart(2, "0")).join("")
+            for (const field of fields) {
+                let value = browser[field.ename]
+                if (field.itype === "boolean" && typeof value !== "boolean")
+                    value = Boolean(value)
+                else if (field.itype === "number" && typeof value !== "number")
+                    value = Number(value)
+                else if (field.itype === "string" && typeof value !== "string")
+                    value = String(value)
+                delete browser[field.ename]
+                browser[field.iname] = value
+            }
+        }
+        store.set("browsers", JSON.stringify(browsers))
+        log.info(`imported browsers configuration (${browsers.length} browser entries)`)
+    }
     electron.ipcMain.handle("browsers-export", async (ev) => {
         electron.dialog.showSaveDialog({
             title:       "Choose Export File (YAML)",
@@ -318,46 +410,7 @@ electron.app.on("ready", async () => {
             if (result.canceled)
                 return
             if (result.filePath) {
-                const file = result.filePath
-                const browsers = JSON.parse(store.get("browsers")).map((browser) => {
-                    delete browser.id
-                    return browser
-                })
-                let yaml =
-                   "%YAML 1.2\n" +
-                   "##\n" +
-                   "##  Vingester Configuration\n" +
-                   `##  Version: Vingester ${version.vingester}\n` +
-                   `##  Date:    ${moment().format("YYYY-MM-DD HH:mm")}\n` +
-                   "##\n" +
-                   "\n" +
-                   "---\n" +
-                   "\n"
-                for (const browser of browsers) {
-                    let line = 1
-                    for (const field of fields) {
-                        yaml += (line++ === 1 ? "-   " : "    ")
-                        let value = browser[field.iname]
-                        if (field.etype === "boolean" && typeof value !== "boolean")
-                            value = Boolean(value)
-                        else if (field.etype === "number" && typeof value !== "number")
-                            value = Number(value)
-                        else if (field.etype === "string" && typeof value !== "string")
-                            value = String(value)
-                        value = jsYAML.dump(value, {
-                            forceQuotes: true,
-                            quotingType: "\"",
-                            condenseFlow: true,
-                            lineWidth: -1,
-                            indent: 0
-                        })
-                        value = value.replace(/\r?\n$/, "")
-                        yaml += `${(field.ename + ":").padEnd(30, " ")} ${value}\n`
-                    }
-                    yaml += "\n"
-                }
-                await fs.promises.writeFile(file, yaml, { encoding: "utf8" })
-                log.info(`exported browsers configuration (${browsers.length} browser entries)`)
+                await exportConfig(result.filePath)
                 return true
             }
             return false
@@ -375,34 +428,7 @@ electron.app.on("ready", async () => {
             if (result.canceled)
                 return
             if (result.filePaths && result.filePaths.length === 1) {
-                const file = result.filePaths[0]
-                const yaml = await fs.promises.readFile(file, { encoding: "utf8" })
-                let browsers = null
-                try {
-                    browsers = jsYAML.load(yaml)
-                }
-                catch (ex) {
-                    log.info(`importing browsers configuration failed: ${ex}`)
-                    return false
-                }
-                for (const browser of browsers) {
-                    if (browser.id === undefined)
-                        browser.id = new UUID(1).fold(2).map((num) =>
-                            num.toString(16).toUpperCase().padStart(2, "0")).join("")
-                    for (const field of fields) {
-                        let value = browser[field.ename]
-                        if (field.itype === "boolean" && typeof value !== "boolean")
-                            value = Boolean(value)
-                        else if (field.itype === "number" && typeof value !== "number")
-                            value = Number(value)
-                        else if (field.itype === "string" && typeof value !== "string")
-                            value = String(value)
-                        delete browser[field.ename]
-                        browser[field.iname] = value
-                    }
-                }
-                store.set("browsers", JSON.stringify(browsers))
-                log.info(`imported browsers configuration (${browsers.length} browser entries)`)
+                await importConfig(result.filePaths[0])
                 return true
             }
             return false
@@ -561,6 +587,10 @@ electron.app.on("ready", async () => {
         setTimeout(check, 100)
     })
 
+    /*  send parameters  */
+    if (tag !== null)
+        control.webContents.send("tag", tag)
+
     /*  toggle GPU hardware acceleration  */
     log.info("send GPU status and provide IPC hook for GPU status change")
     control.webContents.send("gpu", !!store.get("gpu"))
@@ -601,17 +631,40 @@ electron.app.on("ready", async () => {
         controlBrowser("stop-all")
     })
 
+    /*  optionally auto-import configuration  */
+    if (configFile !== null) {
+        if (await pathExists(configFile)) {
+            await importConfig(configFile)
+            control.webContents.send("load")
+        }
+    }
+
     /*  gracefully shutdown application  */
     log.info("hook into control user interface window states")
     control.on("close", async (ev) => {
         log.info("shutting down")
         ev.preventDefault()
+
+        /*  stop timer  */
         if (timer !== null) {
             clearTimeout(timer)
             timer = null
         }
+
+        /*  stop all browsers  */
         await controlBrowser("stop-all", null)
+
+        /*  optionally auto-export configuration  */
+        if (configFile !== null) {
+            control.webContents.send("save")
+            await new Promise((resolve) => setTimeout(resolve, 500))
+            await exportConfig(configFile)
+        }
+
+        /*  save window bounds  */
         updateBounds()
+
+        /*  destroy control user interface  */
         control.destroy()
     })
     electron.app.on("window-all-closed", () => {

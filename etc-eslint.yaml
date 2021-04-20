@@ -54,4 +54,5 @@ rules:
     node/no-callback-literal:            off
     multiline-ternary:                   off
     no-new:                              off
+    no-unneeded-ternary:                 off
 

@@ -51,7 +51,8 @@ const app = Vue.createApp({
             updateNotifyBlink: false,
             updateProgress:    0,
             updateError:       null,
-            audioDevices:      []
+            audioDevices:      [],
+            tag:               null
         }
     },
     computed: {
@@ -69,6 +70,15 @@ const app = Vue.createApp({
         await this.updateAudioDevices()
         navigator.mediaDevices.addEventListener("devicechange", () => { this.updateAudioDevices() })
         this.load()
+        electron.ipcRenderer.on("tag", (ev, tag) => {
+            this.tag = tag
+        })
+        electron.ipcRenderer.on("load", (ev) => {
+            this.load()
+        })
+        electron.ipcRenderer.on("save", (ev) => {
+            this.save()
+        })
         electron.ipcRenderer.on("browser-start", (ev, id) => {
             log.info("browser-start", id)
         })

@@ -142,6 +142,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="tag" v-if="tag !== null">
+                    {{ tag }}
+                </div>
             </div>
             <div class="ui-modal" v-show="modal !== ''">
                 <div class="ui-modal-info" v-show="modal === 'info'">
