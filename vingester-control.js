@@ -146,7 +146,10 @@ const app = Vue.createApp({
             const pixels = new ImageData(arr, capture.size.width, capture.size.height)
             const bitmap = await createImageBitmap(pixels)
             ctx.clearRect(0, 0, 160, 90)
-            ctx.drawImage(bitmap, 0, 0)
+            if ((capture.size.width / capture.size.height) >= (160 / 90))
+                ctx.drawImage(bitmap, 0, Math.trunc((90 - capture.size.height) / 2))
+            else
+                ctx.drawImage(bitmap, Math.trunc((160 - capture.size.width) / 2), 0)
         })
         electron.ipcRenderer.on("gpu", (ev, gpu) => {
             this.gpu = gpu

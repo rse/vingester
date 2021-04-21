@@ -11,7 +11,6 @@ const os               = require("os")
 const electron         = require("electron")
 const electronLog      = require("electron-log")
 const grandiose        = require("grandiose")
-const Jimp             = require("jimp")
 const pcmconvert       = require("pcm-convert")
 const ebml             = require("ebml")
 const Opus             = require("@discordjs/opus")
@@ -171,36 +170,39 @@ class BrowserWorker {
 
         /*  send preview capture frame  */
         if (this.cfg.P) {
-            const img = await new Promise((resolve, reject) => {
-                new Jimp({ data: buffer, width: size.width, height: size.height }, (err, image) => {
-                    if (err)
-                        reject(err)
-                    else
-                        resolve(image)
-                })
-            })
-            img.contain(160, 90, Jimp.RESIZE_NEAREST_NEIGHBOR)
-            if (os.endianness() === "LE") {
-                /*  convert from BGRA (chrome "paint") to RGBA (canvas) if necessary  */
-                const D = img.bitmap.data
-                img.scan(0, 0, img.bitmap.width, img.bitmap.height, (x, y, idx) => {
-                    const B = D[idx]
-                    D[idx] = D[idx + 2]
-                    D[idx + 2] = B
-                })
-            }
-            electron.ipcRenderer.sendTo(this.cfg.controlId, "capture", {
-                buffer: img.bitmap.data,
-                size: {
-                    width:  img.bitmap.width,
-                    height: img.bitmap.height
-                },
-                id: this.id
-            })
+            /*  create nativeImage out of buffer again  */
+            let img = electron.nativeImage.createFromBitmap(buffer,
+                { width: size.width, height: size.height })
+
+            /*  resize image to small preview  */
+            if ((size.width / size.height) >= (160 / 90))
+                img = img.resize({ width: 160 })
+            else
+                img = img.resize({ height: 90 })
+
+            /*  retrieve buffer again  */
+            const buffer2 = img.getBitmap()
+            const size2   = img.getSize()
+
+            /*  convert from ARGB/BGRA (Electron/Chromium capture output) to RGBA (Web canvas)  */
+            if (os.endianness() === "BE")
+                util.ImageBufferAdjustment.ARGBtoRGBA(buffer2)
+            else
+                util.ImageBufferAdjustment.BGRAtoRGBA(buffer2)
+
+            /*  send result to control UI  */
+            electron.ipcRenderer.sendTo(this.cfg.controlId, "capture",
+                { buffer: buffer2, size: size2, id: this.id })
         }
 
         /*  send NDI video frame  */
         if (this.cfg.N) {
+            /*  convert from ARGB (Electron/Chromium on big endian CPU)
+                to BGRA (supported input of NDI SDK)  */
+            if (os.endianness() === "BE")
+                util.ImageBufferAdjustment.ARGBtoBGRA(buffer)
+
+            /*  send NDI video frame  */
             const now = this.timeNow()
             const bytesForBGRA = 4
             const frame = {

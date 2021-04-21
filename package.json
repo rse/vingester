@@ -41,7 +41,6 @@
         "@discordjs/opus":               "0.5.0",
         "ebml":                          "3.0.0",
         "less":                          "4.1.1",
-        "jimp":                          "0.16.1",
         "grandiose":                     "rse/grandiose#3237e14",
         "throttle-debounce":             "3.0.1",
         "js-yaml":                       "4.1.0",
