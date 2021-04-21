@@ -5,6 +5,7 @@ Changes
 - 1.7.1
     - IMPROVEMENT: improve performance of preview generation by switching from Jimp to Electron NativeImage
     - IMPROVEMENT: fix NDI video frame generation on big endian CPU based computers
+    - UPGRADE: upgrade to Electron 12.0.5
 
 - 1.7.0
     - IMPROVEMENT: support particular profile with the option "--profile=<id>|<directory>"
