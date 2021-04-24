@@ -1,7 +1,7 @@
 {
     "name":                              "Vingester",
     "homepage":                          "https://vingester.app",
-    "version":                           "1.7.0",
+    "version":                           "1.7.1",
     "description":                       "Ingest Web Contents as Video Streams",
     "author":                            "Dr. Ralf S. Engelschall",
     "keywords":                          [ "web", "contents", "video", "audio", "stream", "capture", "ndi" ],
