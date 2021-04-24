@@ -204,7 +204,9 @@ const app = Vue.createApp({
     },
     mounted () {
         electron.ipcRenderer.invoke("control-mounted")
-        this.updateCheck()
+        setTimeout(() => {
+            this.updateCheck()
+        }, 2000)
     },
     methods: {
         async load () {
