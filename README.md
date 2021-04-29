@@ -58,8 +58,8 @@ captured by OBS Studio through a "Screen Capture" or "Window Capture"
 source while the "headless" NDI stream usually is directly consumed by
 OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 
-Performance Notice
-------------------
+Performance Notes
+-----------------
 
 ### Performance Aspects
 
@@ -228,6 +228,8 @@ As four reference points for you:
 
 So, while the Headless mode is more flexible than the Frameless mode, it
 has just about half the performance. Keep this in mind!
+
+### Source Framerate
 
 Finally, for "headless" NDI output ensure that your Web Contents is
 really producing at least the Frames-Per-Second (FPS) you requested from
