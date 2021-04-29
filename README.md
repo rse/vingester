@@ -61,6 +61,8 @@ OBS Studio through a ["NDI Source"](https://github.com/Palakis/obs-ndi).
 Performance Notice
 ------------------
 
+### Performance Aspects
+
 Performance is crucial in ingesting rendered Web Content. The following
 related aspects should be kept in mind:
 
@@ -132,6 +134,35 @@ related aspects should be kept in mind:
   by any peer and set to the target framerate if the video stream is
   part of the preview or program at any receiving peer.
 
+- **Main Capturing Process**:
+
+  Although Vingester runs each browser instance in two dedicated
+  separate processes (one for the content rendering and one for the
+  output encoding), the underlying Electron technology currently allows
+  Vingester only to capture the Web Contents from within the main
+  process. So, in the chain of content rendering, output capturing
+  and output encoding, the output capturing is the bottleneck, as it
+  cannot use multiple processes. For 1 to 3 browser instances, this
+  usually does not matter very much. But if you want to use more browser
+  instances, you better should optimize your Vingester setup by running
+  multiple Vingester instances and spread your N browser instances onto
+  for instance N/3 Vingester instances.
+
+  Suppose you want to ingest 6 OBS.Ninja sessions with Vingester. Under
+  Windows, create three individual shortcuts to the `Vingester.exe` and
+  edit its properties by adding the command-line options `--tag=<name>
+  --profile=<dir> --config=<dir>.yaml` where `<name>` is something
+  like `OBSN-1-2`, `OBSN-3-4` and `OSBN-5-6` and `<dir>` is the fully
+  qualified filesystem path like `C:\Users\<username>\Desktop\OBSN-1-2`,
+  like `C:\Users\<username>\Desktop\OBSN-3-4` and like
+  `C:\Users\<username>\Desktop\OBSN-5-6`. When you now start Vingester
+  with these shortcuts you get dedicated instances with their own
+  config, etc. In the example, you get 3 Vingester instances, each
+  handles 2 OBS.Ninja sessions. This way your get 3 instead of just 1
+  processes which perform the output capturing.
+
+### Standard Modes
+
 These performance aspects all together mean, you should use only one of
 the following modes of operation in practice:
 
@@ -161,6 +192,8 @@ the following modes of operation in practice:
   used it has a somewhat lower overall performance than the previous
   mode of operation.
 
+### Golden Rule
+
 <b>Remember: in any case of operation modes of **Vingester** and OBS
 Studio, always ensure that the total CPU usage of your system never
 exceeds about 80-90% or you certainly will be faced with quality
@@ -168,6 +201,8 @@ problems in both audio (clipping, lip-unsync) and video (frame loss)
 streams. Also Vingester in a CPU overload situation will be no longer
 responsible enough and internally queue more data than it is able to
 send out.</b>
+
+### Reference Points
 
 As four reference points for you:
 
