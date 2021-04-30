@@ -528,16 +528,16 @@ module.exports = class Browser {
             }
         }
 
+        /*  notify worker and wait until its processVideo/processAudio
+            callbacks were at least done one last time  */
+        this.worker.webContents.send("browser-worker-stop")
+        await new Promise((resolve) => setTimeout(resolve, 200))
+
         /*  remove all listeners  */
         this.worker.removeAllListeners()
         this.worker.webContents.removeAllListeners()
         this.content.removeAllListeners()
         this.content.webContents.removeAllListeners()
-
-        /*  notify worker and wait until its processVideo/processAudio
-            callbacks were at least done one last time  */
-        this.worker.webContents.send("browser-worker-stop")
-        await new Promise((resolve) => setTimeout(resolve, 100))
 
         /*  destroy content and worker browsers the soft way  */
         const p1 = new Promise((resolve) => this.worker.once("closed",  resolve))
