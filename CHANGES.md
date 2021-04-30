@@ -3,6 +3,7 @@ Changes
 =======
 
 - 1.7.2
+    - BUGFIX: for a "Color" of value "transparent" make a frameless window also really transparent
     - UPGRADE: upgrade minor dependencies
 
 - 1.7.1
