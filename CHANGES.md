@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.7.2
+    - UPGRADE: upgrade minor dependencies
+
 - 1.7.1
     - IMPROVEMENT: improve performance of preview generation by switching from Jimp to Electron NativeImage
     - IMPROVEMENT: fix NDI video frame generation on big endian CPU based computers
