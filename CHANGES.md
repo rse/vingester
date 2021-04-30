@@ -4,6 +4,7 @@ Changes
 
 - 1.7.2
     - BUGFIX: for a "Color" of value "transparent" make a frameless window also really transparent
+    - BUGFIX: fixed internal browser stopping by reordering the steps
     - UPGRADE: upgrade minor dependencies
 
 - 1.7.1
