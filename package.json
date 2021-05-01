@@ -29,7 +29,7 @@
         "eslint-plugin-promise":         "4.3.1",
         "eslint-plugin-import":          "2.22.1",
         "eslint-plugin-node":            "11.1.0",
-        "stylelint":                     "13.13.0",
+        "stylelint":                     "13.13.1",
         "stylelint-config-standard":     "22.0.0",
         "htmllint-cli":                  "0.0.7"
     },
@@ -46,6 +46,7 @@
         "js-yaml":                       "4.1.0",
         "pure-uuid":                     "1.6.2",
         "got":                           "11.8.2",
+        "clone":                         "2.1.2",
         "adm-zip":                       "0.5.5",
         "dayjs":                         "1.10.4",
         "update-helper":                 "1.1.5",

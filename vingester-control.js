@@ -10,6 +10,7 @@ const debounce         = require("throttle-debounce").debounce
 const UUID             = require("pure-uuid")
 const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 const VueTippy         = require("vue-tippy").default
+const clone            = require("clone")
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
@@ -210,26 +211,9 @@ const app = Vue.createApp({
     },
     methods: {
         async load () {
-            let browsers = await electron.ipcRenderer.invoke("browsers-load")
-            if (browsers === undefined)
-                browsers = "[]"
-            const defaults = {
-                t: "", w: "1280", h: "720", c: "transparent",
-                u: "", i: "",
-                D: true, d: "", x: "0", y: "0", p: false, A: "",
-                N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
-                P: false, T: false
-            }
-            const B = JSON.parse(browsers)
-            let changed = false
-            for (const browser of B) {
-                for (const field of Object.keys(defaults)) {
-                    if (browser[field] === undefined) {
-                        browser[field] = defaults[field]
-                        changed = true
-                    }
-                }
-                await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
+            const browsers = await electron.ipcRenderer.invoke("browsers-load")
+            for (const browser of browsers) {
+                await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
                 this.running[browser.id] = false
                 this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
                 this.burst[browser.id] = {
@@ -239,13 +223,10 @@ const app = Vue.createApp({
                 this.tally[browser.id] = "unconnected"
                 this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             }
-            this.browsers = B
-            if (changed)
-                this.save()
+            this.browsers = browsers
         },
         save: debounce(1000, async function () {
-            const browsers = JSON.stringify(this.browsers)
-            await electron.ipcRenderer.invoke("browsers-save", browsers)
+            await electron.ipcRenderer.invoke("browsers-save", clone(this.browsers))
         }),
         async exportBrowsers () {
             await electron.ipcRenderer.invoke("browsers-export")
@@ -257,14 +238,8 @@ const app = Vue.createApp({
         async addBrowser () {
             const id = new UUID(1).fold(2).map((num) =>
                 num.toString(16).toUpperCase().padStart(2, "0")).join("")
-            const browser = {
-                id,
-                t: "", w: "1280", h: "720", c: "transparent",
-                u: "", i: "",
-                D: true, d: "", x: "0", y: "0", p: false, A: "",
-                N: false, f: "30", C: "2", a: false, r: 48000, O: "0", o: "0",
-                P: false, T: false
-            }
+            let browser = { id }
+            browser = await electron.ipcRenderer.invoke("browser-sanitize", browser)
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
             this.burst[browser.id] = {
@@ -275,10 +250,10 @@ const app = Vue.createApp({
             this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()
-            await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
+            await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
         async modBrowser (browser) {
-            await electron.ipcRenderer.invoke("control", "mod", browser.id, JSON.stringify(browser))
+            await electron.ipcRenderer.invoke("control", "mod", browser.id, browser)
         },
         async moveBrowser (browser, direction) {
             if (this.running[browser.id])
@@ -313,7 +288,7 @@ const app = Vue.createApp({
             this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
             this.save()
-            await electron.ipcRenderer.invoke("control", "add", browser.id, JSON.stringify(browser))
+            await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
         async delBrowser (browser) {
             if (this.running[browser.id])
@@ -354,7 +329,7 @@ const app = Vue.createApp({
             this.changed(browser)
         },
         changed (browser) {
-            this.modBrowser(browser)
+            this.modBrowser(clone(browser))
             this.save()
         },
         toggleGPU () {

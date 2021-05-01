@@ -56,6 +56,7 @@ module.exports = class Browser {
         this.cfg.O = parseInt(this.cfg.O)
         this.cfg.o = parseInt(this.cfg.o)
         this.cfg.C = parseInt(this.cfg.C)
+        this.cfg.z = parseFloat(this.cfg.z)
 
         /*  recalculate capture framerate  */
         this.recalcCaptureFramerate()
@@ -265,8 +266,11 @@ module.exports = class Browser {
             show:            false
         })
         const opts2 = (this.cfg.D ? {
+            offscreen:       false,
+            zoomFactor:      this.cfg.z / factor
         } : {
-            offscreen:       true
+            offscreen:       true,
+            zoomFactor:      this.cfg.z
         })
         const content = new electron.BrowserWindow({
             ...opts1,
@@ -283,7 +287,6 @@ module.exports = class Browser {
                 disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false,
-                zoomFactor:                 1.0 / factor,
                 additionalArguments:        [ JSON.stringify({
                     ...this.cfg,
                     controlId: this.control.webContents.id,
@@ -402,12 +405,24 @@ module.exports = class Browser {
         /*  remember window object  */
         this.content = content
 
-        /*  load postload script once the DOM is ready  */
+        /*  adjust contents  */
         content.webContents.on("dom-ready", async (ev) => {
+            /*  load postload script once the DOM is ready  */
             const code = await fs.promises.readFile(
                 path.join(__dirname, "vingester-browser-postload.js"),
                 { encoding: "utf8" })
             content.webContents.executeJavaScript(code)
+
+            /*  optionally insert custom CSS styles  */
+            if (this.cfg.s !== "")
+                content.webContents.insertCSS(this.cfg.s, { cssOrigin: "user" })
+
+            /*  force zoom level (sometimes Chromium keeps old factors if
+                just the "zoomFactor" attribute is used)  */
+            if (this.cfg.D)
+                content.webContents.setZoomFactor(this.cfg.z / factor)
+            else
+                content.webContents.setZoomFactor(this.cfg.z)
         })
 
         /*  finally load the Web Content  */

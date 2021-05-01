@@ -389,7 +389,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">BROWSER:</div>
-                                        <div class="label label-title">Title:</div>
+                                        <div class="label label-title">Title*:</div>
                                         <div class="field field-title"
                                             v-tippy="{ placement: 'top', content: 'Title of browser window<br/>or name of NDI stream.' }">
                                             <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
@@ -419,8 +419,25 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="group"></div>
+                                        <div class="label label-zoom">Zoom:</div>
+                                        <div class="field field-zoom"
+                                            v-tippy="{ placement: 'top', content: 'Zoom level of browser window.' }">
+                                            <input type="text" v-model="browser.z" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                        <div class="label label-style">Style:</div>
+                                        <div class="field field-style"
+                                            v-tippy="{ placement: 'top', content: 'Custom CSS styles to inject into browser window.' }">
+                                            <input type="text" v-model="browser.s" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="group">INPUT:</div>
-                                        <div class="label label-url">URL:</div>
+                                        <div class="label label-url">URL*:</div>
                                         <div class="field field-url"
                                             v-tippy="{ placement: 'top', content: 'Uniform Resource Locator (URL)<br/>of Web Content to render.' }">
                                             <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"

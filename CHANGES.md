@@ -2,9 +2,13 @@
 Changes
 =======
 
-- 1.7.2
+- 1.8.0
     - BUGFIX: for a "Color" of value "transparent" make a frameless window also really transparent
     - BUGFIX: fixed internal browser stopping by reordering the steps
+    - BUGFIX: fixed zoom-level handling for offscreen rendering
+    - IMPROVEMENT: add zoom level control field for setting the browser zoom level
+    - IMPROVEMENT: add CSS style control field for injecting a user style into the browser
+    - IMPROVEMENT: sanitize the browser configurations to be able to load old configurations
     - UPGRADE: upgrade to Electron 12.0.6
     - UPGRADE: upgrade minor dependencies
 

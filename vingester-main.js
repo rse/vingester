@@ -296,40 +296,81 @@ electron.app.on("ready", async () => {
 
     /*  provide IPC hooks for store access  */
     log.info("provide IPC hooks for control user interface")
+    const fields = [
+        { iname: "t", itype: "string",  def: "",            etype: "string",  ename: "BrowserTitle" },
+        { iname: "w", itype: "string",  def: "1280",        etype: "number",  ename: "BrowserWidth" },
+        { iname: "h", itype: "string",  def: "720",         etype: "number",  ename: "BrowserHeight" },
+        { iname: "c", itype: "string",  def: "transparent", etype: "string",  ename: "BrowserColor" },
+        { iname: "z", itype: "string",  def: "1.0",         etype: "number",  ename: "BrowserZoom" },
+        { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "BrowserStyle" },
+        { iname: "u", itype: "string",  def: "",            etype: "string",  ename: "InputURL" },
+        { iname: "i", itype: "string",  def: "",            etype: "string",  ename: "InputInfo" },
+        { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
+        { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },
+        { iname: "y", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionY" },
+        { iname: "d", itype: "string",  def: "",            etype: "string",  ename: "Output1VideoDisplay" },
+        { iname: "p", itype: "boolean", def: false,         etype: "boolean", ename: "Output1VideoPinTop" },
+        { iname: "A", itype: "string",  def: "",            etype: "string",  ename: "Output1AudioDevice" },
+        { iname: "N", itype: "boolean", def: false,         etype: "boolean", ename: "Output2Enabled" },
+        { iname: "f", itype: "string",  def: "30",          etype: "number",  ename: "Output2VideoFrameRate" },
+        { iname: "a", itype: "boolean", def: false,         etype: "boolean", ename: "Output2VideoAdaptive" },
+        { iname: "O", itype: "string",  def: "0",           etype: "number",  ename: "Output2VideoDelay" },
+        { iname: "r", itype: "number",  def: "48000",       etype: "number",  ename: "Output2AudioSampleRate" },
+        { iname: "C", itype: "string",  def: "2",           etype: "number",  ename: "Output2AudioChannels" },
+        { iname: "o", itype: "string",  def: "0",           etype: "number",  ename: "Output2AudioDelay" },
+        { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
+        { iname: "T", itype: "boolean", def: false,         etype: "boolean", ename: "ConsoleEnabled" }
+    ]
+    const sanitizeConfig = (browser) => {
+        let changed = 0
+        for (const field of fields) {
+            if (browser[field.iname] === undefined) {
+                browser[field.iname] = field.def
+                changed++
+            }
+        }
+        for (const attr of Object.keys(browser)) {
+            if (attr === "id")
+                continue
+            if (!fields.find((field) => field.iname === attr)) {
+                delete browser[attr]
+                changed++
+            }
+        }
+        return changed
+    }
+    const saveConfigs = (browsers) => {
+        browsers = JSON.stringify(browsers)
+        store.set("browsers", browsers)
+    }
+    const loadConfigs = () => {
+        let changed = 0
+        let browsers = store.get("browsers")
+        if (browsers !== undefined)
+            browsers = JSON.parse(browsers)
+        else {
+            browsers = []
+            changed++
+        }
+        for (const browser of browsers)
+            changed += sanitizeConfig(browser)
+        if (changed > 0)
+            saveConfigs(browsers)
+        return browsers
+    }
     electron.ipcMain.handle("browsers-load", async (ev) => {
-        return store.get("browsers")
+        return loadConfigs()
     })
     electron.ipcMain.handle("browsers-save", async (ev, browsers) => {
-        store.set("browsers", browsers)
+        saveConfigs(browsers)
     })
-    const fields = [
-        { iname: "t", itype: "string",  etype: "string",  ename: "BrowserTitle" },
-        { iname: "w", itype: "string",  etype: "number",  ename: "BrowserWidth" },
-        { iname: "h", itype: "string",  etype: "number",  ename: "BrowserHeight" },
-        { iname: "c", itype: "string",  etype: "string",  ename: "BrowserColor" },
-        { iname: "u", itype: "string",  etype: "string",  ename: "InputURL" },
-        { iname: "i", itype: "string",  etype: "string",  ename: "InputInfo" },
-        { iname: "D", itype: "boolean", etype: "boolean", ename: "Output1Enabled" },
-        { iname: "x", itype: "string",  etype: "number",  ename: "Output1VideoPositionX" },
-        { iname: "y", itype: "string",  etype: "number",  ename: "Output1VideoPositionY" },
-        { iname: "d", itype: "string",  etype: "string",  ename: "Output1VideoDisplay" },
-        { iname: "p", itype: "boolean", etype: "boolean", ename: "Output1VideoPinTop" },
-        { iname: "A", itype: "string",  etype: "string",  ename: "Output1AudioDevice" },
-        { iname: "N", itype: "boolean", etype: "boolean", ename: "Output2Enabled" },
-        { iname: "f", itype: "string",  etype: "number",  ename: "Output2VideoFrameRate" },
-        { iname: "a", itype: "boolean", etype: "boolean", ename: "Output2VideoAdaptive" },
-        { iname: "O", itype: "string",  etype: "number",  ename: "Output2VideoDelay" },
-        { iname: "r", itype: "number",  etype: "number",  ename: "Output2AudioSampleRate" },
-        { iname: "C", itype: "string",  etype: "number",  ename: "Output2AudioChannels" },
-        { iname: "o", itype: "string",  etype: "number",  ename: "Output2AudioDelay" },
-        { iname: "P", itype: "boolean", etype: "boolean", ename: "PreviewEnabled" },
-        { iname: "T", itype: "boolean", etype: "boolean", ename: "ConsoleEnabled" }
-    ]
+    electron.ipcMain.handle("browser-sanitize", async (ev, browser) => {
+        sanitizeConfig(browser)
+        return browser
+    })
     const exportConfig = async (file) => {
-        let cfg = store.get("browsers")
-        if (cfg === undefined)
-            cfg = "[]"
-        const browsers = JSON.parse(cfg).map((browser) => {
+        let browsers = loadConfigs()
+        browsers = browsers.map((browser) => {
             delete browser.id
             return browser
         })
@@ -395,9 +436,10 @@ electron.app.on("ready", async () => {
                     value = String(value)
                 delete browser[field.ename]
                 browser[field.iname] = value
+                sanitizeConfig(browser)
             }
         }
-        store.set("browsers", JSON.stringify(browsers))
+        saveConfigs(browsers)
         log.info(`imported browsers configuration (${browsers.length} browser entries)`)
     }
     electron.ipcMain.handle("browsers-export", async (ev) => {
@@ -553,7 +595,6 @@ electron.app.on("ready", async () => {
         }
     }
     electron.ipcMain.handle("control", (ev, action, id, browser) => {
-        browser = browser !== undefined && browser !== null ? JSON.parse(browser) : undefined
         return controlBrowser(action, id, browser)
     })
 

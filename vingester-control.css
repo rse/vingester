@@ -565,11 +565,11 @@ body {
             margin-left: 8px;
             margin-right: 4px;
             &.label-title,
-            &.label-url {
-                width: 35px;
-            }
+            &.label-zoom,
+            &.label-url,
+            &.label-style,
             &.label-info {
-                width: 35px;
+                width: 40px;
             }
             &.label-output {
                 width: 107px;
@@ -647,6 +647,9 @@ body {
                 .vue-dropdown {
                     width: 364px;
                 }
+            }
+            &.field-style > input {
+                width: 325px;
             }
             &.field-url > input {
                 width: 430px;
