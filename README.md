@@ -236,9 +236,9 @@ really producing at least the Frames-Per-Second (FPS) you requested from
 Vingester. For instance, compare the following three YouTube videos as
 the Web Contents:
 
-- [YouTube Video 24fps](https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1)
-- [YouTube Video 30fps](https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1)
-- [YouTube Video 60fps](https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1)
+- [YouTube Video 24fps](https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0)
+- [YouTube Video 30fps](https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0)
+- [YouTube Video 60fps](https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0)
 
 If you tell Vingester you want 30 fps, the first will effectively just
 output as a 24 fps stream (the reason is that the underlying Chromium
