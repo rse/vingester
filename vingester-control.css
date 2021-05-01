@@ -685,7 +685,7 @@ body {
                 width: 50px;
             }
             &.field-delay > input {
-                width: 25px;
+                width: 35px;
             }
             &.field-start,
             &.field-reload,
