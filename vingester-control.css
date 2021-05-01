@@ -560,15 +560,18 @@ body {
         .sep {
             margin-left: 0;
             margin-right: 4px;
+            font-weight: 300;
         }
         .label {
             margin-left: 8px;
             margin-right: 4px;
             &.label-title,
-            &.label-zoom,
+            &.label-size,
             &.label-url,
-            &.label-style,
-            &.label-info {
+            &.label-style {
+                width: 40px;
+            }
+            &.label-zoom {
                 width: 40px;
             }
             &.label-output {
@@ -649,19 +652,19 @@ body {
                 }
             }
             &.field-style > input {
-                width: 325px;
+                width: 423px;
             }
             &.field-url > input {
-                width: 430px;
-            }
-            &.field-info > input {
-                width: 430px;
+                width: 423px;
             }
             &.field-title > input {
-                width: 134px;
+                width: 103px;
+            }
+            &.field-info > input {
+                width: 268px;
             }
             &.field-color > input {
-                width: 80px;
+                width: 97px;
             }
             &.field-pin .toggle {
                 width: 50px;

@@ -389,13 +389,23 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">BROWSER:</div>
-                                        <div class="label label-title">Title*:</div>
+                                        <div class="label label-title">Title:</div>
                                         <div class="field field-title"
                                             v-tippy="{ placement: 'top', content: 'Title of browser window<br/>or name of NDI stream.' }">
                                             <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
+                                        <div class="label label-info">Info:</div>
+                                        <div class="field field-info"
+                                            v-tippy="{ placement: 'top', content: 'Arbitrary meta information of the user.<br/>This is not used by Vingester itself.' }">
+                                            <input type="text" v-model="browser.i" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="group"></div>
                                         <div class="label label-size">Size:</div>
                                         <div class="field"
                                             v-tippy="{ placement: 'top', content: 'Width of browser canvas in pixels.<br/>Use 854 for 480p, 1280 for 720p or 1920 for 1080p.' }">
@@ -410,7 +420,15 @@
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
-                                        <div class="label">Color:</div>
+                                        <div class="unit">px</div>
+                                        <div class="label label-zoom">Zoom:</div>
+                                        <div class="field field-zoom"
+                                            v-tippy="{ placement: 'top', content: 'Zoom level of browser window.' }">
+                                            <input type="text" v-model="browser.z" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                        <div class="label">Background:</div>
                                         <div class="field field-color"
                                             v-tippy="{ placement: 'top', content: 'Background color of browser canvas.<br/>Use \'#RRGGBB\' or \'transparent\'.' }">
                                             <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
@@ -419,25 +437,8 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="group"></div>
-                                        <div class="label label-zoom">Zoom:</div>
-                                        <div class="field field-zoom"
-                                            v-tippy="{ placement: 'top', content: 'Zoom level of browser window.' }">
-                                            <input type="text" v-model="browser.z" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
-                                                v-bind:disabled="running[browser.id]">
-                                        </div>
-                                        <div class="label label-style">Style:</div>
-                                        <div class="field field-style"
-                                            v-tippy="{ placement: 'top', content: 'Custom CSS styles to inject into browser window.' }">
-                                            <input type="text" v-model="browser.s" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
-                                                v-bind:disabled="running[browser.id]">
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="group">INPUT:</div>
-                                        <div class="label label-url">URL*:</div>
+                                        <div class="label label-url">URL:</div>
                                         <div class="field field-url"
                                             v-tippy="{ placement: 'top', content: 'Uniform Resource Locator (URL)<br/>of Web Content to render.' }">
                                             <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
@@ -447,10 +448,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="group"></div>
-                                        <div class="label label-info">Info:</div>
-                                        <div class="field field-info"
-                                            v-tippy="{ placement: 'top', content: 'Arbitrary meta information of the user.<br/>This is not used by Vingester itself.' }">
-                                            <input type="text" v-model="browser.i" v-on:keyup="changed(browser)"
+                                        <div class="label label-style">Style:</div>
+                                        <div class="field field-style"
+                                            v-tippy="{ placement: 'top', content: 'Custom CSS styles to inject into browser window.' }">
+                                            <input type="text" v-model="browser.s" v-on:keyup="changed(browser)"
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
