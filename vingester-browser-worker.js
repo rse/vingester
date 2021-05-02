@@ -256,7 +256,7 @@ class BrowserWorker {
                     and correctly handles the RGBA conversion internally  */
 
                 /*  convert buffer into a JPEG (understood by FFmpeg)  */
-                let img = electron.nativeImage.createFromBitmap(buffer,
+                const img = electron.nativeImage.createFromBitmap(buffer,
                     { width: size.width, height: size.height })
                 const data = img.toJPEG(100)
 
