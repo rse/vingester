@@ -624,7 +624,7 @@
                                         <div class="cluster" v-show="browser.m">
                                             <div class="sep">-f</div>
                                             <div class="field"
-                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg<br/>sink output format.<br/>Use \'matroska\' and \'mp4\' for recording<br/>and \'mpegts\' and \'flv\' for streaming.' }">
+                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output format. Use \'matroska\' and \'mp4\' for recording and \'mpegts\' and \'flv\' for streaming.' }">
                                                 <div class="toggle" v-on:click="toggle(browser, 'F', [ 'matroska', 'mp4', 'mpegts', 'flv' ])">
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.F === 'matroska' }">matroska</div>
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mp4' }">mp4</div>
