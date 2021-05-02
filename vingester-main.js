@@ -63,7 +63,8 @@ const version = {
     chromium:  process.versions.chrome,
     v8:        process.versions.v8.replace(/-electron.*$/, ""),
     node:      process.versions.node,
-    ndi:       grandiose.version().replace(/^.+\s+/, "")
+    ndi:       grandiose.version().replace(/^.+\s+/, ""),
+    ffmpeg:    "4.3.2"
 }
 const support = {
     ndi:       grandiose.isSupportedCPU()
