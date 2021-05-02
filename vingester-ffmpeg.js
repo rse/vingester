@@ -63,8 +63,10 @@ module.exports = class FFmpeg extends EventEmitter {
             /*  specific output options (defaults)  */
             "-c:v", "h264",
             "-c:a", "aac",
-            "-preset", "ultrafast",
-            "-tune", "zerolatency",
+            "-preset", "veryfast",
+            "-b:v", "3000k",
+            "-maxrate", "3000k",
+            "-bufsize", "6000k",
             "-movflags", "frag_keyframe+omit_tfhd_offset+empty_moov+default_base_moof+faststart",
             "-fflags", "flush_packets",
             "-y",
