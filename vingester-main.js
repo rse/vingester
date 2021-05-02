@@ -315,7 +315,7 @@ electron.app.on("ready", async () => {
         { iname: "f", itype: "string",  def: "30",          etype: "number",  ename: "Output2VideoFrameRate" },
         { iname: "a", itype: "boolean", def: false,         etype: "boolean", ename: "Output2VideoAdaptive" },
         { iname: "O", itype: "string",  def: "0",           etype: "number",  ename: "Output2VideoDelay" },
-        { iname: "r", itype: "number",  def: "48000",       etype: "number",  ename: "Output2AudioSampleRate" },
+        { iname: "r", itype: "number",  def: 48000,         etype: "number",  ename: "Output2AudioSampleRate" },
         { iname: "C", itype: "string",  def: "2",           etype: "number",  ename: "Output2AudioChannels" },
         { iname: "o", itype: "string",  def: "0",           etype: "number",  ename: "Output2AudioDelay" },
         { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
