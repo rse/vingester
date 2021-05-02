@@ -53,7 +53,6 @@ module.exports = class FFmpeg extends EventEmitter {
             "-ar", this.options.asr,
             "-ac", this.options.ac,
             "-i", "pipe:3",
-            // "-filter_complex", "aresample=async=10000",
 
             /*  generic output options  */
             "-map", "0:v:0",
