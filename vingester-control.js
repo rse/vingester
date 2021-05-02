@@ -82,6 +82,7 @@ const app = Vue.createApp({
         })
         electron.ipcRenderer.on("browser-start", (ev, id) => {
             log.info("browser-start", id)
+            this.resetState(id)
         })
         electron.ipcRenderer.on("browser-started", (ev, id) => {
             log.info("browser-started", id)
@@ -89,9 +90,11 @@ const app = Vue.createApp({
         })
         electron.ipcRenderer.on("browser-reload", (ev, id) => {
             log.info("browser-reload", id)
+            this.resetState(id)
         })
         electron.ipcRenderer.on("browser-reloaded", (ev, id) => {
             log.info("browser-reloaded", id)
+            this.running[id] = true
         })
         electron.ipcRenderer.on("browser-stop", (ev, id) => {
             log.info("browser-stop", id)
@@ -210,18 +213,28 @@ const app = Vue.createApp({
         }, 2000)
     },
     methods: {
+        resetState (id) {
+            this.running[id] = false
+            this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
+            this.burst[id] = {
+                video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
+                audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
+            }
+            this.tally[id] = "unconnected"
+            this.trace[id] = { warning: 0, error: 0, messages: [] }
+        },
+        deleteState (id) {
+            delete this.running[id]
+            delete this.stat[id]
+            delete this.burst[id]
+            delete this.tally[id]
+            delete this.trace[id]
+        },
         async load () {
             const browsers = await electron.ipcRenderer.invoke("browsers-load")
             for (const browser of browsers) {
                 await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
-                this.running[browser.id] = false
-                this.stat[browser.id] = { fps: 0, memUsed: 0, memAvail: 0 }
-                this.burst[browser.id] = {
-                    video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
-                    audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
-                }
-                this.tally[browser.id] = "unconnected"
-                this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
+                this.resetState(browser.id)
             }
             this.browsers = browsers
         },
@@ -240,15 +253,8 @@ const app = Vue.createApp({
                 num.toString(16).toUpperCase().padStart(2, "0")).join("")
             let browser = { id }
             browser = await electron.ipcRenderer.invoke("browser-sanitize", browser)
-            this.running[id] = false
-            this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
-            this.burst[browser.id] = {
-                video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
-                audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
-            }
-            this.tally[browser.id] = "unconnected"
-            this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
+            this.resetState(id)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
@@ -278,15 +284,8 @@ const app = Vue.createApp({
             const id = new UUID(1).fold(2).map((num) =>
                 num.toString(16).toUpperCase().padStart(2, "0")).join("")
             const browser = { ...browserTemplate, id }
-            this.running[id] = false
-            this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
-            this.burst[browser.id] = {
-                video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
-                audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
-            }
-            this.tally[browser.id] = "unconnected"
-            this.trace[browser.id] = { warning: 0, error: 0, messages: [] }
             this.browsers.push(browser)
+            this.resetState(id)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
@@ -294,10 +293,7 @@ const app = Vue.createApp({
             if (this.running[browser.id])
                 return
             this.browsers = this.browsers.filter((b) => b.id !== browser.id)
-            delete this.running[browser.id]
-            delete this.stat[browser.id]
-            delete this.burst[browser.id]
-            delete this.trace[browser.id]
+            this.deleteState(browser.id)
             this.save()
             await electron.ipcRenderer.invoke("control", "del", browser.id)
         },

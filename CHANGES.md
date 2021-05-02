@@ -6,6 +6,7 @@ Changes
     - BUGFIX: for a "Color" of value "transparent" make a frameless window also really transparent
     - BUGFIX: fixed internal browser stopping by reordering the steps
     - BUGFIX: fixed zoom-level handling for offscreen rendering
+    - BUGFIX: correctly reinitialize state of browser on (re)start and reload
     - IMPROVEMENT: add zoom level control field for setting the browser zoom level
     - IMPROVEMENT: add CSS style control field for injecting a user style into the browser
     - IMPROVEMENT: sanitize the browser configurations to be able to load old configurations
