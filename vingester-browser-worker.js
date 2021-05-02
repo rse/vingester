@@ -17,6 +17,7 @@ const Opus             = require("@discordjs/opus")
 
 /*  require own modules  */
 const util             = require("./vingester-util.js")
+const FFmpeg           = require("./vingester-ffmpeg.js")
 
 /*  parse passed-through browser configuration  */
 const cfg = JSON.parse(process.argv[process.argv.length - 1])
@@ -47,6 +48,7 @@ class BrowserWorker {
         this.timeStart       = (BigInt(Date.now()) * BigInt(1e6) - process.hrtime.bigint())
         this.ndiSender       = null
         this.ndiTimer        = null
+        this.ffmpeg          = null
         this.opusEncoder     = null
         this.burst1          = null
         this.burst2          = null
@@ -77,31 +79,47 @@ class BrowserWorker {
         this.ndiTimer  = null
         this.ndiStatus = "unconnected"
         if (this.cfg.N) {
-            this.ndiSender = await grandiose.send({
-                name:       title,
-                clockVideo: false,
-                clockAudio: false
-            })
-            this.ndiTimer = setInterval(() => {
-                if (this.stopping)
-                    return
+            if (this.cfg.n) {
+                this.ndiSender = await grandiose.send({
+                    name:       title,
+                    clockVideo: false,
+                    clockAudio: false
+                })
+                this.ndiTimer = setInterval(() => {
+                    if (this.stopping)
+                        return
 
-                /*  poll NDI for connections and tally status  */
-                const conns = this.ndiSender.connections()
-                const tally = this.ndiSender.tally()
+                    /*  poll NDI for connections and tally status  */
+                    const conns = this.ndiSender.connections()
+                    const tally = this.ndiSender.tally()
 
-                /*  determine our Vingester "tally status"  */
-                this.ndiStatus = "unconnected"
-                if      (tally.on_program) this.ndiStatus = "program"
-                else if (tally.on_preview) this.ndiStatus = "preview"
-                else if (conns > 0)        this.ndiStatus = "connected"
+                    /*  determine our Vingester "tally status"  */
+                    this.ndiStatus = "unconnected"
+                    if      (tally.on_program) this.ndiStatus = "program"
+                    else if (tally.on_preview) this.ndiStatus = "preview"
+                    else if (conns > 0)        this.ndiStatus = "connected"
 
-                /*  send tally status  */
-                electron.ipcRenderer.sendTo(this.cfg.controlId, "tally",
-                    { status: this.ndiStatus, id: this.id })
-                electron.ipcRenderer.send("tally",
-                    { status: this.ndiStatus, id: this.id })
-            }, 1 * 500)
+                    /*  send tally status  */
+                    electron.ipcRenderer.sendTo(this.cfg.controlId, "tally",
+                        { status: this.ndiStatus, id: this.id })
+                    electron.ipcRenderer.send("tally",
+                        { status: this.ndiStatus, id: this.id })
+                }, 1 * 500)
+            }
+            if (this.cfg.m) {
+                this.ffmpeg = new FFmpeg({
+                    ffmpeg: this.cfg.ffmpeg,
+                    cwd:    this.cfg.ffmpegCwd,
+                    format: this.cfg.F,
+                    asr:    this.cfg.r,
+                    ac:     this.cfg.C,
+                    args:   this.cfg.M.split(/\s+/),
+                    log: (level, msg) => {
+                        this.log[level](msg)
+                    }
+                })
+                await this.ffmpeg.start()
+            }
         }
         this.burst1   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
         this.burst2   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
@@ -150,6 +168,11 @@ class BrowserWorker {
         /*  destroy NDI sender  */
         if (this.ndiSender !== null)
             await this.ndiSender.destroy()
+
+        /*  destroy FFmpeg sender  */
+        if (this.ffmpeg !== null)
+            await this.ffmpeg.stop()
+
         this.log.info("stopped")
     }
 
@@ -195,34 +218,51 @@ class BrowserWorker {
                 { buffer: buffer2, size: size2, id: this.id })
         }
 
-        /*  send NDI video frame  */
+        /*  send video frame  */
         if (this.cfg.N) {
-            /*  convert from ARGB (Electron/Chromium on big endian CPU)
-                to BGRA (supported input of NDI SDK)  */
-            if (os.endianness() === "BE")
-                util.ImageBufferAdjustment.ARGBtoBGRA(buffer)
+            if (this.cfg.n) {
+                /*  convert from ARGB (Electron/Chromium on big endian CPU)
+                    to BGRA (supported input of NDI SDK). On little endian
+                    CPU the input is already BGRA.  */
+                if (os.endianness() === "BE")
+                    util.ImageBufferAdjustment.ARGBtoBGRA(buffer)
 
-            /*  send NDI video frame  */
-            const now = this.timeNow()
-            const bytesForBGRA = 4
-            const frame = {
-                /*  base information  */
-                timecode:           now / BigInt(100),
+                /*  send NDI video frame  */
+                const now = this.timeNow()
+                const bytesForBGRA = 4
+                const frame = {
+                    /*  base information  */
+                    timecode:           now / BigInt(100),
 
-                /*  type-specific information  */
-                xres:               size.width,
-                yres:               size.height,
-                frameRateN:         this.cfg.f * 1000,
-                frameRateD:         1000,
-                pictureAspectRatio: ratio,
-                frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
-                lineStrideBytes:    size.width * bytesForBGRA,
+                    /*  type-specific information  */
+                    xres:               size.width,
+                    yres:               size.height,
+                    frameRateN:         this.cfg.f * 1000,
+                    frameRateD:         1000,
+                    pictureAspectRatio: ratio,
+                    frameFormatType:    grandiose.FORMAT_TYPE_PROGRESSIVE,
+                    lineStrideBytes:    size.width * bytesForBGRA,
 
-                /*  the data itself  */
-                fourCC:             grandiose.FOURCC_BGRA,
-                data:               buffer
+                    /*  the data itself  */
+                    fourCC:             grandiose.FOURCC_BGRA,
+                    data:               buffer
+                }
+                await this.ndiSender.video(frame)
             }
-            await this.ndiSender.video(frame)
+            if (this.cfg.m) {
+                /*  keep the BGRA (Electron/Chromium on little endian CPU)
+                    or ARGB (Electron/Chromium on big endian CPU) format,
+                    as the nativeImage expects it in the native format
+                    and correctly handles the RGBA conversion internally  */
+
+                /*  convert buffer into a JPEG (understood by FFmpeg)  */
+                let img = electron.nativeImage.createFromBitmap(buffer,
+                    { width: size.width, height: size.height })
+                const data = img.toJPEG(100)
+
+                /*  send FFmpeg video frame  */
+                this.ffmpeg.video(data)
+            }
         }
 
         /*  end time-keeping  */
@@ -267,36 +307,43 @@ class BrowserWorker {
                 this.opusEncoder = new Opus.OpusEncoder(sampleRate, noChannels)
             buffer = this.opusEncoder.decode(buffer)
 
-            /*  convert from PCM/signed-16-bit/little-endian data
-                to NDI's "PCM/planar/signed-float32/little-endian  */
-            buffer = pcmconvert(buffer, {
-                channels:    noChannels,
-                dtype:       "int16",
-                endianness:  "le",
-                interleaved: true
-            }, {
-                dtype:       "float32",
-                endianness:  "le",
-                interleaved: false
-            })
+            /*  send audio frame  */
+            if (this.cfg.n) {
+                /*  convert from PCM/signed-16-bit/little-endian data
+                    to NDI's "PCM/planar/signed-float32/little-endian  */
+                buffer = pcmconvert(buffer, {
+                    channels:    noChannels,
+                    dtype:       "int16",
+                    endianness:  "le",
+                    interleaved: true
+                }, {
+                    dtype:       "float32",
+                    endianness:  "le",
+                    interleaved: false
+                })
 
-            /*  create frame  */
-            const now = this.timeNow()
-            const frame = {
-                /*  base information  */
-                timecode:           now / BigInt(100),
+                /*  create frame  */
+                const now = this.timeNow()
+                const frame = {
+                    /*  base information  */
+                    timecode:           now / BigInt(100),
 
-                /*  type-specific information  */
-                sampleRate:         sampleRate,
-                noChannels:         noChannels,
-                noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
-                channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
+                    /*  type-specific information  */
+                    sampleRate:         sampleRate,
+                    noChannels:         noChannels,
+                    noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
+                    channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
 
-                /*  the data itself  */
-                fourCC:             grandiose.FOURCC_FLTp,
-                data:               buffer
+                    /*  the data itself  */
+                    fourCC:             grandiose.FOURCC_FLTp,
+                    data:               buffer
+                }
+                await this.ndiSender.audio(frame)
             }
-            await this.ndiSender.audio(frame)
+            if (this.cfg.m) {
+                /*  send FFmpeg audio frame  */
+                this.ffmpeg.audio(buffer)
+            }
         }
 
         /*  end time-keeping  */

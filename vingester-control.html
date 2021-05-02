@@ -458,7 +458,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">OUTPUT 1:</div>
-                                        <div class="label label-output">Frameless / WIN:</div>
+                                        <div class="label label-output">Frameless:</div>
                                         <div class="field"
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (browser.D ? 'disable' : 'enable') + ' Frameless mode, where<br/>Web Content is rendered into a desktop window.' }">
                                             <div class="toggle" v-on:click="toggle(browser, 'D', [ true, false ])">
@@ -524,13 +524,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="group">OUTPUT 2:</div>
-                                        <div class="label label-output">Headless / NDI&reg;:</div>
+                                        <div class="label label-output">Headless:</div>
                                         <div class="field"
-                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, where<br/>Web Content is multicasted via NDI.' }">
-                                            <div v-if="!support.ndi">
-                                                NOT SUPPORTED
-                                            </div>
-                                            <div v-if="support.ndi" class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.N ? 'disable' : 'enable') + ' Headless mode, where Web Content is<br/>multicasted via NDI or passed to FFmpeg.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'N', [ true, false ])">
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.N === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.N === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
                                             </div>
@@ -542,7 +539,7 @@
                                         <div class="cluster" v-show="browser.N">
                                             <div class="label label-framerate">Frame Rate:</div>
                                             <div class="field field-framerate"
-                                                v-tippy="{ placement: 'top', content: 'Frames per second for the NDI video-stream.<br/>Usually you want to use 30 or 60.' }">
+                                                v-tippy="{ placement: 'top', content: 'Frames per second for the video-stream.<br/>Usually you want to use 30 or 60.' }">
                                                 <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
@@ -558,7 +555,7 @@
                                             </div>
                                             <div class="label label-delay">Delay:</div>
                                             <div class="field field-delay"
-                                                v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the NDI video-stream.<br/>Usually you want to use 0 or up to about 150.' }">
+                                                v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the video-stream.<br/>Usually you want to use 0 or up to about 150.' }">
                                                 <input type="text" v-model="browser.O" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
@@ -572,7 +569,7 @@
                                         <div class="cluster" v-show="browser.N">
                                             <div class="label label-samplerate">Sample Rate:</div>
                                             <div class="field field-samplerate"
-                                                v-tippy="{ placement: 'top', content: 'Samples per second for the NDI audio-stream.<br/>Only sample rates of underlying OPUS technology supported.' }">
+                                                v-tippy="{ placement: 'top', content: 'Samples per second for the audio-stream.<br/>Only sample rates of underlying OPUS technology supported.' }">
                                                 <div class="toggle" v-on:click="toggle(browser, 'r', [ 8000, 12000, 16000, 24000, 48000 ])">
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.r === 8000 }">8</div>
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.r === 12000 }">12</div>
@@ -584,19 +581,61 @@
                                             <div class="unit unit-khz">kHz</div>
                                             <div class="label label-channels">Channels:</div>
                                             <div class="field field-channels"
-                                                v-tippy="{ placement: 'top', content: 'Number of channels for the NDI audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
+                                                v-tippy="{ placement: 'top', content: 'Number of channels for the audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
                                                 <input type="text" v-model="browser.C" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="label label-delay">Delay:</div>
                                             <div class="field field-delay"
-                                                v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the NDI audio-stream.<br/>Usually you want to use 0 or up to about 150.' }">
+                                                v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the audio-stream.<br/>Usually you want to use 0 or up to about 150.' }">
                                                 <input type="text" v-model="browser.o" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="unit">ms</div>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="browser.N">
+                                        <div class="group"></div>
+                                        <div class="sub-group">SINK:</div>
+                                        <div class="label label-kind">NDI&reg;:</div>
+                                        <div class="field"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.n ? 'disable' : 'enable') + ' NDI sink.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'n', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.n === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.n === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="browser.N">
+                                        <div class="group"></div>
+                                        <div class="sub-group"></div>
+                                        <div class="label label-kind">FFmpeg:</div>
+                                        <div class="field"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.m ? 'disable' : 'enable') + ' FFmpeg sink.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'm', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.m === true  }"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.m === false }"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;NO</div>
+                                            </div>
+                                        </div>
+                                        <div class="cluster" v-show="browser.m">
+                                            <div class="sep">-f</div>
+                                            <div class="field"
+                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg<br/>sink output format.' }">
+                                                <div class="toggle" v-on:click="toggle(browser, 'F', [ 'matroska', 'flv', 'mp4', 'mpegts' ])">
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'matroska' }">matroska</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'flv' }">flv</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mp4' }">mp4</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mpegts' }">mpegts</div>
+                                                </div>
+                                            </div>
+                                            <div class="field field-opts"
+                                                v-tippy="{ placement: 'top', content: 'Command line interface arguments for FFmpeg output. The internally prepended (default) output options are \'-c:v h264 -c:a aac -movflags +faststart -y -f mp4\', but these can be overridden with subsequent ones provided here. Use e.g. \'-preset ultrafast example.m4v\' for fast recording, or \'-f flv rtmp://10.0.0.1:1935/live/example\' for RTMP streaming. At least a single output argument has to be given.' }">
+                                                <input type="text" v-model="browser.M" v-on:keyup="changed(browser)"
+                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:disabled="running[browser.id]">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row row-buttons">
@@ -636,9 +675,9 @@
                                     <div class="stat" v-if="running[browser.id]">
                                         <div class="stat-row" v-if="browser.N && rate[browser.id]">
                                             <span
-                                                v-tippy="{ placement: 'top', content: 'Shows the NDI sending performance<br/>(video+audio network packets per second).' }"
+                                                v-tippy="{ placement: 'top', content: 'Shows the network sending performance<br/>(video+audio network packets per second).' }"
                                                 class="stat-item">
-                                            NDI: {{ Math.round(rate[browser.id].video) }}+{{ Math.round(rate[browser.id].audio) }} p/s
+                                            NET: {{ Math.round(rate[browser.id].video) }}+{{ Math.round(rate[browser.id].audio) }} p/s
                                             </span>
                                         </div>
                                         <div class="stat-row">

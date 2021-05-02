@@ -9,6 +9,7 @@ Changes
     - IMPROVEMENT: add zoom level control field for setting the browser zoom level
     - IMPROVEMENT: add CSS style control field for injecting a user style into the browser
     - IMPROVEMENT: sanitize the browser configurations to be able to load old configurations
+    - IMPROVEMENT: add support for FFmpeg-based output recording or streaming
     - UPGRADE: upgrade to Electron 12.0.6
     - UPGRADE: upgrade minor dependencies
 

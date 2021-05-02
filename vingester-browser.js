@@ -16,11 +16,12 @@ const bluebird    = require("bluebird")
 /*  browser abstraction  */
 module.exports = class Browser {
     /*  create new browser  */
-    constructor (log, id, cfg, control) {
+    constructor (log, id, cfg, control, ffmpeg) {
         this.log             = log
         this.id              = id
         this.cfg             = {}
         this.control         = control
+        this.ffmpeg          = ffmpeg
         this.reset()
         this.reconfigure(cfg)
     }
@@ -117,6 +118,7 @@ module.exports = class Browser {
     valid () {
         return (
             (this.cfg.D || this.cfg.N)
+            && (!this.cfg.N || (this.cfg.N && (this.cfg.n || this.cfg.m)))
             && this.cfg.t !== ""
             && this.cfg.u !== ""
         )
@@ -148,7 +150,9 @@ module.exports = class Browser {
                 spellcheck:                 false,
                 additionalArguments:        [ JSON.stringify({
                     ...this.cfg,
-                    controlId: this.control.webContents.id
+                    controlId:  this.control.webContents.id,
+                    ffmpeg:     this.ffmpeg,
+                    ffmpegCwd:  electron.app.getPath("videos")
                 }) ]
             }
         })

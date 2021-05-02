@@ -582,7 +582,8 @@ body {
                 width: 55px;
             }
             &.label-framerate,
-            &.label-samplerate {
+            &.label-samplerate,
+            &.label-kind {
                 width: 90px;
             }
             &.label-delay {
@@ -677,6 +678,12 @@ body {
             }
             &.field-samplerate .toggle {
                 width: 40px;
+            }
+            &.field-kind .toggle {
+                width: 92px;
+            }
+            &.field-opts > input {
+                width: 165px;
             }
             &.field-framerate > input {
                 width: 40px;

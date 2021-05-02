@@ -8,6 +8,7 @@
 const path        = require("path")
 const fs          = require("fs")
 const process     = require("process")
+const os          = require("os")
 
 /*  require external modules  */
 const electron    = require("electron")
@@ -118,6 +119,20 @@ if (!store.get("gpu")) {
     log.info("disabling GPU hardware acceleration (explicitly configured)")
     electron.app.disableHardwareAcceleration()
 }
+
+/*  determine path to embedded ffmpeg(1) executable  */
+let ffmpeg
+if (os.platform() === "win32")
+    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg.exe")
+        .replace("app.asar", "app.asar.unpacked"))
+else if (os.platform() === "darwin")
+    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg")
+        .replace("app.asar", "app.asar.unpacked"))
+else if (os.platform() === "linux")
+    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg")
+        .replace("app.asar", "app.asar.unpacked"))
+else
+    throw new Error(`operating system platform ${os.platform()} not supported`)
 
 /*  once electron is ready...  */
 electron.app.on("ready", async () => {
@@ -318,6 +333,10 @@ electron.app.on("ready", async () => {
         { iname: "r", itype: "number",  def: 48000,         etype: "number",  ename: "Output2AudioSampleRate" },
         { iname: "C", itype: "string",  def: "2",           etype: "number",  ename: "Output2AudioChannels" },
         { iname: "o", itype: "string",  def: "0",           etype: "number",  ename: "Output2AudioDelay" },
+        { iname: "n", itype: "string",  def: true,          etype: "boolean", ename: "Output2SinkNDIEnabled" },
+        { iname: "m", itype: "string",  def: false,         etype: "boolean", ename: "Output2SinkFFmpegEnabled" },
+        { iname: "F", itype: "string",  def: "matroska",    etype: "string",  ename: "Output2SinkFFmpegFormat" },
+        { iname: "M", itype: "string",  def: "",            etype: "string",  ename: "Output2SinkFFmpegOptions" },
         { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
         { iname: "T", itype: "boolean", def: false,         etype: "boolean", ename: "ConsoleEnabled" }
     ]
@@ -517,7 +536,7 @@ electron.app.on("ready", async () => {
     const controlBrowser = async (action, id, cfg) => {
         if (action === "add") {
             /*  add browser configuration  */
-            browsers[id] = new Browser(log, id, cfg, control)
+            browsers[id] = new Browser(log, id, cfg, control, ffmpeg)
         }
         else if (action === "mod") {
             /*  modify browser configuration  */
