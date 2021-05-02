@@ -311,7 +311,7 @@ class BrowserWorker {
             if (this.cfg.n) {
                 /*  convert from PCM/signed-16-bit/little-endian data
                     to NDI's "PCM/planar/signed-float32/little-endian  */
-                buffer = pcmconvert(buffer, {
+                const buffer2 = pcmconvert(buffer, {
                     channels:    noChannels,
                     dtype:       "int16",
                     endianness:  "le",
@@ -331,12 +331,12 @@ class BrowserWorker {
                     /*  type-specific information  */
                     sampleRate:         sampleRate,
                     noChannels:         noChannels,
-                    noSamples:          Math.trunc(buffer.byteLength / noChannels / bytesForFloat32),
-                    channelStrideBytes: Math.trunc(buffer.byteLength / noChannels),
+                    noSamples:          Math.trunc(buffer2.byteLength / noChannels / bytesForFloat32),
+                    channelStrideBytes: Math.trunc(buffer2.byteLength / noChannels),
 
                     /*  the data itself  */
                     fourCC:             grandiose.FOURCC_FLTp,
-                    data:               buffer
+                    data:               buffer2
                 }
                 await this.ndiSender.audio(frame)
             }
