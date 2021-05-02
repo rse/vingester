@@ -65,6 +65,7 @@ module.exports = class FFmpeg extends EventEmitter {
             "-c:a", "aac",
             "-preset", "veryfast",
             "-b:v", "3000k",
+            "-pix_fmt", "yuv420p",
             "-maxrate", "3000k",
             "-bufsize", "6000k",
             "-movflags", "frag_keyframe+omit_tfhd_offset+empty_moov+default_base_moof+faststart",
