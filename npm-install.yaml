@@ -1,0 +1,27 @@
+##
+##  Vingester ~ Ingest Web Contents as Video Streams
+##  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+##  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
+##
+
+-   arch:     "x64"
+    platform: "darwin"
+    name:     "FFmpeg 4.3.2 (macOS/x64, static) [74 MB]"
+    input:    "https://github.com/eugeneware/ffmpeg-static/releases/download/b4.3.2/darwin-x64"
+    extract:  false
+    output:   "vingester-ffmpeg.d/ffmpeg"
+
+-   arch:     "x64"
+    platform: "win32"
+    name:     "FFmpeg 4.3.2 (Windows/x64, static) [68 MB]"
+    input:    "https://github.com/eugeneware/ffmpeg-static/releases/download/b4.3.2/win32-x64"
+    extract:  false
+    output:   "vingester-ffmpeg.d/ffmpeg.exe"
+
+-   arch:     "x64"
+    platform: "linux"
+    name:     "FFmpeg 4.3.2 (Linux/x64, static) [75 MB]"
+    input:    "https://github.com/eugeneware/ffmpeg-static/releases/download/b4.3.2/linux-x64"
+    extract:  false
+    output:   "vingester-ffmpeg.d/ffmpeg"
+
