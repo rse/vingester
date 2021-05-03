@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.8.1
+    - IMPROVEMENT: use a title for the error message log dialog to be less confusing
+
 - 1.8.0
     - IMPROVEMENT: add zoom level control field for setting the browser zoom level
     - IMPROVEMENT: add CSS style control field for injecting a user style into the browser

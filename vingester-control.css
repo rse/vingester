@@ -284,6 +284,10 @@ body {
             }
         }
         .ui-modal-messages {
+            .message-title {
+                font-weight: 300;
+                margin-bottom: 4px;
+            }
             .message-table {
                 width: calc(100% - 10px);
                 height: 100px;

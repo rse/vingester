@@ -152,6 +152,7 @@
             </div>
             <div class="ui-modal" v-show="modal !== ''">
                 <div class="ui-modal-messages" v-show="modal === 'messages'">
+                    <div class="message-title">ERROR MESSAGE LOG:</div>
                     <div class="message-table" ref="message-table">
                         <div class="message-line" v-bind:class="{ obsolete: i < messages.length - 3, current: i === messages.length - 1 }" v-for="(message, i) in messages" v-bind:key="i">
                             <div class="message-time">[{{ message.time }}]</div>
