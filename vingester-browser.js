@@ -306,6 +306,10 @@ module.exports = class Browser {
             }, 1000)
         }
 
+        /*  determine user-agent identifier  */
+        const ua = content.webContents.getUserAgent()
+        this.log.info(`browser: content: user-agent: "${ua}"`)
+
         /*  control audio (for desktop window we unmute, for NDI we mute)  */
         if (this.cfg.D || (this.cfg.N && this.cfg.C === 0))
             content.webContents.setAudioMuted(false)
