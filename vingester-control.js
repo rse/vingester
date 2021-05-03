@@ -45,6 +45,7 @@ const app = Vue.createApp({
             version:           {},
             support:           {},
             modal:             "",
+            modalAuto:         false,
             updateUpdateable:  false,
             updateVersions:    { running: {}, current: {}, forthcoming: {} },
             updateNotify:      "",
@@ -334,11 +335,22 @@ const app = Vue.createApp({
         windowControl (action) {
             electron.ipcRenderer.invoke("window-control", action)
         },
-        modalToggle (id) {
+        modalToggle (id, auto = false) {
+            this.modalAuto = false
             if (this.modal === id)
                 this.modal = ""
-            else
+            else {
                 this.modal = id
+                if (auto) {
+                    this.modalAuto = true
+                    setTimeout(() => {
+                        if (this.modalAuto) {
+                            this.modalAuto = false
+                            this.modal = ""
+                        }
+                    }, 5000)
+                }
+            }
         },
         updateCheck () {
             electron.ipcRenderer.invoke("update-check")
