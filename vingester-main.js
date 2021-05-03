@@ -77,6 +77,7 @@ log.info(`using Chromium: ${version.chromium}`)
 log.info(`using V8: ${version.v8}`)
 log.info(`using Node: ${version.node}`)
 log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "no"})`)
+log.info(`using FFmpeg: ${version.ffmpeg}`)
 
 /*  support particular profiles  */
 if (electron.app.commandLine.hasSwitch("profile")) {
