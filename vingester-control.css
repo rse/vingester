@@ -723,12 +723,23 @@ body {
             }
             &.field-framerate > input {
                 width: 40px;
+                text-align: center;
             }
             &.field-channels > input {
                 width: 50px;
+                text-align: center;
             }
             &.field-delay > input {
                 width: 35px;
+                text-align: center;
+            }
+            &.field-x > input,
+            &.field-y > input,
+            &.field-display > input,
+            &.field-width > input,
+            &.field-height > input,
+            &.field-zoom > input {
+                text-align: center;
             }
             &.field-start,
             &.field-reload,

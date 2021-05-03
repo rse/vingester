@@ -422,14 +422,14 @@
                                     <div class="row">
                                         <div class="group"></div>
                                         <div class="label label-size">Size:</div>
-                                        <div class="field"
+                                        <div class="field field-width"
                                             v-tippy="{ placement: 'top', content: 'Width of browser canvas in pixels.<br/>Use 854 for 480p, 1280 for 720p or 1920 for 1080p.' }">
                                             <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                         <div class="sep">x</div>
-                                        <div class="field"
+                                        <div class="field field-height"
                                             v-tippy="{ placement: 'top', content: 'Height of browser canvas in pixels.<br/>Use 480 for 480p, 720 for 720p or 1080 for 1080p.' }">
                                             <input type="text" v-model="browser.h" v-on:keyup="changed(browser)"
                                                 v-bind:class="{ disabled: running[browser.id] }"
@@ -487,14 +487,14 @@
                                         <div class="sub-group">VIDEO:</div>
                                         <div class="cluster" v-show="browser.D">
                                             <div class="label label-position">Position:</div>
-                                            <div class="field"
+                                            <div class="field field-x"
                                                 v-tippy="{ placement: 'top', content: 'X-Position of desktop window (0 is at left border)<br/>(absolute or relative to display).' }">
                                                 <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="sep">x</div>
-                                            <div class="field"
+                                            <div class="field field-y"
                                                 v-tippy="{ placement: 'top', content: 'Y-Position of desktop window (0 is at top border)<br/>(absolute or relative to display).' }">
                                                 <input type="text" v-model="browser.y" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
@@ -502,7 +502,7 @@
                                             </div>
                                             <div class="unit">px</div>
                                             <div class="label">Display:</div>
-                                            <div class="field"
+                                            <div class="field field-display"
                                                 v-tippy="{ placement: 'top', content: 'Selection of display for relative positioning. If empty or set to 0,0, X/Y-positions are relative to the primary display. Use -1,0 for the display on the left side, 0,-1 for the display at the top, etc.' }">
                                                 <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id] }"
