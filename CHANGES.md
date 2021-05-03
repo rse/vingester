@@ -3,15 +3,15 @@ Changes
 =======
 
 - 1.8.1
-    - IMPROVEMENT: use a title for the error message log dialog to be less confusing
-    - IMPROVEMENT: center text in most dialog fields where numbers are expected
-    - IMPROVEMENT: small style cleanups
+    - CLEANUP: use a title for the error message log dialog to be less confusing
+    - CLEANUP: center text in most dialog fields where numbers are expected
+    - CLEANUP: small style cleanups
 
 - 1.8.0
-    - IMPROVEMENT: add zoom level control field for setting the browser zoom level
-    - IMPROVEMENT: add CSS style control field for injecting a user style into the browser
+    - EXTENSION: add zoom level control field for setting the browser zoom level
+    - EXTENSION: add CSS style control field for injecting a user style into the browser
+    - EXTENSION: add support for FFmpeg-based output recording or streaming
     - IMPROVEMENT: sanitize the browser configurations to be able to load old configurations
-    - IMPROVEMENT: add support for FFmpeg-based output recording or streaming
     - IMPROVEMENT: provide error modal dialog and use it in case Web Contents does not load
     - BUGFIX: for a "Color" of value "transparent" make a frameless window also really transparent
     - BUGFIX: fixed internal browser stopping by reordering the steps
