@@ -5,6 +5,7 @@ Changes
 - 1.8.1
     - IMPROVEMENT: use a title for the error message log dialog to be less confusing
     - IMPROVEMENT: center text in most dialog fields where numbers are expected
+    - IMPROVEMENT: small style cleanups
 
 - 1.8.0
     - IMPROVEMENT: add zoom level control field for setting the browser zoom level
