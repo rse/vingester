@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.8.2
+    - CLEANUP: small style cleanups
+
 - 1.8.1
     - CLEANUP: use a title for the error message log dialog to be less confusing
     - CLEANUP: center text in most dialog fields where numbers are expected

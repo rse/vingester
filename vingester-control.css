@@ -927,6 +927,13 @@ body {
                 top: -2px;
                 display: none;
                 width: 100%;
+                .icon {
+                    position: relative;
+                    top: 1px;
+                    color: #cccccc;
+                    display: inline-block;
+                    padding-right: 4px;
+                }
             }
             .toggle-option.selected {
                 display: block;
@@ -934,11 +941,17 @@ body {
             &:hover {
                 background-color: #ffffff;
                 color: #000000;
+                .toggle-option .icon {
+                    color: #666666;
+                }
             }
         }
         &.running .toggle {
             background-color: #6699cc;
             cursor: default;
+            .toggle-option .icon {
+                color: #c0d0f0;
+            }
             &:hover {
                 background-color: #6699cc;
                 color: #ffffff;
