@@ -55,11 +55,15 @@
                     </div>
                     <div class="row-right">
                         <div class="icons">
-                            <div v-tippy="{ placement: 'bottom', content: 'Click to ' + (info ? 'close' : 'open') + ' the<br/>application information.' }"
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application status messages.' }"
+                                class="icon" v-on:click="modalToggle('messages')">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application version information.' }"
                                 class="icon" v-on:click="modalToggle('info')">
                                 <i class="fas fa-info-circle"></i>
                             </div>
-                            <div v-tippy="{ placement: 'bottom', content: 'Click to check for<br/>application updates.' }"
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application update dialog.' }"
                                 class="icon" v-bind:class="{ blink: updateNotifyBlink }"
                                 v-on:click="modalToggle('update')">
                                 <i class="fas fa-cloud-download-alt"></i>
@@ -147,6 +151,14 @@
                 </div>
             </div>
             <div class="ui-modal" v-show="modal !== ''">
+                <div class="ui-modal-messages" v-show="modal === 'messages'">
+                    <div class="message-table" ref="message-table">
+                        <div class="message-line" v-bind:class="{ obsolete: i < messages.length - 3, current: i === messages.length - 1 }" v-for="(message, i) in messages" v-bind:key="i">
+                            <div class="message-time">[{{ message.time }}]</div>
+                            <div class="message-text">{{ message.text }}</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="ui-modal-info" v-show="modal === 'info'">
                     <div class="about">
                         <p>

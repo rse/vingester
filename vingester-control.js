@@ -11,6 +11,7 @@ const UUID             = require("pure-uuid")
 const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 const VueTippy         = require("vue-tippy").default
 const clone            = require("clone")
+const moment           = require("moment")
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
@@ -41,11 +42,12 @@ const app = Vue.createApp({
             trace:             {},
             usage:             0,
             gpu:               false,
-            info:              false,
+            messages:          [],
             version:           {},
             support:           {},
             modal:             "",
             modalAuto:         false,
+            modalTimer:        null,
             updateUpdateable:  false,
             updateVersions:    { running: {}, current: {}, forthcoming: {} },
             updateNotify:      "",
@@ -103,6 +105,18 @@ const app = Vue.createApp({
         electron.ipcRenderer.on("browser-stopped", (ev, id) => {
             log.info("browser-stopped", id)
             this.running[id] = false
+        })
+        electron.ipcRenderer.on("message", (ev, text) => {
+            const time = moment().format("YYYY-MM-DD HH:mm:ss")
+            if (this.messages.length >= 5)
+                this.messages.shift()
+            this.messages.push({ time, text })
+            this.modalToggle("messages", true, true)
+            this.$nextTick(() => {
+                const table = this.$refs["message-table"]
+                if (table !== null)
+                    table.scrollTop = table.scrollHeight
+            })
         })
         electron.ipcRenderer.on("stat", (ev, stat) => {
             this.stat[stat.id] = stat
@@ -335,15 +349,17 @@ const app = Vue.createApp({
         windowControl (action) {
             electron.ipcRenderer.invoke("window-control", action)
         },
-        modalToggle (id, auto = false) {
+        modalToggle (id, force = false, auto = false) {
             this.modalAuto = false
-            if (this.modal === id)
+            if (this.modal === id && !force)
                 this.modal = ""
             else {
                 this.modal = id
-                if (auto) {
+                if (auto && !this.modalAuto) {
                     this.modalAuto = true
-                    setTimeout(() => {
+                    if (this.modalTimer !== null)
+                        clearTimeout(this.modalTimer)
+                    this.modalTimer = setTimeout(() => {
                         if (this.modalAuto) {
                             this.modalAuto = false
                             this.modal = ""

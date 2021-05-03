@@ -11,6 +11,7 @@ Changes
     - IMPROVEMENT: add CSS style control field for injecting a user style into the browser
     - IMPROVEMENT: sanitize the browser configurations to be able to load old configurations
     - IMPROVEMENT: add support for FFmpeg-based output recording or streaming
+    - IMPROVEMENT: provide error modal dialog and use it in case Web Contents does not load
     - UPGRADE: upgrade to Electron 12.0.6
     - UPGRADE: upgrade minor dependencies
 

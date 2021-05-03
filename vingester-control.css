@@ -283,6 +283,38 @@ body {
                 }
             }
         }
+        .ui-modal-messages {
+            .message-table {
+                width: calc(100% - 10px);
+                height: 100px;
+                overflow-y: scroll;
+                border-radius: 4px;
+                margin-right: 20px;
+                padding: 4px 8px 4px 8px;
+                border: 1px solid #d8c0b0;
+                color: #000000;
+                .message-line {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    .message-time {
+                        width: 180px;
+                    }
+                    .message-text {
+                        width: 100%;
+                        overflow-wrap: anywhere;
+                    }
+                    &.obsolete {
+                        color: #685040;
+                    }
+                    &.current {
+                        .message-text {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
         .ui-modal-update {
             display: flex;
             flex-direction: column;

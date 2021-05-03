@@ -194,6 +194,7 @@ module.exports = class Browser {
             worker.webContents.once("did-fail-load", (ev, code, desc, url, isMainFrame) => {
                 ev.preventDefault()
                 this.log.info(`browser: worker: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
+                this.control.webContents.send("message", `browser: worker: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
                 resolve(false)
             })
             worker.webContents.once("did-finish-load", (ev) => {
@@ -438,6 +439,7 @@ module.exports = class Browser {
             content.webContents.once("did-fail-load", (ev, code, desc, url, isMainFrame) => {
                 ev.preventDefault()
                 this.log.info(`browser: content: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
+                this.control.webContents.send("message", `browser: content: failed (code: ${code}, desc: ${desc}, url: ${url}, isMainFrame: ${isMainFrame})`)
                 this.starting = false
                 resolve(isMainFrame ? false : true)
             })
