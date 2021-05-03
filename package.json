@@ -64,7 +64,9 @@
         "typopro-web":                   "4.2.5"
     },
     "main":                              "vingester-main.js",
-    "upd":                               [ "!eslint-plugin-promise" ],
+    "upd":                               [ "!eslint-plugin-promise",
+                                           "!electron-builder",
+                                           "!vue-next-select" ],
     "build": {
         "appId":                         "com.engelschall.apps.vingester",
         "productName":                   "Vingester",
