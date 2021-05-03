@@ -611,11 +611,11 @@ body {
                 width: 40px;
             }
             &.label-output {
-                width: 107px;
+                width: 70px;
             }
             &.label-position,
             &.label-device {
-                width: 55px;
+                width: 90px;
             }
             &.label-framerate,
             &.label-samplerate,
@@ -680,28 +680,28 @@ body {
             }
             &.field-device {
                 margin-left: 0;
-                width: 364px;
+                width: 338px;
                 .vue-select {
-                    width: 364px;
+                    width: 338px;
                 }
                 .vue-dropdown {
-                    width: 364px;
+                    width: 338px;
                 }
             }
             &.field-style > input {
-                width: 423px;
+                width: 433px;
             }
             &.field-url > input {
-                width: 423px;
+                width: 433px;
             }
             &.field-title > input {
                 width: 103px;
             }
             &.field-info > input {
-                width: 268px;
+                width: 278px;
             }
             &.field-color > input {
-                width: 97px;
+                width: 107px;
             }
             &.field-pin .toggle {
                 width: 50px;
@@ -719,7 +719,7 @@ body {
                 width: 92px;
             }
             &.field-opts > input {
-                width: 165px;
+                width: 175px;
             }
             &.field-framerate > input {
                 width: 40px;
@@ -730,7 +730,7 @@ body {
                 text-align: center;
             }
             &.field-delay > input {
-                width: 35px;
+                width: 40px;
                 text-align: center;
             }
             &.field-x > input,

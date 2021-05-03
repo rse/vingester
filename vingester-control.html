@@ -508,7 +508,7 @@
                                                     v-bind:class="{ disabled: running[browser.id] }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
-                                            <div class="label">Pin Top:</div>
+                                            <div class="label">Pin:</div>
                                             <div class="field field-pin"
                                                 v-tippy="{ placement: 'top', content: 'Click to ' + (browser.p ? 'disable' : 'enable') + ' pinning the desktop window to the top,<br/>i.e., above all other windows on the desktop.' }">
                                                 <div class="toggle" v-on:click="toggle(browser, 'p', [ true, false ])">
