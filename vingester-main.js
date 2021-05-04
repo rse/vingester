@@ -315,13 +315,13 @@ electron.app.on("ready", async () => {
     log.info("provide IPC hooks for control user interface")
     const fields = [
         { iname: "t", itype: "string",  def: "",            etype: "string",  ename: "BrowserTitle" },
+        { iname: "i", itype: "string",  def: "",            etype: "string",  ename: "BrowserInfo" },
         { iname: "w", itype: "string",  def: "1280",        etype: "number",  ename: "BrowserWidth" },
         { iname: "h", itype: "string",  def: "720",         etype: "number",  ename: "BrowserHeight" },
         { iname: "c", itype: "string",  def: "transparent", etype: "string",  ename: "BrowserColor" },
         { iname: "z", itype: "string",  def: "1.0",         etype: "number",  ename: "BrowserZoom" },
-        { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "BrowserStyle" },
         { iname: "u", itype: "string",  def: "",            etype: "string",  ename: "InputURL" },
-        { iname: "i", itype: "string",  def: "",            etype: "string",  ename: "InputInfo" },
+        { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "InputStyle" },
         { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
         { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },
         { iname: "y", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionY" },
@@ -449,6 +449,8 @@ electron.app.on("ready", async () => {
                     num.toString(16).toUpperCase().padStart(2, "0")).join("")
             for (const field of fields) {
                 let value = browser[field.ename]
+                if (value === undefined)
+                    continue
                 if (field.itype === "boolean" && typeof value !== "boolean")
                     value = Boolean(value)
                 else if (field.itype === "number" && typeof value !== "number")
@@ -457,8 +459,8 @@ electron.app.on("ready", async () => {
                     value = String(value)
                 delete browser[field.ename]
                 browser[field.iname] = value
-                sanitizeConfig(browser)
             }
+            sanitizeConfig(browser)
         }
         saveConfigs(browsers)
         log.info(`imported browsers configuration (${browsers.length} browser entries)`)

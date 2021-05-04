@@ -4,6 +4,7 @@ Changes
 
 - 1.9.0
     - IMPROVEMENT: major control user interface styling overhaul
+    - BUGFIX: fix importing of external configurations
 
 - 1.8.1
     - CLEANUP: use a title for the error message log dialog to be less confusing
