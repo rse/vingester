@@ -107,40 +107,56 @@
                                     v-tippy="{ placement: 'bottom', content: 'Start all not<br/>running browsers.' }"
                                     v-bind:class="{ disabled: nAvailable === 0 || nAvailable === nRunning }"
                                     v-on:click="control('start-all', null)">
-                                    <i class="fas fa-play"></i> &nbsp;START
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-play"></i></span> &nbsp;START
+                                    </div>
                                 </div>
                                 <div class="field field-reload"
                                     v-tippy="{ placement: 'bottom', content: 'Reload all<br/>running browsers.' }"
                                     v-bind:class="{ disabled: nRunning === 0 }"
                                     v-on:click="control('reload-all', null)">
-                                    <i class="fas fa-redo"></i> &nbsp;RELOAD
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-redo"></i></span> &nbsp;RELOAD
+                                    </div>
                                 </div>
                                 <div class="field field-stop"
                                     v-tippy="{ placement: 'bottom', content: 'Stop all running browsers.<br/>(Global Hotkey: CTRL+ALT+SHIFT+ESC)' }"
                                     v-bind:class="{ disabled: nRunning === 0 }"
                                     v-on:click="control('stop-all', null)">
-                                    <i class="fas fa-pause"></i> &nbsp;STOP
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-pause"></i></span> &nbsp;STOP
+                                    </div>
                                 </div>
                             </div>
                             <div class="row-middle">
                                 <div class="field field-usage"
                                     v-tippy="{ placement: 'bottom', content: 'Shows the current<br>overall CPU usage.' }">
-                                    <i class="fas fa-microchip"></i> &nbsp;CPU: {{ usage.toFixed(1) }}%
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-microchip"></i></span> &nbsp;<span class="label">CPU:</span> {{ usage.toFixed(1) }}%
+                                    </div>
                                 </div>
                                 <div class="field field-gpu" v-on:click="toggleGPU"
                                     v-tippy="{ placement: 'bottom', content: (gpu ? 'Disable the currently enabled' : 'Enable the currently disabled') + '<br/>GPU hardware acceleration.<br/>Enable for Frameless mode.<br/>Disable for Headless mode.' }">
-                                    <span v-show="gpu"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;GPU: YES</span>
-                                    <span v-show="!gpu"><i class="fas fa-times-circle"></i>&nbsp;&nbsp;GPU: NO</span>
+                                    <div class="input-button">
+                                        <span v-show="gpu"><span class="icon"><i class="fas fa-check-circle"></i></span>&nbsp;&nbsp;<span class="label">GPU:</span> YES</span>
+                                        <span v-show="!gpu"><span class="icon"><i class="fas fa-times-circle"></i></span>&nbsp;&nbsp;<span class="label">GPU:</span> NO</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row-right">
                                 <div v-tippy="{ placement: 'bottom', content: 'Export browser configurations<br/>to external YAML file.' }"
                                     class="field field-export" v-on:click="exportBrowsers">
-                                    <i class="fas fa-upload"></i> &nbsp;EXPORT
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-upload"></i></span>
+                                        &nbsp;EXPORT
+                                    </div>
                                 </div>
                                 <div v-tippy="{ placement: 'bottom', content: 'Import browser configurations<br/>from external YAML file.' }"
                                     class="field field-import" v-on:click="importBrowsers">
-                                    <i class="fas fa-download"></i> &nbsp;IMPORT
+                                    <div class="input-button">
+                                        <span class="icon"><i class="fas fa-download"></i></span>
+                                        &nbsp;IMPORT
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,10 +169,14 @@
             <div class="ui-modal" v-show="modal !== ''">
                 <div class="ui-modal-messages" v-show="modal === 'messages'">
                     <div class="message-title">ERROR MESSAGE LOG:</div>
-                    <div class="message-table" ref="message-table">
-                        <div class="message-line" v-bind:class="{ obsolete: i < messages.length - 3, current: i === messages.length - 1 }" v-for="(message, i) in messages" v-bind:key="i">
-                            <div class="message-time">[{{ message.time }}]</div>
-                            <div class="message-text">{{ message.text }}</div>
+                    <div class="message-border-outside">
+                        <div class="message-border-inside">
+                            <div class="message-table" ref="message-table">
+                                <div class="message-line" v-bind:class="{ obsolete: i < messages.length - 3, current: i === messages.length - 1 }" v-for="(message, i) in messages" v-bind:key="i">
+                                    <div class="message-time">[{{ message.time }}]</div>
+                                    <div class="message-text">{{ message.text }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,15 +227,17 @@
                     <div class="recheck-button update-button"
                         v-bind:class="{ disabled: updateProgress !== null }"
                         v-on:click="updateCheck">
-                        <i class="fas fa-sync-alt"></i>
-                        &nbsp;
-                        RE-CHECK
+                        <div class="input-button">
+                            <i class="fas fa-sync-alt"></i>
+                            &nbsp;
+                            RE-CHECK
+                        </div>
                     </div>
                     <div class="versions">
                         <div class="versions-row headline">
-                            <div class="col-1 type">Type</div>
-                            <div class="col-2 version">Version</div>
-                            <div class="col-3 date">Date</div>
+                            <div class="col-1 type">TYPE</div>
+                            <div class="col-2 version">VERSION</div>
+                            <div class="col-3 date">DATE</div>
                         </div>
                         <div v-if="updateVersions.forthcoming.version" class="versions-row">
                             <div class="col-1 type">Forthcoming:</div>
@@ -230,18 +252,22 @@
                                 v-if="updateUpdateable"
                                 v-show="updateProgress === null && updateVersions.forthcoming.version !== updateVersions.running.version"
                                 v-on:click="updateToVersion(updateVersions.forthcoming.version)">
-                                <i class="fas fa-cloud-download-alt"></i>
-                                &nbsp;
-                                Update
+                                <div class="input-button">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                    &nbsp;
+                                    UPDATE
+                                </div>
                             </div>
                             <div class="col-4"
                                 v-if="!updateUpdateable"
                                 v-show="updateProgress === null && updateVersions.forthcoming.version !== updateVersions.running.version">
                                 <a class="update-button" v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.forthcoming.version"
                                     v-on:click="openURL">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    &nbsp;
-                                    Download
+                                    <div class="input-button">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        &nbsp;
+                                        DOWNLOAD
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -258,18 +284,22 @@
                                 v-if="updateUpdateable"
                                 v-show="updateProgress === null && updateVersions.current.version !== updateVersions.running.version"
                                 v-on:click="updateToVersion(updateVersions.current.version)">
-                                <i class="fas fa-cloud-download-alt"></i>
-                                &nbsp;
-                                Update
+                                <div class="input-button">
+                                    <i class="fas fa-cloud-download-alt"></i>
+                                    &nbsp;
+                                    UPDATE
+                                </div>
                             </div>
                             <div class="col-4"
                                 v-if="!updateUpdateable"
                                 v-show="updateProgress === null && updateVersions.current.version !== updateVersions.running.version">
                                 <a class="update-button" v-bind:href="'https://github.com/rse/vingester/releases/tag/' + updateVersions.current.version"
                                     v-on:click="openURL">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    &nbsp;
-                                    Download
+                                    <div class="input-button">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        &nbsp;
+                                        DOWNLOAD
+                                    </div>
                                 </a>
                             </div>
                         </div>
@@ -343,28 +373,30 @@
                             </span>
                         </span>
                     </div>
-                    <div class="progress" v-if="updateProgress !== null">
-                        <b>Progress:</b>
-                        <div class="spinner">
-                            <i class="fas fa-spinner fa-spin"></i>
+                    <div class="progress-border">
+                        <div class="progress" v-if="updateProgress !== null">
+                            <b>Progress:</b>
+                            <div class="spinner">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                            {{ updateProgress.task }}
+                            <div class="completion">
+                                <div class="total"></div>
+                                <div class="completed" v-bind:style="{ width: (updateProgress.completed * 100) + '%' }"></div>
+                                <div class="caption">{{ (updateProgress.completed * 100).toFixed(0) + '%' }}</div>
+                            </div>
                         </div>
-                        {{ updateProgress.task }}
-                        <div class="completion">
-                            <div class="total"></div>
-                            <div class="completed" v-bind:style="{ width: (updateProgress.completed * 100) + '%' }"></div>
-                            <div class="caption">{{ (updateProgress.completed * 100).toFixed(0) + '%' }}</div>
+                        <div class="progress" v-if="updateProgress === null">
+                            <b>Progress:</b>
+                            none
+                            <div class="completion">
+                                <div class="total disabled"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="progress" v-if="updateProgress === null">
-                        <b>Progress:</b>
-                        none
-                        <div class="completion">
-                            <div class="total disabled"></div>
+                        <div class="error" v-if="updateError !== null">
+                            <b>ERROR:</b>
+                            {{ updateError }}
                         </div>
-                    </div>
-                    <div class="error" v-if="updateError !== null">
-                        <b>ERROR:</b>
-                        {{ updateError }}
                     </div>
                 </div>
             </div>
@@ -394,9 +426,11 @@
                             </div>
                             <div class="box">
                                 <div class="box-area">
-                                    <div class="preview" v-show="browser.P && running[browser.id]"
-                                        v-tippy="{ placement: 'bottom', content: 'Shows a thumbnail preview (160x90px)<br/>of the Web Content rendering.' }">
-                                        <canvas v-bind:ref="'canvas-' + browser.id" width="160" height="90"></canvas>
+                                    <div class="preview" v-show="browser.P && running[browser.id]">
+                                        <div class="preview-inner"
+                                            v-tippy="{ placement: 'bottom', content: 'Shows a thumbnail preview (160x90px)<br/>of the Web Content rendering.' }">
+                                            <canvas v-bind:ref="'canvas-' + browser.id" width="160" height="90"></canvas>
+                                        </div>
                                     </div>
                                     <div class="tally" v-show="browser.N && running[browser.id]"
                                         v-bind:class="[ 'tally-' + tally[browser.id] ]"
@@ -659,74 +693,88 @@
                                                 v-tippy="{ placement: 'top', content: 'Start browser.' }"
                                                 v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.t === '' || browser.u === '' }"
                                                 v-on:click="control('start', browser.id)">
-                                                <i class="fas fa-play"></i> &nbsp;START
+                                                <div class="input-button">
+                                                    <span class="icon"><i class="fas fa-play"></i></span>
+                                                    &nbsp;START
+                                                </div>
                                             </div>
                                             <div class="field field-reload"
                                                 v-tippy="{ placement: 'top', content: 'Reload browser.' }"
                                                 v-on:click="control('reload', browser.id)">
-                                                <i class="fas fa-redo"></i> &nbsp;RELOAD
+                                                <div class="input-button">
+                                                    <span class="icon"><i class="fas fa-redo"></i></span>
+                                                    &nbsp;RELOAD
+                                                </div>
                                             </div>
                                             <div class="field field-stop"
                                                 v-tippy="{ placement: 'top', content: 'Stop browser.' }"
                                                 v-on:click="control('stop', browser.id)">
-                                                <i class="fas fa-pause"></i> &nbsp;STOP
+                                                <div class="input-button">
+                                                    <span class="icon"><i class="fas fa-pause"></i></span>
+                                                    &nbsp;STOP
+                                                </div>
                                             </div>
-                                            <div
+                                            <div class="field field-preview"
                                                 v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview thumbnail image' + (!running[browser.id] ? '<br/>once the browser is running' : '') + '.' }"
-                                                class="field field-preview" v-on:click="toggle(browser, 'P', [ true, false ])">
-                                                <span v-show="browser.P === true"><i class="fas fa-eye"></i></span>
-                                                <span v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
-                                                &nbsp;PREVIEW
+                                                v-on:click="toggle(browser, 'P', [ true, false ])">
+                                                <div class="input-button">
+                                                    <span class="icon" v-show="browser.P === true"><i class="fas fa-eye"></i></span>
+                                                    <span class="icon" v-show="browser.P === false"><i class="fas fa-eye-slash"></i></span>
+                                                    &nbsp;PREVIEW
+                                                </div>
                                             </div>
-                                            <div
+                                            <div class="field field-console"
                                                 v-tippy="{ placement: 'top', content: 'Click to ' + (browser.T ? 'disable' : 'enable') + ' the Web Content<br/>console output messages' + (!running[browser.id] ? '<br/>once the browser is running' : '') + '.' }"
-                                                class="field field-console" v-on:click="toggle(browser, 'T', [ true, false ])">
-                                                <span v-show="browser.T === true"><i class="fas fa-eye"></i></span>
-                                                <span v-show="browser.T === false"><i class="fas fa-eye-slash"></i></span>
-                                                &nbsp;CONSOLE
+                                                v-on:click="toggle(browser, 'T', [ true, false ])">
+                                                <div class="input-button">
+                                                    <span class="icon" v-show="browser.T === true"><i class="fas fa-eye"></i></span>
+                                                    <span class="icon" v-show="browser.T === false"><i class="fas fa-eye-slash"></i></span>
+                                                    &nbsp;CONSOLE
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="stat" v-if="running[browser.id]">
-                                        <div class="stat-row" v-if="browser.N && rate[browser.id]">
-                                            <span
-                                                v-tippy="{ placement: 'top', content: 'Shows the network sending performance<br/>(video+audio network packets per second).' }"
+                                        <div class="stat-item-border" v-if="browser.N && rate[browser.id]">
+                                            <div v-tippy="{ placement: 'top', content: 'Shows the network sending performance<br/>(video+audio network packets per second).' }"
                                                 class="stat-item">
-                                            NET: {{ Math.round(rate[browser.id].video) }}+{{ Math.round(rate[browser.id].audio) }} p/s
-                                            </span>
+                                                <span class="stat-item-label">NET:</span> {{ Math.round(rate[browser.id].video) }}+{{ Math.round(rate[browser.id].audio) }} p/s
+                                            </div>
                                         </div>
-                                        <div class="stat-row">
-                                            <span
-                                                v-tippy="{ placement: 'top', content: 'Shows the CPU performance (milliseconds per frame)<br/>of the browser Web Content rendering.' }"
-                                                class="stat-item" v-if="browser.N || browser.P">
-                                            CPU: {{ Math.round(burst[browser.id].video.avg) }}+{{ Math.round(burst[browser.id].audio.avg) }}={{ Math.round(burst[browser.id].video.avg + burst[browser.id].audio.avg) }} / {{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
-                                            </span>
-                                            <span
-                                                v-tippy="{ placement: 'top', content: 'Shows the graphics performance (frames per second)<br/>of the browser Web Content rendering.' }"
+                                        <div class="stat-item-border" v-if="browser.N || browser.P">
+                                            <div v-tippy="{ placement: 'top', content: 'Shows the CPU performance (milliseconds per frame)<br/>of the browser Web Content rendering.' }"
                                                 class="stat-item">
-                                            GFX: {{ Math.round(stat[browser.id].fps) }} fps
-                                            </span>
+                                                <span class="stat-item-label">CPU:</span> {{ Math.round(burst[browser.id].video.avg) }}+{{ Math.round(burst[browser.id].audio.avg) }}={{ Math.round(burst[browser.id].video.avg + burst[browser.id].audio.avg) }} / {{ stat[browser.id].fps > 0 ? Math.round(1000 / stat[browser.id].fps) : "-" }} ms/f
+                                            </div>
                                         </div>
-                                        <div class="stat-row">
-                                            <span
-                                                v-tippy="{ placement: 'top', content: 'Shows the memory consumption (MB)<br/>of the Web Content rendering.' }"
+                                        <div class="stat-item-border">
+                                            <div v-tippy="{ placement: 'top', content: 'Shows the graphics performance (frames per second)<br/>of the browser Web Content rendering.' }"
                                                 class="stat-item">
-                                            RAM: {{ stat[browser.id].memUsed.toFixed(1) }} / {{ stat[browser.id].memAvail.toFixed(0) }} MB
-                                            </span>
-                                            <span
-                                                v-tippy="{ placement: 'top', content: 'Shows number of warnings and<br/>errors on Web Content console.' }"
+                                                <span class="stat-item-label">GFX:</span> {{ Math.round(stat[browser.id].fps) }} fps
+                                            </div>
+                                        </div>
+                                        <div class="stat-item-border">
+                                            <div v-tippy="{ placement: 'top', content: 'Shows the memory consumption (MB)<br/>of the Web Content rendering.' }"
+                                                class="stat-item">
+                                                <span class="stat-item-label">RAM:</span> {{ stat[browser.id].memUsed.toFixed(1) }} / {{ stat[browser.id].memAvail.toFixed(0) }} MB
+                                            </div>
+                                        </div>
+                                        <div class="stat-item-border">
+                                            <div v-tippy="{ placement: 'top', content: 'Shows number of warnings and<br/>errors on Web Content console.' }"
                                                 class="stat-item stat-item-trace">
-                                            CON: {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
-                                            </span>
+                                                <span class="stat-item-label">CON:</span> {{ trace[browser.id].warning }} W, {{ trace[browser.id].error }} E
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="row" v-show="running[browser.id] && browser.T">
-                                        <div class="console" v-bind:ref="'console-' + browser.id">
-                                            <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
-                                                <div class="console-level">{{ message.level }}:</div>
-                                                <div class="console-message">{{ message.message }}</div>
+                                        <div class="console-border">
+                                            <div class="console" v-bind:ref="'console-' + browser.id">
+                                                <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
+                                                    <div class="console-level">{{ message.level }}:</div>
+                                                    <div class="console-message">{{ message.message }}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -2,8 +2,8 @@
 Changes
 =======
 
-- 1.8.2
-    - CLEANUP: small style cleanups
+- 1.9.0
+    - IMPROVEMENT: major control user interface styling overhaul
 
 - 1.8.1
     - CLEANUP: use a title for the error message log dialog to be less confusing
