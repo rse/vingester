@@ -160,8 +160,7 @@ electron.app.on("ready", async () => {
     for (const sampleConfig of sampleConfigs) {
         const iname = path.join(appPath, sampleConfig.iname)
         const ename = path.join(cfgDir,  sampleConfig.ename)
-        if (!(await pathExists(ename)))
-            await fs.promises.copyFile(iname, ename)
+        await fs.promises.copyFile(iname, ename)
     }
 
     /*  determine main window position and size  */
