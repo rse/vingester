@@ -14,8 +14,14 @@ About
 for use under Windows, macOS or Linux to run multiple
 [Chromium](https://www.chromium.org/)-based Web browser instances and
 ingesting their rendered Web Contents as screen/window-captured or
-[NDI](https://www.ndi.tv/)-multicasted video streams for further use in
-video mixing applications.
+[NDI](https://www.ndi.tv/)-multicasted or [FFmpeg](https://ffmpeg.org)-based
+video streams for further use in local or remote video mixing applications or
+for local recording.
+
+Sneak Preview
+-------------
+
+![Vingester Screenshot](vingester-screenshot.png)
 
 Motivation
 ----------
@@ -43,11 +49,6 @@ browser performance if it is backgrounded like a regular Chrome browser
 does. And **Vingester** windows can be pinned to be always on top of
 others windows and determine the correct window sizes if the display
 uses a high DPI mode.
-
-Sneak Preview
--------------
-
-![Vingester Screenshot](vingester-screenshot.png)
 
 Performance Notes
 -----------------
