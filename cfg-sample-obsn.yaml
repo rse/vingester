@@ -9,11 +9,13 @@
 ---
 
 -   BrowserTitle:                  "OBSN-P01"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 1"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01"
-    InputInfo:                     "OBS.Ninja Session, Person No. 1"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -27,15 +29,21 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "OBSN-P02"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 2"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P02"
-    InputInfo:                     "OBS.Ninja Session, Person No. 2"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -49,15 +57,21 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "OBSN-P03"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 3"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P03"
-    InputInfo:                     "OBS.Ninja Session, Person No. 3"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -71,15 +85,21 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "OBSN-P04"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 4"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P04"
-    InputInfo:                     "OBS.Ninja Session, Person No. 4"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -93,15 +113,21 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "OBSN-P05"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 5"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P05"
-    InputInfo:                     "OBS.Ninja Session, Person No. 5"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -115,15 +141,21 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "OBSN-P06"
+    BrowserInfo:                   "OBS.Ninja Session, Person No. 6"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P06"
-    InputInfo:                     "OBS.Ninja Session, Person No. 6"
+    InputStyle:                    ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -137,28 +169,10 @@
     Output2AudioSampleRate:        24000
     Output2AudioChannels:          1
     Output2AudioDelay:             0
-    PreviewEnabled:                false
-    ConsoleEnabled:                false
-
--   BrowserTitle:                  "OBSN-P07"
-    BrowserWidth:                  1280
-    BrowserHeight:                 720
-    BrowserColor:                  "#00ff00"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P07"
-    InputInfo:                     "OBS.Ninja Session, Person No. 7"
-    Output1Enabled:                false
-    Output1VideoPositionX:         0
-    Output1VideoPositionY:         0
-    Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
-    Output1AudioDevice:            ""
-    Output2Enabled:                true
-    Output2VideoFrameRate:         30
-    Output2VideoAdaptive:          true
-    Output2VideoDelay:             0
-    Output2AudioSampleRate:        24000
-    Output2AudioChannels:          1
-    Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 

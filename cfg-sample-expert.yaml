@@ -6,11 +6,13 @@
 ---
 
 -   BrowserTitle:                  "The-Expert-1"
+    BrowserInfo:                   "The Expert: 7 Red Lines (Original Sketch)"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1"
-    InputInfo:                     "The Expert: 7 Red Lines (Original Sketch)"
+    InputStyle:                    ""
     Output1Enabled:                true
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -24,15 +26,21 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "The-Expert-2"
+    BrowserInfo:                   "D. Scott Williamson's response to \"The Expert: 7 Red Lines\""
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/B7MIJP90biM?autoplay=1"
-    InputInfo:                     "D. Scott Williamson's response to \"The Expert: 7 Red Lines\""
+    InputStyle:                    ""
     Output1Enabled:                true
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         0
@@ -46,15 +54,21 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "The-Expert-3"
+    BrowserInfo:                   "The Expert: Wrong Angle (Square Project Episode 1)"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/mokllJ_Sz_g?autoplay=1"
-    InputInfo:                     "The Expert: Wrong Angle (Square Project Episode 1)"
+    InputStyle:                    ""
     Output1Enabled:                true
     Output1VideoPositionX:         0
     Output1VideoPositionY:         720
@@ -68,15 +82,21 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "The-Expert-4"
+    BrowserInfo:                   "The Expert: IT Support (Square Project Episode 2)"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/ZOzzRlc_qho?autoplay=1"
-    InputInfo:                     "The Expert: IT Support (Square Project Episode 2)"
+    InputStyle:                    ""
     Output1Enabled:                true
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         720
@@ -90,15 +110,21 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
 -   BrowserTitle:                  "The-Expert-5"
+    BrowserInfo:                   "The Expert: Progress Meeting (Square Project Episode 3)"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
+    BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/u8Kt7fRa2Wc?autoplay=1"
-    InputInfo:                     "The Expert: Progress Meeting (Square Project Episode 3)"
+    InputStyle:                    ""
     Output1Enabled:                true
     Output1VideoPositionX:         2540
     Output1VideoPositionY:         720
@@ -112,6 +138,10 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
 
