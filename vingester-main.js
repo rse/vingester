@@ -320,6 +320,8 @@ electron.app.on("ready", async () => {
         { iname: "c", itype: "string",  def: "transparent", etype: "string",  ename: "BrowserColor" },
         { iname: "z", itype: "string",  def: "1.0",         etype: "number",  ename: "BrowserZoom" },
         { iname: "u", itype: "string",  def: "",            etype: "string",  ename: "InputURL" },
+        { iname: "H", itype: "boolean", def: false,         etype: "boolean", ename: "InputTrustSite" },
+        { iname: "I", itype: "boolean", def: false,         etype: "boolean", ename: "InputTrustContent" },
         { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "InputStyle" },
         { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
         { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },

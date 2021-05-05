@@ -16,6 +16,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -44,6 +46,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P02"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -72,6 +76,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P03"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -100,6 +106,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P04"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -128,6 +136,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P05"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -156,6 +166,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P06"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0

@@ -285,8 +285,8 @@ module.exports = class Browser {
                 devTools:                   (process.env.DEBUG === "2"),
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
-                nodeIntegration:            false,
-                nodeIntegrationInWorker:    false,
+                nodeIntegration:            this.cfg.I ? true : false,
+                nodeIntegrationInWorker:    this.cfg.I ? true : false,
                 contextIsolation:           true,
                 enableRemoteModule:         false,
                 disableDialogs:             true,
@@ -310,6 +310,17 @@ module.exports = class Browser {
         /*  determine user-agent identifier  */
         const ua = content.webContents.getUserAgent()
         this.log.info(`browser: content: user-agent: "${ua}"`)
+
+        /*  allow insecure HTTPS connections  */
+        content.webContents.session.setCertificateVerifyProc((request, callback) => {
+            if (request.hostname === "localhost" ||
+                request.hostname === "127.0.0.1" ||
+                request.hostname === "::1" ||
+                this.cfg.H)
+                callback(0)
+            else
+                callback(-3)
+        })
 
         /*  control audio (for desktop window we unmute, for NDI we mute)  */
         if (this.cfg.D || (this.cfg.N && this.cfg.C === 0))

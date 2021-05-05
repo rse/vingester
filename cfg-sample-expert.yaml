@@ -13,6 +13,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                true
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -41,6 +43,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/B7MIJP90biM?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                true
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         0
@@ -69,6 +73,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/mokllJ_Sz_g?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                true
     Output1VideoPositionX:         0
     Output1VideoPositionY:         720
@@ -97,6 +103,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/ZOzzRlc_qho?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                true
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         720
@@ -125,6 +133,8 @@
     BrowserZoom:                   "1.0"
     InputURL:                      "https://www.youtube.com/embed/u8Kt7fRa2Wc?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
+    InputTrustSite:                false
+    InputTrustContent:             false
     Output1Enabled:                true
     Output1VideoPositionX:         2540
     Output1VideoPositionY:         720

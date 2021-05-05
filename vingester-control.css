@@ -717,6 +717,7 @@ body {
             margin-right: 4px;
             &.label-title,
             &.label-size,
+            &.label-site,
             &.label-url,
             &.label-style {
                 width: 40px;

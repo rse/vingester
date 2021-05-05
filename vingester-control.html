@@ -506,6 +506,29 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="group">TRUST:</div>
+                                        <div class="label label-site">Site:</div>
+                                        <div class="field field-site"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.H ? 'not trust' : 'trust') + ' the HTTPS connections<br/>to the site specified by URL above, i.e.,<br/>' + (browser.H ? 'disallow' : 'allow') + ' unknown certificate authorities.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'H', [ true, false ])">
+                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.H === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.H === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                        <div v-if="browser.H" class="unit">&#8801; insecure</div>
+                                        <div v-if="!browser.H" class="unit">&#8801; secure</div>
+                                        <div class="label label-content">Content:</div>
+                                        <div class="field field-content"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.I ? 'not trust' : 'trust') + ' the Web Contents<br/>of the site specified by URL above, i.e.,<br/>' + (browser.I ? 'disable' : 'enable') + ' Node API integrations.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'I', [ true, false ])">
+                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.I === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.I === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                        <div v-if="browser.I" class="unit">&#8801; insecure</div>
+                                        <div v-if="!browser.I" class="unit">&#8801; secure</div>
+                                    </div>
+                                    <div class="row">
                                         <div class="group">OUTPUT 1:</div>
                                         <div class="label label-output">Frameless:</div>
                                         <div class="field"

@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 1.9.2
+    - EXTENSION: add "Trust Site" (ignore SSL/TLS certs) functionality
+    - EXTENSION: add "Trust Content" (allow Node API integration) functionality
+
 - 1.9.1
     - BUGFIX: once again fix importing of external configurations
 
