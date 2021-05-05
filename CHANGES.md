@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 1.9.1
+    - BUGFIX: once again fix importing of external configurations
+
 - 1.9.0
     - IMPROVEMENT: major control user interface styling overhaul
     - IMPROVEMENT: always copy the sample files to provide fresh ones on startup
