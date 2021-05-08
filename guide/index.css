@@ -1,0 +1,77 @@
+/*
+**  Vingester ~ Ingest Web Contents as Video Streams
+**  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
+*/
+
+:root {
+    --base-font-family:            "Source Sans Pro", sans-serif;
+    --code-font-family:            "DejaVu Sans Mono", monospace;
+    --base-font-size:              13pt;
+
+    --theme-color:                 #336699;
+
+    --base-line-height:            1.35;
+
+    --code-inline-background:      #f5f5f5;
+    --code-inline-border-radius:   4px;
+
+    --heading-h1-color:            #336699;
+    --heading-h1-font-size:        32pt;
+    --heading-h1-font-weight:      bold;
+    --heading-h1-margin:           1.5rem 0 0 0;
+    --heading-h1-padding:          0 0 0.5rem 0;
+
+    --heading-h2-color:            #4477aa;
+    --heading-h2-font-size:        24pt;
+    --heading-h2-font-weight:      bold;
+    --heading-h2-margin:           1.5rem 0 0 0;
+    --heading-h2-padding:          0 0 0.5rem 0;
+
+    --heading-h3-color:            #5588bb;
+    --heading-h3-font-size:        16pt;
+    --heading-h3-font-weight:      bold;
+    --heading-h3-margin:           1.5rem 0 0 0;
+    --heading-h3-padding:          0 0 0 0;
+}
+
+code {
+    letter-spacing:                -0.25px;
+    font-size:                     11pt !important;
+    word-break:                    break-all;
+}
+
+.cover-main img {
+    width:                         200px;
+}
+.cover-main h1 {
+    font-family:                   "Overlock", sans-serif;
+    font-weight:                   bold;
+    font-style:                    italic;
+}
+.cover-main h1 span {
+    font-size:                     90pt !important;
+}
+
+.app-name-link {
+    font-family:                   "Overlock", sans-serif;
+    font-weight:                   bold;
+    font-style:                    italic;
+    font-size:                     42pt;
+}
+.app-name-link img {
+    width:                         50px;
+}
+
+.docsify-pagination-container {
+    margin:                        3em 0 1em !important;
+}
+.pagination-item {
+    margin-top:                    0.75em !important;
+}
+
+p + p {
+    margin-top:                    0.5em !important;
+    margin-bottom:                 0 !important;
+}
+
