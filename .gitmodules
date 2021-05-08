@@ -1,0 +1,3 @@
+[submodule "obsn"]
+	path = obsn
+	url = https://github.com/rse/obs-ninja-trampoline
