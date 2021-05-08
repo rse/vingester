@@ -2,7 +2,7 @@
 Changes
 =======
 
-- 1.9.2
+- 2.0.0
     - EXTENSION: add "Trust" (ignore SSL/TLS certs) functionality
     - EXTENSION: add "Node.js API" (enable Node API integration) functionality
     - EXTENSION: add "OBS Browser DOM" (emulate OBS Studio Browser Source DOM) functionality
