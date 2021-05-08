@@ -28,7 +28,7 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
-    Output2SinkNDIEnabled:         false
+    Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
@@ -58,7 +58,7 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
-    Output2SinkNDIEnabled:         false
+    Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
@@ -88,7 +88,7 @@
     Output2AudioSampleRate:        48000
     Output2AudioChannels:          2
     Output2AudioDelay:             0
-    Output2SinkNDIEnabled:         false
+    Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
