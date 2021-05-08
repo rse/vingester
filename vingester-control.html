@@ -486,6 +486,33 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="group"></div>
+                                        <div class="label label-trust">Trust:</div>
+                                        <div class="field field-trust"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.H ? 'not trust' : 'trust') + ' the HTTPS connections<br/>to the site specified by URL above, i.e.,<br/>' + (browser.H ? 'disallow' : 'allow') + ' unknown SSL/TLS certificate authorities.<br/>ATTENTION: Trusting a site is a security risk!' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'H', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.H === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.H === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-nodejs">Node.js&reg; API:</div>
+                                        <div class="field field-content"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.I ? 'disable' : 'enable') + ' the Node.js API integration<br/>for the Web Contents of the site specified by URL above.<br/>ATTENTION: Enabling the Node.js API is a security risk!' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'I', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.I === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.I === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-obsdom">OBS&reg; Browser DOM:</div>
+                                        <div class="field field-content"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.B ? 'disable' : 'enable') + ' the OBS Studio Browser Source DOM emulation<br/>for the Web Contents of the site specified by URL above.<br/>ATTENTION: Enabling this pretends Vingester is the OBS Studio Browser Source.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'B', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.B === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.B === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="group">INPUT:</div>
                                         <div class="label label-url">URL:</div>
                                         <div class="field field-url"
@@ -504,29 +531,6 @@
                                                 v-bind:class="{ disabled: running[browser.id] }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="group">TRUST:</div>
-                                        <div class="label label-site">Site:</div>
-                                        <div class="field field-site"
-                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.H ? 'not trust' : 'trust') + ' the HTTPS connections<br/>to the site specified by URL above, i.e.,<br/>' + (browser.H ? 'disallow' : 'allow') + ' unknown certificate authorities.' }">
-                                            <div class="toggle" v-on:click="toggle(browser, 'H', [ true, false ])">
-                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.H === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
-                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.H === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
-                                            </div>
-                                        </div>
-                                        <div v-if="browser.H" class="unit">&#8801; insecure</div>
-                                        <div v-if="!browser.H" class="unit">&#8801; secure</div>
-                                        <div class="label label-content">Content:</div>
-                                        <div class="field field-content"
-                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.I ? 'not trust' : 'trust') + ' the Web Contents<br/>of the site specified by URL above, i.e.,<br/>' + (browser.I ? 'disable' : 'enable') + ' Node API integrations.' }">
-                                            <div class="toggle" v-on:click="toggle(browser, 'I', [ true, false ])">
-                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.I === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
-                                                <div class="toggle-option toggle-option" v-bind:class="{ selected: browser.I === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
-                                            </div>
-                                        </div>
-                                        <div v-if="browser.I" class="unit">&#8801; insecure</div>
-                                        <div v-if="!browser.I" class="unit">&#8801; secure</div>
                                     </div>
                                     <div class="row">
                                         <div class="group">OUTPUT 1:</div>

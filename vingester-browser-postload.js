@@ -216,4 +216,18 @@
     /*  optionally capture audio  */
     if (vingester.cfg.D || (vingester.cfg.N && parseInt(vingester.cfg.C) > 0))
         captureAudio()
+
+    /*  support custom DOM Visibility API  */
+    Object.defineProperty(document, "visibilityState", {
+        enumerable:   true,
+        configurable: true,
+        get: function ()  { return vingester.visibility() },
+        set: function (v) {}
+    })
+    Object.defineProperty(document, "hidden", {
+        enumerable:   true,
+        configurable: true,
+        get: function ()  { return vingester.visibility() === "hidden" },
+        set: function (v) {}
+    })
 })()

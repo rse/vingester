@@ -28,7 +28,8 @@
     electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
     const log = electronLog.scope(`browser/content-${cfg.id}`)
 
-    /*  provide global "vingester" environment (for postload)  */
+    /*  provide global Vingester environment (for postload)  */
+    let visibility = cfg.D ? "visible" : "hidden"
     electron.contextBridge.exposeInMainWorld("vingester", {
         cfg: cfg,
         log (...args) {
@@ -39,7 +40,40 @@
         },
         async audioCapture (data) {
             electron.ipcRenderer.sendTo(cfg.workerId, "audio-capture", data)
+        },
+        visibility (state) {
+            if (state !== undefined)
+                visibility = state
+            return visibility
         }
     })
+
+    /*  provide optional global OBS Studio Browser Source environment (simulated, for content)  */
+    if (cfg.B) {
+        electron.contextBridge.exposeInMainWorld("obsstudio", {
+            pluginVersion: "0.0.0",
+            getCurrentScene (callback) {
+                /*  map the browser title and size onto a simulated OBS Studio scene  */
+                callback({
+                    name:   this.cfg.t,
+                    width:  this.cfg.w,
+                    height: this.cfg.h
+                })
+            },
+            getStatus (callback) {
+                /*  pretent OBS Studio is streaming if the content is visible anywhere  */
+                callback({
+                    streaming:       visibility === "visible",
+                    recording:       false,
+                    recordingPaused: false,
+                    replaybuffer:    false,
+                    virtualcam:      false
+                })
+            },
+            saveReplayBuffer () {
+                /*  no-op  */
+            }
+        })
+    }
 })()
 

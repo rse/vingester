@@ -717,13 +717,19 @@ body {
             margin-right: 4px;
             &.label-title,
             &.label-size,
-            &.label-site,
+            &.label-trust,
             &.label-url,
             &.label-style {
                 width: 40px;
             }
             &.label-zoom {
                 width: 40px;
+            }
+            &.label-nodejs {
+                width: 85px;
+            }
+            &.label-obsdom {
+                width: 124px;
             }
             &.label-output {
                 width: 70px;

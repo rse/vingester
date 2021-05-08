@@ -175,6 +175,57 @@ module.exports = class Browser {
             this.log[method](`browser/worker-${this.id}: console: ${message.replace(/\s+/g, " ")}`)
         })
 
+        /*  notify content of tally information  */
+        const changeVisibilityState = (state) => {
+            if (this.content === null)
+                return
+            this.content.webContents.executeJavaScript(`
+                vingester.visibility(${JSON.stringify(state)});
+                document.dispatchEvent(new Event("visibilitychange", {
+                    bubbles: false, cancelable: false
+                }))
+            `)
+        }
+        const raiseContentEvent = (name, detail) => {
+            if (this.content === null)
+                return
+            this.content.webContents.executeJavaScript(`
+                window.dispatchEvent(new CustomEvent("${name}", {
+                    bubbles: false, cancelable: false,
+                    detail: ${JSON.stringify(detail)}
+                }))
+            `)
+        }
+        let activeLast  = null
+        let visibleLast = null
+        const notifyContent = (tally) => {
+            /*  provide original event  */
+            raiseContentEvent("vingesterTallyChanged", tally)
+
+            /*  optionally simulate OBS Studio events  */
+            if (this.cfg.B) {
+                let visible = false  /*  visible on preview/program or any display        */
+                let active  = false  /*  visible on preview/program and stream/recording  */
+                if (tally === "preview")
+                    visible = true
+                else if (tally === "program") {
+                    visible = true
+                    active  = true
+                }
+                if (visibleLast !== visible) {
+                    raiseContentEvent("obsSourceVisibleChanged", { visible })
+                    this.log.info(`browser: new OBS DOM VISIBLE state: ${visible}`)
+                    visibleLast = visible
+                }
+                if (activeLast !== active) {
+                    changeVisibilityState(active ? "visible" : "hidden")
+                    raiseContentEvent("obsSourceActiveChanged", { active })
+                    this.log.info(`browser: new OBS DOM ACTIVE state: ${active}`)
+                    activeLast = active
+                }
+            }
+        }
+
         /*  receive worker information  */
         let tallyLast = ""
         worker.webContents.on("ipc-message", (ev, channel, msg) => {
@@ -185,6 +236,8 @@ module.exports = class Browser {
                     tallyLast = this.tally
                     this.recalcCaptureFramerate()
                     this.update()
+                    this.log.info(`browser: new NDI TALLY state: ${this.tally}`)
+                    notifyContent(this.tally)
                 }
             }
         })
@@ -313,10 +366,10 @@ module.exports = class Browser {
 
         /*  allow insecure HTTPS connections  */
         content.webContents.session.setCertificateVerifyProc((request, callback) => {
-            if (request.hostname === "localhost" ||
-                request.hostname === "127.0.0.1" ||
-                request.hostname === "::1" ||
-                this.cfg.H)
+            if (request.hostname === "localhost"
+                || request.hostname === "127.0.0.1"
+                || request.hostname === "::1"
+                || this.cfg.H)
                 callback(0)
             else
                 callback(-3)
@@ -443,6 +496,16 @@ module.exports = class Browser {
                 content.webContents.setZoomFactor(this.cfg.z / factor)
             else
                 content.webContents.setZoomFactor(this.cfg.z)
+
+            /*  initially raise events  */
+            setTimeout(() => {
+                raiseContentEvent("vingesterTallyChanged", "unconnected")
+                changeVisibilityState("hidden")
+                if (this.cfg.B) {
+                    raiseContentEvent("obsSourceActiveChanged",  { active: false })
+                    raiseContentEvent("obsSourceVisibleChanged", { visible: false })
+                }
+            }, 100)
         })
 
         /*  finally load the Web Content  */

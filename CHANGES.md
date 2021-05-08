@@ -3,8 +3,9 @@ Changes
 =======
 
 - 1.9.2
-    - EXTENSION: add "Trust Site" (ignore SSL/TLS certs) functionality
-    - EXTENSION: add "Trust Content" (allow Node API integration) functionality
+    - EXTENSION: add "Trust" (ignore SSL/TLS certs) functionality
+    - EXTENSION: add "Node.js API" (enable Node API integration) functionality
+    - EXTENSION: add "OBS Browser DOM" (emulate OBS Studio Browser Source DOM) functionality
     - IMPROVEMENT: improve and update sample configurations
     - BUGFIX: fixed styling of disabled buttons
     - UPGRADE: upgrade to Electron 12.0.7

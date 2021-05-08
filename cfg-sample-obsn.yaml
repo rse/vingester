@@ -14,10 +14,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -44,10 +45,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P02"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -74,10 +76,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P03"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -104,10 +107,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P04"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -134,10 +138,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P05"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -164,10 +169,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 true
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P06"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0

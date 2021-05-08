@@ -11,10 +11,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
     InputURL:                      "https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -41,10 +42,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
     InputURL:                      "https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -71,10 +73,11 @@
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
     BrowserZoom:                   "1.0"
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
     InputURL:                      "https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
-    InputTrustSite:                false
-    InputTrustContent:             false
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
