@@ -5,6 +5,9 @@ Changes
 - 1.9.2
     - EXTENSION: add "Trust Site" (ignore SSL/TLS certs) functionality
     - EXTENSION: add "Trust Content" (allow Node API integration) functionality
+    - IMPROVEMENT: improve and update sample configurations
+    - UPGRADE: upgrade to Electron 12.0.7
+    - UPGRADE: upgrade minor dependencies
 
 - 1.9.1
     - BUGFIX: once again fix importing of external configurations
