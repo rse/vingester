@@ -945,11 +945,19 @@ body {
             &.field-stop:hover .input-button {
                 cursor: default;
             }
-            &.disabled {
-                background-color: #a0a0a0;
+            &.disabled .input-button {
+                color: #999999;
+                background-color: #555555;
+                border-top: 1px solid #656565;
+                border-left: 1px solid #656565;
+                border-right: 1px solid #202020;
+                border-bottom: 1px solid #202020;
                 cursor: default;
-                &.disabled:hover {
-                    background-color: #a0a0a0;
+                .icon {
+                    color: #777777;
+                }
+                &.disabled:hover .input-button {
+                    background-color: #555555;
                 }
             }
         }

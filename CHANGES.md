@@ -6,6 +6,7 @@ Changes
     - EXTENSION: add "Trust Site" (ignore SSL/TLS certs) functionality
     - EXTENSION: add "Trust Content" (allow Node API integration) functionality
     - IMPROVEMENT: improve and update sample configurations
+    - BUGFIX: fixed styling of disabled buttons
     - UPGRADE: upgrade to Electron 12.0.7
     - UPGRADE: upgrade minor dependencies
 
