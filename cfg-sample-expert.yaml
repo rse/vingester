@@ -19,7 +19,7 @@
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
     Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
+    Output1VideoPinTop:            true
     Output1AudioDevice:            ""
     Output2Enabled:                false
     Output2VideoFrameRate:         24
@@ -49,7 +49,7 @@
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         0
     Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
+    Output1VideoPinTop:            true
     Output1AudioDevice:            ""
     Output2Enabled:                false
     Output2VideoFrameRate:         24
@@ -79,7 +79,7 @@
     Output1VideoPositionX:         0
     Output1VideoPositionY:         720
     Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
+    Output1VideoPinTop:            true
     Output1AudioDevice:            ""
     Output2Enabled:                false
     Output2VideoFrameRate:         24
@@ -109,7 +109,7 @@
     Output1VideoPositionX:         1280
     Output1VideoPositionY:         720
     Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
+    Output1VideoPinTop:            true
     Output1AudioDevice:            ""
     Output2Enabled:                false
     Output2VideoFrameRate:         24
@@ -139,7 +139,7 @@
     Output1VideoPositionX:         2540
     Output1VideoPositionY:         720
     Output1VideoDisplay:           ""
-    Output1VideoPinTop:            false
+    Output1VideoPinTop:            true
     Output1AudioDevice:            ""
     Output2Enabled:                false
     Output2VideoFrameRate:         24
