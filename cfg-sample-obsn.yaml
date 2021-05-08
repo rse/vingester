@@ -4,7 +4,7 @@
 ##
 
 #   NOTICE: OBS.Ninja Sender Session
-#   https://obs.xt.msg.team/#/example/example/sender/mono/720p30/none/Person-1/Person_1
+#   https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01
 
 ---
 
@@ -14,7 +14,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P01"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -25,7 +25,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
@@ -44,7 +44,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P02"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P02"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -55,7 +55,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
@@ -74,7 +74,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P03"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P03"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -85,7 +85,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
@@ -104,7 +104,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P04"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P04"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -115,7 +115,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
@@ -134,7 +134,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P05"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P05"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -145,7 +145,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
@@ -164,7 +164,7 @@
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
     BrowserZoom:                   "1.0"
-    InputURL:                      "https://obs.xt.msg.team/#/example/example/receiver/mono/720p30/none/P06"
+    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P06"
     InputStyle:                    ""
     InputTrustSite:                false
     InputTrustContent:             false
@@ -175,7 +175,7 @@
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
-    Output2VideoFrameRate:         30
+    Output2VideoFrameRate:         24
     Output2VideoAdaptive:          true
     Output2VideoDelay:             0
     Output2AudioSampleRate:        24000
