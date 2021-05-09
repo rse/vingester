@@ -442,14 +442,14 @@
                                         <div class="field field-title"
                                             v-tippy="{ placement: 'top', content: 'Title of browser window<br/>or name of NDI stream.' }">
                                             <input type="text" v-model="browser.t" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.t }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                         <div class="label label-info">Info:</div>
                                         <div class="field field-info"
                                             v-tippy="{ placement: 'top', content: 'Arbitrary meta information of the user.<br/>This is not used by Vingester itself.' }">
                                             <input type="text" v-model="browser.i" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.i }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
@@ -459,14 +459,14 @@
                                         <div class="field field-width"
                                             v-tippy="{ placement: 'top', content: 'Width of browser canvas in pixels.<br/>Use 854 for 480p, 1280 for 720p or 1920 for 1080p.' }">
                                             <input type="text" v-model="browser.w" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.w }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                         <div class="sep">x</div>
                                         <div class="field field-height"
                                             v-tippy="{ placement: 'top', content: 'Height of browser canvas in pixels.<br/>Use 480 for 480p, 720 for 720p or 1080 for 1080p.' }">
                                             <input type="text" v-model="browser.h" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.h }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                         <div class="unit">px</div>
@@ -474,14 +474,14 @@
                                         <div class="field field-zoom"
                                             v-tippy="{ placement: 'top', content: 'Zoom level of browser window.' }">
                                             <input type="text" v-model="browser.z" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.z }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                         <div class="label">Background:</div>
                                         <div class="field field-color"
                                             v-tippy="{ placement: 'top', content: 'Background color of browser canvas.<br/>Use \'#RRGGBB\' or \'transparent\'.' }">
                                             <input type="text" v-model="browser.c" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.c }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
@@ -518,7 +518,7 @@
                                         <div class="field field-url"
                                             v-tippy="{ placement: 'top', content: 'Uniform Resource Locator (URL)<br/>of Web Content to render.' }">
                                             <input type="text" v-model="browser.u" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.u }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
@@ -528,7 +528,7 @@
                                         <div class="field field-style"
                                             v-tippy="{ placement: 'top', content: 'Custom CSS styles to inject into browser window.' }">
                                             <input type="text" v-model="browser.s" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id] }"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.s }"
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
@@ -551,14 +551,14 @@
                                             <div class="field field-x"
                                                 v-tippy="{ placement: 'top', content: 'X-Position of desktop window (0 is at left border)<br/>(absolute or relative to display).' }">
                                                 <input type="text" v-model="browser.x" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.x }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="sep">x</div>
                                             <div class="field field-y"
                                                 v-tippy="{ placement: 'top', content: 'Y-Position of desktop window (0 is at top border)<br/>(absolute or relative to display).' }">
                                                 <input type="text" v-model="browser.y" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.y }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="unit">px</div>
@@ -566,7 +566,7 @@
                                             <div class="field field-display"
                                                 v-tippy="{ placement: 'top', content: 'Selection of display for relative positioning. If empty or set to 0,0, X/Y-positions are relative to the primary display. Use -1,0 for the display on the left side, 0,-1 for the display at the top, etc.' }">
                                                 <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.d }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="label">Pin:</div>
@@ -617,7 +617,7 @@
                                             <div class="field field-framerate"
                                                 v-tippy="{ placement: 'top', content: 'Frames per second for the video-stream.<br/>Usually you want to use 30 or 60.' }">
                                                 <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.f }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="unit unit-fps">fps</div>
@@ -633,7 +633,7 @@
                                             <div class="field field-delay"
                                                 v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the video-stream.<br/>Usually you want to use 0 or up to about 150.' }">
                                                 <input type="text" v-model="browser.O" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.O }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="unit">ms</div>
@@ -659,14 +659,14 @@
                                             <div class="field field-channels"
                                                 v-tippy="{ placement: 'top', content: 'Number of channels for the audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
                                                 <input type="text" v-model="browser.C" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.C }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="label label-delay">Delay:</div>
                                             <div class="field field-delay"
                                                 v-tippy="{ placement: 'top', content: 'Delay in milliseconds for the audio-stream.<br/>Usually you want to use 0 or up to about 150.' }">
                                                 <input type="text" v-model="browser.o" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.o }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                             <div class="unit">ms</div>
@@ -709,7 +709,7 @@
                                             <div class="field field-opts"
                                                 v-tippy="{ placement: 'top', content: 'Command line interface (CLI) arguments for FFmpeg output. The internally prepended (default) output options this way an be overridden and extended. Use e.g. for format \'matroska\' a filename like \'recording.mkv\', for format \'mpegts\' a URL like \'udp://10.0.0.1:1234\' and for format \'flv\' a URL like \'rtmp://10.0.0.1:1935/live/example\'. At least a single output argument has to be given.' }">
                                                 <input type="text" v-model="browser.M" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id] }"
+                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.M }"
                                                     v-bind:disabled="running[browser.id]">
                                             </div>
                                         </div>
@@ -718,7 +718,7 @@
                                         <div class="row-left">
                                             <div class="field field-start"
                                                 v-tippy="{ placement: 'top', content: 'Start browser.' }"
-                                                v-bind:class="{ disabled: (!browser.D && !browser.N) || browser.t === '' || browser.u === '' }"
+                                                v-bind:class="{ disabled: Object.keys(invalid[browser.id]).length > 0 }"
                                                 v-on:click="control('start', browser.id)">
                                                 <div class="input-button">
                                                     <span class="icon"><i class="fas fa-play"></i></span>

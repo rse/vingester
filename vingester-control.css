@@ -831,10 +831,10 @@ body {
                 user-select: text;
                 border-top: 1px solid #6a6a6a;
                 border-left: 1px solid #6a6a6a;
-                background-color: #4a4a4a;
-                color: #ffffff;
                 border-right: 1px solid #2a2a2a;
                 border-bottom: 1px solid #2a2a2a;
+                background-color: #4a4a4a;
+                color: #ffffff;
             }
             > input:hover {
                 border-top: 1px solid #404040;
@@ -855,6 +855,20 @@ body {
             > input.disabled:hover {
                 background-color: #777777;
                 color: #ffffff;
+            }
+            > input.invalid {
+                border-top: 1px solid #9a6a6a;
+                border-left: 1px solid #9a6a6a;
+                border-right: 1px solid #5a2a2a;
+                border-bottom: 1px solid #5a2a2a;
+                background-color: #775555;
+            }
+            > input.invalid:focus {
+                border-top: 1px solid #644444;
+                border-left: 1px solid #644444;
+                border-right: 1px solid #644444;
+                border-bottom: 1px solid #644444;
+                background-color: #664444;
             }
             &.field-device {
                 margin-left: 0;

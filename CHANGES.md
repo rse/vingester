@@ -6,6 +6,7 @@ Changes
     - EXTENSION: add "Trust" (ignore SSL/TLS certs) functionality
     - EXTENSION: add "Node.js API" (enable Node API integration) functionality
     - EXTENSION: add "OBS Browser DOM" (emulate OBS Studio Browser Source DOM) functionality
+    - IMPROVEMENT: validate all fields, show errors with red backgrounds and provide defaults on empty entry
     - IMPROVEMENT: improve and update sample configurations
     - BUGFIX: fixed styling of disabled buttons
     - UPGRADE: upgrade to Electron 12.0.7

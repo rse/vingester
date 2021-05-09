@@ -30,6 +30,26 @@ electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}
 const log = electronLog.scope("control")
 log.info("starting up")
 
+const browserFields = [
+    { name: "t", def: "",            valid: /^.+$/ },
+    { name: "i", def: "",            valid: /^.*$/ },
+    { name: "w", def: "1280",        valid: /^\d+$/ },
+    { name: "h", def: "720",         valid: /^\d+$/ },
+    { name: "c", def: "transparent", valid: /^(?:transparent|#[\da-fA-F]{3,6})$/ },
+    { name: "z", def: "1.0",         valid: /^(?:\d*\.\d+|\d+\.\d*|\d+)$/ },
+    { name: "u", def: "",            valid: /^.+$/ },
+    { name: "s", def: "",            valid: /^.*$/ },
+    { name: "x", def: "0",           valid: /^[+-]?\d+$/ },
+    { name: "y", def: "0",           valid: /^[+-]?\d+$/ },
+    { name: "d", def: "",            valid: /^([+-]?\d+,[+-]?\d+)?$/ },
+    { name: "A", def: "",            valid: /^.*$/ },
+    { name: "f", def: "30",          valid: /^\d+$/ },
+    { name: "O", def: "0",           valid: /^\d+$/ },
+    { name: "C", def: "2",           valid: /^\d+$/ },
+    { name: "o", def: "0",           valid: /^\d+$/ },
+    { name: "M", def: "",            valid: /^.*$/ }
+]
+
 const app = Vue.createApp({
     data () {
         return {
@@ -40,6 +60,7 @@ const app = Vue.createApp({
             burst:             {},
             tally:             {},
             trace:             {},
+            invalid:           {},
             usage:             0,
             gpu:               false,
             messages:          [],
@@ -228,6 +249,16 @@ const app = Vue.createApp({
         }, 2000)
     },
     methods: {
+        validateState (browser) {
+            for (const field of browserFields) {
+                if (browser[field.name] === "")
+                    browser[field.name] = field.def
+                if (!(browser[field.name].match(field.valid)))
+                    this.invalid[browser.id][field.name] = true
+                else
+                    delete this.invalid[browser.id][field.name]
+            }
+        },
         resetState (id) {
             this.running[id] = false
             this.stat[id] = { fps: 0, memUsed: 0, memAvail: 0 }
@@ -237,6 +268,7 @@ const app = Vue.createApp({
             }
             this.tally[id] = "unconnected"
             this.trace[id] = { warning: 0, error: 0, messages: [] }
+            this.invalid[id] = {}
         },
         deleteState (id) {
             delete this.running[id]
@@ -244,12 +276,14 @@ const app = Vue.createApp({
             delete this.burst[id]
             delete this.tally[id]
             delete this.trace[id]
+            delete this.invalid[id]
         },
         async load () {
             const browsers = await electron.ipcRenderer.invoke("browsers-load")
             for (const browser of browsers) {
                 await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
                 this.resetState(browser.id)
+                this.validateState(browser)
             }
             this.browsers = browsers
         },
@@ -270,6 +304,7 @@ const app = Vue.createApp({
             browser = await electron.ipcRenderer.invoke("browser-sanitize", browser)
             this.browsers.push(browser)
             this.resetState(id)
+            this.validateState(browser)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
@@ -301,6 +336,7 @@ const app = Vue.createApp({
             const browser = { ...browserTemplate, id }
             this.browsers.push(browser)
             this.resetState(id)
+            this.validateState(browser)
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
@@ -339,10 +375,11 @@ const app = Vue.createApp({
             browser[field] = options[i]
             this.changed(browser)
         },
-        changed (browser) {
+        changed: debounce(500, function (browser) {
+            this.validateState(browser)
             this.modBrowser(clone(browser))
             this.save()
-        },
+        }),
         toggleGPU () {
             electron.ipcRenderer.invoke("gpu", !this.gpu)
         },
