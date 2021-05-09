@@ -14,6 +14,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
+    BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
     Output1Enabled:                true
@@ -45,6 +46,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
+    BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/B7MIJP90biM?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
     Output1Enabled:                true
@@ -76,6 +78,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
+    BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/mokllJ_Sz_g?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
     Output1Enabled:                true
@@ -107,6 +110,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
+    BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/ZOzzRlc_qho?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
     Output1Enabled:                true
@@ -138,6 +142,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
+    BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/u8Kt7fRa2Wc?autoplay=1&controls=0&rel=0"
     InputStyle:                    ""
     Output1Enabled:                true

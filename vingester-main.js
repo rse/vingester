@@ -323,6 +323,7 @@ electron.app.on("ready", async () => {
         { iname: "H", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserTrust" },
         { iname: "I", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserNodeAPI" },
         { iname: "B", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserOBSDOM" },
+        { iname: "S", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserPersist" },
         { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "InputStyle" },
         { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
         { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },
@@ -617,6 +618,17 @@ electron.app.on("ready", async () => {
             control.webContents.send("browser-stop", id)
             await browser.stop()
             control.webContents.send("browser-stopped", id)
+        }
+        else if (action === "clear") {
+            /*  clear a particular browser  */
+            const browser = browsers[id]
+            if (browser === undefined)
+                throw new Error("invalid browser id")
+            if (browser.running())
+                throw new Error("browser still running")
+            control.webContents.send("browser-clear", id)
+            await browser.clear()
+            control.webContents.send("browser-cleared", id)
         }
     }
     electron.ipcMain.handle("control", (ev, action, id, browser) => {

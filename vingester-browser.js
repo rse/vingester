@@ -8,6 +8,7 @@
 const os          = require("os")
 const fs          = require("fs")
 const path        = require("path")
+const rimraf      = require("rimraf")
 
 /*  require external modules  */
 const electron    = require("electron")
@@ -66,7 +67,7 @@ module.exports = class Browser {
         this.update()
     }
 
-    /*  explicitly allow capturing our content browser windows  */
+    /*  explicitly allow the content browser windows certain permissions  */
     static prepare () {
         const session = electron.session.fromPartition("vingester-browser-content")
         const allowedPermissions = [ "media", "mediaKeySystem", "geolocation" ]
@@ -295,6 +296,20 @@ module.exports = class Browser {
             pos = { x, y }
         }
 
+        /*  create browser session  */
+        let session = electron.session.fromPartition("vingester-browser-content")
+        if (this.cfg.S) {
+            const name = `vingester-browser-content-${this.id.toLowerCase()}`
+            session = electron.session.fromPartition(`persist:${name}`)
+            const allowedPermissions = [ "media", "mediaKeySystem", "geolocation" ]
+            session.setPermissionRequestHandler((webContents, permission, callback) => {
+                if (allowedPermissions.includes(permission))
+                    callback(true)
+                else
+                    callback(false)
+            })
+        }
+
         /*  create content browser window (visible or offscreen)  */
         const opts1 = (this.cfg.D ? {
             ...pos,
@@ -334,7 +349,7 @@ module.exports = class Browser {
             ...opts1,
             webPreferences: {
                 ...opts2,
-                partition:                  "vingester-browser-content",
+                session:                    session,
                 devTools:                   (process.env.DEBUG === "2"),
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
@@ -656,6 +671,27 @@ module.exports = class Browser {
         this.reset()
         this.log.info("browser: stopped")
         this.stopping = false
+        return true
+    }
+
+    /*  clear browser  */
+    async clear () {
+        if (!this.cfg.S)
+            return
+        const name = `vingester-browser-content-${this.id.toLowerCase()}`
+        const session = electron.session.fromPartition(`persist:${name}`)
+        await session.clearCache()
+        await session.clearAuthCache()
+        await session.clearHostResolverCache()
+        await session.clearStorageData()
+        await new Promise((resolve, reject) => {
+            const p = path.join(electron.app.getPath("userData"), "Partitions", name)
+            this.log.info(`browser: clearing session persistance area: "${p}"`)
+            rimraf(p, { disableGlob: true }, (err) => {
+                if (err) reject(err)
+                else resolve()
+            })
+        })
         return true
     }
 }

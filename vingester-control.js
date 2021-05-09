@@ -127,6 +127,12 @@ const app = Vue.createApp({
             log.info("browser-stopped", id)
             this.running[id] = false
         })
+        electron.ipcRenderer.on("browser-clear", (ev, id) => {
+            log.info("browser-clear", id)
+        })
+        electron.ipcRenderer.on("browser-cleared", (ev, id) => {
+            log.info("browser-cleared", id)
+        })
         electron.ipcRenderer.on("message", (ev, text) => {
             const time = moment().format("YYYY-MM-DD HH:mm:ss")
             if (this.messages.length >= 5)
@@ -356,9 +362,10 @@ const app = Vue.createApp({
                 return
             if (   (action === "start"  &&  this.running[id])
                 || (action === "reload" && !this.running[id])
-                || (action === "stop"   && !this.running[id]))
+                || (action === "stop"   && !this.running[id])
+                || (action === "clear"  &&  this.running[id]))
                 return
-            if (action === "start" && browser !== undefined && ((!browser.D && !browser.N) || browser.t === "" || browser.u === ""))
+            if (action === "start" && browser !== undefined && Object.keys(this.invalid[browser.id]).length > 0)
                 return
             await electron.ipcRenderer.invoke("control", action, id)
         },

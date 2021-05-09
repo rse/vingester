@@ -17,6 +17,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01"
     InputStyle:                    ""
     Output1Enabled:                false
@@ -48,6 +49,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P02"
     InputStyle:                    ""
     Output1Enabled:                false
@@ -79,6 +81,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P03"
     InputStyle:                    ""
     Output1Enabled:                false
@@ -110,6 +113,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P04"
     InputStyle:                    ""
     Output1Enabled:                false
@@ -141,6 +145,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P05"
     InputStyle:                    ""
     Output1Enabled:                false
@@ -172,6 +177,7 @@
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
+    BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P06"
     InputStyle:                    ""
     Output1Enabled:                false

@@ -495,20 +495,28 @@
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.H === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
                                             </div>
                                         </div>
-                                        <div class="label label-nodejs">Node.js&reg; API:</div>
-                                        <div class="field field-content"
+                                        <div class="label label-nodejs">Node-API:</div>
+                                        <div class="field field-nodejs"
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (browser.I ? 'disable' : 'enable') + ' the Node.js API integration<br/>for the Web Contents of the site specified by URL above.<br/>ATTENTION: Enabling the Node.js API is a security risk!' }">
                                             <div class="toggle" v-on:click="toggle(browser, 'I', [ true, false ])">
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.I === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.I === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
                                             </div>
                                         </div>
-                                        <div class="label label-obsdom">OBS&reg; Browser DOM:</div>
-                                        <div class="field field-content"
+                                        <div class="label label-obsdom">OBS-DOM:</div>
+                                        <div class="field field-obsdom"
                                             v-tippy="{ placement: 'top', content: 'Click to ' + (browser.B ? 'disable' : 'enable') + ' the OBS Studio Browser Source DOM emulation<br/>for the Web Contents of the site specified by URL above.<br/>ATTENTION: Enabling this pretends Vingester is the OBS Studio Browser Source.' }">
                                             <div class="toggle" v-on:click="toggle(browser, 'B', [ true, false ])">
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.B === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
                                                 <div class="toggle-option" v-bind:class="{ selected: browser.B === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-persist">Persist:</div>
+                                        <div class="field field-persist"
+                                            v-tippy="{ placement: 'top', content: 'Click to ' + (browser.S ? 'disable' : 'enable') + ' the browser session persistance.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'S', [ true, false ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.S === true  }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.S === false }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
                                             </div>
                                         </div>
                                     </div>
@@ -739,6 +747,15 @@
                                                 <div class="input-button">
                                                     <span class="icon"><i class="fas fa-pause"></i></span>
                                                     &nbsp;STOP
+                                                </div>
+                                            </div>
+                                            <div class="field field-clear"
+                                                v-tippy="{ placement: 'top', content: 'Clear browser session persistance.' }"
+                                                v-bind:class="{ disabled: !browser.S }"
+                                                v-on:click="control('clear', browser.id)">
+                                                <div class="input-button">
+                                                    <span class="icon"><i class="fas fa-recycle"></i></span>
+                                                    &nbsp;CLEAR
                                                 </div>
                                             </div>
                                             <div class="field field-preview"

@@ -726,10 +726,10 @@ body {
                 width: 40px;
             }
             &.label-nodejs {
-                width: 85px;
+                width: auto;
             }
             &.label-obsdom {
-                width: 124px;
+                width: auto;
             }
             &.label-output {
                 width: 70px;
@@ -772,7 +772,7 @@ body {
             }
         }
         .input-button {
-            width: 80px;
+            width: 75px;
             height: 18px;
             border-radius: 4px;
             border-top: 1px solid #707070;
@@ -901,6 +901,12 @@ body {
             &.field-mode .toggle {
                 width: 110px;
             }
+            &.field-trust .toggle,
+            &.field-nodejs .toggle,
+            &.field-obsdom .toggle,
+            &.field-persist .toggle {
+                width: 48px;
+            }
             &.field-adaptive .toggle {
                 width: 50px;
             }
@@ -936,6 +942,7 @@ body {
             &.field-start,
             &.field-reload,
             &.field-stop,
+            &.field-clear,
             &.field-export,
             &.field-import,
             &.field-preview,
@@ -1027,7 +1034,8 @@ body {
                     background-color: #225588;
                     color: #ffffff;
                 }
-                &.field-start .input-button {
+                &.field-start .input-button,
+                &.field-clear .input-button {
                     color: #77aadd;
                     background-color: #336699;
                     border-top: 1px solid #5588bb;
@@ -1052,7 +1060,8 @@ body {
                         color: #d0e0ff;
                     }
                 }
-                &.field-start:hover .input-button {
+                &.field-start:hover .input-button,
+                &.field-clear:hover .input-button {
                     cursor: default;
                 }
                 &.field-reload:hover .input-button,
