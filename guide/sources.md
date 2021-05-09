@@ -33,10 +33,10 @@ HUDS
 ----
 
 [Head-Up-Display Server (HUDS)](https://github.com/rse/huds) is a
-companion tool from the **Vingester** author for a Web service for
-serving one or more HTML Single-Page Applications (SPA) which act as
-"Head-Up-Displays (HUD)" or "Overlays" in video production scenarios.
-These HUDs can be ingested by **Vingester**.
+companion tool from the **Vingester** author for serving one or more
+HTML Single-Page Applications (SPA) which act as "Head-Up-Displays
+(HUD)" or "Overlays" in video production scenarios. These HUDs can be
+ingested by **Vingester**.
 
 One of the more elaborated HUDs for HUD is the
 [HUDS-HUD-Training](https://github.com/rse/huds-hud-training/). The
@@ -54,11 +54,32 @@ Then the ingest URL for **Vingester** is:
 
 http://127.0.0.1:9999/training/
 
+NodeCG
+------
+
+[NodeCG](https://www.nodecg.dev/) is similar to HUDS. It is a broadcast
+graphics framework and application. It enables you to write complex,
+dynamic broadcast graphics using Web technologies. The results can be
+ingested by **Vingester**.
+
+NodeCG can be setup liket this:
+
+```sh
+$ npx nodecg-cli setup
+$ npx nodecg-cli install <bundle-id>
+$ npx nodecg-cli start
+```
+
+The corresponding URLs are:
+
+`http://localhost:9090/dashboard/`
+`http://localhost:9090/view/<bundle-id>`
+
 LowerThird
 ----------
 
 [LowerThird](https://github.com/rse/lowerthird/) is a
-companion tool from the **Vingester** author for rendering "lower thirds".
+small companion tool from the **Vingester** author for rendering "lower thirds".
 The result can be ingested via **Vingester**. An example usage is:
 
 ```sh
