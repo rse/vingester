@@ -6,8 +6,10 @@ Sources
 both local (scheme `file:`) and remote (schemes `http:` and `https:`) locations.
 A few typical use-cases and their particular sources are explained in more detail here.
 
-OBS.Ninja
----------
+Online Conferences 
+------------------
+
+### OBS.Ninja
 
 [OBS.Ninja](https://obs.ninja) is an awesome WebRTC-based online meeting solution,
 especially intended for ingesting one or more participants into
@@ -29,8 +31,7 @@ https://vingester.app/obsn/#/sample/sample/director/mono/720p/24/none/D<br/>
 https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01<br/>
 https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01
 
-Jitsi Meet
-----------
+### Jitsi Meet
 
 [Jitsi](https://jitsi.org/) is a powerful peer-to-peer (P2P) or
 Selective Forwarding Unit (SFU), [WebRTC](https://webrtc.org/) based,
@@ -51,8 +52,10 @@ An example set of URLs is:
 https://vingester.app/jitsi/#/sample/sample/sender/mono/720p/24/none/P01<br/>
 https://vingester.app/jitsi/#/sample/sample/receiver/mono/720p/24/none/P01
 
-HUDS
-----
+Graphics Overlays
+-----------------
+
+### HUDS
 
 [Head-Up-Display Server (HUDS)](https://github.com/rse/huds) is a
 companion tool from the **Vingester** author for serving one or more
@@ -76,8 +79,7 @@ Then the ingest URL for **Vingester** is:
 
 http://127.0.0.1:9999/training/
 
-NodeCG
-------
+### NodeCG
 
 [NodeCG](https://www.nodecg.dev/) is similar to HUDS. It is a broadcast
 graphics framework and application. It enables you to write complex,
@@ -97,8 +99,32 @@ The corresponding URLs are:
 `http://localhost:9090/dashboard/`
 `http://localhost:9090/view/<bundle-id>`
 
-LowerThird
-----------
+### SPX-GC
+
+[SPX-GC](https://www.spxgc.com/) is a graphics controller for
+professional live television broadcasts and web streams using HTML
+graphics which supports CasparCG templates. Instead of using CasparCG to
+playout NDI output, you can also use **Vingester**.
+
+If your SPX-GC instance is running under http://127.0.0.1:5000/,
+the ingest URL for **Vingester** is http://127.0.0.1:5000/renderer/ 
+
+### Singular.Live
+
+[Singular.Live](https://singular.live/) is a graphics controller for
+professional live television broadcasts and web streams using HTML
+graphics. Each Singular.Live content has a *ContentID* and a corresponding *PlayoutID*.
+The control and playout URLs are of the form:
+
+`https://app.singular.live/control/<ControlID>`<br/>
+`https://app.singular.live/output/<PlayoutID>/Default?aspect=16:9`
+
+An example set of URLs is:
+
+https://app.singular.live/control/00jHgnHzza6VxD2EijAXbP<br/>
+https://app.singular.live/output/0P5cMVcFWOuKRQqJT5dT55/Default?aspect=16:9
+
+### LowerThird
 
 [LowerThird](https://github.com/rse/lowerthird/) is a
 small companion tool from the **Vingester** author for rendering "lower thirds".
@@ -116,35 +142,10 @@ Then the ingest URL for **Vingester** is:
 
 `file://<path-to-lowerhird>/index.html?scene=<scene-id>`
 
-Singular.Live
--------------
+Video Playouts
+--------------
 
-[Singular.Live](https://singular.live/) is a graphics controller for
-professional live television broadcasts and web streams using HTML
-graphics. Each Singular.Live content has a *ContentID* and a corresponding *PlayoutID*.
-The control and playout URLs are of the form:
-
-`https://app.singular.live/control/<ControlID>`<br/>
-`https://app.singular.live/output/<PlayoutID>/Default?aspect=16:9`
-
-An example set of URLs is:
-
-https://app.singular.live/control/00jHgnHzza6VxD2EijAXbP<br/>
-https://app.singular.live/output/0P5cMVcFWOuKRQqJT5dT55/Default?aspect=16:9
-
-SPX-GC
-------
-
-[SPX-GC](https://www.spxgc.com/) is a graphics controller for
-professional live television broadcasts and web streams using HTML
-graphics which supports CasparCG templates. Instead of using CasparCG to
-playout NDI output, you can also use **Vingester**.
-
-If your SPX-GC instance is running under http://127.0.0.1:5000/,
-the ingest URL for **Vingester** is http://127.0.0.1:5000/renderer/ 
-
-YouTube
--------
+### YouTube
 
 [YouTube](https://www.youtube.com) is the most popular all-purpose video platform. Videos on
 YouTube have a unique *VideoID*. You can ingest such a video via
@@ -157,8 +158,7 @@ An example ingest URL is:
 
 https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1&controls=0&rel=0
 
-Vimeo
------
+### Vimeo
   
 [Vimeo](https://www.vimeo.com) is a popular business video platform. Videos on Vimeo
 have a unique *VideoID*. You can ingest such a video via ingest

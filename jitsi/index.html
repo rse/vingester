@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<!--
+**
+**  Jitsi Meet Trampoline
+**  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Licensed under MIT license <https://spdx.org/licenses/MIT.html>
+**
+-->
+<html>
+    <head>
+        <title>Jitsi Meet Trampoline</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <style type="text/css">
+            html, body {
+                margin: 0;
+                width:  100vw;
+                height: 100vh;
+                background-color: transparent;
+            }
+            body {
+                width:  100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: #c0c0c0;
+            }
+            .trampoline {
+                background: linear-gradient(#444444, #000000);
+                color: #ffffff;
+                font-family: sans-serif;
+                font-size: 11pt;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 20px 30px 20px 30px;
+                border-radius: 8px;
+                box-shadow: 0px 4px 8px #666666;
+            }
+            .trampoline .row {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 4px;
+            }
+            .trampoline .desc {
+                width: 600px;
+                margin-bottom: 12px;
+                color: #e0e0e0;
+                text-align: justify;
+                font-size: 10pt;
+            }
+            .trampoline a {
+                text-decoration: none;
+                color: #ffffff;
+            }
+            .trampoline .title {
+                color: #ffffff;
+                font-weight: bold;
+                margin-right: 8px;
+                width: 100%;
+                margin-bottom: 8px;
+                font-size: 150%;
+            }
+            .trampoline .label {
+                margin-right: 4px;
+                width: calc(140px - 4px);
+                color: #e0e0e0;
+            }
+            .trampoline .field {
+                width: 460px;
+            }
+            .trampoline input[type='text'] {
+                background-color: #333333;
+                color: #ffffff;
+                border: 1px solid #999999;
+                font-size: 11pt;
+                padding: 2px 8px 2px 8px;
+                width: calc(100% - 16px);
+            }
+            .trampoline input[type='text']:hover,
+            .trampoline input[type='text']:focus {
+                background-color: #336699;
+                outline: none;
+            }
+            .trampoline select {
+                background-color: #333333;
+                color: #ffffff;
+                border: 1px solid #999999;
+                font-size: 11pt;
+                padding: 2px 4px 2px 4px;
+                width: calc(90% - 8px);
+            }
+            .trampoline select:hover,
+            .trampoline select:focus {
+                background-color: #336699;
+                outline: none;
+            }
+            .trampoline #effect.disabled,
+            .trampoline #peer.disabled,
+            .trampoline #name.disabled {
+                background-color: #666666;
+                border: 1px solid #999999;
+            }
+            .trampoline .url {
+                background-color: #666666;
+                color: #ffffff;
+                border: 1px solid #999999;
+                font-size: 11pt;
+                padding: 2px 4px 2px 4px;
+                width: calc(100% - 8px);
+                font-family: monospace;
+            }
+            .trampoline input[type='submit'] {
+                background-color: #cccccc;
+                font-size: 11pt;
+                border: 1px solid #cccccc;
+                color: #000000;
+                padding: 2px 4px 2px 4px;
+                width: 100%;
+                font-weight: bold;
+                border-radius: 4px;
+                margin: 0;
+                margin-bottom: 4px;
+            }
+            .trampoline input[type='submit']:hover {
+                background-color: #336699;
+                border: 1px solid #336699;
+                color: #ffffff;
+            }
+            .trampoline input[type='submit'].cancel {
+                background-color: #993333;
+                border: 1px solid #993333;
+                color: #ffffff;
+            }
+            .trampoline .foot {
+                text-align: right;
+                width: 600px;
+                margin-top: 8px;
+                font-size: 8pt;
+                color: #a0a0a0;
+            }
+            .trampoline .foot a {
+                color: #c0c0c0;
+            }
+            .trampoline .row.source {
+                margin-top: 16px;
+            }
+            .trampoline.disabled {
+                display: none;
+            }
+            .jitsi {
+                width: 100vw;
+                height: 100vh;
+            }
+            .jitsi .embedding {
+                width: 100vw;
+                height: 100vh;
+            }
+            .jitsi.disabled {
+                display: none;
+            }
+        </style>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="https://meet.jit.si/external_api.js"></script>
+    </head>
+    <body>
+        <div class="trampoline">
+            <!-- headline -->
+            <div class="row">
+                <div class="title">Jitsi Meet Trampoline</div>
+            </div>
+
+            <!-- description -->
+            <div class="row">
+                <div class="desc">
+                    <a href="https://jitsi.org/jitsi-meet/">Jitsi Meet</a> is a powerful Peer-to-Peer (P2P) or
+                    Selective Forwarding Unit (SFU), <a href="https://webrtc.org/">WebRTC</a> based, browser based,
+                    Open Source video conferencing solution. It can also be used
+                    for bringing the video/audio streams of presenters into a live event
+                    production software like <a href="https://obsproject.com">OBS Studio</a> or
+                    an ingest software like <a href="https://vingester.app">Vingester</a>.
+                    This form is just a parameter simplification trampoline, i.e., it takes a few intuitive URL
+                    parameters and starts the underlying complex technical API of
+                    <a href="https://jitsi.org/jitsi-meet/">Jitsi Meet</a>.  By default it uses the
+                    free <a href="https://meet.jit.si/">meet.jit.si</a> service.
+                    <p/>
+                    This allows you to control <a href="https://jitsi.org/jitsi-meet/">Jitsi Meet</a> parameters at
+                    a central place while being able to use clean, intuitive and stable URLs for both the
+                    presenters and <a href="https://obsproject.com">OBS Studio</a>
+                    or <a href="https://vingester.app">Vingester</a>.
+                    The underlying <a href="https://jitsi.org/jitsi-meet/">Jitsi Meet</a>
+                    parameter sets are rather opinionated and hard-coded and are intended for
+                    meeting or broadcast sessions with multiple presenters only.
+                </div>
+            </div>
+
+            <!-- input parameters -->
+            <div class="row">
+                <div class="label">Room Id:</div>
+                <div class="field">
+                    <input id="room" class="input-room" type="text" value="example"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Room Password:</div>
+                <div class="field">
+                    <input id="pass" class="input-password" type="text" value="example"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Session Mode:</div>
+                <div class="field">
+                    <select id="mode" class="select-mode">
+                        <option value="attendee" selected="selected">attendee (person in meeting)</option>
+                        <option value="sender">sender (person in broadcast)</option>
+                        <option value="follower">follower (person in broadcast, no-video)</option>
+                        <option value="injector">injector (person in broadcast, no-video, no-audio)</option>
+                        <option value="receiver">receiver (OBS Studio or Vingester, single sender)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Audio Mode:</div>
+                <div class="field">
+                    <select id="audio" class="select-audio">
+                        <option value="stereo" selected="selected">stereo (2 channels)</option>
+                        <option value="mono">mono (1 channel)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Video Mode:</div>
+                <div class="field">
+                    <select id="video" class="select-video">
+                        <option value="1080p">1080p (Full-HD, 1920x1080px, dynamic/smart)</option>
+                        <option value="720p" selected="selected">720p (HD, 1280x720px, dynamic/smart)</option>
+                        <option value="576p">576p (SD, 1024x576px, tatic/fixed)</option>
+                        <option value="480p">480p (854x480px, static/fixed)</option>
+                        <option value="360p">360p (640x360px, dynamic/smart)</option>
+                        <option value="240p">240p (426x240px, static/fixed)</option>
+                        <option value="144p">144p (256x144px, static/fixed)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Video Framerate:</div>
+                <div class="field">
+                    <select id="fps" class="select-fps">
+                        <option value="10">10.00 fps (1/3 Standard)</option>
+                        <option value="15">15.00 fps (1/2 Standard)</option>
+                        <option value="20">20.00 fps (2/3 Standard)</option>
+                        <option value="24">24.00 fps (Cinema)</option>
+                        <option value="25">25.00 fps (PAL)</option>
+                        <option value="29.97">29.97 fps (NTSC)</option>
+                        <option value="30" selected="selected">30.00 fps (Standard)</option>
+                        <option value="40">40.00 fps (4/3 Standard)</option>
+                        <option value="48">48.00 fps (2x Cinema)</option>
+                        <option value="50">50.00 fps (2x PAL)</option>
+                        <option value="59.94">59.94 fps (2x NTSC)</option>
+                        <option value="60">60.00 fps (2x Standard)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Video Effect:</div>
+                <div class="field">
+                    <select id="effect" class="select-effect">
+                        <option value="none" selected="selected">none</option>
+                        <option value="bokehblur">bokeh-blur (AI, CPU-intensive)</option>
+                        <option value="greenscreen">green-screen (AI, CPU-intensive)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Peer Id:</div>
+                <div class="field">
+                    <input id="peer" class="input-peer" type="text" value="P01"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="label">Peer Name:</div>
+                <div class="field">
+                    <input id="name" class="input-name" type="text" value="Mr. Example"></input>
+                </div>
+            </div>
+
+            <!-- source URL -->
+            <div class="row source">
+                <div class="label">Source URL:<br/>(your entry point)</div>
+                <div class="field">
+                    <textarea id="url-trampoline" class="url" rows="3" disabled="disabled"></textarea>
+                </div>
+            </div>
+
+            <!-- copy button -->
+            <div class="row">
+                <div class="label"></div>
+                <div class="field">
+                    <input id="copy" type="submit" value="COPY"></input>
+                </div>
+            </div>
+
+            <!-- open button -->
+            <div class="row">
+                <div class="label"></div>
+                <div class="field">
+                    <input id="open" type="submit" value="OPEN"></input>
+                </div>
+            </div>
+
+            <!-- footer -->
+            <div class="row">
+                <div class="foot">
+                    <a href="https://github.com/rse/jitsi-meet-trampoline">Jitsi Meet Trampoline</a> 0.9.0 (2021-05-10)<br/>
+                    Copyright &copy; 2021 <a href="mailto:rse@engelschall.com">Dr. Ralf S. Engelschall</a><br/>
+                    Licensed under <a href="https://spdx.org/licenses/MIT.html">MIT license</a>
+                </div>
+            </div>
+        </div>
+        <div class="jitsi disabled">
+            <div class="embedding"></div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            /*  update URLs on form changes  */
+            let config = {}
+            const updateURLs = () => {
+                /*  fetch information of form  */
+                const room   = $("#room").val()
+                const pass   = $("#pass").val()
+                const mode   = $("#mode option:selected").val()
+                const audio  = $("#audio option:selected").val()
+                const video  = $("#video option:selected").val()
+                const fps    = $("#fps option:selected").val()
+                const effect = $("#effect option:selected").val()
+                const peer   = $("#peer").val()
+                const name   = $("#name").val().replace(/\s+/g, "_")
+
+                /*  generate URLs  */
+                let urlTrampoline = window.location.href.replace(/#.*$/, "") +
+                    `#/${room}/${pass}/${mode}/${audio}/${video}/${fps}/${effect}`
+                if (peer !== "")
+                    urlTrampoline += `/${peer}`
+                if (name !== "")
+                    urlTrampoline += `/${name}`
+
+                /*  update information in form  */
+                $("#url-trampoline").val(urlTrampoline)
+
+                /*  update information for open  */
+                config = { room, pass, mode, audio, video, fps, effect, peer, name }
+            }
+            $("#room, #pass, #peer, #name").bind("keyup", () => {
+                updateURLs()
+            })
+            $("#mode, #audio, #video, #fps, #effect").bind("change", () => {
+                updateURLs()
+            })
+            $("#mode").bind("change", () => {
+                const mode = $("#mode option:selected").val()
+                if (mode === "receiver") {
+                    $("#name").attr("disabled", "disabled")
+                    $("#name").addClass("disabled")
+                    $("#name").val("")
+                }
+                else {
+                    $("#peer").removeAttr("disabled")
+                    $("#peer").removeClass("disabled")
+                    $("#peer").val("P01")
+                    $("#name").removeAttr("disabled")
+                    $("#name").removeClass("disabled")
+                    $("#name").val("Mr. Example")
+                }
+                if (mode === "attendee" || mode === "sender") {
+                    $("#effect").removeAttr("disabled")
+                    $("#effect").removeClass("disabled")
+                }
+                else {
+                    $("#effect").attr("disabled", "disabled")
+                    $("#effect").addClass("disabled")
+                    $("#effect").val("none")
+                }
+                updateURLs()
+            })
+            updateURLs()
+
+            /*  final open  */
+            const open = () => {
+                /*  config = { room, pass, mode, audio, video, fps, effect, peer, name }  */
+                //  FIXME: effect
+
+                /*  toggle user interface  */
+                $(".trampoline").addClass("disabled")
+                $(".jitsi").removeClass("disabled")
+
+                /*  start Jitsi API options  */
+                let options = {
+                    parentNode: $(".jitsi .embedding").get(0),
+                    roomName: config.room,
+                    userInfo: {
+                        email: "",
+                        displayName: ""
+                    },
+                    configOverwrite: {
+                        /*  https://github.com/jitsi/jitsi-meet/blob/master/config.js  */
+                        hiddenDomain: "hidden.jitsi.local",
+                        apiLogLevels: [ "error" ],
+                        prejoinPageEnabled: false,
+                        startWithVideoMuted: true,
+                        startWithAudioMuted: true,
+                        maxFullResolutionParticipants: 3,
+                        enableClosePage: false,
+                        disableThirdPartyRequests: true,
+                        desktopSharingFrameRate: { min: 5, max: 5 },
+                    },
+                    interfaceConfigOverwrite: {
+                        /*  https://github.com/jitsi/jitsi-meet/blob/master/interface_config.js  */
+                        VIDEO_LAYOUT_FIT: "both",
+                        SHARING_FEATURES: [],
+                        SHOW_CHROME_EXTENSION_BANNER: false,
+                    }
+                }
+
+                /*  configure audio  */
+                if (config.audio === "stereo") {
+                    Object.assign(options.configOverwrite, {
+                        audioQuality: {
+                            stereo: true,
+                            opusMaxAverageBitrate: 64000
+                        },
+                        disableAP:  true,
+                        disableAEC: true,
+                        disableNS:  true,
+                        disableHPF: true,
+                        disableAGC: false,
+                    })
+                }
+                else {
+                    Object.assign(options.configOverwrite, {
+                        audioQuality: {
+                            stereo: false,
+                            opusMaxAverageBitrate: 32000
+                        },
+                        disableAP:  false,
+                        disableAEC: false,
+                        disableNS:  false,
+                        disableHPF: false,
+                        disableAGC: false,
+                    })
+                }
+
+                /*  configure video  */
+                Object.assign(options.configOverwrite, {
+                    maxBitratesVideo: {
+                        H264: {
+                            low:       200000,
+                            standard:  500000,
+                            high:     1500000
+                        },
+                        VP8 : {
+                            low:       200000,
+                            standard:  500000,
+                            high:     1500000
+                        },
+                        VP9: {
+                            low:       100000,
+                            standard:  300000,
+                            high:     1200000
+                        }
+                    }
+                })
+                const setVideoSize = (minW, idealW, maxW, minH, idealH, maxH) => {
+                    Object.assign(options, {
+                        width:  idealW,
+                        height: idealH
+                    })
+                    Object.assign(options.configOverwrite, {
+                        resolution: idealH,
+                        constraints: {
+                            video: {
+                                aspectRatio: 16 / 9,
+                                width:  { ideal: idealW, max: maxW, min: minW },
+                                height: { ideal: idealH, max: maxH, min: minH }
+                            }
+                        }
+                    })
+                }
+                if      (config.video === "1080p") setVideoSize(1280, 1920, 1920, 720, 1080, 1080)
+                else if (config.video ===  "720p") setVideoSize(1024, 1280, 1920, 576,  720, 1080)
+                else if (config.video ===  "576p") setVideoSize( 854, 1024, 1280, 480,  576,  720)
+                else if (config.video ===  "480p") setVideoSize( 640,  854, 1024, 360,  480,  576)
+                else if (config.video ===  "360p") setVideoSize( 426,  640,  854, 240,  360,  480)
+                else if (config.video ===  "240p") setVideoSize( 256,  426,  640, 144,  240,  360)
+                else if (config.video ===  "144p") setVideoSize( 256,  256,  426, 144,  144,  240)
+                const setVideoFPS = (min, ideal, max) => {
+                    Object.assign(options.configOverwrite.constraints.video, {
+                        framerate: { ideal: ideal, max: max, min: min }
+                    })
+                }
+                let fps = parseInt(config.fps)
+                if      (fps <= 24) setVideoFPS(15, fps, 24)
+                else if (fps <= 30) setVideoFPS(24, fps, 30)
+                else if (fps <= 60) setVideoFPS(30, fps, 60)
+                else                setVideoFPS(60, fps, fps)
+
+                /*  override configs for particular modes...  */
+                const username = config.peer.replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-")
+                const realname = config.name.replace(/_/g, " ")
+                if (config.mode === "attendee") {
+                    /*  ...for attendee (meeting)  */
+                    options.userInfo.email = `${username}@jitsi.local`
+                    options.userInfo.displayName = `${config.peer}: ${realname}`
+                    options.userInfo.displayName = `${config.peer}: ${realname}`
+                    Object.assign(options.configOverwrite, {
+                        toolbarButtons: [
+                            "microphone", "camera", "closedcaptions",
+                            "desktop", "embedmeeting", "fullscreen",
+                            "fodeviceselection", "hangup", "profile",
+                            "chat", "recording", "livestreaming",
+                            "etherpad", "sharedvideo", "settings",
+                            "raisehand", "videoquality", "filmstrip",
+                            "invite", "feedback", "stats", "shortcuts",
+                            "tileview", "select-background",
+                            "download", "help", "mute-everyone",
+                            "mute-video-everyone", "security"
+                        ],
+                    })
+                    Object.assign(options.interfaceConfigOverwrite, {
+                        SETTINGS_SECTIONS: [ "devices", "language", "moderator" ],
+                    })
+                }
+                else if (config.mode === "sender") {
+                    /*  ...for sender (broadcast)  */
+                    options.userInfo.email = `${username}@jitsi.local`
+                    options.userInfo.displayName = `${config.peer}: ${realname}`
+                    Object.assign(options.configOverwrite, {
+                        toolbarButtons: [
+                            "microphone", "camera",
+                            "desktop", "fullscreen",
+                            "fodeviceselection", "hangup",
+                            "chat",
+                            "settings",
+                            "raisehand", "filmstrip",
+                            "feedback", "shortcuts",
+                            "tileview", "select-background",
+                            "help"
+                        ],
+                    })
+                    Object.assign(options.interfaceConfigOverwrite, {
+                        SETTINGS_SECTIONS: [ "devices", "language" ],
+                    })
+                }
+                else if (config.mode === "follower") {
+                    /*  ...for follower (broadcast, no-video)  */
+                    options.userInfo.email = `${username}@hidden.jitsi.local`
+                    options.userInfo.displayName = `${config.peer}: ${realname}`
+                    Object.assign(options.configOverwrite, {
+                        toolbarButtons: [
+                            "microphone",
+                            "fullscreen",
+                            "fodeviceselection", "hangup",
+                            "chat",
+                            "settings",
+                            "filmstrip",
+                            "shortcuts",
+                            "tileview",
+                            "help"
+                        ],
+                    })
+                    Object.assign(options.interfaceConfigOverwrite, {
+                        SETTINGS_SECTIONS: [ "devices", "language" ],
+                    })
+                    options.configOverwrite.constraints.video = false
+                }
+                else if (config.mode === "injector") {
+                    /*  ...for injector (broadcast, no-video, no-audio)  */
+                    options.userInfo.email = `${username}@hidden.jitsi.local`
+                    options.userInfo.displayName = `${config.peer}: ${realname}`
+                    Object.assign(options.configOverwrite, {
+                        toolbarButtons: [
+                            "fullscreen",
+                            "hangup",
+                            "chat",
+                            "settings",
+                            "filmstrip",
+                            "shortcuts",
+                            "tileview",
+                            "help"
+                        ],
+                    })
+                    Object.assign(options.interfaceConfigOverwrite, {
+                        SETTINGS_SECTIONS: [ "devices", "language" ],
+                    })
+                    options.configOverwrite.constraints.video = false
+                    options.configOverwrite.constraints.audio = false
+                }
+                else if (config.mode === "receiver") {
+                    /*  ...for receiver (OBS Studio or Vingester)  */
+                    options.userInfo.email = `${username}-RECEIVER@hidden.jitsi.local`
+                    options.userInfo.displayName = `${config.peer}: RECEIVER`
+                    options.configOverwrite.constraints.video = false
+                    options.configOverwrite.constraints.audio = false
+                    Object.assign(options.configOverwrite, {
+                        hideLobbyButton: true,
+                        enableInsecureRoomNameWarning: false,
+                        gatherStats: false,
+                        disableJoinLeaveSounds: true,
+                        enableLipSync: true,
+                        disableTileView: true,
+                        enableWelcomePage: false,
+                        disableProfile: true,
+                        backgroundAlpha: 0,
+                        hideConferenceSubject: true,
+                        hideConferenceTimer: true,
+                        hideParticipantsStats: true,
+                        maxFullResolutionParticipants: -1,
+                        enableLayerSuspension: true,
+                        disableAudioLevels: true,
+                        enableNoAudioDetection: false,
+                        enableNoisyMicDetection: false,
+                        disableAudioLevels: true,
+                        liveStreamingEnabled: false,
+                        constraints: { video: false, audio: false },
+                        toolbarButtons: [],
+                        notifications: []
+                    })
+                    Object.assign(options.interfaceConfigOverwrite, {
+                        CONNECTION_INDICATOR_DISABLED: true,
+                        DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+                        DISABLE_FOCUS_INDICATOR: true,
+                        DISABLE_PRESENCE_STATUS: true,
+                        DISABLE_RINGING: true,
+                        SHOW_BRAND_WATERMARK: false,
+                        SHOW_JITSI_WATERMARK: false,
+                        VIDEO_QUALITY_LABEL_DISABLED: true,
+                        SETTINGS_SECTIONS: []
+                    })
+                }
+
+                const server = "meet.jit.si" // FIXME
+
+                /*  open the Jitsi Meet external API:
+                    https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe  */
+                const api = new JitsiMeetExternalAPI(server, options)
+
+                /*  handle subsequent login of participants  */
+                api.addEventListener("passwordRequired", () => {
+                    api.executeCommand("password", config.pass)
+                })
+
+                /*  handle initial login of moderator  */
+                api.on("participantRoleChanged", (event) => {
+                    if (event.role === "moderator")
+                        api.executeCommand("password", config.pass)
+                })
+
+                /*  pin participant for receiver mode  */
+                const pinParticipant = () => {
+                    const P = api.getParticipantsInfo()
+                    for (const p of P) {
+                        let id = p.displayName.replace(/:.*$/, "")
+                        if (id === config.peer) {
+                            api.pinParticipant(p.participantId)
+                            return true
+                        }
+                    }
+                    return false
+                }
+
+                /*  handle conference join  */
+                let timer = null
+                let joined = false
+                api.addListener("videoConferenceJoined", (ev, data) => {
+                    joined = true
+                    api.executeCommand("toggleFilmStrip")
+                    if (config.mode === "receiver") {
+                        let ok = pinParticipant()
+                        if (!ok) {
+                            timer = setInterval(() => {
+                                ok = pinParticipant()
+                                if (ok) {
+                                    clearTimeout(timer)
+                                    timer = null
+                                }
+                            }, 1000)
+                        }
+                    }
+                })
+
+                /*  handle conference leave  */
+                api.addListener("videoConferenceLeft", (ev) => {
+                    /*  account join status as Jitsi calls this event
+                        also once if initially a password is required  */
+                    if (!joined)
+                        return
+                    joined = false
+
+                    /*  clear join/pin timer  */
+                    if (timer !== null) {
+                        clearTimeout(timer)
+                        timer = null
+                    }
+
+                    /*  toggle user interface  */
+                    $(".trampoline").removeClass("disabled")
+                    $(".jitsi").addClass("disabled")
+
+                    /*  drop Jitsi  */
+                    $(".jitsi .embedding").empty()
+                })
+            }
+
+            /*  countdown to open  */
+            let timer = null
+            let count = 2
+            const startopen = () => {
+                if (timer !== null)
+                    clearTimeout(timer)
+                timer = setInterval(() => {
+                    if (count > 0) {
+                        $("#open").val(`CANCEL OPEN (redirecting in ${count} seconds)`)
+                        if (!$("#open").hasClass("cancel"))
+                            $("#open").addClass("cancel")
+                        count--
+                    }
+                    else {
+                        clearTimeout(timer)
+                        $("#open").val("OPEN").removeClass("cancel")
+                        open()
+                    }
+                }, 1000)
+            }
+
+            /*  initial (page load) or interactive hash-change  */
+            const takehash = () => {
+                /*  take and parse hash  */
+                const hash = window.location.hash
+                const m = hash.match(/^#\/([^/]+)\/([^/]*)\/([^/]+)(?:\/([^/]+)(?:\/([^/]+)(?:\/([^/]+)(?:\/([^/]+)(?:\/([^/]+)(?:\/([^/]+))?)?)?)?)?)?$/)
+                if (m === null)
+                    return
+                let [ , room, pass, mode, audio, video, fps, effect, peer, name ] = m
+                if (audio  === undefined) audio  = "mono"
+                if (video  === undefined) video  = "1080p"
+                if (fps    === undefined) fps    = "30"
+                if (effect === undefined) effect = "none"
+                if (peer   === undefined) peer   = ""
+                if (name   === undefined) name   = ""
+
+                /*  canonicalize values  */
+                if (typeof name === "string")
+                    name = name.replace(/_/g, " ")
+
+                /*  fill form inputs  */
+                $("#room").val(room)
+                $("#pass").val(pass)
+                $(`#mode option[value='${mode}']`).attr("selected", "selected").change()
+                $(`#audio option[value='${audio}']`).attr("selected", "selected").change()
+                $(`#video option[value='${video}']`).attr("selected", "selected").change()
+                $(`#fps option[value='${fps}']`).attr("selected", "selected").change()
+                $(`#effect option[value='${effect}']`).attr("selected", "selected").change()
+                $("#peer").val(peer)
+                $("#name").val(name)
+
+                /*  update form outputs  */
+                updateURLs()
+
+                /*  start a countdown to open  */
+                startopen()
+            }
+            $(window).bind("hashchange", (ev) => {
+                takehash()
+            })
+            takehash()
+
+            /*  interactive copy  */
+            $("#copy").click((ev) => {
+                 const textarea = $("#url-trampoline").get(0)
+                 var selection = document.getSelection()
+                 var range = document.createRange()
+                 range.selectNode(textarea)
+                 selection.removeAllRanges()
+                 selection.addRange(range)
+                 document.execCommand("copy")
+                 selection.removeAllRanges()
+            })
+
+            /*  interactive open  */
+            $("#open").click((ev) => {
+                if (timer !== null && count >= 0) {
+                    clearTimeout(timer)
+                    timer = null
+                    $("#open").val("OPEN").removeClass("cancel")
+                }
+                else
+                    open()
+                ev.preventDefault()
+            })
+        })
+    </script>
+</html>
