@@ -41,6 +41,31 @@ The first group of configuration fields target the browser:
   transparent background or `#RRGGBB` for a particular RGB background
   color. For a chroma-key style background, use `#00ff00`.
 
+- **Browser / Trust**:<br/>
+  Enable or disable the site trust, i.e., whether the SSL/TLS certificate of the
+  site (as specified by **Input / URL**) is trusted. Usually, this should be
+  disabled to not enforce the trust and rely on valid certificates. Enable
+  it only to especially enfore the trust of your *own* self-signed certificates
+  when communicating over `localhost`.
+
+- **Browser / Node-API**:<br/>
+  Enable or disable the Electron/Node API integration for the Web
+  Contents. Usually, this should be disabled to not give the Web
+  Contents access to the local system. Enable it only to especially
+  grant access for your *own* applications which require elevated
+  privileges.
+
+- **Browser / OBS-DOM**:<br/>
+  Enable or disable the OBS Studio Browser Source emulation in the
+  Document Object Model (DOM) of the Web Contents. Usually, this should
+  only be enabled for applications which explicitly check whether they
+  are running under the OBS Studio Browser Source. The most prominent
+  example is OBS.Ninja, which this way supports tally light information.
+
+- **Browser / Persist**:<br/>
+  Enable or disable the Web Contents session persistence. Enable it
+  if you want to keep state across stop/start or reload actions.
+
 Input
 -----
 
@@ -57,23 +82,6 @@ The second group of configuration fields target the Web Contents itself:
   The CSS styles to be injected into the Web Contents for overriding its styles.
   For instance, use `html, body { background: transparent !important; }` to
   force the background of the Web Contents to be transparent.
-
-Trust
------
-
-- **Trust / Site**:<br/>
-  Enable or disable the site trust, i.e., whether the SSL/TLS certificate of the
-  site (as specified by **Input / URL**) is trusted. Usually, this should be
-  disabled to not enforce the trust and rely on valid certificates. Enable
-  it only to especially enfore the trust of your *own* self-signed certificates
-  when communicating over `localhost`.
-
-- **Trust / Content**:<br/>
-  Enable or disable the content trust, i.e., whether the Web Contents is trusted
-  and hence the Node API integration should be available to it. Usually, this should
-  be disabled to not enforce the trust and give the Web Contents no access to the
-  local system. Enable it only to especially enforce the trust of your *own*
-  applications which require elevated privileges.
 
 Output 1 (Frameless)
 --------------------
