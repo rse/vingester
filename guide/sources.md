@@ -29,6 +29,28 @@ https://vingester.app/obsn/#/sample/sample/director/mono/720p/24/none/D<br/>
 https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01<br/>
 https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01
 
+Jitsi Meet
+----------
+
+[Jitsi](https://jitsi.org/) is a powerful peer-to-peer (P2P) or
+Selective Forwarding Unit (SFU), [WebRTC](https://webrtc.org/) based,
+browser based, Open Source video conferencing solution. [Jitsi Meet
+Trampoline](https://github.com/rse/jitsi-meet-trampoline) and its
+[Vingester instance](https://vingester.app/jitsi/) provides a convenient
+frontend to configure the involved Jitsi Meet sessions. For ingesting
+a participant *PersonID* in a room *RoomID* (and with room password
+*RoomPW*) with 720p24, URLs of the following form should be used:
+
+- Sender: `https://vingester.app/jitsi/#/`<br/>
+  `<RoomID>/<RoomPW>/sender/mono/720p/24/none/<PersonID>`
+- Receiver: `https://vingester.app/jitsi/#/`<br/>
+  `<RoomID>/<RoomPW>/receiver/mono/720p/24/none/<PersonID>`
+
+An example set of URLs is:
+
+https://vingester.app/jitsi/#/sample/sample/sender/mono/720p/24/none/P01<br/>
+https://vingester.app/jitsi/#/sample/sample/receiver/mono/720p/24/none/P01
+
 HUDS
 ----
 
