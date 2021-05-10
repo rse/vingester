@@ -706,7 +706,7 @@
                                         <div class="cluster" v-show="browser.m">
                                             <div class="sep">-f</div>
                                             <div class="field"
-                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output format. Use \'matroska\' and \'mp4\' for recording and \'mpegts\' and \'flv\' for streaming.' }">
+                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output format. Use \'matroska\' (MKV) and \'mp4\' (MPEG-4) for recording and \'mpegts\' (MPEG-TS) and \'flv\' (FLV/RTMP) for streaming.' }">
                                                 <div class="toggle" v-on:click="toggle(browser, 'F', [ 'matroska', 'mp4', 'mpegts', 'flv' ])">
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.F === 'matroska' }">matroska</div>
                                                     <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mp4' }">mp4</div>
@@ -715,7 +715,7 @@
                                                 </div>
                                             </div>
                                             <div class="field field-opts"
-                                                v-tippy="{ placement: 'top', content: 'Command line interface (CLI) arguments for FFmpeg output. The internally prepended (default) output options this way an be overridden and extended. Use e.g. for format \'matroska\' a filename like \'recording.mkv\', for format \'mpegts\' a URL like \'udp://10.0.0.1:1234\' and for format \'flv\' a URL like \'rtmp://10.0.0.1:1935/live/example\'. At least a single output argument has to be given.' }">
+                                                v-tippy="{ placement: 'top', content: 'Command line interface (CLI) arguments for FFmpeg output. The internally prepended (default) output options this way an be overridden and extended. Use e.g. for format \'matroska\' a filename like \'recording.mkv\', for format \'mp4\' a filename like \'recording.m4v\', for format \'mpegts\' a URL like \'udp://10.0.0.1:1234\' and for format \'flv\' a URL like \'rtmp://10.0.0.1:1935/live/example\'. At least a single output argument has to be given.' }">
                                                 <input type="text" v-model="browser.M" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.M }"
                                                     v-bind:disabled="running[browser.id]">
