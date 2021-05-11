@@ -96,7 +96,7 @@ $ npx nodecg-cli start
 
 The corresponding URLs are:
 
-`http://localhost:9090/dashboard/`
+`http://localhost:9090/dashboard/`<br/>
 `http://localhost:9090/view/<bundle-id>`
 
 ### SPX-GC
