@@ -370,7 +370,7 @@ const app = Vue.createApp({
             await electron.ipcRenderer.invoke("control", action, id)
         },
         toggle (browser, field, options) {
-            if (field !== "P" && field !== "T" && this.running[browser.id])
+            if (field !== "P" && field !== "T" && field !== "_" && this.running[browser.id])
                 return
             const val = browser[field]
             let i = 0

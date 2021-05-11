@@ -36,6 +36,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-2"
     BrowserInfo:                   "D. Scott Williamson's response to \"The Expert: 7 Red Lines\""
@@ -68,6 +69,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-3"
     BrowserInfo:                   "The Expert: Wrong Angle (Square Project Episode 1)"
@@ -100,6 +102,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-4"
     BrowserInfo:                   "The Expert: IT Support (Square Project Episode 2)"
@@ -132,6 +135,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-5"
     BrowserInfo:                   "The Expert: Progress Meeting (Square Project Episode 3)"
@@ -164,4 +168,5 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 

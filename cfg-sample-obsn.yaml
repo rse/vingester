@@ -39,6 +39,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "OBSN-P02"
     BrowserInfo:                   "OBS.Ninja Session, Person No. 2"
@@ -71,6 +72,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "OBSN-P03"
     BrowserInfo:                   "OBS.Ninja Session, Person No. 3"
@@ -103,6 +105,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "OBSN-P04"
     BrowserInfo:                   "OBS.Ninja Session, Person No. 4"
@@ -135,6 +138,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "OBSN-P05"
     BrowserInfo:                   "OBS.Ninja Session, Person No. 5"
@@ -167,6 +171,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 
 -   BrowserTitle:                  "OBSN-P06"
     BrowserInfo:                   "OBS.Ninja Session, Person No. 6"
@@ -199,4 +204,5 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    Collapsed:                     false
 

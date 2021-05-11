@@ -7,6 +7,7 @@ Changes
     - EXTENSION: add "Node.js API" (enable Node API integration) functionality
     - EXTENSION: add "OBS DOM" (emulate OBS Studio Browser Source DOM) functionality
     - EXTENSION: add "Persist" (persistant browser session) and "Clear" (clear persistance) functionality
+    - EXTENSION: add "Collapsed" icon for collapsing/expanding a browser configuration in the user interface
     - IMPROVEMENT: documented everything related to Vingester in the new Vingester Guide https://vingester.app/guide/
     - IMPROVEMENT: validate all fields, show errors with red backgrounds and provide defaults on empty entry
     - IMPROVEMENT: improve and update sample configurations

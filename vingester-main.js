@@ -343,7 +343,8 @@ electron.app.on("ready", async () => {
         { iname: "F", itype: "string",  def: "matroska",    etype: "string",  ename: "Output2SinkFFmpegFormat" },
         { iname: "M", itype: "string",  def: "",            etype: "string",  ename: "Output2SinkFFmpegOptions" },
         { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
-        { iname: "T", itype: "boolean", def: false,         etype: "boolean", ename: "ConsoleEnabled" }
+        { iname: "T", itype: "boolean", def: false,         etype: "boolean", ename: "ConsoleEnabled" },
+        { iname: "_", itype: "boolean", def: false,         etype: "boolean", ename: "Collapsed" }
     ]
     const sanitizeConfig = (browser) => {
         let changed = 0

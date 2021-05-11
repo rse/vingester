@@ -407,9 +407,10 @@
                     <div class="browsers">
                         <div v-for="(browser, i) in browsers" v-bind:key="browser.id" class="browser" v-bind:class="{ running: running[browser.id] }">
                             <div class="button-control">
-                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
-                                    v-on:click="delBrowser(browser)">
-                                    <i class="fas fa-minus-circle"></i>
+                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Toggle browser configuration<br/>entry collapsed display.' }"
+                                    v-on:click="toggle(browser, '_', [ true, false ])">
+                                    <div v-show="browser._ === true "><span class="icon"><i class="fas fa-chevron-circle-right"></i></div>
+                                    <div v-show="browser._ === false"><span class="icon"><i class="fas fa-chevron-circle-down"></i></div>
                                 </div>
                                 <div class="button" v-bind:class="{ disabled: i === 0 }" v-tippy="{ placement: 'bottom', content: 'Move this browser<br/>configuration entry upward.' }"
                                     v-on:click="moveBrowser(browser, 'up')">
@@ -419,14 +420,20 @@
                                     v-on:click="moveBrowser(browser, 'down')">
                                     <i class="fas fa-arrow-alt-circle-down"></i>
                                 </div>
+                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
+                                    v-show="!browser._"
+                                    v-on:click="delBrowser(browser)">
+                                    <i class="fas fa-minus-circle"></i>
+                                </div>
                                 <div class="button" v-tippy="{ placement: 'bottom', content: 'Clone this browser<br/>configuration entry.' }"
+                                    v-show="!browser._"
                                     v-on:click="cloneBrowser(browser)">
                                     <i class="fas fa-clone"></i>
                                 </div>
                             </div>
                             <div class="box">
                                 <div class="box-area">
-                                    <div class="preview" v-show="browser.P && running[browser.id]">
+                                    <div class="preview" v-show="browser.P && running[browser.id] && !browser._">
                                         <div class="preview-inner"
                                             v-tippy="{ placement: 'bottom', content: 'Shows a thumbnail preview (160x90px)<br/>of the Web Content rendering.' }">
                                             <canvas v-bind:ref="'canvas-' + browser.id" width="160" height="90"></canvas>
@@ -453,7 +460,7 @@
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group"></div>
                                         <div class="label label-size">Size:</div>
                                         <div class="field field-width"
@@ -485,7 +492,7 @@
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group"></div>
                                         <div class="label label-trust">Trust:</div>
                                         <div class="field field-trust"
@@ -520,7 +527,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group">INPUT:</div>
                                         <div class="label label-url">URL:</div>
                                         <div class="field field-url"
@@ -530,7 +537,7 @@
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group"></div>
                                         <div class="label label-style">Style:</div>
                                         <div class="field field-style"
@@ -540,7 +547,7 @@
                                                 v-bind:disabled="running[browser.id]">
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group">OUTPUT 1:</div>
                                         <div class="label label-output">Frameless:</div>
                                         <div class="field"
@@ -551,7 +558,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.D">
+                                    <div class="row" v-show="!browser._ && browser.D">
                                         <div class="group"></div>
                                         <div class="sub-group">VIDEO:</div>
                                         <div class="cluster" v-show="browser.D">
@@ -587,7 +594,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.D">
+                                    <div class="row" v-show="!browser._ && browser.D">
                                         <div class="group"></div>
                                         <div class="sub-group">AUDIO:</div>
                                         <div class="label label-device">Device:</div>
@@ -606,7 +613,7 @@
                                                 v-bind:disabled="running[browser.id]"></vue-select>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" v-show="!browser._">
                                         <div class="group">OUTPUT 2:</div>
                                         <div class="label label-output">Headless:</div>
                                         <div class="field"
@@ -617,7 +624,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.N">
+                                    <div class="row" v-show="!browser._ && browser.N">
                                         <div class="group"></div>
                                         <div class="sub-group">VIDEO:</div>
                                         <div class="cluster" v-show="browser.N">
@@ -647,7 +654,7 @@
                                             <div class="unit">ms</div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.N">
+                                    <div class="row" v-show="!browser._ && browser.N">
                                         <div class="group"></div>
                                         <div class="sub-group">AUDIO:</div>
                                         <div class="cluster" v-show="browser.N">
@@ -680,7 +687,7 @@
                                             <div class="unit">ms</div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.N">
+                                    <div class="row" v-show="!browser._ && browser.N">
                                         <div class="group"></div>
                                         <div class="sub-group">SINK:</div>
                                         <div class="label label-kind">NDI&reg;:</div>
@@ -692,7 +699,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-show="browser.N">
+                                    <div class="row" v-show="!browser._ && browser.N">
                                         <div class="group"></div>
                                         <div class="sub-group"></div>
                                         <div class="label label-kind">FFmpeg&trade;:</div>
@@ -758,7 +765,7 @@
                                                     &nbsp;CLEAR
                                                 </div>
                                             </div>
-                                            <div class="field field-preview"
+                                            <div class="field field-preview" v-show="!browser._"
                                                 v-tippy="{ placement: 'top', content: 'Click to ' + (browser.P ? 'disable' : 'enable') + ' the Web Content<br/>preview thumbnail image' + (!running[browser.id] ? '<br/>once the browser is running' : '') + '.' }"
                                                 v-on:click="toggle(browser, 'P', [ true, false ])">
                                                 <div class="input-button">
@@ -767,7 +774,7 @@
                                                     &nbsp;PREVIEW
                                                 </div>
                                             </div>
-                                            <div class="field field-console"
+                                            <div class="field field-console" v-show="!browser._"
                                                 v-tippy="{ placement: 'top', content: 'Click to ' + (browser.T ? 'disable' : 'enable') + ' the Web Content<br/>console output messages' + (!running[browser.id] ? '<br/>once the browser is running' : '') + '.' }"
                                                 v-on:click="toggle(browser, 'T', [ true, false ])">
                                                 <div class="input-button">
@@ -778,7 +785,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="stat" v-if="running[browser.id]">
+                                    <div class="stat" v-if="running[browser.id]" v-show="!browser._">
                                         <div class="stat-item-border" v-if="browser.N && rate[browser.id]">
                                             <div v-tippy="{ placement: 'top', content: 'Shows the network sending performance<br/>(video+audio network packets per second).' }"
                                                 class="stat-item">
@@ -812,7 +819,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="row" v-show="running[browser.id] && browser.T">
+                                    <div class="row" v-show="running[browser.id] && browser.T && !browser._">
                                         <div class="console-border">
                                             <div class="console" v-bind:ref="'console-' + browser.id">
                                                 <div class="console-line" v-for="(message, i) in trace[browser.id].messages" v-bind:key="i">
