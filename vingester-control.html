@@ -409,8 +409,8 @@
                             <div class="button-control">
                                 <div class="button" v-tippy="{ placement: 'bottom', content: 'Toggle browser configuration<br/>entry collapsed display.' }"
                                     v-on:click="toggle(browser, '_', [ true, false ])">
-                                    <div v-show="browser._ === true "><span class="icon"><i class="fas fa-chevron-circle-right"></i></div>
-                                    <div v-show="browser._ === false"><span class="icon"><i class="fas fa-chevron-circle-down"></i></div>
+                                    <div v-show="browser._ === true "><span class="icon"><i class="fas fa-chevron-circle-right"></i></span></div>
+                                    <div v-show="browser._ === false"><span class="icon"><i class="fas fa-chevron-circle-down"></i></span></div>
                                 </div>
                                 <div class="button" v-bind:class="{ disabled: i === 0 }" v-tippy="{ placement: 'bottom', content: 'Move this browser<br/>configuration entry upward.' }"
                                     v-on:click="moveBrowser(browser, 'up')">
