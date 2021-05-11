@@ -10,10 +10,10 @@
 
 [About](/about)
 [Installation](/install)
-[Usage](/usage)
+[Usage](/usage)<br/>
 [Configuration](/configuration)
 [Performance](/performance)
-[Sources](/sources)
+[Sources](/sources)<br/>
 [Alternatives](/alternatives)
 [Imprint](/imprint)
 
