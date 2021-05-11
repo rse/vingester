@@ -11,20 +11,28 @@ Decent Alternatives
 -------------------
 
 - [OBS-Browser](https://github.com/obsproject/obs-browser):
-  This is OBS Studio's built-in "Browser Source". It is a decent
-  implementation based on the Chromium Embedded Framework (CEF). The
-  drawback (and the original motivation for **Vingester**) is that CPU
-  intensive applications like OBS.Ninja, running in a Browser Source,
-  can cause OBS Studio to degrade at least audio quality regularly.
+  This is OBS Studio's built-in "Browser Source". It is
+  a decent implementation based on the Chromium Embedded
+  Framework (CEF). The drawback (and the original motivation
+  for **Vingester**) is that CPU intensive applications like
+  OBS.Ninja, running in a Browser Source, can cause OBS Studio to
+  degrade at least audio quality regularly. The major drawback of
+  [OBS-Browser](https://github.com/obsproject/obs-browser) is that its
+  Chromium Embedded Framework (CEF) and this way its contained Chromium
+  engine is not the latest one.
 
-- [OBS-Studio](https://obsproject.com) + [OBS-Browser](https://github.com/obsproject/obs-browser) + [OBS-NDI](https://github.com/Palakis/obs-ndi/):
-  This is meant seriously: one alternative for ingesting into OBS Studio
-  is OBS Studio itself. Obviously, as this does not reduce the overall
-  complexity and load, this makes no sense on the same machine, of
-  course. But if you run the combination of OBS Studio plus OBS-Browser
-  plus OBS-NDI (with its "Dedicated NDI Output" filter) on a separate
-  machine, you could use this to ingest Web Content into OBS Studio via
-  NDI, too.
+- [OBS-Studio](https://obsproject.com) +
+  [OBS-Browser](https://github.com/obsproject/obs-browser) +
+  [OBS-NDI](https://github.com/Palakis/obs-ndi/): This is meant seriously:
+  one alternative for ingesting into OBS Studio is OBS Studio itself.
+  Obviously, as this does not reduce the overall complexity and load,
+  this makes no sense on the same machine, of course. But if you run
+  the combination of OBS Studio plus OBS-Browser plus OBS-NDI (with its
+  "Dedicated NDI Output" filter) on a separate machine, you could use
+  this to ingest Web Content into OBS Studio via NDI, too. The major
+  drawback of [OBS-Browser](https://github.com/obsproject/obs-browser)
+  is that its Chromium Embedded Framework (CEF) and this way its
+  contained Chromium engine is not the latest one.
 
 Limited Alternatives
 --------------------

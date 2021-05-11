@@ -40,7 +40,7 @@ contained executable. Copy the extracted executable to an arbitrary
 location where your current user has access to.
 
 > [!NOTE]
-> **Vingester** intentionally does NOT come with an "installer".
+> **Vingester** intentionally does *not* come with an "installer".
 > Instead, it is packaged as a self-contained single-file executable
 > which can be run from an arbitrary filesystem location and with
 > just regular user privileges. For updating purposes, instead of an
