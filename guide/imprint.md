@@ -12,7 +12,8 @@ Contact & Issues
 ----------------
 
 In case of any particular issues with **Vingester**, open a new *public*
-[Github Issue Request](https://github.com/rse/vingester/issues).
+[Github Issue Request](https://github.com/rse/vingester/issues/new/choose) in the
+[Github Issue Tracker](https://github.com/rse/vingester/issues).
 Additionally, the **Vingester** author can be also contacted in *private* under the following adresses:
 
 |          |                                                            |
