@@ -48,10 +48,10 @@ others windows and determine the correct window sizes if the display
 uses a high DPI mode.
 
 As **Vingester** supports [NDI&reg;](https://www.ndi.tv/)-based
-multicasting of the output video streams, this open up completely new
-possibilities, including using arbitrary mixing applications and even
-running them on different computers. Finally, as **Vingester** also
-supports [FFmpeg&trade;](https://ffmpeg.org) as the output sink, it can
-both locally record the video streams and send them remotely through
-protocols like RTMP.
+multicasting of the output video streams, this open up completely
+new possibilities, including using arbitrary mixing applications and
+even running them on different computers on the same LAN. Finally, as
+**Vingester** also supports [FFmpeg&trade;](https://ffmpeg.org) as the
+output sink, it can both locally record the video streams and send them
+to remote locations via WAN through streaming protocols like RTMP.
 
