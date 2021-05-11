@@ -42,12 +42,13 @@ code {
 }
 
 .cover-main img {
-    width:                         200px;
+    width:                         140px;
 }
-.cover-main h1 {
+.cover-main h1 a {
     font-family:                   "Overlock", sans-serif;
     font-weight:                   bold;
     font-style:                    italic;
+    font-size:                     80pt;
 }
 .cover-main h1 span {
     font-size:                     90pt !important;
