@@ -28,6 +28,7 @@ module.exports = class FFmpeg extends EventEmitter {
 
         /*  initialize state  */
         this.proc       = null
+        this.workaround = false
     }
     async start () {
         /*  cleanup if necessary  */
@@ -90,6 +91,33 @@ module.exports = class FFmpeg extends EventEmitter {
         this.proc.stderr.on("data", (line) => {
             this.options.log("info", `FFmpeg stderr: ${line.toString()}`)
             this.emit("error", `FFmpeg stderr: ${line.toString()}`)
+        })
+
+        /*  process exit of ffmpeg(1) subprocess  */
+        this.workaround = false
+        this.proc.on("exit", async (code, signal) => {
+            /*  just log the information  */
+            this.options.log("error", `FFmpeg exit: code: ${code}, signal: ${signal}`)
+
+            /*  NASTY WORKAROUND: on some Linux platforms (e.g. Ubuntu 20.10) the statically built
+                ffmpeg(1) executable (built under Debian AFAIK) unfortunately segfaults, so at
+                least once try to use an externally installed "native" ffmpeg(1) of the system  */
+            if (code === null && signal === "SIGSEGV" && !this.workaround) {
+                this.workaround = true
+                const ffmpeg = which.sync("ffmpeg", { nothrow: true })
+                if (ffmpeg !== null) {
+                    this.options.ffmpeg = ffmpeg
+                    await this.stop()
+                    this.start()
+                }
+                else {
+                    /*  no chance, we have to tell the user that we need a system-native FFmpeg  */
+                    this.emit("fatal", "sorry, the embedded FFmpeg program unfortunately crashes under " +
+                        "your particular operating system. Please install a native FFmpeg in your system, " +
+                        "ensure that the executable \"ffmpeg\" is in your $PATH and then restart this " +
+                        "Vingester application again, please.")
+                }
+            }
         })
     }
     async video (data) {

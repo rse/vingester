@@ -118,6 +118,11 @@ class BrowserWorker {
                         this.log[level](msg)
                     }
                 })
+                this.ffmpeg.on("fatal", (msg) => {
+                    this.log.error(`FFmpeg fatal error: ${msg}`)
+                    electron.ipcRenderer.sendTo(this.cfg.controlId, "message",
+                        `FFmpeg fatal error: ${msg}`)
+                })
                 await this.ffmpeg.start()
             }
         }
