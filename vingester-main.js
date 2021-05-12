@@ -319,12 +319,17 @@ electron.app.on("ready", async () => {
         { iname: "h", itype: "string",  def: "720",         etype: "number",  ename: "BrowserHeight" },
         { iname: "c", itype: "string",  def: "transparent", etype: "string",  ename: "BrowserColor" },
         { iname: "z", itype: "string",  def: "1.0",         etype: "number",  ename: "BrowserZoom" },
-        { iname: "u", itype: "string",  def: "",            etype: "string",  ename: "InputURL" },
         { iname: "H", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserTrust" },
         { iname: "I", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserNodeAPI" },
         { iname: "B", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserOBSDOM" },
         { iname: "S", itype: "boolean", def: false,         etype: "boolean", ename: "BrowserPersist" },
-        { iname: "s", itype: "string",  def: "",            etype: "string",  ename: "InputStyle" },
+        { iname: "u", itype: "string",  def: "",            etype: "string",  ename: "InputURL" },
+        { iname: "k", itype: "string",  def: "0",           etype: "number",  ename: "PatchDelay" },
+        { iname: "j", itype: "string",  def: "",            etype: "string",  ename: "PatchFrame" },
+        { iname: "g", itype: "string",  def: "inline",      etype: "string",  ename: "PatchStyleType" },
+        { iname: "q", itype: "string",  def: "",            etype: "string",  ename: "PatchStyleCode" },
+        { iname: "G", itype: "string",  def: "inline",      etype: "string",  ename: "PatchScriptType" },
+        { iname: "Q", itype: "string",  def: "",            etype: "string",  ename: "PatchScriptCode" },
         { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
         { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },
         { iname: "y", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionY" },
@@ -504,6 +509,22 @@ electron.app.on("ready", async () => {
             return false
         }).catch(() => {
             return false
+        })
+    })
+
+    /*  handle file selection  */
+    electron.ipcMain.handle("select-file", async (ev) => {
+        return electron.dialog.showOpenDialog({
+            title:       "Choose File",
+            properties:  [ "openFile" ]
+        }).then(async (result) => {
+            if (result.canceled)
+                return null
+            if (result.filePaths && result.filePaths.length === 1)
+                return result.filePaths[0]
+            return null
+        }).catch(() => {
+            return null
         })
     })
 

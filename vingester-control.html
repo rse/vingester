@@ -538,13 +538,61 @@
                                         </div>
                                     </div>
                                     <div class="row" v-show="!browser._">
-                                        <div class="group"></div>
-                                        <div class="label label-style">Style:</div>
-                                        <div class="field field-style"
-                                            v-tippy="{ placement: 'top', content: 'Custom CSS styles to inject into browser window.' }">
-                                            <input type="text" v-model="browser.s" v-on:keyup="changed(browser)"
-                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.s }"
+                                        <div class="group">PATCH:</div>
+                                        <div class="label label-patch-delay">Delay:</div>
+                                        <div class="field field-patch-delay"
+                                            v-tippy="{ placement: 'top', content: 'Delay in milliseconds before<br/ patching the Web Contents.' }">
+                                            <input type="text" v-model="browser.k" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.k }"
                                                 v-bind:disabled="running[browser.id]">
+                                        </div>
+                                        <div class="unit">ms</div>
+                                        <div class="label label-frame">Frame:</div>
+                                        <div class="field field-frame"
+                                            v-tippy="{ placement: 'top', content: 'URL pattern of Web Contents frame to patch.<br/>Keep empty for main frame.' }">
+                                            <input type="text" v-model="browser.j" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.j }"
+                                                v-bind:disabled="running[browser.id]">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="!browser._">
+                                        <div class="group"></div>
+                                        <div class="sub-group">STYLE:</div>
+                                        <div class="label">Type:</div>
+                                        <div class="field"
+                                            v-tippy="{ placement: 'top', content: 'Toggle source type of style code.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'g', [ 'inline', 'file' ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.g === 'inline' }"><span class="icon"><i class="fas fa-file-code"></i></span> Inline</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.g === 'file'   }"><span class="icon"><i class="fas fa-file-download"></i></span> File</div>
+                                            </div>
+                                        </div>
+                                        <div class="label">Code:</div>
+                                        <div class="field field-style"
+                                            v-on:click="clickCode(browser, 'g', 'q')"
+                                            v-tippy="{ placement: 'top', content: 'Custom CSS styles to patch the Web Contents.' }">
+                                            <input type="text" v-model="browser.q" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.q }"
+                                                v-bind:disabled="running[browser.id] || browser.g === 'file'">
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="!browser._">
+                                        <div class="group"></div>
+                                        <div class="sub-group">SCRIPT:</div>
+                                        <div class="label label-patch-js">Type:</div>
+                                        <div class="field field-patch-js"
+                                            v-tippy="{ placement: 'top', content: 'Toggle source type of script code.' }">
+                                            <div class="toggle" v-on:click="toggle(browser, 'G', [ 'inline', 'file' ])">
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.G === 'inline' }"><span class="icon"><i class="fas fa-file-code"></i></span> Inline</div>
+                                                <div class="toggle-option" v-bind:class="{ selected: browser.G === 'file'   }"><span class="icon"><i class="fas fa-file-download"></i></span> File</div>
+                                            </div>
+                                        </div>
+                                        <div class="label">Code:</div>
+                                        <div class="field field-script"
+                                            v-on:click="clickCode(browser, 'G', 'Q')"
+                                            v-tippy="{ placement: 'top', content: 'Custom JavaScript code to patch the Web Contents.' }">
+                                            <input type="text" v-model="browser.Q" v-on:keyup="changed(browser)"
+                                                v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.Q }"
+                                                v-bind:disabled="running[browser.id] || browser.G === 'file'">
                                         </div>
                                     </div>
                                     <div class="row" v-show="!browser._">

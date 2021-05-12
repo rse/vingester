@@ -59,6 +59,7 @@ module.exports = class Browser {
         this.cfg.O = parseInt(this.cfg.O)
         this.cfg.o = parseInt(this.cfg.o)
         this.cfg.C = parseInt(this.cfg.C)
+        this.cfg.k = parseInt(this.cfg.k)
         this.cfg.z = parseFloat(this.cfg.z)
 
         /*  recalculate capture framerate  */
@@ -529,9 +530,46 @@ module.exports = class Browser {
                 { encoding: "utf8" })
             content.webContents.executeJavaScript(code)
 
-            /*  optionally insert custom CSS styles  */
-            if (this.cfg.s !== "")
-                content.webContents.insertCSS(this.cfg.s, { cssOrigin: "user" })
+            /*  optionally patch content  */
+            if (this.cfg.q !== "" || this.cfg.Q !== "") {
+                setTimeout(async () => {
+                    /*  determine target frame  */
+                    const mainFrame = content.webContents.mainFrame
+                    let frame
+                    if (this.cfg.j === "")
+                        frame = mainFrame.top
+                    else {
+                        const regexp = new RegExp(this.cfg.j)
+                        frame = mainFrame.framesInSubtree.find((frame) => regexp.test(frame.url))
+                    }
+                    if (frame === undefined || frame === null)
+                        return
+
+                    /*  patch content  */
+                    let script = ""
+                    if (this.cfg.q !== "") {
+                        let css = this.cfg.q
+                        if (this.cfg.g === "file")
+                            css = await fs.promises.readFile(css, { encoding: "utf8" })
+                        css = css.replace(/[""]/g, "\\\"").replace(/\r?\n/g, "\\n")
+                        script += `;(function () {
+                            const style = document.createElement("style");
+                            style.type = "text/css";
+                            style.appendChild(document.createTextNode("${css}"));
+                            const head = document.getElementsByTagName("head")[0];
+                            head.appendChild(style);
+                        })();`
+                    }
+                    if (this.cfg.Q !== "") {
+                        let js = this.cfg.Q
+                        if (this.cfg.G === "file")
+                            js = await fs.promises.readFile(js, { encoding: "utf8" })
+                        script += js
+                    }
+                    this.log.info("EXEC", script)
+                    frame.executeJavaScript(script, true)
+                }, this.cfg.k)
+            }
 
             /*  force zoom level (sometimes Chromium keeps old factors if
                 just the "zoomFactor" attribute is used)  */

@@ -38,7 +38,10 @@ const browserFields = [
     { name: "c", def: "transparent", valid: /^(?:transparent|#[\da-fA-F]{3,6})$/ },
     { name: "z", def: "1.0",         valid: /^(?:\d*\.\d+|\d+\.\d*|\d+)$/ },
     { name: "u", def: "",            valid: /^.+$/ },
-    { name: "s", def: "",            valid: /^.*$/ },
+    { name: "k", def: "0",           valid: /^\d+$/ },
+    { name: "j", def: "",            valid: /^.*$/ },
+    { name: "q", def: "",            valid: /^.*$/ },
+    { name: "Q", def: "",            valid: /^.*$/ },
     { name: "x", def: "0",           valid: /^[+-]?\d+$/ },
     { name: "y", def: "0",           valid: /^[+-]?\d+$/ },
     { name: "d", def: "",            valid: /^([+-]?\d+,[+-]?\d+)?$/ },
@@ -434,6 +437,16 @@ const app = Vue.createApp({
                 .map((device) => { return device.label })
         },
         changeOption (browser, field, value) {
+            this.changed(browser)
+        },
+        async clickCode (browser, field1, field2) {
+            if (browser[field1] === "file") {
+                const file = await electron.ipcRenderer.invoke("select-file")
+                if (file !== null)
+                    browser[field2] = file
+                else
+                    browser[field2] = ""
+            }
             this.changed(browser)
         }
     }

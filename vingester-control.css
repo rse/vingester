@@ -719,7 +719,9 @@ body {
             &.label-size,
             &.label-trust,
             &.label-url,
-            &.label-style {
+            &.label-patch-delay,
+            &.label-patch-style,
+            &.label-patch-script {
                 width: 40px;
             }
             &.label-zoom {
@@ -880,8 +882,12 @@ body {
                     width: 352px;
                 }
             }
-            &.field-style > input {
-                width: 445px;
+            &.field-frame > input {
+                width: 313px;
+            }
+            &.field-style > input,
+            &.field-script > input {
+                width: 276px;
             }
             &.field-url > input {
                 width: 445px;

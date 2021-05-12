@@ -16,7 +16,12 @@
     BrowserOBSDOM:                 false
     BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -49,7 +54,12 @@
     BrowserOBSDOM:                 false
     BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -82,7 +92,12 @@
     BrowserOBSDOM:                 false
     BrowserPersist:                false
     InputURL:                      "https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0

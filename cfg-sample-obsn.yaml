@@ -19,7 +19,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -52,7 +57,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P02"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -85,7 +95,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P03"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -118,7 +133,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P04"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -151,7 +171,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P05"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
@@ -184,7 +209,12 @@
     BrowserOBSDOM:                 true
     BrowserPersist:                false
     InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P06"
-    InputStyle:                    ""
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
