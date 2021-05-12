@@ -78,13 +78,44 @@ The second group of configuration fields target the Web Contents itself:
   Ensure that the Web Contents does not require any interactions and optimally expands to 100% of the
   browser canvas.
 
-- **Input / Style**:<br/>
-  The CSS styles to be injected into the Web Contents for overriding its styles.
+Patch
+-----
+
+The third group of configuration fields target the Web Contents patching:
+
+- **Patch / Delay**:<br/>
+  The delay in milliseconds before patching the Web Contents.
+
+- **Patch / Frame**:<br/>
+  The regular expression matching the URL of the Web Contents frame to patch.
+  Use an empty string for the main frame.
+
+- **Patch / Style / Type**:<br/>
+  Either `inline` for inline CSS code (see **Patch / Style / Code**) or
+  `file` for selecting external CSS code (click onto **Patch / Style /
+  Code** for selecting the file).
+
+- **Patch / Style / Code**:<br/>
+  The CSS code to be injected into the Web Contents for overriding its styles.
   For instance, use `html, body { background: transparent !important; }` to
   force the background of the Web Contents to be transparent.
 
+- **Patch / Script / Type**:<br/>
+  Either `inline` for inline JavaScript code (see **Patch / Script / Code**) or
+  `file` for selecting external JavaScript code (click onto **Patch / Script /
+  Code** for selecting the file).
+
+- **Patch / Script / Code**:<br/>
+  The JavaScript code to be injected into the Web Contents for
+  manipulating its Document Object Model (DOM). For instance,
+  use `for (const el of document.querySelectorAll(".foo .bar"))
+  el.parentNode.removeChild(el)` to remove all DOM elements matching the
+  CSS selector `.foo .bar`.
+
 Output 1 (Frameless)
 --------------------
+
+The forth group of configuration fields target the Frameless output:
 
 - **Output 1 / Frameless**:<br/>
   Enable or disable the "Frameless" mode of operation where the Web
@@ -119,6 +150,8 @@ Output 1 (Frameless)
 
 Output 2 (Headless)
 -------------------
+
+The fifth group of configuration fields target the Headless output:
 
 - **Headless**:<br/>
   Enable or disable the "Headless" mode of operation where the Web
