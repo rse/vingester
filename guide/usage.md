@@ -152,3 +152,6 @@ and local functions (for a particular browser only).
 - **CONSOLE**: Pressing this local button toggles the display of the Web Contents
   console at the bottom of the browser configuration tile.
 
+- **DEVTOOLS**: Pressing this local button toggles the display a
+  detached DevTools window for low-level interaction with the Web Contents.
+
