@@ -789,7 +789,7 @@ body {
             .icon {
                 color: #cccccc;
                 display: inline-block;
-                margin-right: 4px;
+                margin-right: 2px;
             }
             &:hover {
                 border-top: 1px solid #a0a0a0;
@@ -939,16 +939,21 @@ body {
             &.field-zoom > input {
                 text-align: center;
             }
-            &.field-start,
+            &.field-start {
+                margin-top: 2px;
+                margin-left: 8px;
+                margin-bottom: 2px;
+            }
             &.field-reload,
             &.field-stop,
             &.field-clear,
             &.field-export,
             &.field-import,
             &.field-preview,
-            &.field-console {
+            &.field-console,
+            &.field-devtools {
                 margin-top: 2px;
-                margin-left: 8px;
+                margin-left: 2px;
                 margin-bottom: 2px;
             }
             &.field-reload .input-button,
@@ -963,9 +968,31 @@ body {
                     color: #777777;
                 }
             }
+            &.field-start .input-button {
+                width: 60px;
+            }
+            &.field-reload .input-button {
+                width: 62px;
+            }
+            &.field-stop .input-button {
+                width: 60px;
+            }
+            &.field-clear .input-button {
+                width: 60px;
+            }
+            &.field-preview .input-button {
+                width: 70px;
+            }
+            &.field-console .input-button {
+                width: 73px;
+            }
+            &.field-devtools .input-button {
+                width: 78px;
+            }
             &.field-start:hover .input-button,
             &.field-preview:hover .input-button,
-            &.field-console:hover .input-button {
+            &.field-console:hover .input-button,
+            &.field-devtools:hover .input-button {
                 background-color: #808080;
             }
             &.field-reload:hover .input-button,
@@ -1049,7 +1076,8 @@ body {
                 &.field-reload .input-button,
                 &.field-stop .input-button,
                 &.field-preview .input-button,
-                &.field-console .input-button {
+                &.field-console .input-button,
+                &.field-devtools .input-button {
                     color: #ffffff;
                     background-color: #4477aa;
                     border-top: 1px solid #5588bb;
@@ -1067,7 +1095,8 @@ body {
                 &.field-reload:hover .input-button,
                 &.field-stop:hover .input-button,
                 &.field-preview:hover .input-button,
-                &.field-console:hover .input-button {
+                &.field-console:hover .input-button,
+                &.field-devtools:hover .input-button {
                     cursor: pointer;
                     background-color: #6699cc;
                     border-top: 1px solid #88bbee;

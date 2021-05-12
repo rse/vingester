@@ -133,6 +133,10 @@ const app = Vue.createApp({
         electron.ipcRenderer.on("browser-cleared", (ev, id) => {
             log.info("browser-cleared", id)
         })
+        electron.ipcRenderer.on("devtools", (ev, { id, enabled }) => {
+            const browser = this.browsers.find((b) => b.id === id)
+            browser.E = enabled
+        })
         electron.ipcRenderer.on("message", (ev, text) => {
             const time = moment().format("YYYY-MM-DD HH:mm:ss")
             if (this.messages.length >= 5)
@@ -370,7 +374,7 @@ const app = Vue.createApp({
             await electron.ipcRenderer.invoke("control", action, id)
         },
         toggle (browser, field, options) {
-            if (field !== "P" && field !== "T" && field !== "_" && this.running[browser.id])
+            if (field !== "P" && field !== "T" && field !== "E" && field !== "_" && this.running[browser.id])
                 return
             const val = browser[field]
             let i = 0

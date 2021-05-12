@@ -783,6 +783,15 @@
                                                     &nbsp;CONSOLE
                                                 </div>
                                             </div>
+                                            <div class="field field-devtools" v-show="!browser._"
+                                                v-tippy="{ placement: 'top', content: 'Click to ' + (browser.E ? 'disable' : 'enable') + ' the devTools console<br/>for low-level interaction with the Web Contents.' }"
+                                                v-on:click="toggle(browser, 'E', [ true, false ])">
+                                                <div class="input-button">
+                                                    <span class="icon" v-show="browser.E === true"><i class="fas fa-eye"></i></span>
+                                                    <span class="icon" v-show="browser.E === false"><i class="fas fa-eye-slash"></i></span>
+                                                    &nbsp;DEVTOOLS
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="stat" v-if="running[browser.id]" v-show="!browser._">

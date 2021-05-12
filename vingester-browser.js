@@ -40,6 +40,7 @@ module.exports = class Browser {
         this.framerateTarget = -1
         this.framerateNow    = -1
         this.framesToSkip    = -1
+        this.devToolsEnabled = false
     }
 
     /*  reconfigure browser  */
@@ -65,6 +66,20 @@ module.exports = class Browser {
 
         /*  optionally reconfigure already running worker instance  */
         this.update()
+
+        /*  control devTools window  */
+        if (this.content !== null) {
+            if (!this.devToolsEnabled && this.cfg.E) {
+                this.content.webContents.openDevTools({ mode: "detach", activate: true })
+                this.devToolsEnabled = true
+                this.control.webContents.send("devtools", { id: this.id, enabled: true })
+            }
+            else if (this.devToolsEnabled && !this.cfg.E) {
+                this.content.webContents.closeDevTools()
+                this.devToolsEnabled = false
+                this.control.webContents.send("devtools", { id: this.id, enabled: false })
+            }
+        }
     }
 
     /*  explicitly allow the content browser windows certain permissions  */
@@ -350,7 +365,7 @@ module.exports = class Browser {
             webPreferences: {
                 ...opts2,
                 session:                    session,
-                devTools:                   (process.env.DEBUG === "2"),
+                devTools:                   true,
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
                 nodeIntegration:            this.cfg.I ? true : false,
@@ -369,11 +384,24 @@ module.exports = class Browser {
         })
         if (os.platform() === "darwin")
             content.setWindowButtonVisibility(false)
-        if (process.env.DEBUG === "2") {
+
+        /*  support devTools  */
+        if (this.cfg.E) {
+            this.log.info("browser: open")
             setTimeout(() => {
-                content.webContents.openDevTools()
+                content.webContents.openDevTools({ mode: "detach", activate: false })
+                this.devToolsEnabled = true
+                this.control.webContents.send("devtools", { id: this.id, enabled: true })
             }, 1000)
         }
+        content.webContents.on("devtools-opened", (ev) => {
+            this.devToolsEnabled = true
+            this.control.webContents.send("devtools", { id: this.id, enabled: true })
+        })
+        content.webContents.on("devtools-closed", (ev) => {
+            this.devToolsEnabled = false
+            this.control.webContents.send("devtools", { id: this.id, enabled: false })
+        })
 
         /*  determine user-agent identifier  */
         const ua = content.webContents.getUserAgent()

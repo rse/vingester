@@ -344,6 +344,7 @@ electron.app.on("ready", async () => {
         { iname: "M", itype: "string",  def: "",            etype: "string",  ename: "Output2SinkFFmpegOptions" },
         { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
         { iname: "T", itype: "boolean", def: false,         etype: "boolean", ename: "ConsoleEnabled" },
+        { iname: "E", itype: "boolean", def: false,         etype: "boolean", ename: "DevToolsEnabled" },
         { iname: "_", itype: "boolean", def: false,         etype: "boolean", ename: "Collapsed" }
     ]
     const sanitizeConfig = (browser) => {
