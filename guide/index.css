@@ -49,6 +49,7 @@ code {
     font-weight:                   bold;
     font-style:                    italic;
     font-size:                     80pt;
+    letter-spacing:                -4px;
 }
 .cover-main h1 span {
     font-size:                     90pt !important;
@@ -59,6 +60,7 @@ code {
     font-weight:                   bold;
     font-style:                    italic;
     font-size:                     42pt;
+    letter-spacing:                -2px;
 }
 .app-name-link img {
     width:                         50px;
