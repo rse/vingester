@@ -16,6 +16,6 @@
 [Sources](/sources)<br/>
 [Visibility](/visibility)
 [Development](/development)
-[Alternatives](/alternatives)
+[Alternatives](/alternatives)<br/>
 [Imprint](/imprint)
 
