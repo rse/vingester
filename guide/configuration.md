@@ -76,7 +76,7 @@ The second group of configuration fields target the Web Contents itself:
   YouTube URLs like `https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1&controls=0&rel=0`,
   OBS.Ninja (Trampoline) URLs like `https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01`, etc.
   Ensure that the Web Contents does not require any interactions and optimally expands to 100% of the
-  browser canvas.
+  browser canvas. See [sources](sources#sources) for details on usual inputs.
 
 Patch
 -----
