@@ -64,7 +64,8 @@ const version = {
     v8:        process.versions.v8.replace(/-electron.*$/, ""),
     node:      process.versions.node,
     ndi:       grandiose.version().replace(/^.+\s+/, ""),
-    ffmpeg:    "4.3.2"
+    ffmpeg:    "4.3.2",
+    vuejs:     pkg.dependencies.vue
 }
 const support = {
     ndi:       grandiose.isSupportedCPU()
