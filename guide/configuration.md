@@ -124,17 +124,12 @@ The forth group of configuration fields target the Frameless output:
   inside OBS Studio.
 
 - **Output 1 / Video / Position**:<br/>
-  The position of the desktop window of the browser instance. If
-  **Output 1 / Video / Display** is empty or `0,0` this is the position
-  in pixels of the browser window's top-left corner, relative to the
-  top-left corner of the primary display.
+  The position of the desktop window of the browser instance, relative
+  to the top-left corner of the **Output 1 / Video / Display**.
 
 - **Output 1 / Video / Display**:<br/>
-  The selection of the display. If empty or `0,0` the primary display
-  is used. Other displays can be selected with `-X,-Y` relative to the
-  primary display. For instance, `-1,0` is the display left to the
-  primary display, `0,+1` is the display at the top of the primary
-  display.
+  The selection of the display. The display number `0` is always
+  the primary display. The other displays are numbered `1`, `2`, etc.
 
 - **Output 1 / Video / Pin**:<br/>
   Enable or disable the pinning of the browser window to the top, i.e.,
