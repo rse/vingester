@@ -56,7 +56,6 @@
         "rimraf":                        "3.0.2",
         "which":                         "2.0.2",
         "moment":                        "2.29.1",
-        "fabric":                        "4.4.0",
         "dsig":                          "1.1.7",
         "vue":                           "3.0.7",
         "vue3-perfect-scrollbar":        "1.5.5",

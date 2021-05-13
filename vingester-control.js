@@ -12,7 +12,6 @@ const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 const VueTippy         = require("vue-tippy").default
 const clone            = require("clone")
 const moment           = require("moment")
-const { fabric }       = require("fabric")
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
@@ -292,8 +291,8 @@ const app = Vue.createApp({
                 for (const browser of this.browsers) {
                     /*  ...and displays  */
                     for (const display of this.displays) {
-                        const el = this.$refs[`display-icon-${browser.id}-${display.num}`]
-                        if (el === null)
+                        const canvas = this.$refs[`display-icon-${browser.id}-${display.num}`]
+                        if (canvas === null)
                             continue
 
                         /*  determine canvas size/ratio/scale  */
@@ -306,16 +305,18 @@ const app = Vue.createApp({
                         const scale = w / W
 
                         /*  render the screen blocks onto the canvas  */
-                        const canvas = new fabric.StaticCanvas(el, { width: W * scale, height: H * scale })
+                        canvas.width  = Math.round(W * scale)
+                        canvas.height = Math.round(H * scale)
+                        const ctx = canvas.getContext("2d")
+                        ctx.clearRect(0, 0, canvas.width, canvas.height)
                         for (const d of this.displays) {
-                            const rect = new fabric.Rect({
-                                left:   (w1 + d.x) * scale,
-                                top:    (h1 + d.y) * scale,
-                                width:  d.w * scale,
-                                height: d.h * scale,
-                                ...(d.num === display.num ? { fill: "#ffffff80" } : { fill: "#30303080" })
-                            })
-                            canvas.add(rect)
+                            ctx.fillStyle = (d.num === display.num ? "#ffffff80" : "#30303080")
+                            ctx.fillRect(
+                                Math.round((w1 + d.x) * scale),
+                                Math.round((h1 + d.y) * scale),
+                                Math.round(d.w * scale),
+                                Math.round(d.h * scale)
+                            )
                         }
                     }
                 }
