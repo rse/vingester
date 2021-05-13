@@ -14,6 +14,7 @@
 [Configuration](/configuration)
 [Performance](/performance)
 [Sources](/sources)<br/>
+[Visibility](/visibility)
 [Alternatives](/alternatives)
 [Imprint](/imprint)
 
