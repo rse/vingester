@@ -217,7 +217,7 @@ module.exports = class Browser {
         let visibleLast = null
         const notifyContent = (tally) => {
             /*  provide original event  */
-            raiseContentEvent("vingesterTallyChanged", tally)
+            raiseContentEvent("vingesterTallyChanged", { tally })
 
             /*  track visibility  */
             let visible = false  /*  OBS Studio: visible on preview/program or any display        */
@@ -583,7 +583,7 @@ module.exports = class Browser {
 
             /*  initially raise events  */
             setTimeout(() => {
-                raiseContentEvent("vingesterTallyChanged", "unconnected")
+                raiseContentEvent("vingesterTallyChanged", { tally: "unconnected" })
                 changeVisibilityState("hidden")
                 if (this.cfg.B) {
                     raiseContentEvent("obsSourceActiveChanged",  { active: false })
