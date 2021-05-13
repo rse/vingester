@@ -13,6 +13,7 @@ const rimraf      = require("rimraf")
 /*  require external modules  */
 const electron    = require("electron")
 const bluebird    = require("bluebird")
+const util        = require("./vingester-util.js")
 
 /*  browser abstraction  */
 module.exports = class Browser {
@@ -285,20 +286,16 @@ module.exports = class Browser {
         const title = (this.cfg.t == null ? "Vingester" : this.cfg.t)
 
         /*  determine target display of browser window  */
-        const point = electron.screen.getCursorScreenPoint()
-        let D = electron.screen.getDisplayNearestPoint(point)
-        let m
-        if (this.cfg.d !== null && (m = this.cfg.d.match(/^([-+]?\d+),([-+]?\d+)$/))) {
-            const select = { x: parseInt(m[1]), y: parseInt(m[2]) }
-            const d = electron.screen.getPrimaryDisplay()
-            const w = d.size.width
-            const h = d.size.height
-            const point = {
-                x: (select.x * w) + (0.5 * w),
-                y: (select.y * h) + (0.5 * h)
-            }
-            D = electron.screen.getDisplayNearestPoint(point)
-        }
+        const displays = util.AvailableDisplays.determine(electron)
+        let display = displays.find((display) => display.num === this.cfg.d)
+        if (display === undefined)
+            display = displays.find((display) => display.num === 0)
+        const D = electron.screen.getDisplayMatching({
+            x:      display.x,
+            y:      display.y,
+            width:  display.w,
+            height: display.h
+        })
 
         /*  determine scale factor of browser window (on its target display)  */
         const factor = D.scaleFactor

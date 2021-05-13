@@ -627,10 +627,18 @@
                                             <div class="unit">px</div>
                                             <div class="label">Display:</div>
                                             <div class="field field-display"
-                                                v-tippy="{ placement: 'top', content: 'Selection of display for relative positioning. If empty or set to 0,0, X/Y-positions are relative to the primary display. Use -1,0 for the display on the left side, 0,-1 for the display at the top, etc.' }">
-                                                <input type="text" v-model="browser.d" v-on:keyup="changed(browser)"
-                                                    v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.d }"
-                                                    v-bind:disabled="running[browser.id]">
+                                                v-tippy="{ placement: 'top', content: 'Selection of display<br/>for relative positioning.' }">
+                                                <div class="toggle" v-on:click="toggle(browser, 'd', displays.map((d) => d.num))">
+                                                    <div v-for="display in displays" v-bind:key="display.num"
+                                                        class="toggle-option toggle-display"
+                                                        v-show="browser.d === display.num">
+                                                        <div class="num">{{ display.num }}</div>
+                                                        <canvas class="display-icon"
+                                                            v-bind:ref="'display-icon-' + browser.id + '-' + display.num"
+                                                            v-bind:class="[ 'display-icon-' + display.num ]">
+                                                        </canvas>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="label">Pin:</div>
                                             <div class="field field-pin"

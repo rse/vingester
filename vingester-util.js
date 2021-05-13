@@ -96,9 +96,26 @@ class ImageBufferAdjustment {
     }
 }
 
+/*  helper class for determining displays  */
+class AvailableDisplays {
+    static determine (electron) {
+        let i = 0
+        const pd = electron.screen.getPrimaryDisplay()
+        let displays = [ { num: i++, x: pd.bounds.x, y: pd.bounds.y, w: pd.bounds.width, h: pd.bounds.height } ]
+        displays = displays.concat(electron.screen.getAllDisplays()
+            .filter((d) => d.id !== pd.id)
+            .map((d) => ({ x: d.bounds.x, y: d.bounds.y, w: d.bounds.width, h: d.bounds.height }))
+            .sort((d1, d2) => d1.x - d2.x)
+            .sort((d1, d2) => d1.y - d2.y)
+            .map((d) => { d.num = i++; return d }))
+        return displays
+    }
+}
+
 module.exports = {
     WeightedAverage,
     ActionsPerTime,
-    ImageBufferAdjustment
+    ImageBufferAdjustment,
+    AvailableDisplays
 }
 

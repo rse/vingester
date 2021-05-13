@@ -916,6 +916,24 @@ body {
             &.field-adaptive .toggle {
                 width: 50px;
             }
+            &.field-display .toggle {
+                width: 40px;
+                .toggle-display {
+                    display: flex;
+                    flex-direction: row;
+                    .num {
+                        width: 10px;
+                        margin-right: 4px;
+                    }
+                    .display-icon {
+                        margin-top: 2px;
+                        /*
+                        height: 16px !important;
+                        width: 28px !important;
+                        */
+                    }
+                }
+            }
             &.field-samplerate .toggle {
                 width: 40px;
             }
@@ -939,7 +957,6 @@ body {
             }
             &.field-x > input,
             &.field-y > input,
-            &.field-display > input,
             &.field-width > input,
             &.field-height > input,
             &.field-zoom > input {

@@ -12,6 +12,7 @@ const PerfectScrollbar = require("vue3-perfect-scrollbar").default
 const VueTippy         = require("vue-tippy").default
 const clone            = require("clone")
 const moment           = require("moment")
+const { fabric }       = require("fabric")
 
 /*  etablish reasonable logging environment  */
 if (typeof process.env.DEBUG !== "undefined") {
@@ -44,7 +45,6 @@ const browserFields = [
     { name: "Q", def: "",            valid: /^.*$/ },
     { name: "x", def: "0",           valid: /^[+-]?\d+$/ },
     { name: "y", def: "0",           valid: /^[+-]?\d+$/ },
-    { name: "d", def: "",            valid: /^([+-]?\d+,[+-]?\d+)?$/ },
     { name: "A", def: "",            valid: /^.*$/ },
     { name: "f", def: "30",          valid: /^\d+$/ },
     { name: "O", def: "0",           valid: /^\d+$/ },
@@ -80,7 +80,8 @@ const app = Vue.createApp({
             updateProgress:    0,
             updateError:       null,
             audioDevices:      [],
-            tag:               null
+            tag:               null,
+            displays:          []
         }
     },
     computed: {
@@ -97,6 +98,7 @@ const app = Vue.createApp({
         log.info("creating")
         await this.updateAudioDevices()
         navigator.mediaDevices.addEventListener("devicechange", () => { this.updateAudioDevices() })
+        this.displays = await electron.ipcRenderer.invoke("display-list")
         this.load()
         electron.ipcRenderer.on("tag", (ev, tag) => {
             this.tag = tag
@@ -154,6 +156,12 @@ const app = Vue.createApp({
         })
         electron.ipcRenderer.on("stat", (ev, stat) => {
             this.stat[stat.id] = stat
+        })
+        electron.ipcRenderer.on("display-update", (ev, displays) => {
+            this.displays = displays
+            for (const browser of this.browsers)
+                this.validateState(browser)
+            this.renderDisplayIcons()
         })
         electron.ipcRenderer.on("rate", (ev, rate) => {
             if (this.rate[rate.id] === undefined)
@@ -262,6 +270,57 @@ const app = Vue.createApp({
         }, 2000)
     },
     methods: {
+        renderDisplayIcons () {
+            this.$nextTick(async () => {
+                /*  determine maximum width/height  */
+                let h1 = 0
+                let h2 = 0
+                let w1 = 0
+                let w2 = 0
+                for (const d of this.displays) {
+                    if (d.x < 0 && -d.x > w1)
+                        w1 = -d.x
+                    else if (d.x >= 0 && (d.x + d.w) > w2)
+                        w2 = (d.x + d.w)
+                    if (d.y < 0 && -d.y > h1)
+                        h1 = -d.y
+                    else if (d.y >= 0 && (d.y + d.h) > h2)
+                        h2 = (d.y + d.h)
+                }
+
+                /*  iterate over all browser...  */
+                for (const browser of this.browsers) {
+                    /*  ...and displays  */
+                    for (const display of this.displays) {
+                        const el = this.$refs[`display-icon-${browser.id}-${display.num}`]
+                        if (el === null)
+                            continue
+
+                        /*  determine canvas size/ratio/scale  */
+                        const W = w1 + w2
+                        const H = h1 + h2
+                        const R = W / H
+                        let w, h
+                        if (R >= 1.0) { w = 28;     h = 28 / R }
+                        else          { w = 16 * R; h = 16     }
+                        const scale = w / W
+
+                        /*  render the screen blocks onto the canvas  */
+                        const canvas = new fabric.StaticCanvas(el, { width: W * scale, height: H * scale })
+                        for (const d of this.displays) {
+                            const rect = new fabric.Rect({
+                                left:   (w1 + d.x) * scale,
+                                top:    (h1 + d.y) * scale,
+                                width:  d.w * scale,
+                                height: d.h * scale,
+                                ...(d.num === display.num ? { fill: "#ffffff80" } : { fill: "#30303080" })
+                            })
+                            canvas.add(rect)
+                        }
+                    }
+                }
+            })
+        },
         validateState (browser) {
             for (const field of browserFields) {
                 if (browser[field.name] === "")
@@ -271,6 +330,8 @@ const app = Vue.createApp({
                 else
                     delete this.invalid[browser.id][field.name]
             }
+            if (parseInt(browser.d) >= this.displays.length)
+                browser.d = (this.displays.length - 1)
         },
         resetState (id) {
             this.running[id] = false
@@ -299,6 +360,7 @@ const app = Vue.createApp({
                 this.validateState(browser)
             }
             this.browsers = browsers
+            this.renderDisplayIcons()
         },
         save: debounce(1000, async function () {
             await electron.ipcRenderer.invoke("browsers-save", clone(this.browsers))

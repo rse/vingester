@@ -333,7 +333,7 @@ electron.app.on("ready", async () => {
         { iname: "D", itype: "boolean", def: true,          etype: "boolean", ename: "Output1Enabled" },
         { iname: "x", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionX" },
         { iname: "y", itype: "string",  def: "0",           etype: "number",  ename: "Output1VideoPositionY" },
-        { iname: "d", itype: "string",  def: "",            etype: "string",  ename: "Output1VideoDisplay" },
+        { iname: "d", itype: "number",  def: 0,             etype: "number",  ename: "Output1VideoDisplay" },
         { iname: "p", itype: "boolean", def: false,         etype: "boolean", ename: "Output1VideoPinTop" },
         { iname: "A", itype: "string",  def: "",            etype: "string",  ename: "Output1AudioDevice" },
         { iname: "N", itype: "boolean", def: false,         etype: "boolean", ename: "Output2Enabled" },
@@ -526,6 +526,20 @@ electron.app.on("ready", async () => {
         }).catch(() => {
             return null
         })
+    })
+
+    /*  handle display information determination  */
+    let displays = []
+    const displaysDetermine = () => {
+        displays = util.AvailableDisplays.determine(electron)
+        control.webContents.send("display-update", displays)
+    }
+    displaysDetermine()
+    electron.screen.on("display-added",           () => { displaysDetermine() })
+    electron.screen.on("display-removed",         () => { displaysDetermine() })
+    electron.screen.on("display-metrics-changed", () => { displaysDetermine() })
+    electron.ipcMain.handle("display-list", async (ev) => {
+        return displays
     })
 
     /*  handle update check request from UI  */
