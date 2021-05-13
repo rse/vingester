@@ -15,6 +15,7 @@
 [Performance](/performance)
 [Sources](/sources)<br/>
 [Visibility](/visibility)
+[Development](/development)
 [Alternatives](/alternatives)
 [Imprint](/imprint)
 
