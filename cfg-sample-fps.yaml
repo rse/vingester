@@ -25,7 +25,7 @@
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
-    Output1VideoDisplay:           ""
+    Output1VideoDisplay:           0
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
@@ -63,7 +63,7 @@
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
-    Output1VideoDisplay:           ""
+    Output1VideoDisplay:           0
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
@@ -101,7 +101,7 @@
     Output1Enabled:                false
     Output1VideoPositionX:         0
     Output1VideoPositionY:         0
-    Output1VideoDisplay:           ""
+    Output1VideoDisplay:           0
     Output1VideoPinTop:            false
     Output1AudioDevice:            ""
     Output2Enabled:                true
