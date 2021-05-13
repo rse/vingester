@@ -219,27 +219,30 @@ module.exports = class Browser {
             /*  provide original event  */
             raiseContentEvent("vingesterTallyChanged", tally)
 
-            /*  optionally simulate OBS Studio events  */
-            if (this.cfg.B) {
-                let visible = false  /*  visible on preview/program or any display        */
-                let active  = false  /*  visible on preview/program and stream/recording  */
-                if (tally === "preview")
-                    visible = true
-                else if (tally === "program") {
-                    visible = true
-                    active  = true
-                }
-                if (visibleLast !== visible) {
+            /*  track visibility  */
+            let visible = false  /*  OBS Studio: visible on preview/program or any display        */
+            let active  = false  /*  OBS Studio: visible on preview/program and stream/recording  */
+            if (tally === "preview")
+                visible = true
+            else if (tally === "program") {
+                visible = true
+                active  = true
+            }
+            if (visibleLast !== visible) {
+                if (this.cfg.B) {
                     raiseContentEvent("obsSourceVisibleChanged", { visible })
                     this.log.info(`browser: new OBS DOM VISIBLE state: ${visible}`)
-                    visibleLast = visible
                 }
-                if (activeLast !== active) {
-                    changeVisibilityState(active ? "visible" : "hidden")
+                visibleLast = visible
+            }
+            if (activeLast !== active) {
+                this.log.info(`browser: new DOM VISIBILITY state: ${active}`)
+                changeVisibilityState(active ? "visible" : "hidden")
+                if (this.cfg.B) {
                     raiseContentEvent("obsSourceActiveChanged", { active })
                     this.log.info(`browser: new OBS DOM ACTIVE state: ${active}`)
-                    activeLast = active
                 }
+                activeLast = active
             }
         }
 
