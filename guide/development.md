@@ -66,13 +66,22 @@ development environments:
   [Node.js&reg;](https://nodejs.org),
   [Git](https://git-scm.com/).
 
-To build **Vingester** from scratch and then run it without packaging,
+To build **Vingester** from scratch without packaging,
 perform the following steps:
 
 ```sh
 git clone https://github.com/rse/vingester
 cd vingester
 npm install
+```
+
+To run **Vingester** without packaging and in an automatic
+"restart-on-code-change" mode, perform the following step:
+
+```sh
 npm start
 ```
+
+In this mode, just edit the source files in parallel. On each
+write, **Vingester** is automatically restarted within a second.
 
