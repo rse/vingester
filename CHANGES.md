@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 2.0.1
+    - IMPROVEMENT: provide a more convenient "npm start" task for development
+    - UPGRADE: upgrade minor dependencies
+
 - 2.0.0
     - EXTENSION: add "Trust" (ignore SSL/TLS certs) functionality
     - EXTENSION: add "Node.js API" (enable Node API integration) functionality
