@@ -6,6 +6,16 @@ Sources
 both local (scheme `file:`) and remote (schemes `http:` and `https:`) locations.
 A few typical use-cases and their particular sources are explained in more detail here.
 
+Test Page
+---------
+
+### Vingester Test Content
+
+In order to quickly test-drive the rendering of Web Content inside
+**Vingester**, there is a short Single-Page Application (SPA) under
+https://vingester.app/test/ which just shows an animated **Vingester**
+logo and some browser details.
+
 Online Conferences 
 ------------------
 
