@@ -295,13 +295,15 @@ const app = Vue.createApp({
                         if (canvas === null)
                             continue
 
-                        /*  determine canvas size/ratio/scale  */
+                        /*  determine canvas size/ratio  */
                         const W = w1 + w2
                         const H = h1 + h2
                         const R = W / H
-                        let w, h
-                        if (R >= 1.0) { w = 28;     h = 28 / R }
-                        else          { w = 16 * R; h = 16     }
+
+                        /*  determine canvas scaling (down to fit 28x16)  */
+                        let w
+                        if (R >= 1.0) w = 28
+                        else          w = 16 * R
                         const scale = w / W
 
                         /*  render the screen blocks onto the canvas  */

@@ -5,6 +5,7 @@ Changes
 - 2.0.1
     - IMPROVEMENT: provide a more convenient "npm start" task for development
     - UPGRADE: upgrade minor dependencies
+    - CLEANUP: make ESLint happy and cleanup code
 
 - 2.0.0
     - EXTENSION: add "Trust" (ignore SSL/TLS certs) functionality
