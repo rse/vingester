@@ -383,6 +383,7 @@ const app = Vue.createApp({
             this.browsers.push(browser)
             this.resetState(id)
             this.validateState(browser)
+            this.renderDisplayIcons()
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
@@ -415,6 +416,7 @@ const app = Vue.createApp({
             this.browsers.push(browser)
             this.resetState(id)
             this.validateState(browser)
+            this.renderDisplayIcons()
             this.save()
             await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
         },
