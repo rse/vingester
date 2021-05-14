@@ -7,6 +7,7 @@ Changes
     - IMPROVEMENT: provide an audio device "(none)" for getting rid of audio in Frameless mode
     - IMPROVEMENT: pass video framerate to FFmpeg sink for better quality and dynamically determine default bitrate
     - UPGRADE: upgrade minor dependencies
+    - BUGFIX: fix packaging under Windows with Node 16 where cross-zip failed
     - CLEANUP: make ESLint happy and cleanup code
 
 - 2.0.0
