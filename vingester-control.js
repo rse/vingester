@@ -500,6 +500,7 @@ const app = Vue.createApp({
             this.audioDevices = devices
                 .filter((device) => device.kind === "audiooutput")
                 .map((device) => { return device.label })
+                .concat("(none)")
         },
         changeOption (browser, field, value) {
             this.changed(browser)

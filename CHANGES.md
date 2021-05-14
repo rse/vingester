@@ -4,6 +4,7 @@ Changes
 
 - 2.0.1
     - IMPROVEMENT: provide a more convenient "npm start" task for development
+    - IMPROVEMENT: provide an audio device "(none)" for getting rid of audio in Frameless mode
     - UPGRADE: upgrade minor dependencies
     - CLEANUP: make ESLint happy and cleanup code
 

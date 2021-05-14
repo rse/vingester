@@ -96,8 +96,9 @@
 
             /*  internal state  */
             let attached = 0
-            const nodes  = new Map()
-            const tracks = new Map()
+            const nodes     = new Map()
+            const tracks    = new Map()
+            const listeners = new Map()
 
             /*  attach/detach a particular node  */
             const trackAdd = (when, track) => {
@@ -131,14 +132,37 @@
             const attach = async (when, node) => {
                 if (!nodes.has(node)) {
                     if (vingester.cfg.D) {
-                        let devices = await navigator.mediaDevices.enumerateDevices()
-                        if (vingester.cfg.A === "")
-                            devices = devices.filter((d) => d.kind === "audiooutput" && d.deviceId === "default")
-                        else
+                        if (vingester.cfg.A === "(none)") {
+                            vingester.log(`on ${when} mute audio of ${node.tagName}`)
+                            const audioMuteItOnce = () => {
+                                node.muted  = true
+                                node.volume = 0
+                            }
+                            const audioMuteIt = () => {
+                                audioMuteItOnce()
+                                setTimeout(audioMuteItOnce, 100)
+                                setTimeout(audioMuteItOnce, 200)
+                                setTimeout(audioMuteItOnce, 300)
+                                setTimeout(audioMuteItOnce, 400)
+                                setTimeout(audioMuteItOnce, 500)
+                            }
+                            node.addEventListener("canplay",      audioMuteIt)
+                            node.addEventListener("play",         audioMuteIt)
+                            node.addEventListener("volumechange", audioMuteIt)
+                            listeners.set(node, audioMuteIt)
+                            audioMuteIt()
+                        }
+                        else if (vingester.cfg.A === "") {
+                            vingester.log(`on ${when} redirect audio of ${node.tagName} to default device`)
+                            await node.setSinkId("default").catch((ex) => void (0))
+                        }
+                        else {
+                            let devices = await navigator.mediaDevices.enumerateDevices()
                             devices = devices.filter((d) => d.kind === "audiooutput" && d.label === vingester.cfg.A)
-                        if (devices.length === 1) {
-                            vingester.log(`on ${when} redirect audio of ${node.tagName} to device "${devices[0].label}"`)
-                            await node.setSinkId(devices[0].deviceId).catch((ex) => void (0))
+                            if (devices.length === 1) {
+                                vingester.log(`on ${when} redirect audio of ${node.tagName} to device "${devices[0].label}"`)
+                                await node.setSinkId(devices[0].deviceId).catch((ex) => void (0))
+                            }
                         }
                         nodes.set(node, true)
                     }
@@ -157,8 +181,19 @@
             const detach = (when, node) => {
                 if (nodes.has(node)) {
                     if (vingester.cfg.D) {
-                        vingester.log(`on ${when} unredirect audio of ${node.tagName}`)
-                        node.setSinkId("default").catch((ex) => void (0))
+                        if (vingester.cfg.A === "(none)") {
+                            vingester.log(`on ${when} unmute audio of ${node.tagName}`)
+                            const listener = listeners.get(node)
+                            node.removeEventListener("canplay",      listener)
+                            node.removeEventListener("play",         listener)
+                            node.removeEventListener("volumechange", listener)
+                            node.muted  = false
+                            node.volume = 1
+                        }
+                        else if (vingester.cfg.A !== "") {
+                            vingester.log(`on ${when} unredirect audio of ${node.tagName}`)
+                            node.setSinkId("default").catch((ex) => void (0))
+                        }
                     }
                     if (vingester.cfg.N) {
                         vingester.log(`on ${when} detach from ${node.tagName} node`)
