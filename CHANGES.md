@@ -5,6 +5,7 @@ Changes
 - 2.0.3
     - UPGRADE: upgrade to VueJS 3.0.11
     - BUGFIX: use "npx electron" in "npm start" for portability reasons
+    - BUGFIX: the width/height of browsers in Headless mode were incorrectly calculated
 
 - 2.0.2
     - BUGFIX: correctly display the graphical display icon on added/cloned browser configurations

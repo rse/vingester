@@ -301,8 +301,8 @@ module.exports = class Browser {
         const factor = D.scaleFactor
 
         /*  determine width/height of browser window (on its target display)  */
-        const width  = Math.round(this.cfg.w / factor)
-        const height = Math.round(this.cfg.h / factor)
+        const width  = this.cfg.D ? Math.round(this.cfg.w / factor) : this.cfg.w
+        const height = this.cfg.D ? Math.round(this.cfg.h / factor) : this.cfg.h
 
         /*  determine position of browser window (on its target display)  */
         let pos = {}
