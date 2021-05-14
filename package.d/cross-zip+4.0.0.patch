@@ -7,7 +7,7 @@ index 52fb9ad..28d7fee 100644
        inPath = tmpPath
      }
 -    fs.rmdirSync(outPath, { recursive: true, maxRetries: 3 })
-+    fs.rmSync(outPath, { recursive: true, maxRetries: 3 })
++    fs.rmSync(outPath, { recursive: true, maxRetries: 3, force: true })
    }
    var opts = {
      cwd: path.dirname(inPath),
