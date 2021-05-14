@@ -27,23 +27,39 @@
             body {
                 background: linear-gradient(#282828, #000000);
                 background-repeat: no-repeat;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                overflow: hidden;
+            }
+            .canvas {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 20px);
+                border: 10px solid #3366ff;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                width: calc(100vw - 20px);
-                height: calc(100vh - 20px);
-                margin: 0;
                 position: relative;
-                overflow: hidden;
-                border: 10px solid #3366cc;
+            }
+            .canvas.tally-unconnected {
+                border: 10px solid #c0c0c0;
+            }
+            .canvas.tally-connected {
+                border: 10px solid #00ff00;
+            }
+            .canvas.tally-preview {
+                border: 10px solid #e0e000;
+            }
+            .canvas.tally-program {
+                border: 10px solid #ff0000;
             }
             .page {
                 margin-top: 20px;
                 margin-bottom: 20px;
                 color: #c0c0c0;
                 font-family: "Source Sans Pro", sans-serif;
-                font-size: 12pt;
+                font-size: 16pt;
             }
             .page .brand {
                 display: flex;
@@ -68,38 +84,43 @@
                 letter-spacing: -2px;
             }
             .page .tab {
+                border: 1px solid #303030;
+                border-radius: 10px;
+                padding: 20px;
                 margin-top: 60px;
             }
             .page .tab .key {
                 vertical-align: top;
-                width: 80px;
+                width: 120px;
                 font-weight: 200;
                 color: #c0c0c0;
             }
             .page .tab .val {
                 vertical-align: top;
-                width: 400px;
+                width: 600px;
                 color: #c0c0c0;
             }
         </style>
     </head>
     <body>
-        <div class="page">
-            <div class="brand">
-                <div class="logo" ref="logo">
-                    <img class="icon" src="logo.svg" alt="Vingester"/>
+        <div class="canvas" v-bind:class="[ 'tally-' + tally ]">
+            <div class="page">
+                <div class="brand">
+                    <div class="logo" ref="logo">
+                        <img class="icon" src="logo.svg" alt="Vingester"/>
+                    </div>
+                    <div ref="title" class="title">
+                        Vingester
+                    </div>
                 </div>
-                <div ref="title" class="title">
-                    Vingester
-                </div>
+                <table class="tab">
+                    <tr><td class="key">Vingester:</td><td class="val"><b>{{ vingester }}</b></td></tr>
+                    <tr><td class="key">User-Agent:</td><td class="val">{{ useragent }}</td></tr>
+                    <tr><td class="key">Viewport:</td><td class="val"><b>{{ width }}</b> x <b>{{ height }}</b> px</td></tr>
+                    <tr><td class="key">Framerate:</td><td class="val"><b>{{ fps }}</b> fps</td></tr>
+                    <tr><td class="key">Tally:</td><td class="val"><b>{{ tally }}</b></td></tr>
+                </table>
             </div>
-            <table class="tab">
-                <tr><td class="key">Vingester:</td><td class="val">{{ vingester }}</td></tr>
-                <tr><td class="key">User-Agent:</td><td class="val">{{ useragent }}</td></tr>
-                <tr><td class="key">Viewport:</td><td class="val"><b>{{ width }}</b> x <b>{{ height }}</b> px</td></tr>
-                <tr><td class="key">Framerate:</td><td class="val"><b>{{ fps }}</b> fps</td></tr>
-                <tr><td class="key">Tally:</td><td class="val"><b>{{ tally }}</b></td></tr>
-            </table>
         </div>
     </body>
     <script type="text/javascript">
@@ -127,16 +148,16 @@
                         tl.add({ rotateX: [ 0, 360 ] })
                     else
                         tl.add({ rotateY: [ 0, 360 ] })
+                    tl.play()
                 }
                 setInterval(() => { animate() }, 4 * 1000)
+
+                /*  determine viewport size  */
                 this.width  = window.innerWidth
                 this.height = window.innerHeight
                 window.addEventListener("resize", () => {
                     this.width  = window.innerWidth
                     this.height = window.innerHeight
-                })
-                window.addEventListener("vingesterTallyChange", (ev, tally) => {
-                    this.tally = ev.detail.tally
                 })
 
                 /*  determine actual frames per second  */
@@ -167,8 +188,14 @@
                 }
                 requestAnimationFrame(calculate)
 
+                /*  once determine whether this is rendered inside Vingester  */
                 if (window.vingester)
                     this.vingester = "yes"
+
+                /*  optionally determine tally information  */
+                window.addEventListener("vingesterTallyChanged", (ev, tally) => {
+                    this.tally = ev.detail.tally
+                })
             }
         }).mount("body")
     </script>
