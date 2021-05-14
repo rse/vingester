@@ -333,7 +333,9 @@ const app = Vue.createApp({
                 else
                     delete this.invalid[browser.id][field.name]
             }
-            if (parseInt(browser.d) >= this.displays.length)
+            if (typeof browser.d !== "number")
+                browser.d = 0
+            if (browser.d >= this.displays.length)
                 browser.d = (this.displays.length - 1)
         },
         resetState (id) {

@@ -4,6 +4,7 @@ Changes
 
 - 2.0.2
     - BUGFIX: correctly display the graphical display icon on added/cloned browser configurations
+    - BUGFIX: do not stuble over old Vingester 1.x configurations of the display field
 
 - 2.0.1
     - IMPROVEMENT: provide a more convenient "npm start" task for development
