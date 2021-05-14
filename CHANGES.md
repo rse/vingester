@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.0.2
+    - BUGFIX: correctly display the graphical display icon on added/cloned browser configurations
+
 - 2.0.1
     - IMPROVEMENT: provide a more convenient "npm start" task for development
     - IMPROVEMENT: provide an audio device "(none)" for getting rid of audio in Frameless mode
