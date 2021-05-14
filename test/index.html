@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--
+**
+**  Vingester Test Content
+**  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Licensed under MIT license <https://spdx.org/licenses/MIT.html>
+**
+-->
+<html>
+    <head>
+        <title>Vingester Test Content</title>
+        <meta charset="UTF-8"/>
+        <link rel="shortcut icon" href="logo.ico">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.11/vue.global.prod.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <style type="text/css">
+            html {
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+            }
+            body {
+                background: linear-gradient(#282828, #000000);
+                background-repeat: no-repeat;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: calc(100vw - 20px);
+                height: calc(100vh - 20px);
+                margin: 0;
+                position: relative;
+                overflow: hidden;
+                border: 10px solid #3366cc;
+            }
+            .page {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                color: #c0c0c0;
+                font-family: "Source Sans Pro", sans-serif;
+                font-size: 12pt;
+            }
+            .page .brand {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-items: center;
+            }
+            .page .brand .logo {
+                width:  200px;
+                height: 200px;
+            }
+            .page .brand .logo .icon {
+                transform-origin: 50% 50%;
+                transform-style:  preserve-3d;
+            }
+            .page .brand .title {
+                color: #ffffff;
+                font-family: "Overlock", sans-serif;
+                font-weight: bold;
+                font-style: italic;
+                font-size: 64pt;
+                letter-spacing: -2px;
+            }
+            .page .tab {
+                margin-top: 60px;
+            }
+            .page .tab .key {
+                vertical-align: top;
+                width: 80px;
+                font-weight: 200;
+                color: #c0c0c0;
+            }
+            .page .tab .val {
+                vertical-align: top;
+                width: 400px;
+                color: #c0c0c0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="brand">
+                <div class="logo" ref="logo">
+                    <img class="icon" src="logo.svg" alt="Vingester"/>
+                </div>
+                <div ref="title" class="title">
+                    Vingester
+                </div>
+            </div>
+            <table class="tab">
+                <tr><td class="key">Vingester:</td><td class="val">{{ vingester }}</td></tr>
+                <tr><td class="key">User-Agent:</td><td class="val">{{ useragent }}</td></tr>
+                <tr><td class="key">Viewport:</td><td class="val"><b>{{ width }}</b> x <b>{{ height }}</b> px</td></tr>
+                <tr><td class="key">Framerate:</td><td class="val"><b>{{ fps }}</b> fps</td></tr>
+                <tr><td class="key">Tally:</td><td class="val"><b>{{ tally }}</b></td></tr>
+            </table>
+        </div>
+    </body>
+    <script type="text/javascript">
+        Vue.createApp({
+            data () {
+                return {
+                    vingester: "no",
+                    useragent: window.navigator.userAgent,
+                    width:     0,
+                    height:    0,
+                    fps:       0,
+                    tally:     "unknown"
+                }
+            },
+            mounted () {
+                /*  animate the logo  */
+                let i = 0
+                const animate = () => {
+                    const tl = anime.timeline({
+                        targets:  [ this.$refs.logo, this.$refs.title ],
+                        duration: 4000,
+                        easing:   "easeInOutQuad"
+                    })
+                    if (i++ % 2 === 0)
+                        tl.add({ rotateX: [ 0, 360 ] })
+                    else
+                        tl.add({ rotateY: [ 0, 360 ] })
+                }
+                setInterval(() => { animate() }, 4 * 1000)
+                this.width  = window.innerWidth
+                this.height = window.innerHeight
+                window.addEventListener("resize", () => {
+                    this.width  = window.innerWidth
+                    this.height = window.innerHeight
+                })
+                window.addEventListener("vingesterTallyChange", (ev, tally) => {
+                    this.tally = ev.detail.tally
+                })
+
+                /*  determine actual frames per second  */
+                const FPSwa = []
+                for (let i = 0; i < 60; i++)
+                    FPSwa[i] = 0
+                let last = null
+                const calculate = (now) => {
+                    if (last === null)
+                        last = now
+                    else {
+                        const delta = now - last
+                        const fps = 1000 / delta
+                        last = now
+                        FPSwa.pop()
+                        FPSwa.unshift(fps)
+                        let avg = 0
+                        let div = 0
+                        for (let i = 0; i < FPSwa.length; i++) {
+                            const k = FPSwa.length - i
+                            avg += FPSwa[i] * k
+                            div += k
+                        }
+                        avg /= div
+                        this.fps = Math.round(avg)
+                    }
+                    requestAnimationFrame(calculate)
+                }
+                requestAnimationFrame(calculate)
+
+                if (window.vingester)
+                    this.vingester = "yes"
+            }
+        }).mount("body")
+    </script>
+</html>
