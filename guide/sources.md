@@ -6,16 +6,6 @@ Sources
 both local (scheme `file:`) and remote (schemes `http:` and `https:`) locations.
 A few typical use-cases and their particular sources are explained in more detail here.
 
-Test Page
----------
-
-### Vingester Test Content
-
-In order to quickly test-drive the rendering of Web Content inside
-**Vingester**, there is a short Single-Page Application (SPA) under
-https://vingester.app/test/ which just shows an animated **Vingester**
-logo and some browser details.
-
 Online Conferences 
 ------------------
 
@@ -180,4 +170,14 @@ URLs of the form:
 An example ingest URL is:
 
 https://player.vimeo.com/video/99907545?autoplay=1&background=1&transparent=1&controls=0&quality=1080p
+
+Test Page
+---------
+
+### Vingester Test Content
+
+In order to quickly test-drive the rendering of Web Content inside
+**Vingester**, there is a short Single-Page Application (SPA) under
+https://vingester.app/test/ which just shows an animated **Vingester**
+logo and some browser details.
 
