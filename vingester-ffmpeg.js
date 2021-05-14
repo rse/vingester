@@ -22,6 +22,7 @@ module.exports = class FFmpeg extends EventEmitter {
             cwd:        "",
             format:     "matroska",
             args:       [],
+            vfr:        30,
             asr:        48000,
             ac:         2,
             log:        (level, msg) => {}
@@ -36,6 +37,16 @@ module.exports = class FFmpeg extends EventEmitter {
         if (this.proc !== null)
             await this.stop()
 
+        /*  determine reasonable default video bitrate  */
+        let bitrate
+        if      (this.options.vfr >= 60) bitrate = "7000k"
+        else if (this.options.vfr >= 50) bitrate = "6000k"
+        else if (this.options.vfr >= 40) bitrate = "5000k"
+        else if (this.options.vfr >= 30) bitrate = "4000k"
+        else if (this.options.vfr >= 20) bitrate = "3000k"
+        else if (this.options.vfr >= 10) bitrate = "2000k"
+        else                             bitrate = "1000k"
+
         /*  start ffmpeg(1) sub-process  */
         const options = [
             /*  top-level options  */
@@ -47,6 +58,7 @@ module.exports = class FFmpeg extends EventEmitter {
 
             /*  video input options  */
             "-f", "image2pipe",
+            "-framerate", this.options.vfr,
             "-pix_fmt", "rgba",
             "-i", "pipe:0",
 
@@ -64,12 +76,12 @@ module.exports = class FFmpeg extends EventEmitter {
 
             /*  specific output options (defaults)  */
             "-c:v", "h264",
+            "-r", this.options.vfr,
             "-c:a", "aac",
             "-preset", "veryfast",
-            "-b:v", "3000k",
+            "-b:v", bitrate,
+            "-bufsize", bitrate,
             "-pix_fmt", "yuv420p",
-            "-maxrate", "3000k",
-            "-bufsize", "6000k",
             "-movflags", "frag_keyframe+omit_tfhd_offset+empty_moov+default_base_moof+faststart",
             "-fflags", "flush_packets",
             "-y",

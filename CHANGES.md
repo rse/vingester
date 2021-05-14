@@ -5,6 +5,7 @@ Changes
 - 2.0.1
     - IMPROVEMENT: provide a more convenient "npm start" task for development
     - IMPROVEMENT: provide an audio device "(none)" for getting rid of audio in Frameless mode
+    - IMPROVEMENT: pass video framerate to FFmpeg sink for better quality and dynamically determine default bitrate
     - UPGRADE: upgrade minor dependencies
     - CLEANUP: make ESLint happy and cleanup code
 

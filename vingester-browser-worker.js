@@ -111,6 +111,7 @@ class BrowserWorker {
                     ffmpeg: this.cfg.ffmpeg,
                     cwd:    this.cfg.ffmpegCwd,
                     format: this.cfg.F,
+                    vfr:    this.cfg.f,
                     asr:    this.cfg.r,
                     ac:     this.cfg.C,
                     args:   this.cfg.M.split(/\s+/),
