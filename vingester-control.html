@@ -429,7 +429,10 @@
                                 <div class="button" v-tippy="{ placement: 'bottom', content: 'Clone this browser<br/>configuration entry.' }"
                                     v-show="!browser._"
                                     v-on:click="cloneBrowser(browser)">
-                                    <i class="fas fa-clone"></i>
+                                    <span class="icon-stack">
+                                        <span class="icon"><i class="fas fa-circle"></i></span>
+                                        <span class="icon"><i class="fas fa-clone" data-fa-transform="shrink-7"></i></span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="box">

@@ -16,6 +16,24 @@ body {
     font-family: "TypoPRO Source Sans Pro", sans-serif;
     font-size: 11pt;
     position: relative;
+    .icon-stack {
+        position: relative;
+        .icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .icon + .icon {
+            color: #555555;
+        }
+    }
+    .running {
+        .icon-stack {
+            .icon + .icon {
+                color: #336699;
+            }
+        }
+    }
     .ui-head {
         position: absolute;
         z-index: 300;
