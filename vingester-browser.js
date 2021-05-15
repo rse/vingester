@@ -576,16 +576,6 @@ module.exports = class Browser {
                 content.webContents.setZoomFactor(this.cfg.z / factor)
             else
                 content.webContents.setZoomFactor(this.cfg.z)
-
-            /*  initially raise events  */
-            setTimeout(() => {
-                raiseContentEvent("vingesterTallyChanged", { tally: "unconnected" })
-                changeVisibilityState("hidden")
-                if (this.cfg.B) {
-                    raiseContentEvent("obsSourceActiveChanged",  { active: false })
-                    raiseContentEvent("obsSourceVisibleChanged", { visible: false })
-                }
-            }, 100)
         })
 
         /*  finally load the Web Content  */

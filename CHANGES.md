@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.1.2
+    - BUGFIX: do not initially raise visibility/tally events to not confuse observers with wrong states
+
 - 2.1.1
     - IMPROVEMENT: show the number of NDI receivers in the tally circle in the preview window
     - CLEANUP: enlarge the minimum window size to at least allow a full browser configuration to be shown
