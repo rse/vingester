@@ -37,6 +37,7 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
@@ -75,6 +76,7 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
@@ -113,6 +115,7 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false

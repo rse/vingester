@@ -37,8 +37,9 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
-    Output2SinkFFmpegOptions:      ""
+    Output2SinkFFmpegOptions:      "the-expert-1.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
     Collapsed:                     false
@@ -75,8 +76,9 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
-    Output2SinkFFmpegOptions:      ""
+    Output2SinkFFmpegOptions:      "the-expert-2.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
     Collapsed:                     false
@@ -113,8 +115,9 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
-    Output2SinkFFmpegOptions:      ""
+    Output2SinkFFmpegOptions:      "the-expert-3.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
     Collapsed:                     false
@@ -151,8 +154,9 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
-    Output2SinkFFmpegOptions:      ""
+    Output2SinkFFmpegOptions:      "the-expert-4.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
     Collapsed:                     false
@@ -189,8 +193,9 @@
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
     Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
     Output2SinkFFmpegFormat:       "matroska"
-    Output2SinkFFmpegOptions:      ""
+    Output2SinkFFmpegOptions:      "the-expert-5.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
     Collapsed:                     false
