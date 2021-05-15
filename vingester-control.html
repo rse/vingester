@@ -768,18 +768,35 @@
                                             </div>
                                         </div>
                                         <div class="cluster" v-show="browser.m">
-                                            <div class="sep">-f</div>
-                                            <div class="field"
-                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output format. Use \'matroska\' (MKV) and \'mp4\' (MPEG-4) for recording and \'mpegts\' (MPEG-TS) and \'flv\' (FLV/RTMP) for streaming.' }">
-                                                <div class="toggle" v-on:click="toggle(browser, 'F', [ 'matroska', 'mp4', 'mpegts', 'flv' ])">
-                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'matroska' }">matroska</div>
-                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mp4' }">mp4</div>
-                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mpegts' }">mpegts</div>
-                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'flv' }">flv</div>
+                                            <div class="label label-ffmpeg-mode">Mode:</div>
+                                            <div class="field field-ffmpeg-mode"
+                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output quality mode. Use \'VBR/CRF\' (Variable Bit Rate / Constant Rate Factor) for recording, \'ABR\' (Adaptive Bit Rate) for (recording/)streaming and \'CBR\' (Constant Bit Rate) for streaming.' }">
+                                                <div class="toggle" v-on:click="toggle(browser, 'R', [ 'vbr', 'abr', 'cbr' ])">
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.R === 'vbr' }"><span class="icon"><i class="fas fa-file-video"></i></span> VBR</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.R === 'abr' }"><span class="icon"><i class="fas fa-podcast"></i></span> ABR</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.R === 'cbr' }"><span class="icon"><i class="fas fa-podcast"></i></span> CBR</div>
                                                 </div>
                                             </div>
-                                            <div class="field field-opts"
-                                                v-tippy="{ placement: 'top', content: 'Command line interface (CLI) arguments for FFmpeg output. The internally prepended (default) output options this way an be overridden and extended. Use e.g. for format \'matroska\' a filename like \'recording.mkv\', for format \'mp4\' a filename like \'recording.m4v\', for format \'mpegts\' a URL like \'udp://10.0.0.1:1234\' and for format \'flv\' a URL like \'rtmp://10.0.0.1:1935/live/example\'. At least a single output argument has to be given.' }">
+                                            <div class="label label-ffmpeg-format">Format:</div>
+                                            <div class="field field-ffmpeg-format"
+                                                v-tippy="{ placement: 'top', content: 'Click to toggle the FFmpeg sink output format. Use Matroska (MKV) and MPEG-4 for recording and MPEG-TS and FLV/RTMP for streaming.' }">
+                                                <div class="toggle" v-on:click="toggle(browser, 'F', [ 'matroska', 'mp4', 'mpegts', 'flv' ])">
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'matroska' }"><span class="icon"><i class="fas fa-file-video"></i></span> Matroska</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mp4' }"><span class="icon"><i class="fas fa-file-video"></i></span> MPEG-4</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'mpegts' }"><span class="icon"><i class="fas fa-podcast"></i></span> MPEG-TS</div>
+                                                    <div class="toggle-option" v-bind:class="{ selected: browser.F === 'flv' }"><span class="icon"><i class="fas fa-podcast"></i></span> FLV/RTMP</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" v-show="!browser._ && browser.N">
+                                        <div class="group"></div>
+                                        <div class="sub-group"></div>
+                                        <div class="label label-kind"></div>
+                                        <div class="cluster" v-show="browser.m">
+                                            <div class="label label-ffmpeg-args">Arguments:</div>
+                                            <div class="field field-ffmpeg-args"
+                                                v-tippy="{ placement: 'top', content: 'Command line interface (CLI) arguments for FFmpeg output. The internally prepended (default) output options this way an be overridden and extended. For instance, for mode \'VBR\' and format \'Matroska\', use a filename like \'recording.mkv\', for mode \'VBR\' and format \'MPEG-4\', use a filename like \'recording.m4v\', for mode \'CBR\' and format \'MPEG-TS\', use a URL like \'udp://10.0.0.1:1234\' and for mode \'CBR\' and format \'FLV\', use a URL like \'rtmp://10.0.0.1:1935/live/example\'. At least a single output argument has to be given.' }">
                                                 <input type="text" v-model="browser.M" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.M }"
                                                     v-bind:disabled="running[browser.id]">

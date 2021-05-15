@@ -936,8 +936,14 @@ body {
             &.field-kind .toggle {
                 width: 92px;
             }
-            &.field-opts > input {
-                width: 180px;
+            &.field-ffmpeg-mode .toggle {
+                width: 57px;
+            }
+            &.field-ffmpeg-format .toggle {
+                width: 85px;
+            }
+            &.field-ffmpeg-args > input {
+                width: 262px;
             }
             &.field-framerate > input {
                 width: 40px;

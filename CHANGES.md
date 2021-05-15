@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.1.0
+    - IMPROVEMENT: provide a FFmpeg "Mode" (VBR/ABR/CBR) field for better ffmpeg(1) CLI default options
+
 - 2.0.3
     - UPGRADE: upgrade to VueJS 3.0.11
     - BUGFIX: use "npx electron" in "npm start" for portability reasons

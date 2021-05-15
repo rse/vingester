@@ -20,9 +20,12 @@ module.exports = class FFmpeg extends EventEmitter {
         this.options = Object.assign({}, {
             ffmpeg:     "ffmpeg",
             cwd:        "",
+            width:      1280,
+            height:     720,
+            mode:       "vbr",
             format:     "matroska",
             args:       [],
-            vfr:        30,
+            fps:        30,
             asr:        48000,
             ac:         2,
             log:        (level, msg) => {}
@@ -37,17 +40,91 @@ module.exports = class FFmpeg extends EventEmitter {
         if (this.proc !== null)
             await this.stop()
 
-        /*  determine reasonable default video bitrate  */
-        let bitrate
-        if      (this.options.vfr >= 60) bitrate = "7000k"
-        else if (this.options.vfr >= 50) bitrate = "6000k"
-        else if (this.options.vfr >= 40) bitrate = "5000k"
-        else if (this.options.vfr >= 30) bitrate = "4000k"
-        else if (this.options.vfr >= 20) bitrate = "3000k"
-        else if (this.options.vfr >= 10) bitrate = "2000k"
-        else                             bitrate = "1000k"
+        /*  helper functions for bitrate calculation and size formatting  */
+        const bitrateCalc = () => {
+            /*  A general formula with the usual H.264 compression of 1:150 is:
+                [width] x [height] x [bpp] x [fps] * [compression-ratio] = [bitrate]  */
+            const bitrateH264 = (width, height, bpp, fps) => {
+                const bitrate = (width * height * bpp * fps) * (1 / 150)
+                return bitrate
+            }
 
-        /*  start ffmpeg(1) sub-process  */
+            /*  Kush Amerasinghe's "Kush Gauge" formula from
+                his "H.264 Primer" (https://issuu.com/konu/docs/h264_primer)
+                [width] x [height] x [fps] x [motion-rank] x 0.07 = [bitrate]  */
+            const bitrateKush = (width, height, bpp, fps) => {
+                const bitrate = width * height * fps * 1 * 0.07
+                return bitrate
+            }
+
+            /*  Dr. Ralf S. Engelschall's calculation, based on
+                the reference bitrate of 4500kbps for 1080p30 and
+                aligned to the usual YouTube bitrate expecations */
+            const bitrateRSE = (width, height, bpp, fps) => {
+                let bitrate   = 4500 * 1000
+                const refSize = 1920 * 1080
+                const refFPS  = 30
+                const size = width * height
+                if (size !== refSize)
+                    bitrate *= ((size / refSize) + 0.08)
+                if (fps !== refFPS)
+                    bitrate *= (fps / refFPS) * 0.75
+                return bitrate
+            }
+
+            /*  perform a weighted calculation  */
+            const bitrate1 = bitrateH264(this.options.width, this.options.height, 12, this.options.fps)
+            const bitrate2 = bitrateKush(this.options.width, this.options.height, 12, this.options.fps)
+            const bitrate3 = bitrateRSE(this.options.width, this.options.height, 12, this.options.fps)
+            let bitrate = (bitrate1 * 1.0 + bitrate2 * 1.0 + bitrate3 * 3.0) / 5.0
+
+            /*  round to 50kpbs  */
+            bitrate = (Math.round(bitrate / (50 * 1000))) * (50 * 1000)
+            return bitrate
+        }
+        const sizeFormat = (size) => {
+            if (size > 10000)
+                return (Math.round(size / 1000) + "k")
+            return (size + "")
+        }
+
+        /*  determine format specific options  */
+        let opts = []
+        if (this.options.format === "mp4")
+            opts = opts.concat("-movflags",
+                "frag_keyframe+omit_tfhd_offset+empty_moov+default_base_moof+faststart")
+
+        /*  determine reasonable default video bitrate  */
+        if (this.options.mode === "vbr") {
+            /*  Variable Bit Rate (VBR) / Constant Rate Factor (CRF) -- recording  */
+            opts = opts.concat(
+                "-preset", "medium",
+                "-crf", "22")
+        }
+        else if (this.options.mode === "abr") {
+            /*  Adaptive Bit Rate (ABR) -- (recording/)streaming  */
+            const bitrate = bitrateCalc()
+            opts = opts.concat(
+                "-preset", "veryfast",
+                "-b:v", sizeFormat(bitrate),
+                "-minrate", sizeFormat(bitrate * 0.5),
+                "-maxrate", sizeFormat(bitrate * 1.5),
+                "-fflags", "flush_packets")
+        }
+        else if (this.options.mode === "cbr") {
+            /*  Constant Bit Rate (CBR) -- streaming  */
+            const bitrate = bitrateCalc()
+            opts = opts.concat(
+                "-preset", "veryfast",
+                "-x264-params", "nal-hrd=cbr",
+                "-b:v", sizeFormat(bitrate),
+                "-minrate", sizeFormat(bitrate),
+                "-maxrate", sizeFormat(bitrate),
+                "-bufsize", sizeFormat(bitrate * 2),
+                "-fflags", "flush_packets")
+        }
+
+        /*  determine FFmpeg CLI arguments  */
         const options = [
             /*  top-level options  */
             "-loglevel", "0",
@@ -58,7 +135,7 @@ module.exports = class FFmpeg extends EventEmitter {
 
             /*  video input options  */
             "-f", "image2pipe",
-            "-framerate", this.options.vfr,
+            "-framerate", this.options.fps,
             "-pix_fmt", "rgba",
             "-i", "pipe:0",
 
@@ -76,14 +153,10 @@ module.exports = class FFmpeg extends EventEmitter {
 
             /*  specific output options (defaults)  */
             "-c:v", "h264",
-            "-r", this.options.vfr,
-            "-c:a", "aac",
-            "-preset", "veryfast",
-            "-b:v", bitrate,
-            "-bufsize", bitrate,
             "-pix_fmt", "yuv420p",
-            "-movflags", "frag_keyframe+omit_tfhd_offset+empty_moov+default_base_moof+faststart",
-            "-fflags", "flush_packets",
+            "-r", this.options.fps,
+            "-c:a", "aac",
+            ...opts,
             "-y",
 
             /*  specific output format  */
@@ -92,6 +165,8 @@ module.exports = class FFmpeg extends EventEmitter {
             /*  specific output options  */
             ...this.options.args
         ]
+
+        /*  start ffmpeg(1) sub-process  */
         this.options.log("info", `starting FFmpeg process: ${this.options.ffmpeg} ${options.join(" ")} (cwd: ${this.options.cwd})`)
         this.proc = execa(this.options.ffmpeg, options, {
             stdio: [ "pipe", "pipe", "pipe", "pipe" ],

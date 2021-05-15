@@ -110,8 +110,11 @@ class BrowserWorker {
                 this.ffmpeg = new FFmpeg({
                     ffmpeg: this.cfg.ffmpeg,
                     cwd:    this.cfg.ffmpegCwd,
+                    width:  this.cfg.w,
+                    height: this.cfg.h,
+                    mode:   this.cfg.R,
                     format: this.cfg.F,
-                    vfr:    this.cfg.f,
+                    fps:    this.cfg.f,
                     asr:    this.cfg.r,
                     ac:     this.cfg.C,
                     args:   this.cfg.M.split(/\s+/),

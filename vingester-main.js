@@ -347,6 +347,7 @@ electron.app.on("ready", async () => {
         { iname: "o", itype: "string",  def: "0",           etype: "number",  ename: "Output2AudioDelay" },
         { iname: "n", itype: "boolean", def: true,          etype: "boolean", ename: "Output2SinkNDIEnabled" },
         { iname: "m", itype: "boolean", def: false,         etype: "boolean", ename: "Output2SinkFFmpegEnabled" },
+        { iname: "R", itype: "string",  def: "vbr",         etype: "string",  ename: "Output2SinkFFmpegMode" },
         { iname: "F", itype: "string",  def: "matroska",    etype: "string",  ename: "Output2SinkFFmpegFormat" },
         { iname: "M", itype: "string",  def: "",            etype: "string",  ename: "Output2SinkFFmpegOptions" },
         { iname: "P", itype: "boolean", def: false,         etype: "boolean", ename: "PreviewEnabled" },
