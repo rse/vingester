@@ -154,6 +154,7 @@ electron.app.on("ready", async () => {
     if (!(await pathExists(cfgDir)))
         await mkdirp(cfgDir, { mode: 0o755 })
     const sampleConfigs = [
+        { iname: "cfg-sample-test.yaml",   ename: "Sample-Test.yaml" },
         { iname: "cfg-sample-expert.yaml", ename: "Sample-Expert.yaml" },
         { iname: "cfg-sample-fps.yaml",    ename: "Sample-FPS.yaml" },
         { iname: "cfg-sample-obsn.yaml",   ename: "Sample-OBSN.yaml" }
