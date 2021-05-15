@@ -566,7 +566,6 @@ module.exports = class Browser {
                             js = await fs.promises.readFile(js, { encoding: "utf8" })
                         script += js
                     }
-                    this.log.info("EXEC", script)
                     frame.executeJavaScript(script, true)
                 }, this.cfg.k)
             }
