@@ -444,8 +444,11 @@
                                         </div>
                                     </div>
                                     <div class="tally" v-show="browser.N && running[browser.id]"
-                                        v-bind:class="[ 'tally-' + tally[browser.id] ]"
-                                        v-tippy="{ placement: 'bottom', content: 'NDI stream is ' + tally[browser.id] }">
+                                        v-bind:class="[ 'tally-' + tally[browser.id].status ]"
+                                        v-tippy="{ placement: 'bottom', content: 'NDI stream is ' + tally[browser.id].status + ' and has ' + tally[browser.id].connections + ' connections.' }">
+                                        <div class="connections">
+                                            {{ tally[browser.id].connections }}
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="group">BROWSER:</div>

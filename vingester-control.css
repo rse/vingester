@@ -706,17 +706,34 @@ body {
                 height: 16px;
                 border-radius: 9px;
                 border: 1px solid #00000080;
+                overflow: hidden;
+                .connections {
+                    font-size: 12px;
+                    text-align: center;
+                }
                 &.tally-unconnected {
                     background-color: #555555;
+                    .connections {
+                        color: #ffffff;
+                    }
                 }
                 &.tally-connected {
-                    background-color: #00e000;
+                    background-color: #30a030;
+                    .connections {
+                        color: #ffffff;
+                    }
                 }
                 &.tally-preview {
-                    background-color: #e0e000;
+                    background-color: #c0a000;
+                    .connections {
+                        color: #ffffff;
+                    }
                 }
                 &.tally-program {
                     background-color: #e00000;
+                    .connections {
+                        color: #ffffff;
+                    }
                 }
             }
         }

@@ -197,7 +197,7 @@ const app = Vue.createApp({
             this.burst[stat.id][stat.type] = stat
         })
         electron.ipcRenderer.on("tally", (ev, msg) => {
-            this.tally[msg.id] = msg.status
+            this.tally[msg.id] = { status: msg.status, connections: msg.connections }
         })
         electron.ipcRenderer.on("capture", async (ev, capture) => {
             const canvas = this.$refs[`canvas-${capture.id}`]
@@ -345,7 +345,7 @@ const app = Vue.createApp({
                 video: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 },
                 audio: { avg: 0, min: 0, max: 0, tmin: 0, tmax: 0 }
             }
-            this.tally[id] = "unconnected"
+            this.tally[id] = { status: "unconnected", connections: 0 }
             this.trace[id] = { warning: 0, error: 0, messages: [] }
             this.invalid[id] = {}
         },

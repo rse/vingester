@@ -101,9 +101,9 @@ class BrowserWorker {
 
                     /*  send tally status  */
                     electron.ipcRenderer.sendTo(this.cfg.controlId, "tally",
-                        { status: this.ndiStatus, id: this.id })
+                        { status: this.ndiStatus, connections: conns, id: this.id })
                     electron.ipcRenderer.send("tally",
-                        { status: this.ndiStatus, id: this.id })
+                        { status: this.ndiStatus, connections: conns, id: this.id })
                 }, 1 * 500)
             }
             if (this.cfg.m) {

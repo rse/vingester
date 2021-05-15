@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 2.1.1
+    - IMPROVEMENT: show the number of NDI receivers in the tally circle in the preview window
+    - UPGRADE: upgrade minor dependencies
+
 - 2.1.0
     - IMPROVEMENT: provide a FFmpeg "Mode" (VBR/ABR/CBR) field for better ffmpeg(1) CLI default options
     - CLEANUP: use the same "circled" icons for all browser configuration entry icons
