@@ -93,8 +93,8 @@ body {
                 margin-right: 20px;
             }
         }
-        .button-info,
         .button-plus {
+            font-size: 16px;
             color: #e8d0b0;
             margin-top: 4px;
             padding-left: 4px;
@@ -645,6 +645,7 @@ body {
         .button {
             color: #cccccc;
             cursor: pointer;
+            font-size: 16px;
             &:hover {
                 color: #ffffff;
             }
