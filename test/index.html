@@ -118,6 +118,7 @@
                     <tr><td class="key">User-Agent:</td><td class="val">{{ useragent }}</td></tr>
                     <tr><td class="key">Viewport:</td><td class="val"><b>{{ width }}</b> x <b>{{ height }}</b> px</td></tr>
                     <tr><td class="key">Framerate:</td><td class="val"><b>{{ fps }}</b> fps</td></tr>
+                    <tr><td class="key">Visibility:</td><td class="val"><b>{{ visibility }}</b></td></tr>
                     <tr><td class="key">Tally:</td><td class="val"><b>{{ tally }}</b></td></tr>
                 </table>
             </div>
@@ -127,12 +128,13 @@
         Vue.createApp({
             data () {
                 return {
-                    vingester: "no",
-                    useragent: window.navigator.userAgent,
-                    width:     0,
-                    height:    0,
-                    fps:       0,
-                    tally:     "unknown"
+                    vingester:  "no",
+                    useragent:  window.navigator.userAgent,
+                    width:      0,
+                    height:     0,
+                    fps:        0,
+                    tally:      "unknown",
+                    visibility: ""
                 }
             },
             mounted () {
@@ -151,6 +153,7 @@
                     tl.play()
                 }
                 setInterval(() => { animate() }, 4 * 1000)
+                animate()
 
                 /*  determine viewport size  */
                 this.width  = window.innerWidth
@@ -195,6 +198,12 @@
                 /*  optionally determine tally information  */
                 window.addEventListener("vingesterTallyChanged", (ev, tally) => {
                     this.tally = ev.detail.tally
+                })
+
+                /*  optionally determine visibility state  */
+                this.visibility = document.visibilityState
+                window.addEventListener("visibilitychanged", () => {
+                    this.visibility = document.visibilityState
                 })
             }
         }).mount("body")
