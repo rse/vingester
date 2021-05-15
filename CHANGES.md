@@ -4,7 +4,7 @@ Changes
 
 - 2.1.1
     - IMPROVEMENT: show the number of NDI receivers in the tally circle in the preview window
-    - CLEANUP: enlarge the minimum window size to at least allow a full browser configuration top be shown
+    - CLEANUP: enlarge the minimum window size to at least allow a full browser configuration to be shown
     - UPGRADE: upgrade minor dependencies
 
 - 2.1.0
