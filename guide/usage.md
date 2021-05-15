@@ -140,6 +140,16 @@ and local functions (for a particular browser only).
 
 ### Local Functions
 
+- **Collapse/Expand**: Collapse/expand the browser configuration entry.
+
+- **Move Up**: Move the browser configuration entry up in the list.
+
+- **Move Down**: Move the browser configuration entry down in the list.
+
+- **Delete**: Delete the browser configuration entry.
+
+- **Clone**: Clone/duplicate the browser configuration entry.
+
 - **START**: Pressing this local button starts the browser.
 
 - **RELOAD**: Pressing this local button reloads the browser and this way its Web Contents.
