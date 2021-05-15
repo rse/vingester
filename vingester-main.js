@@ -170,7 +170,7 @@ electron.app.on("ready", async () => {
     const x = store.get("control.x", null)
     const y = store.get("control.y", null)
     const w = store.get("control.w", 840)
-    const h = store.get("control.h", 420)
+    const h = store.get("control.h", 575)
     const pos = (x !== null && y !== null ? { x, y } : {})
 
     /*  create main window  */
@@ -181,7 +181,7 @@ electron.app.on("ready", async () => {
         width:           w,
         height:          h,
         minWidth:        840,
-        minHeight:       420,
+        minHeight:       575,
         frame:           false,
         title:           "Vingester",
         backgroundColor: "#333333",
