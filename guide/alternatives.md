@@ -34,6 +34,12 @@ Decent Alternatives
   is that its Chromium Embedded Framework (CEF) and this way its
   contained Chromium engine is not the latest one.
 
+- [CasparCG Server](https://github.com/CasparCG/server): This
+  is also based on Chromium Embedded Framework (CEF) and especially
+  also supports playouts via NDI. The major drawback is that CasperCG
+  Server's CEF version and this way its contained Chromium engine is not
+  the latest one.
+
 Limited Alternatives
 --------------------
 
