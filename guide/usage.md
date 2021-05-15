@@ -138,6 +138,9 @@ and local functions (for a particular browser only).
     The sender sides can be opened via URLs like
     https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01/P01
 
+  - `Sample-Test.yaml`: single configuration containing the Vingester Test
+    page https://vingester.app/test/ for quick test-driving.
+
 ### Local Functions
 
 - **Collapse/Expand**: Collapse/expand the browser configuration entry.
