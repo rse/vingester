@@ -171,13 +171,25 @@ An example ingest URL is:
 
 https://player.vimeo.com/video/99907545?autoplay=1&background=1&transparent=1&controls=0&quality=1080p
 
-Test Page
----------
+Test Screens
+------------
 
-### Vingester Test Content
+### Vingester Test
 
 In order to quickly test-drive the rendering of Web Content inside
 **Vingester**, there is a short Single-Page Application (SPA) under
 https://vingester.app/test/ which just shows an animated **Vingester**
-logo and some browser details.
+logo and some browser details, including the viewport size, the content
+visibility state and the NDI tally state. Use it for checking smooth
+animations and environment information.
+
+https://vingester.app/test/
+
+### TV Test Pattern
+
+In order to quickly check colors and audio, you can use one of the
+standard television test patterns. A possible 4K test pattern with an
+ambient sound is:
+
+https://www.youtube.com/embed/5FOPHHD4uzs?autoplay=1&controls=0&rel=0
 
