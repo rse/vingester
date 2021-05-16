@@ -40,13 +40,46 @@ Software Architecture
 ---------------------
 
 **Vingester** uses an architecture, directly based on the Electron
-process model of a *main* process and multiple *renderer* processes.
-There is a single renderer process for the control user interface of
-**Vingester** itself plus two renderer processes (one for the Frameless
-or Headless browser, and one for a video-stream capturing worker) for
-each started browser instance. The limiting factor in this architecture
-unfortunately currently is the main process where all video-streams
-have to be passed through.
+process model of a *main* process and multiple *renderer*
+(`BrowserWindow`) processes. There is a single renderer process for
+the control user interface of **Vingester** itself plus two renderer
+processes (one for the Frameless or Headless browser, and one for a
+video-stream capturing worker) for each started browser instance.
+
+The separated processes for each browser and the further splitting
+between content and worker allows **Vingester** to leverage from
+multi-core CPUs. Unfortunately, the limiting factor in this architecture
+currently still is the *main* process where all video-streams have to be
+passed through.
+
+```nomnoml
+#fill: #f0f0f0; #ffffff
+#stroke: #333333
+#font: Source Sans Pro
+#fontSize: 12
+#lineWidth: 1
+#spacing: 20
+#padding: 0
+#edges: rounded
+
+[<frame> Vingester|
+    [main]<->[<frame> <<BrowserWindow>> Control|
+        [control]<->[<actor> actor]
+    ]
+    [main]<->[browser]
+    [browser]<->[<frame> <<BrowserWindow>> Content|
+         [<reference> content]->[browser-preload]
+         [content]<-[browser-postload]
+    ]
+    [browser]<->[<frame> <<BrowserWindow>> Worker|
+         [browser-worker]
+    ]
+    [main]->[ffmpeg]
+    [main]->[update]
+    [main]->[util]
+    [browser]->[util]
+]
+```
 
 Software Development
 --------------------
