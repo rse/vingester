@@ -51,8 +51,30 @@ parallel, too.
 The "Frameless" operation mode runs an on-screen browser instance. The
 output of this browser is displayed in a frameless desktop window,
 intended to be screen- or window-captured by a video mixing application
-like [OBS Studio](https://obsproject.com). The pros and cons
-of this operation mode are:
+like [OBS Studio](https://obsproject.com). 
+
+```nomnoml
+#direction: right
+#fill: #ffffff; #f0f0f0; #e0e0e0; #d0d0d0
+#stroke: #333333
+#font: Source Sans Pro
+#fontSize: 12
+#lineWidth: 1
+#spacing: 80
+#padding: 10
+#edges: rounded
+
+[<frame> Frameless Mode|
+    [Vingester]--[<frame> Chromium (onscreen)|
+        [<reference> content]
+    ]
+    [Chromium (onscreen)]--Capture[<frame> OBS Studio|
+        [OBS Window Capture (source)]
+    ]
+]
+```
+
+The pros and cons of this operation mode are:
 
 - Pro:
     - supports *full* GPU hardware acceleration
@@ -72,6 +94,29 @@ instance. The output of this browser is internally captured and
 sent out as a [NDI&reg;](https://www.ndi.tv/)-multicasted or
 [FFmpeg&trade;](https://ffmpeg.org)-based video stream for further use
 in local or remote video mixing applications or for local recording purposes.
+
+```nomnoml
+#direction: right
+#fill: #ffffff; #f0f0f0; #e0e0e0; #d0d0d0
+#stroke: #333333
+#font: Source Sans Pro
+#fontSize: 12
+#lineWidth: 1
+#spacing: 80
+#padding: 10
+#edges: rounded
+
+[<frame> Headless Mode|
+    [<frame> Vingester|
+        [<frame> Chromium (offscreen)|
+            [<reference> content]
+        ]
+    ]--NDI[<frame> OBS Studio|
+        [OBS NDI (source)]
+    ]
+]
+```
+
 The pros and cons of this operation mode are:
 
 - Pro:
