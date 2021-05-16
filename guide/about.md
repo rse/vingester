@@ -32,7 +32,29 @@ Source](https://github.com/obsproject/obs-browser) of [OBS
 Studio](https://obsproject.com/), using this approach for more than 2-3
 participants usually causes a dramatical performance drop-down in [OBS
 Studio](https://obsproject.com/) and as a side-effect at least regularly
-and noticably destroys the audio quality. By externally ingesting the
+and noticably destroys the audio quality. 
+
+```nomnoml
+#direction: right
+#fill: #ffffff; #f0f0f0; #e0e0e0
+#stroke: #333333
+#font: Source Sans Pro
+#fontSize: 12
+#lineWidth: 1
+#spacing: 80
+#padding: 0
+#edges: rounded
+
+[<frame> Original Workflow|
+    [<frame> Chrome|
+        [OBS.Ninja (sender)]
+    ]--WebRTC[<frame> OBS Studio|
+        [OBS NDI (source)]
+    ]
+]
+```
+
+By externally ingesting the
 video streams of meeting participants through **Vingester**, this
 performance degradation in [OBS Studio](https://obsproject.com/) can be
 avoided, although the total system load will be not necessarily lower.
@@ -54,4 +76,29 @@ even running them on different computers on the same LAN. Finally, as
 **Vingester** also supports [FFmpeg&trade;](https://ffmpeg.org) as the
 output sink, it can both locally record the video streams and send them
 to remote locations via WAN through streaming protocols like RTMP.
+
+```nomnoml
+#direction: right
+#fill: #ffffff; #f0f0f0; #e0e0e0; #d0d0d0
+#stroke: #333333
+#font: Source Sans Pro
+#fontSize: 12
+#lineWidth: 1
+#spacing: 80
+#padding: 0
+#edges: rounded
+
+[<frame> Optimized Workflow|
+    [<frame> Chrome|
+        [OBS.Ninja (sender)]
+    ]--WebRTC[<frame> Vingester|
+        [<frame> Chromium|
+            [OBS.Ninja (receiver)]
+        ]
+    ]
+    [Vingester]--NDI[<frame> OBS Studio|
+        [OBS NDI (source)]
+    ]
+]
+```
 

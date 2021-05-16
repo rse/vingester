@@ -53,7 +53,7 @@ currently still is the *main* process where all video-streams have to be
 passed through.
 
 ```nomnoml
-#fill: #f0f0f0; #ffffff
+#fill: #ffffff; #f0f0f0; #e0e0e0
 #stroke: #333333
 #font: Source Sans Pro
 #fontSize: 12
