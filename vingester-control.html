@@ -445,7 +445,7 @@
                                             <canvas v-bind:ref="'canvas-' + browser.id" width="160" height="90"></canvas>
                                         </div>
                                     </div>
-                                    <div class="tally" v-show="browser.N && running[browser.id]"
+                                    <div class="tally" v-show="browser.N && browser.n && running[browser.id]"
                                         v-bind:class="[ 'tally-' + tally[browser.id].status ]"
                                         v-tippy="{ placement: 'bottom', content: 'NDI stream is ' + tally[browser.id].status + ' and has ' + tally[browser.id].connections + ' connections.' }">
                                         <div class="connections">

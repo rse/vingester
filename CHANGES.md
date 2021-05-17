@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.1.3
+    - CLEANUP: show tally bulp only for NDI-based Headless mode, not for FFmpeg-based Headless mode
+
 - 2.1.2
     - BUGFIX: do not initially raise visibility/tally events to not confuse observers with wrong states
 
