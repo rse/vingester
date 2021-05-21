@@ -96,12 +96,12 @@ related aspects should be kept in mind:
   --profile=<dir> --config=<dir>.yaml` where `<name>` is something
   like `OBSN-1-2`, `OBSN-3-4` and `OSBN-5-6` and `<dir>` is the fully
   qualified filesystem path like `C:\Users\<username>\Desktop\OBSN-1-2`,
-  like `C:\Users\<username>\Desktop\OBSN-3-4` and like
+  `C:\Users\<username>\Desktop\OBSN-3-4` and
   `C:\Users\<username>\Desktop\OBSN-5-6`. When you now start **Vingester**
   with these shortcuts you get dedicated instances with their own
-  config, etc. In the example, you get 3 **Vingester** instances, each
+  configuration and obviously their own main process. In the example, you get 3 **Vingester** instances, each
   handles 2 OBS.Ninja sessions. This way your get 3 instead of just 1
-  processes which perform the output capturing.
+  main processes which perform the output capturing.
 
 Standard Modes
 --------------
