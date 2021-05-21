@@ -139,12 +139,12 @@ Golden Rule
 -----------
 
 > Remember: in any case of operation modes of **Vingester** and OBS
-> Studio, always ensure that the total CPU usage of your system never
-> exceeds about 80-90% or you certainly will be faced with quality
-> problems in both audio (clipping, lip-unsync) and video (frame loss)
-> streams. Also **Vingester** in a CPU overload situation will be no longer
-> responsible enough and internally queue more data than it is able to
-> send out.
+> Studio, always ensure that the total CPU usage of **a single CPU**
+> *and* the **system as a whole** *never* exceeds about 80-90% or you
+> certainly will be faced with quality problems in both audio (clipping,
+> lip-unsync) and video (frame loss) streams. Also **Vingester**, in
+> a CPU overload situation, will be no longer responsive enough and
+> internally queue more data than it is able to send out.
 
 Reference Points
 ----------------
