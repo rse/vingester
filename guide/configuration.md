@@ -204,16 +204,17 @@ The fifth group of configuration fields target the Headless output:
 
 - **Headless / Sink / FFmpeg / (Format)**:<br/>
   The command-line interface (CLI) argument of FFmpeg's `-f` option to
-  set the output format. You can select between `matroska` (MKV), `mp4`
-  (MPEG-4), `mpegts` (MPEG-TS), `flv` (Flash/FLV). Usually, you want to
-  use `matroska` for optimized local recording, `mp4` for alternative
-  local recording, `mpegts` for UDP-based remote streaming and `flv` for
-  RTMP-based remote streaming.
+  set the output format. You can select between Matroska (MKV), MPEG-4,
+  MPEG-TS, RTP and FLV/RTMP. Usually, you want to use Matroska for
+  optimized local recording, MPEG-4 for alternative local recording,
+  MPEG-TS for UDP-based remote streaming and RTP or FLV/RTMP for remote
+  streaming.
 
 - **Headless / Sink / FFmpeg / (Arguments)**:<br/>
   The command-line interface (CLI) arguments of FFmpeg to be appended to
   override the default options, set additional output options and to set
-  the output URL. For local recording use an argument like `example.mkv`.
-  For UDP-based streaming use an argument like `udp://10.0.0.1:12345`
-  and for RTMP-based streaming use an argument like `rtmp://10.0.0.1:1935/live/example`.
+  the output URL. For local recording use an argument like `example.mkv`
+  or `example.m4v`. For UDP-based streaming use an argument like
+  `udp://10.0.0.1:12345` or `rtp://10.0.0.1:12345`, and for RTMP-based
+  streaming use an argument like `rtmp://10.0.0.1:1935/live/example`.
 
