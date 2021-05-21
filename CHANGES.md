@@ -5,6 +5,8 @@ Changes
 - 2.1.3
     - IMPROVEMENT: for the FFmpeg sink, allow also the RTP "Format"
     - CLEANUP: show tally bulp only for NDI-based Headless mode, not for FFmpeg-based Headless mode
+    - UPGRADE: upgrade to Electron 12.0.7
+    - UPGRADE: upgrade minor dependencies
 
 - 2.1.2
     - BUGFIX: do not initially raise visibility/tally events to not confuse observers with wrong states
