@@ -149,7 +149,7 @@ Golden Rule
 Reference Points
 ----------------
 
-As four reference points for you:
+The following are four reference points for you:
 
 - In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
@@ -172,23 +172,23 @@ As four reference points for you:
   at about 60% average system load and without performance penalties.
 
 So, while the Headless mode is more flexible than the Frameless mode, it
-has just about half the performance. Keep this in mind!
+has just about half the performance. Keep this in mind, please!
 
 Source Framerate
 ----------------
 
-Finally, for "headless" NDI output ensure that your Web Contents is
+Finally, for Headless NDI output, ensure that your Web Contents is
 really producing at least the Frames-Per-Second (FPS) you requested from
-**Vingester**. For instance, compare the following three YouTube videos as
-the Web Contents:
+**Vingester**. For instance, compare the following three YouTube videos
+as the Web Contents:
 
-- [YouTube Video 24fps](https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0)
-- [YouTube Video 30fps](https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0)
-- [YouTube Video 60fps](https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0)
+- [YouTube Video 24 FPS](https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0)
+- [YouTube Video 30 FPS](https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0)
+- [YouTube Video 60 FPS](https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0)
 
-If you tell **Vingester** you want 30 fps, the first will effectively just
-output as a 24 fps stream (the reason is that the underlying Chromium
+If you tell **Vingester** you want 30 FPS, the first will effectively just
+output as a 24 FPS stream (the reason is that the underlying Chromium
 rendering engine will dynamically reduce the FPS if the content does not
 change as much as the requesting FPS wishes), the second and third will
-both output as a 30 fps stream.
+both output as a 30 FPS stream.
 
