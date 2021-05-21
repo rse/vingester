@@ -3,6 +3,7 @@ Changes
 =======
 
 - 2.1.3
+    - IMPROVEMENT: for the FFmpeg sink, allow also the RTP "Format"
     - CLEANUP: show tally bulp only for NDI-based Headless mode, not for FFmpeg-based Headless mode
 
 - 2.1.2
