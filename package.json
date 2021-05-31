@@ -25,7 +25,6 @@
         "patch-package":                 "6.4.7",
         "cross-zip":                     "4.0.0",
         "prompt-password":               "1.2.0",
-        "run-script-os-fix":             "1.0.4",
         "eslint":                        "7.27.0",
         "eslint-config-standard":        "16.0.3",
         "eslint-plugin-promise":         "4.3.1",
