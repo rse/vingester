@@ -21,6 +21,7 @@ const jsYAML      = require("js-yaml")
 const UUID        = require("pure-uuid")
 const moment      = require("moment")
 const mkdirp      = require("mkdirp")
+const FFmpeg      = require("@rse/ffmpeg")
 
 /*  require own modules  */
 const Browser     = require("./vingester-browser.js")
@@ -64,7 +65,7 @@ const version = {
     v8:        process.versions.v8.replace(/-electron.*$/, ""),
     node:      process.versions.node,
     ndi:       grandiose.version().replace(/^.+\s+/, ""),
-    ffmpeg:    "4.3.2",
+    ffmpeg:    FFmpeg.info.version,
     vuejs:     pkg.dependencies.vue
 }
 const support = {
@@ -122,20 +123,6 @@ if (!store.get("gpu")) {
     log.info("disabling GPU hardware acceleration (explicitly configured)")
     electron.app.disableHardwareAcceleration()
 }
-
-/*  determine path to embedded ffmpeg(1) executable  */
-let ffmpeg
-if (os.platform() === "win32")
-    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg.exe")
-        .replace("app.asar", "app.asar.unpacked"))
-else if (os.platform() === "darwin")
-    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg")
-        .replace("app.asar", "app.asar.unpacked"))
-else if (os.platform() === "linux")
-    ffmpeg = path.resolve(path.join(electron.app.getAppPath(), "vingester-ffmpeg.d", "ffmpeg")
-        .replace("app.asar", "app.asar.unpacked"))
-else
-    throw new Error(`operating system platform ${os.platform()} not supported`)
 
 /*  once electron is ready...  */
 electron.app.on("ready", async () => {
@@ -583,7 +570,7 @@ electron.app.on("ready", async () => {
     const controlBrowser = async (action, id, cfg) => {
         if (action === "add") {
             /*  add browser configuration  */
-            browsers[id] = new Browser(log, id, cfg, control, ffmpeg)
+            browsers[id] = new Browser(log, id, cfg, control, FFmpeg.binary)
         }
         else if (action === "mod") {
             /*  modify browser configuration  */

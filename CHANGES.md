@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 2.2.0
+    - UPGRADE: upgrade to Electron 13.0.1
+    - UPGRADE: upgrade to FFmpeg 4.4.0 (via new @rse/ffmpeg distribution)
+
 - 2.1.3
     - IMPROVEMENT: for the FFmpeg sink, allow also the RTP "Format"
     - CLEANUP: show tally bulp only for NDI-based Headless mode, not for FFmpeg-based Headless mode

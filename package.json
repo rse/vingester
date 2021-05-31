@@ -13,7 +13,7 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "12.0.9",
+        "electron":                      "13.0.1",
         "electron-builder":              "22.10.4",
         "electron-notarize":             "1.0.0",
         "cross-env":                     "7.0.3",
@@ -21,7 +21,6 @@
         "execa":                         "5.0.1",
         "glob":                          "7.1.7",
         "shell":                         "0.8.4",
-        "npm-install-fetch":             "1.3.2",
         "npm-run-all":                   "4.1.5",
         "patch-package":                 "6.4.7",
         "cross-zip":                     "4.0.0",
@@ -40,6 +39,7 @@
         "electron-log":                  "4.3.5",
         "electron-store":                "8.0.0",
         "bluebird":                      "3.7.2",
+        "@rse/ffmpeg":                   "1.0.1",
         "pcm-convert":                   "1.6.5",
         "@discordjs/opus":               "0.5.0",
         "ebml":                          "3.0.0",
@@ -74,7 +74,7 @@
         "appId":                         "com.engelschall.apps.vingester",
         "productName":                   "Vingester",
         "asar":                          true,
-        "asarUnpack":                    [ "vingester-ffmpeg.d/ffmpeg*",
+        "asarUnpack":                    [ "node_modules/@rse/ffmpeg/**",
                                            "node_modules/grandiose/**",
                                            "node_modules/@discordjs/opus/**" ],
         "removePackageScripts":          true,
@@ -154,10 +154,6 @@
         }
     },
     "scripts": {
-        "install":                       "npm-run-all -s install:fetch-prolog install:fetch install:fetch-epilog",
-        "install:fetch-prolog":          "node npm-install.js prolog",
-        "install:fetch":                 "npm-install-fetch --config npm-install.yaml",
-        "install:fetch-epilog":          "node npm-install.js epilog",
         "postinstall":                   "patch-package --patch-dir package.d && electron-builder install-app-deps",
         "lint":                          "eslint --config etc-eslint.yaml --ext js *.js && stylelint --config etc-stylelint.yaml *.css && htmllint --rc etc-htmllint.json *.html",
         "start":                         "cross-env DEBUG=1 nodemon --exec \"npx electron --trace-warnings .\" --watch . --ext html,yaml,css,js",
