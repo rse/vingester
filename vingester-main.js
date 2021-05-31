@@ -69,7 +69,8 @@ const version = {
     vuejs:     pkg.dependencies.vue
 }
 const support = {
-    ndi:       grandiose.isSupportedCPU()
+    ndi:       grandiose.isSupportedCPU(),
+    srt:       FFmpeg.info.protocols?.srt?.input === true
 }
 electron.ipcMain.handle("version", (ev) => { return version })
 electron.ipcMain.handle("support", (ev) => { return support })

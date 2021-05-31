@@ -5,6 +5,7 @@ Changes
 - 2.2.0
     - UPGRADE: upgrade to Electron 13.0.1
     - UPGRADE: upgrade to FFmpeg 4.4.0 (via new @rse/ffmpeg distribution)
+    - IMPROVEMENT: show tooltip hint to MPEG-TS/SRT and SRT URL only if FFmpeg supports SRT on platform
 
 - 2.1.3
     - IMPROVEMENT: for the FFmpeg sink, allow also the RTP "Format"
