@@ -157,7 +157,8 @@ The fifth group of configuration fields target the Headless output:
 - **Headless / Video / Frame Rate**:<br/>
   The Frames Per Second (FPS) for both capturing and sending the Web
   Contents. Use `24` for Cinema, `25` for PAL, `29.97` for NTSC, `30`
-  for Standard or even `60` for 2x Standard.
+  for Standard or even `60` for 2x Standard. Use `0` for
+  an audio-only stream.
 
 - **Headless / Video / Adaptive**:<br/>
   Enable or disable the NDI-Tally-based FPS adaption, i.e., the FPS
@@ -182,8 +183,9 @@ The fifth group of configuration fields target the Headless output:
 
 - **Headless / Audio / Channels**:<br/>
   The number of audio channels. Use `0` to disable the audio stream at
-  all, use `1` for a mono audio stream and use `2` for a stereo audio
-  stream. Ensure that this matches your Web Contents.
+  all (and get a video-only stream), use `1` for a mono audio stream and
+  use `2` for a stereo audio stream. Ensure that this matches your Web
+  Contents.
 
 - **Headless / Audio / Delay**:<br/>
   The delay of the audio frames in milliseconds. Use this if the video
