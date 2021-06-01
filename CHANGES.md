@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.2.2
+    - CLEANUP: factor out logging configuration into own source file
+
 - 2.2.1
     - UPGRADE: upgrade to Electron-Builder 22.11.5
     - EXTENSION: add Sample-Jitsi.yaml import configuration for Jitsi Meet sessions
