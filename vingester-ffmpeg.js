@@ -59,7 +59,7 @@ module.exports = class FFmpeg extends EventEmitter {
 
             /*  Dr. Ralf S. Engelschall's calculation, based on
                 the reference bitrate of 4500kbps for 1080p30 and
-                aligned to the usual YouTube bitrate expecations */
+                aligned to the usual YouTube bitrate expectations  */
             const bitrateRSE = (width, height, bpp, fps) => {
                 let bitrate   = 4500 * 1000
                 const refSize = 1920 * 1080
