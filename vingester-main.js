@@ -144,7 +144,8 @@ electron.app.on("ready", async () => {
         { iname: "cfg-sample-test.yaml",   ename: "Sample-Test.yaml" },
         { iname: "cfg-sample-expert.yaml", ename: "Sample-Expert.yaml" },
         { iname: "cfg-sample-fps.yaml",    ename: "Sample-FPS.yaml" },
-        { iname: "cfg-sample-vdon.yaml",   ename: "Sample-VDON.yaml" }
+        { iname: "cfg-sample-vdon.yaml",   ename: "Sample-VDON.yaml" },
+        { iname: "cfg-sample-jitsi.yaml",  ename: "Sample-Jitsi.yaml" }
     ]
     for (const sampleConfig of sampleConfigs) {
         const iname = path.join(appPath, sampleConfig.iname)

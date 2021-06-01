@@ -4,6 +4,7 @@ Changes
 
 - 2.2.1
     - UPGRADE: upgrade to Electron-Builder 22.11.5
+    - EXTENSION: add Sample-Jitsi.yaml import configuration for Jitsi Meet sessions
     - CLEANUP: renamed all references of OBS.Ninja to VDO.Ninja to follow its rebranding
     - CLEANUP: small code cleanups
 
