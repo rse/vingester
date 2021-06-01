@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!--
 **
-**  OBS.Ninja Trampoline
+**  VDO.Ninja Trampoline
 **  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **  Licensed under MIT license <https://spdx.org/licenses/MIT.html>
 **
 -->
 <html>
     <head>
-        <title>OBS.Ninja Trampoline</title>
+        <title>VDO.Ninja Trampoline</title>
         <meta charset="UTF-8"/>
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache">
@@ -157,24 +157,24 @@
         <div class="box">
             <!-- headline -->
             <div class="row">
-                <div class="title">OBS.Ninja Trampoline</div>
+                <div class="title">VDO.Ninja Trampoline</div>
             </div>
 
             <!-- description -->
             <div class="row">
                 <div class="desc">
-                    <a href="https://obs.ninja">OBS.Ninja</a> is an awesome peer-to-peer (P2P),
+                    <a href="https://obs.ninja">VDO.Ninja</a> (formerly OBS.Ninja) is an awesome peer-to-peer (P2P),
                     <a href="https://webrtc.org/">WebRTC</a> and browser based solution
                     for bringing the video/audio streams of presenters into the live event
                     production software <a href="https://obsproject.com">OBS Studio</a>,
                     with very low latency and high quality.
                     This form is just a URL simplification
                     trampoline, i.e., it takes a few intuitive URL parameters and redirects to the
-                    underlying complex technical URL of <a href="https://obs.ninja">OBS.Ninja</a>. It allows
-                    you to control <a href="https://obs.ninja">OBS.Ninja</a> parameters at a central
+                    underlying complex technical URL of <a href="https://obs.ninja">VDO.Ninja</a>. It allows
+                    you to control <a href="https://obs.ninja">VDO.Ninja</a> parameters at a central
                     place while being able to use clean, intuitive and stable URLs for both the
                     presenters and <a href="https://obsproject.com">OBS Studio</a>.
-                    The underlying <a href="https://obs.ninja">OBS.Ninja</a>
+                    The underlying <a href="https://obs.ninja">VDO.Ninja</a>
                     parameter sets are rather opinionated and hard-coded and are intended for
                     meeting or broadcast sessions with multiple presenters only. Broadcast sessions are
                     like meetings, where presenters can hear but not see each other,
@@ -310,7 +310,7 @@
             <!-- footer -->
             <div class="row">
                 <div class="foot">
-                    <a href="https://github.com/rse/obs-ninja-trampoline">OBS.Ninja Trampoline</a> 0.9.12 (2021-04-25)<br/>
+                    <a href="https://github.com/rse/vdo-ninja-trampoline">VDO.Ninja Trampoline</a> 1.0.0 (2021-06-01)<br/>
                     Copyright &copy; 2021 <a href="mailto:rse@engelschall.com">Dr. Ralf S. Engelschall</a><br/>
                     Licensed under <a href="https://spdx.org/licenses/MIT.html">MIT license</a>
                 </div>
@@ -322,11 +322,11 @@
         const isOBS    = !!window.obsstudio
         const isIOS    = !!window.navigator.userAgent.match(/(?:iPad|iPhone)/i)
         if (!(isChrome || isOBS || isIOS))
-            alert("ALERT: Sorry, Google Chrome or a Chromium-based browser is strongly recommended for OBS.Ninja. " +
+            alert("ALERT: Sorry, Google Chrome or a Chromium-based browser is strongly recommended for VDO.Ninja. " +
                 "Firefox, Safari or other browsers are not very well supported. " +
                 "Please start over with Google Chrome!")
         $(document).ready(() => {
-            /*  generate OBS.Ninja URL  */
+            /*  generate VDO.Ninja URL  */
             const makeURL = (room, pass, mode, audio, video, fps, effect, peer, name) => {
                 /*  determine audio quality  */
                 let st = 1
