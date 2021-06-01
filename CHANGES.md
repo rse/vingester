@@ -4,6 +4,8 @@ Changes
 
 - 2.2.1
     - UPGRADE: upgrade to Electron-Builder 22.11.5
+    - CLEANUP: renamed all references of OBS.Ninja to VDO.Ninja to follow its rebranding
+    - CLEANUP: small code cleanups
 
 - 2.2.0
     - UPGRADE: upgrade to Electron 13.0.1

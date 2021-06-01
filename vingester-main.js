@@ -8,7 +8,6 @@
 const path        = require("path")
 const fs          = require("fs")
 const process     = require("process")
-const os          = require("os")
 
 /*  require external modules  */
 const electron    = require("electron")
@@ -145,13 +144,14 @@ electron.app.on("ready", async () => {
         { iname: "cfg-sample-test.yaml",   ename: "Sample-Test.yaml" },
         { iname: "cfg-sample-expert.yaml", ename: "Sample-Expert.yaml" },
         { iname: "cfg-sample-fps.yaml",    ename: "Sample-FPS.yaml" },
-        { iname: "cfg-sample-obsn.yaml",   ename: "Sample-OBSN.yaml" }
+        { iname: "cfg-sample-vdon.yaml",   ename: "Sample-VDON.yaml" }
     ]
     for (const sampleConfig of sampleConfigs) {
         const iname = path.join(appPath, sampleConfig.iname)
         const ename = path.join(cfgDir,  sampleConfig.ename)
         await fs.promises.copyFile(iname, ename)
     }
+    await fs.promises.unlink(path.join(cfgDir, "Sample-OBSN.yaml")).catch(() => true)
 
     /*  determine main window position and size  */
     log.info("loading persistant settings")

@@ -3,13 +3,13 @@
 ##  Vingester Sample Configuration
 ##
 
-#   NOTICE: OBS.Ninja Sender Session
-#   https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01
+#   NOTICE: VDO.Ninja Sender Session
+#   https://vingester.app/vdon/#/sample/sample/sender/mono/720p/24/none/P01
 
 ---
 
--   BrowserTitle:                  "OBSN-P01"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 1"
+-   BrowserTitle:                  "VDON-P01"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 1"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -18,7 +18,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P01"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"
@@ -47,8 +47,8 @@
     ConsoleEnabled:                false
     Collapsed:                     false
 
--   BrowserTitle:                  "OBSN-P02"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 2"
+-   BrowserTitle:                  "VDON-P02"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 2"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -57,7 +57,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P02"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P02"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"
@@ -86,8 +86,8 @@
     ConsoleEnabled:                false
     Collapsed:                     false
 
--   BrowserTitle:                  "OBSN-P03"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 3"
+-   BrowserTitle:                  "VDON-P03"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 3"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -96,7 +96,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P03"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P03"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"
@@ -125,8 +125,8 @@
     ConsoleEnabled:                false
     Collapsed:                     false
 
--   BrowserTitle:                  "OBSN-P04"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 4"
+-   BrowserTitle:                  "VDON-P04"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 4"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -135,7 +135,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P04"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P04"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"
@@ -163,8 +163,8 @@
     ConsoleEnabled:                false
     Collapsed:                     false
 
--   BrowserTitle:                  "OBSN-P05"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 5"
+-   BrowserTitle:                  "VDON-P05"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 5"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -173,7 +173,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P05"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P05"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"
@@ -202,8 +202,8 @@
     ConsoleEnabled:                false
     Collapsed:                     false
 
--   BrowserTitle:                  "OBSN-P06"
-    BrowserInfo:                   "OBS.Ninja Session, Person No. 6"
+-   BrowserTitle:                  "VDON-P06"
+    BrowserInfo:                   "VDO.Ninja Session, Person No. 6"
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
@@ -212,7 +212,7 @@
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
     BrowserPersist:                false
-    InputURL:                      "https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P06"
+    InputURL:                      "https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P06"
     PatchDelay:                    0
     PatchFrame:                    ""
     PatchStyleType:                "inline"

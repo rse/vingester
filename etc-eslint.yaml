@@ -11,7 +11,7 @@ extends:
     - eslint-config-standard
 
 parserOptions:
-    ecmaVersion: 10
+    ecmaVersion: 11
     sourceType:  module
     ecmaFeatures:
         jsx:     false
