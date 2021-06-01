@@ -183,6 +183,12 @@ and local functions (for a particular browser only).
     The sender sides can be opened via URLs like
     https://vingester.app/vdon/#/sample/sample/sender/mono/720p/24/none/P01/P01
 
+  - `Sample-Jitsi.yaml`: six configurations containing six receiving sides of
+    the awesome WebRTC-based online meeting solution *Jitsi Meet*, ready
+    to be ingested in "Headless" mode via NDI&reg;.
+    The sender sides can be opened via URLs like
+    https://vingester.app/jitsi/#/sample/sample/sender/mono/720p/24/none/P01/P01
+
   - `Sample-Test.yaml`: single configuration containing the Vingester Test
     page https://vingester.app/test/ for quick test-driving.
 
