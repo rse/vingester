@@ -39,7 +39,7 @@ electron.dialog.showErrorBox = (title, content) => {
     log.info(`UI: exception: ${title}: ${content}`)
 }
 
-/*  determine versions  */
+/*  determine versions and supported features  */
 const version = {
     vingester: pkg.version,
     electron:  process.versions.electron,
