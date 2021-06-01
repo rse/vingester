@@ -22,11 +22,11 @@ Motivation
 Although not tied to this particular use case, **Vingester** was
 originally born for and is primarily intended as an essential
 companion application to [OBS Studio](https://obsproject.com/) and
-[OBS.Ninja](https://obs.ninja/), in order to ingest the video streams of
-[OBS.Ninja](https://obs.ninja/) meeting participants into an OBS Studio
+[VDO.Ninja](https://vdo.ninja/) (formerly OBS.Ninja), in order to ingest the video streams of
+[VDO.Ninja](https://vdo.ninja/) meeting participants into an OBS Studio
 based video production in an efficient and robust way.
 
-The challenge here is that although [OBS.Ninja](https://obs.ninja/)
+The challenge here is that although [VDO.Ninja](https://vdo.ninja/)
 could be directly running in a [Browser
 Source](https://github.com/obsproject/obs-browser) of [OBS
 Studio](https://obsproject.com/), using this approach for more than 2-3
@@ -47,7 +47,7 @@ and noticably destroys the audio quality.
 
 [<frame> Original Workflow|
     [<frame> Chrome|
-        [OBS.Ninja (sender)]
+        [VDO.Ninja (sender)]
     ]--WebRTC[<frame> OBS Studio|
         [OBS NDI (source)]
     ]
@@ -90,10 +90,10 @@ to remote locations via WAN through streaming protocols like RTMP.
 
 [<frame> Optimized Workflow|
     [<frame> Chrome|
-        [OBS.Ninja (sender)]
+        [VDO.Ninja (sender)]
     ]--WebRTC[<frame> Vingester|
         [<frame> Chromium|
-            [OBS.Ninja (receiver)]
+            [VDO.Ninja (receiver)]
         ]
     ]
     [Vingester]--NDI[<frame> OBS Studio|

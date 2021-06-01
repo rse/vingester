@@ -16,13 +16,13 @@ The first group of configuration fields target the browser:
   The title of the browser. For "Frameless" operation, this sets the
   title of the desktop window. For "Headless" operation, this sets
   the name of the NDI&reg; stream. Use a short unique identifier.
-  An example is `OBSN-P01` (for "OBS.Ninja Person 01").
+  An example is `VDON-P01` (for "VDO.Ninja Person 01").
 
 - **Browser / Info**:<br/>
   The optional information attached to the browser configuration.
   **Vingester** internally does *not* use this information at all.
   It is just for documentation purposes of the user.
-  An example is `OBS.Ninja Session, Person No. 1`.
+  An example is `VDO.Ninja Session, Person No. 1`.
 
 - **Browser / Size**:<br/>
   The width and height in pixels of the browser desktop window (in
@@ -60,7 +60,7 @@ The first group of configuration fields target the browser:
   Document Object Model (DOM) of the Web Contents. Usually, this should
   only be enabled for applications which explicitly check whether they
   are running under the OBS Studio Browser Source. The most prominent
-  example is OBS.Ninja, which this way supports tally light information.
+  example is VDO.Ninja, which this way supports tally light information.
 
 - **Browser / Persist**:<br/>
   Enable or disable the Web Contents session persistence. Enable it
@@ -74,7 +74,7 @@ The second group of configuration fields target the Web Contents itself:
 - **Input / URL**:<br/>
   The URL of the Web Contents to render. Typical examples are
   YouTube URLs like `https://www.youtube.com/embed/BKorP55Aqvg?autoplay=1&controls=0&rel=0`,
-  OBS.Ninja (Trampoline) URLs like `https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01`, etc.
+  VDO.Ninja (Trampoline) URLs like `https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P01`, etc.
   Ensure that the Web Contents does not require any interactions and optimally expands to 100% of the
   browser canvas. See [sources](sources#sources) for details on usual inputs.
 

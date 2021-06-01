@@ -9,27 +9,27 @@ A few typical use-cases and their particular sources are explained in more detai
 Online Conferences 
 ------------------
 
-### OBS.Ninja
+### VDO.Ninja
 
-[OBS.Ninja](https://obs.ninja) is an awesome WebRTC-based online meeting solution,
+[VDO.Ninja](https://vdo.ninja) (formerly OBS.Ninja) is an awesome WebRTC-based online meeting solution,
 especially intended for ingesting one or more participants into
-a broadcast production. [OBS.Ninja Trampoline](https://github.com/rse/obs-ninja-trampoline)
-and its [Vingester instance](https://vingester.app/obsn/) provides a convenient
-frontend to configure the involved OBS.Ninja sessions. For ingesting a participant
+a broadcast production. [VDO.Ninja Trampoline](https://github.com/rse/vdo.ninja-trampoline)
+and its [Vingester instance](https://vingester.app/vdon/) provides a convenient
+frontend to configure the involved VDO.Ninja sessions. For ingesting a participant
 *PersonID* in a room *RoomID* (and with room password *RoomPW*) with 720p24, URLs of the following form should be used:
 
-- Director: `https://vingester.app/obsn/#/`<br/>
+- Director: `https://vingester.app/vdon/#/`<br/>
   `<RoomID>/<RoomPW>/director/mono/720p/24/none/D`
-- Sender: `https://vingester.app/obsn/#/`<br/>
+- Sender: `https://vingester.app/vdon/#/`<br/>
   `<RoomID>/<RoomPW>/sender/mono/720p/24/none/<PersonID>`
-- Receiver: `https://vingester.app/obsn/#/`<br/>
+- Receiver: `https://vingester.app/vdon/#/`<br/>
   `<RoomID>/<RoomPW>/receiver/mono/720p/24/none/<PersonID>`
 
 An example set of URLs is:
 
-https://vingester.app/obsn/#/sample/sample/director/mono/720p/24/none/D<br/>
-https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01<br/>
-https://vingester.app/obsn/#/sample/sample/receiver/mono/720p/24/none/P01
+https://vingester.app/vdon/#/sample/sample/director/mono/720p/24/none/D<br/>
+https://vingester.app/vdon/#/sample/sample/sender/mono/720p/24/none/P01<br/>
+https://vingester.app/vdon/#/sample/sample/receiver/mono/720p/24/none/P01
 
 ### Jitsi Meet
 

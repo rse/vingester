@@ -90,17 +90,17 @@ related aspects should be kept in mind:
   multiple **Vingester** instances and spread your N browser instances onto
   for instance N/3 **Vingester** instances.
 
-  Suppose you want to ingest 6 OBS.Ninja sessions with **Vingester**. Under
+  Suppose you want to ingest 6 VDO.Ninja sessions with **Vingester**. Under
   Windows, create three individual shortcuts to the `Vingester.exe` and
   edit its properties by adding the command-line options `--tag=<name>
   --profile=<dir> --config=<dir>.yaml` where `<name>` is something
-  like `OBSN-1-2`, `OBSN-3-4` and `OSBN-5-6` and `<dir>` is the fully
-  qualified filesystem path like `C:\Users\<username>\Desktop\OBSN-1-2`,
-  `C:\Users\<username>\Desktop\OBSN-3-4` and
-  `C:\Users\<username>\Desktop\OBSN-5-6`. When you now start **Vingester**
+  like `VDON-1-2`, `VDON-3-4` and `OSBN-5-6` and `<dir>` is the fully
+  qualified filesystem path like `C:\Users\<username>\Desktop\VDON-1-2`,
+  `C:\Users\<username>\Desktop\VDON-3-4` and
+  `C:\Users\<username>\Desktop\VDON-5-6`. When you now start **Vingester**
   with these shortcuts you get dedicated instances with their own
   configuration and obviously their own main process. In the example, you get 3 **Vingester** instances, each
-  handles 2 OBS.Ninja sessions. This way your get 3 instead of just 1
+  handles 2 VDO.Ninja sessions. This way your get 3 instead of just 1
   main processes which perform the output capturing.
 
 Standard Modes
@@ -153,22 +153,22 @@ The following are four reference points for you:
 
 - In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
-  running under Windows 10 can ingest **9** OBS.Ninja sessions with 720p30
+  running under Windows 10 can ingest **9** VDO.Ninja sessions with 720p30
   at about 80% average system load and without performance penalties.
 
 - In **"Frameless"** mode, with **enabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 8-core i7-11700KF CPU and
-  running under Windows 10 can ingest **18** OBS.Ninja sessions with 720p30
+  running under Windows 10 can ingest **18** VDO.Ninja sessions with 720p30
   at about 40% average system load and without performance penalties.
 
 - In **"Headless"** mode, with **disabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 6-core i5-10600K CPU and
-  running under Windows 10 can ingest **4** OBS.Ninja sessions with 720p30
+  running under Windows 10 can ingest **4** VDO.Ninja sessions with 720p30
   at about 80% average system load and without performance penalties.
 
 - In **"Headless"** mode, with **disabled** GPU Hardware Acceleration
   and **disabled** previews, a PC based on a 8-core i7-11700KF CPU and
-  running under Windows 10 can ingest **8** OBS.Ninja sessions with 720p30
+  running under Windows 10 can ingest **8** VDO.Ninja sessions with 720p30
   at about 60% average system load and without performance penalties.
 
 So, while the Headless mode is more flexible than the Frameless mode, it

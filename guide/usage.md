@@ -177,11 +177,11 @@ and local functions (for a particular browser only).
     documentation videos on YouTube for demonstrating different source
     Frames Per Second (FPS) scenarios.
 
-  - `Sample-OBSN.yaml`: six configurations containing six receiving sides of
-    the awesome WebRTC-based online meeting solution *OBS.Ninja*, ready
+  - `Sample-VDON.yaml`: six configurations containing six receiving sides of
+    the awesome WebRTC-based online meeting solution *VDO.Ninja*, ready
     to be ingested in "Headless" mode via NDI&reg;.
     The sender sides can be opened via URLs like
-    https://vingester.app/obsn/#/sample/sample/sender/mono/720p/24/none/P01/P01
+    https://vingester.app/vdon/#/sample/sample/sender/mono/720p/24/none/P01/P01
 
   - `Sample-Test.yaml`: single configuration containing the Vingester Test
     page https://vingester.app/test/ for quick test-driving.
