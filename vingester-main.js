@@ -11,7 +11,6 @@ const process     = require("process")
 
 /*  require external modules  */
 const electron    = require("electron")
-const electronLog = require("electron-log")
 const grandiose   = require("grandiose")
 const Store       = require("electron-store")
 const debounce    = require("throttle-debounce").debounce
@@ -26,24 +25,8 @@ const FFmpeg      = require("@rse/ffmpeg")
 const Browser     = require("./vingester-browser.js")
 const Update      = require("./vingester-update.js")
 const util        = require("./vingester-util.js")
+const log         = require("./vingester-log.js").scope("main")
 const pkg         = require("./package.json")
-
-/*  etablish reasonable logging environment  */
-if (typeof process.env.DEBUG !== "undefined") {
-    electronLog.transports.file.level    = "debug"
-    electronLog.transports.console.level = "debug"
-    electronLog.transports.ipc.level     = false
-}
-else {
-    electronLog.transports.file.level    = "info"
-    electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = false
-}
-electronLog.transports.remote.level   = false
-electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
-electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
-const log = electronLog.scope("main")
-log.debug(`(find persistent log under ${electronLog.transports.file.getFile()})`)
 
 /*  get rid of unnecessary security warnings when debugging  */
 if (typeof process.env.DEBUG !== "undefined") {

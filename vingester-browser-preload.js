@@ -5,28 +5,12 @@
 */
 
 (function () {
-    /*  require external modules  */
-    const electron    = require("electron")
-    const electronLog = require("electron-log")
-
     /*  parse passed-through browser configuration  */
     const cfg = JSON.parse(process.argv[process.argv.length - 1])
 
-    /*  etablish reasonable logging environment  */
-    if (typeof process.env.DEBUG !== "undefined") {
-        electronLog.transports.file.level    = false
-        electronLog.transports.console.level = false
-        electronLog.transports.ipc.level     = "debug"
-    }
-    else {
-        electronLog.transports.file.level    = false
-        electronLog.transports.console.level = false
-        electronLog.transports.ipc.level     = "info"
-    }
-    electronLog.transports.remote.level   = false
-    electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
-    electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
-    const log = electronLog.scope(`browser/content-${cfg.id}`)
+    /*  require external modules  */
+    const electron     = require("electron")
+    const log          = require("./vingester-log.js").scope(`browser/content-${cfg.id}`)
 
     /*  provide global Vingester environment (for postload)  */
     let visibility = cfg.D ? "visible" : "hidden"

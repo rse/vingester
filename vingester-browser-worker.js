@@ -9,7 +9,6 @@ const os               = require("os")
 
 /*  require external modules  */
 const electron         = require("electron")
-const electronLog      = require("electron-log")
 const grandiose        = require("grandiose")
 const pcmconvert       = require("pcm-convert")
 const ebml             = require("ebml")
@@ -18,25 +17,13 @@ const Opus             = require("@discordjs/opus")
 /*  require own modules  */
 const util             = require("./vingester-util.js")
 const FFmpeg           = require("./vingester-ffmpeg.js")
+const vingesterLog     = require("./vingester-log.js")
 
 /*  parse passed-through browser configuration  */
 const cfg = JSON.parse(process.argv[process.argv.length - 1])
 
 /*  etablish reasonable logging environment  */
-if (typeof process.env.DEBUG !== "undefined") {
-    electronLog.transports.file.level    = false
-    electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = "debug"
-}
-else {
-    electronLog.transports.file.level    = false
-    electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = "info"
-}
-electronLog.transports.remote.level   = false
-electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
-electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
-const log = electronLog.scope(`browser/worker-${cfg.id}`)
+const log = vingesterLog.scope(`browser/worker-${cfg.id}`)
 
 /*  define Worker class  */
 class BrowserWorker {

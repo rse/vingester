@@ -4,8 +4,8 @@
 **  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 */
 
+/*  require external modules  */
 const electron         = require("electron")
-const electronLog      = require("electron-log")
 const debounce         = require("throttle-debounce").debounce
 const UUID             = require("pure-uuid")
 const PerfectScrollbar = require("vue3-perfect-scrollbar").default
@@ -13,21 +13,8 @@ const VueTippy         = require("vue-tippy").default
 const clone            = require("clone")
 const moment           = require("moment")
 
-/*  etablish reasonable logging environment  */
-if (typeof process.env.DEBUG !== "undefined") {
-    electronLog.transports.file.level    = false
-    electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = "debug"
-}
-else {
-    electronLog.transports.file.level    = false
-    electronLog.transports.console.level = false
-    electronLog.transports.ipc.level     = "info"
-}
-electronLog.transports.remote.level   = false
-electronLog.transports.console.format = "{h}:{i}:{s}.{ms} > [{level}] {scope} {text}"
-electronLog.transports.file.format    = "[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {scope} {text}"
-const log = electronLog.scope("control")
+/*  require internal modules  */
+const log              = require("./vingester-log.js").scope("control")
 log.info("starting up")
 
 const browserFields = [
