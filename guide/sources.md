@@ -142,6 +142,25 @@ Then the ingest URL for **Vingester** is:
 
 `file://<path-to-lowerhird>/index.html?scene=<scene-id>`
 
+Graphics Animations
+-------------------
+
+### Adobe Animate
+
+[Adobe Animate](https://www.adobe.com/products/animate.html) is
+a popular vector-based multimedia authoring and computer graphics
+animation application which can output its results in HTML5 format.
+These HTML5 exports then can be directly ingested into Vingester.
+
+Alternatively, [Adobe After Effects](https://www.adobe.com/products/aftereffects.html) is a
+popular motion graphics, compositing and visual effects application,
+which usually outputs its results as a whole in video format for
+direct embedding in a video mixing application. Alternatively, if you want to use
+animations based on Adobe After Effects inside some outer Web Contents (and later
+ingest this as a whole again via Vingester), you can check out the Adobe After Effects
+plugin [Bodymovin](https://aescripts.com/bodymovin/) and the companion
+JavaScript library [Lottie](https://airbnb.design/lottie/).
+
 Video Playouts
 --------------
 
