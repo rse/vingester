@@ -2,6 +2,9 @@
 Changes
 =======
 
+- 2.2.3
+    - BUGFIX: the "execa" module has to be a run-time dependency and not just a build-time dependency
+
 - 2.2.2
     - BUGFIX: in "Adaptive" headless mode, never set framerate below at least 5
     - BUGFIX: if "Frame Rate" is set to 0, effectively try to no longer capture the Web contents
