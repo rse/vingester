@@ -4,6 +4,8 @@ Changes
 
 - 2.2.2
     - CLEANUP: factor out logging configuration into own source file
+    - UPGRADE: upgrade to Electron 13.1.0
+    - UPGRADE: upgrade minor dependencies
 
 - 2.2.1
     - UPGRADE: upgrade to Electron-Builder 22.11.5
