@@ -106,13 +106,16 @@ module.exports = class Browser {
         /*  optionally adapt framerate  */
         if (this.cfg.D && !this.cfg.N && !this.cfg.P)
             framerate = 0
-        else if (this.cfg.N && this.cfg.a) {
+        else if (this.cfg.N && this.cfg.a && framerate > 0) {
             if (this.tally === "unconnected" && !this.cfg.P)
                 framerate = 1
             else if (this.tally === "unconnected" && this.cfg.P)
                 framerate = 5
-            else if (this.tally === "connected")
+            else if (this.tally === "connected") {
                 framerate = Math.trunc(framerate / 3)
+                if (framerate < 5)
+                    framerate = 5
+            }
         }
 
         /*  set capture framerate (if changed)  */

@@ -4,6 +4,8 @@ Changes
 
 - 2.2.2
     - CLEANUP: factor out logging configuration into own source file
+    - BUGFIX: in "Adaptive" headless mode, never set framerate below at least 5
+    - BUGFIX: if "Frame Rate" is set to 0, effectively try to no longer capture the Web contents
     - UPGRADE: upgrade to Electron 13.1.0
     - UPGRADE: upgrade minor dependencies
 
