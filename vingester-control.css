@@ -18,6 +18,9 @@ body {
     position: relative;
     .icon-stack {
         position: relative;
+        min-width: 22px;
+        min-height: 20px;
+        display: block;
         .icon {
             position: absolute;
             top: 0;
@@ -25,6 +28,21 @@ body {
         }
         .icon + .icon {
             color: #555555;
+        }
+    }
+    .ui-head {
+        .icon-stack {
+            &:hover {
+                .icon:first-child {
+                    color: #ffe8c8;
+                }
+            }
+            .icon + .icon {
+                color: #b8a080;
+                &:hover {
+                    color: #b8a080;
+                }
+            }
         }
     }
     .running {
@@ -77,9 +95,9 @@ body {
             flex-direction: row;
             .icon {
                 -webkit-app-region: no-drag;
-                font-size: 16px;
+                font-size: 18px;
                 color: #e8d0b0;
-                margin-left: 8px;
+                margin-left: 4px;
                 &:hover {
                     color: #ffe8c8;
                     cursor: pointer;
@@ -94,7 +112,7 @@ body {
             }
         }
         .button-plus {
-            font-size: 16px;
+            font-size: 18px;
             color: #e8d0b0;
             margin-top: 4px;
             padding-left: 4px;

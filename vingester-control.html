@@ -55,17 +55,23 @@
                     <div class="row-right">
                         <div class="icons">
                             <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application error messages.' }"
-                                class="icon" v-on:click="modalToggle('messages')">
-                                <i class="fas fa-exclamation-triangle"></i>
+                                v-on:click="modalToggle('messages')">
+                                <span class="icon-stack">
+                                    <span class="icon"><i class="fas fa-circle"></i></span>
+                                    <span class="icon"><i class="fas fa-exclamation-triangle" data-fa-transform="shrink-7 up-1 left-1"></i></span>
+                                </span>
                             </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application version information.' }"
                                 class="icon" v-on:click="modalToggle('info')">
                                 <i class="fas fa-info-circle"></i>
                             </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application update dialog.' }"
-                                class="icon" v-bind:class="{ blink: updateNotifyBlink }"
+                                v-bind:class="{ blink: updateNotifyBlink }"
                                 v-on:click="modalToggle('update')">
-                                <i class="fas fa-cloud-download-alt"></i>
+                                <span class="icon-stack">
+                                    <span class="icon"><i class="fas fa-circle"></i></span>
+                                    <span class="icon"><i class="fas fa-cloud-download-alt" data-fa-transform="shrink-7 left-2"></i></span>
+                                </span>
                             </div>
                             <div class="icon-sep">
                             </div>
