@@ -765,6 +765,16 @@ electron.app.on("ready", async () => {
         /*  finally destroy electron  */
         electron.app.quit()
     })
+    for (signal of [ "SIGINT", "SIGTERM" ]) {
+        process.on(signal, () => {
+            /*  optionally destroy NDI library  */
+            if (grandiose.isSupportedCPU())
+                grandiose.destroy()
+
+            /*  finally destroy electron  */
+            electron.app.quit()
+        })
+    }
     electron.app.on("will-quit", () => {
         log.info("terminating")
     })
