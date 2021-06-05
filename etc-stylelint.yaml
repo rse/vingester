@@ -16,4 +16,5 @@ rules:
     color-hex-length: "long"
     max-empty-lines: 10
     no-descending-specificity: null
+    no-duplicate-selectors: null
 
