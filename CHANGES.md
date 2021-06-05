@@ -2,6 +2,10 @@
 Changes
 =======
 
+The following is a detailed list of all changes to **Vingester** in
+reverse chronological order (newer first), grouped by the release
+versions and prefixed with the kind of change.
+
 - 2.2.4
     - IMPROVEMENT: make FFmpeg handling more robust during start/stop
     - IMPROVEMENT: improve FFmpeg configuration for video-only or audio-only recording/streaming
@@ -273,8 +277,7 @@ Changes
 - 0.9.0
     - EXTENSION: initial release
 
-Legend
-------
+#### Legend
 
 - change scope:
     - MAJOR:        major ...

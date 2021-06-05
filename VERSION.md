@@ -1,6 +1,10 @@
 
-Version History
-===============
+Versions
+========
+
+The following is a detailed list of all release versions of
+**Vingester**, in reverse chronological order (newer first), and tagged
+with their original release date and their *current* state.
 
 | VERSION | DATE       | STATE       |
 | ------- | ---------- | ----------- |
@@ -54,8 +58,7 @@ Version History
 | 0.9.1   | 2021-03-25 | deprecated  |
 | 0.9.0   | 2021-03-25 | deprecated  |
 
-Legend
-------
+#### Legend
 
 - forthcoming: new release (before being considered stable enough)
 - current:     current release
