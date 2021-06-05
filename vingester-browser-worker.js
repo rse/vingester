@@ -118,7 +118,10 @@ class BrowserWorker {
             }
         }
         this.burst1   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
-        this.burst2   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
+        if (this.cfg.f > 0)
+            this.burst2   = new util.WeightedAverage(this.cfg.f * 2, this.cfg.f)
+        else
+            this.burst2   = new util.WeightedAverage(30, 15)
         this.videopps = new util.ActionsPerTime(1000)
         this.audiopps = new util.ActionsPerTime(1000)
 
@@ -290,7 +293,7 @@ class BrowserWorker {
         /*  start time-keeping  */
         const t0 = Date.now()
 
-        /*  send NDI audio frame  */
+        /*  send NDI or FFmpeg audio frame  */
         if (this.cfg.N) {
             /*  determine frame information  */
             const sampleRate = this.cfg.r
@@ -338,7 +341,7 @@ class BrowserWorker {
             }
             if (this.cfg.m) {
                 /*  send FFmpeg audio frame  */
-                this.ffmpeg.audio(buffer)
+                await this.ffmpeg.audio(buffer)
             }
         }
 

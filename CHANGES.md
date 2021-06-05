@@ -6,6 +6,7 @@ Changes
     - IMPROVEMENT: make FFmpeg handling more robust during start/stop
     - IMPROVEMENT: improve FFmpeg configuration for video-only or audio-only recording/streaming
     - IMPROVEMENT: provide better tooltip hints for video-only or audio-only recording/streaming
+    - BUGFIX: correctly calculate the CPU bursts for "headless" audio-only capturing
     - UPGRADE: upgrade to Electron 13.1.1
     - UPGRADE: upgrade minor dependencies
 
