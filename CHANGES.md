@@ -2,6 +2,10 @@
 Changes
 =======
 
+- 2.2.4
+    - UPGRADE: upgrade to Electron 13.1.1
+    - UPGRADE: upgrade minor dependencies
+
 - 2.2.3
     - BUGFIX: the "execa" module has to be a run-time dependency and not just a build-time dependency
 
