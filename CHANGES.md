@@ -5,6 +5,7 @@ Changes
 - 2.2.4
     - IMPROVEMENT: make FFmpeg handling more robust during start/stop
     - IMPROVEMENT: improve FFmpeg configuration for video-only or audio-only recording/streaming
+    - IMPROVEMENT: provide better tooltip hints for video-only or audio-only recording/streaming
     - UPGRADE: upgrade to Electron 13.1.1
     - UPGRADE: upgrade minor dependencies
 
