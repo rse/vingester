@@ -11,7 +11,7 @@ application for use under Windows, macOS or Linux, to run
 multiple [Chromium](https://www.chromium.org/)-based Web
 browser instances and ingesting their rendered Web Contents as
 screen/window-captured or [NDI&reg;](https://www.ndi.tv/)-multicasted or
-[FFmpeg&trade;](https://ffmpeg.org)-based video streams for further use
+[FFmpeg&trade;](https://ffmpeg.org)-processed video streams for further use
 in local or remote video mixing applications or for local recording.
 
 ![Vingester Screenshot](_media/screenshot.png)
