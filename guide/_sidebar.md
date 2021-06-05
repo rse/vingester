@@ -8,5 +8,7 @@
 - [Visibility](/visibility)
 - [Development](/development)
 - [Alternatives](/alternatives)
+- [Versions](/versions)
+- [Changes](/changes)
 - [Imprint](/imprint)
 
