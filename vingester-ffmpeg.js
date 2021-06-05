@@ -33,11 +33,12 @@ module.exports = class FFmpeg extends EventEmitter {
 
         /*  initialize state  */
         this.proc       = null
+        this.stopping   = false
         this.workaround = false
     }
     async start () {
         /*  cleanup if necessary  */
-        if (this.proc !== null)
+        if (this.proc !== null && !this.stopping)
             await this.stop()
 
         /*  helper functions for bitrate calculation and size formatting  */
@@ -134,29 +135,45 @@ module.exports = class FFmpeg extends EventEmitter {
             "-fflags", "+genpts",
 
             /*  video input options  */
-            "-f", "image2pipe",
-            "-framerate", this.options.fps,
-            "-pix_fmt", "rgba",
-            "-i", "pipe:0",
+            ...(this.options.fps > 0 ? [
+                "-f", "image2pipe",
+                "-framerate", this.options.fps,
+                "-pix_fmt", "rgba",
+                "-i", "pipe:0"
+            ] : []),
 
             /*  audio input options  */
-            "-f", "s16le",
-            "-ar", this.options.asr,
-            "-ac", this.options.ac,
-            "-i", "pipe:3",
+            ...(this.options.ac > 0 ? [
+                "-f", "s16le",
+                "-ar", this.options.asr,
+                "-ac", this.options.ac,
+                "-i", "pipe:3"
+            ] : []),
 
             /*  generic output options  */
-            "-map", "0:v:0",
-            "-map", "1:a:0",
+            ...(this.options.fps > 0 ? [
+                "-map", "0:v:0"
+            ] : []),
+            ...(this.options.ac > 0 ? [
+                "-map", this.options.fps > 0 ? "1:a:0" : "0:a:0"
+            ] : []),
             "-threads", "4",
             "-shortest",
 
             /*  specific output options (defaults)  */
-            "-c:v", "h264",
-            "-pix_fmt", "yuv420p",
-            "-r", this.options.fps,
-            "-c:a", "aac",
-            ...opts,
+            ...(this.options.fps > 0 ? [
+                "-c:v", "h264",
+                "-pix_fmt", "yuv420p",
+                "-r", this.options.fps,
+                ...opts
+            ] : [
+                "-vn"
+            ]),
+            ...(this.options.ac > 0 ? [
+                "-c:a", "aac"
+            ] : [
+                "-an"
+            ]),
             "-y",
 
             /*  specific output format  */
@@ -209,11 +226,11 @@ module.exports = class FFmpeg extends EventEmitter {
         })
     }
     async video (data) {
-        if (this.proc !== null)
+        if (this.proc !== null && !this.stopping)
             await new Promise((resolve) => this.proc.stdio[0].write(data, null, resolve))
     }
     async audio (data) {
-        if (this.proc !== null)
+        if (this.proc !== null && !this.stopping)
             await new Promise((resolve) => this.proc.stdio[3].write(data, null, resolve))
     }
     async end () {
@@ -225,7 +242,8 @@ module.exports = class FFmpeg extends EventEmitter {
     }
     async stop () {
         /*  kill ffmpeg(1) subprocess  */
-        if (this.proc !== null) {
+        if (this.proc !== null && !this.stopping) {
+            this.stopping = true
             this.options.log("info", "ending FFmpeg input stream")
             await this.end()
             this.options.log("info", "stopping FFmpeg process")
@@ -237,6 +255,7 @@ module.exports = class FFmpeg extends EventEmitter {
                 /*  no-op  */
             }
             this.proc = null
+            this.stopping = false
         }
         return Promise.resolve(true)
     }
