@@ -700,7 +700,7 @@
                                         <div class="cluster" v-show="browser.N">
                                             <div class="label label-framerate">Frame Rate:</div>
                                             <div class="field field-framerate"
-                                                v-tippy="{ placement: 'top', content: 'Frames per second for the video-stream.<br/>Usually you want to use 30 or 60.' }">
+                                                v-tippy="{ placement: 'top', content: 'Frames per second for the video-stream.<br/>Usually you want to use 24, 30, 48 or 60.<br/>Use 0 for audio-only streams.' }">
                                                 <input type="text" v-model="browser.f" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.f }"
                                                     v-bind:disabled="running[browser.id]">
@@ -742,7 +742,7 @@
                                             <div class="unit unit-khz">kHz</div>
                                             <div class="label label-channels">Channels:</div>
                                             <div class="field field-channels"
-                                                v-tippy="{ placement: 'top', content: 'Number of channels for the audio-stream.<br/>Usually you want to use 0 (none), 1 (mono) or 2 (stereo).' }">
+                                                v-tippy="{ placement: 'top', content: 'Number of channels for the audio-stream.<br/>Usually you want to use 1 (mono) or 2 (stereo).<br/>Use 0 for video-only streams.' }">
                                                 <input type="text" v-model="browser.C" v-on:keyup="changed(browser)"
                                                     v-bind:class="{ disabled: running[browser.id], invalid: invalid[browser.id]?.C }"
                                                     v-bind:disabled="running[browser.id]">
