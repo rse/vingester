@@ -96,9 +96,10 @@
 
             /*  internal state  */
             let attached = 0
-            const nodes     = new Map()
-            const tracks    = new Map()
-            const listeners = new Map()
+            const nodes      = new Map()
+            const tracks     = new Map()
+            const listeners1 = new Map()
+            const listeners2 = new Map()
 
             /*  attach/detach a particular node  */
             const trackAdd = (when, track) => {
@@ -149,7 +150,7 @@
                             node.addEventListener("canplay",      audioMuteIt)
                             node.addEventListener("play",         audioMuteIt)
                             node.addEventListener("volumechange", audioMuteIt)
-                            listeners.set(node, audioMuteIt)
+                            listeners1.set(node, audioMuteIt)
                             audioMuteIt()
                         }
                         else if (vingester.cfg.A === "") {
@@ -174,6 +175,16 @@
                             trackAdd(when, audiotracks[i])
                         stream.addEventListener("addtrack",    onAddTrack)
                         stream.addEventListener("removetrack", onRemoveTrack)
+                        const onVolumeChange = () => {
+                            if (node.muted)
+                                for (let i = 0; i < audiotracks.length; i++)
+                                    trackRemove("mute", audiotracks[i])
+                            else
+                                for (let i = 0; i < audiotracks.length; i++)
+                                    trackAdd("unmute", audiotracks[i])
+                        }
+                        node.addEventListener("volumechange", onVolumeChange)
+                        listeners2.set(node, onVolumeChange)
                         nodes.set(node, stream)
                     }
                 }
@@ -183,10 +194,11 @@
                     if (vingester.cfg.D) {
                         if (vingester.cfg.A === "(none)") {
                             vingester.log(`on ${when} unmute audio of ${node.tagName}`)
-                            const listener = listeners.get(node)
+                            const listener = listeners1.get(node)
                             node.removeEventListener("canplay",      listener)
                             node.removeEventListener("play",         listener)
                             node.removeEventListener("volumechange", listener)
+                            listeners1.delete(node)
                             node.muted  = false
                             node.volume = 1
                         }
@@ -197,6 +209,9 @@
                     }
                     if (vingester.cfg.N) {
                         vingester.log(`on ${when} detach from ${node.tagName} node`)
+                        const listener = listeners2.get(node)
+                        node.removeEventListener("volumechange", listener)
+                        listeners2.delete(node)
                         const stream = nodes.get(node)
                         stream.removeEventListener("addtrack",    onAddTrack)
                         stream.removeEventListener("removetrack", onRemoveTrack)
