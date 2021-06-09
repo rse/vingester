@@ -25,11 +25,26 @@ The first group of configuration fields target the browser:
   An example is `VDO.Ninja Session, Person No. 1`.
 
 - **Browser / Size**:<br/>
-  The width and height in pixels of the browser desktop window (in
-  "Frameless" mode) or the off-screen framebuffer (in "Headless" mode).
-  Set this to match the video-stream output size. So, if you want to
-  stream 720p, use a size of `1280` x `720` pixels. If you want to stream
-  1080p, use a size of `1920` x `1080` pixels.
+  The width and height of the browser desktop window (in "Frameless"
+  mode) or the off-screen framebuffer (in "Headless" mode). Set this
+  to match the video-stream output size. So, if you want to stream
+  720p, use a size of `1280` x `720`. If you want to stream 1080p, use
+  a size of `1920` x `1080`. For frameless mode the size is specified
+  in physical DOTs (think Dot Per Inch -- DPI) while for headless mode
+  the size is specified in logical PIXELs (think Pixels Per Inch --
+  PPI). The unit difference exists because of the usual display scaling
+  factors of displays in practice.
+
+  For instance, a monitor with 4K resolution usually is driven by the
+  user (through explicit operating system configuration) with a scale
+  factor of about 150% to ensure that icons and menus are not too small
+  for the users eyes. Here, 100 pixels are represented by 150 dots.
+  As a consequence, a browser size of 1920x1080 on the display and in
+  the screen-capturing would be actually 2888x1620 dots. To ensure
+  that the browser is really just 1920x1080 on the display and in the
+  screen-capturing, **Vingester** reduces the browser size by 150% to
+  1280x720 pixels and when this is displayed it really actually becomes
+  1920x1080 dots on display and in the screen-capturing.
 
 - **Browser / Zoom**:<br/>
   The optical zoom level of the browser. By default it should be kept
