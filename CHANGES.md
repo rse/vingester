@@ -6,6 +6,9 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.2.6
+    - BUGFIX: try to ensure that in "frameless" mode the windows are really of the intended content size
+
 - 2.2.5
     - BUGFIX: detach/reattach the capturing if the application mutes/unmutes the audio of an audio/video element
     - BUGFIX: fix internal deregistration of audio mute/unmute handlers
