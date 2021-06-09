@@ -8,7 +8,8 @@ with their original release date and their *current* state.
 
 | VERSION | DATE       | STATE       |
 | ------- | ---------- | ----------- |
-| 2.2.4   | 2021-06-06 | current     |
+| 2.2.5   | 2021-06-09 | current     |
+| 2.2.4   | 2021-06-06 | obsolete    |
 | 2.2.3   | 2021-06-04 | obsolete    |
 | 2.2.2   | 2021-06-03 | deprecated  |
 | 2.2.1   | 2021-06-01 | obsolete    |
