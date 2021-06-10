@@ -39,7 +39,7 @@
         "bluebird":                      "3.7.2",
         "@rse/ffmpeg":                   "1.0.1",
         "pcm-convert":                   "1.6.5",
-        "@discordjs/opus":               "0.5.0",
+        "@discordjs/opus":               "0.5.3",
         "ebml":                          "3.0.0",
         "less":                          "4.1.1",
         "grandiose":                     "rse/grandiose#4c7bb35",
