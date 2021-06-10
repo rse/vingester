@@ -13,7 +13,7 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "13.1.1",
+        "electron":                      "13.1.2",
         "electron-builder":              "22.11.5",
         "electron-notarize":             "1.0.0",
         "cross-env":                     "7.0.3",
