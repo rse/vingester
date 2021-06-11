@@ -8,6 +8,7 @@ versions and prefixed with the kind of change.
 
 - 2.2.7
     - UPGRADE: upgrade to Electron 13.1.2
+    - UPGRADE: upgrade to Electron Builder 22.11.7
     - UPGRADE: upgrade to @discord/opus 0.5.3
 
 - 2.2.6
