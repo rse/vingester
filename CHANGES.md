@@ -8,6 +8,7 @@ versions and prefixed with the kind of change.
 
 - 2.2.8
     - BUGFIX: fix size of offscreen browser windows in "headless" mode (where Electron uses the primary display scale factor)
+    - BUGFIX: align the default importable configurations to the current export format
 
 - 2.2.7
     - UPGRADE: upgrade to Electron 13.1.2
