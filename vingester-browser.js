@@ -290,22 +290,25 @@ module.exports = class Browser {
 
         /*  determine target display of browser window  */
         const displays = util.AvailableDisplays.determine(electron)
-        let display = displays.find((display) => display.num === this.cfg.d)
-        if (display === undefined)
-            display = displays.find((display) => display.num === 0)
-        const D = electron.screen.getDisplayMatching({
-            x:      display.x,
-            y:      display.y,
-            width:  display.w,
-            height: display.h
-        })
+        let D = electron.screen.getPrimaryDisplay()
+        if (this.cfg.D) {
+            let display = displays.find((display) => display.num === this.cfg.d)
+            if (display === undefined)
+                display = displays.find((display) => display.num === 0)
+            D = electron.screen.getDisplayMatching({
+                x:      display.x,
+                y:      display.y,
+                width:  display.w,
+                height: display.h
+            })
+        }
 
         /*  determine scale factor of browser window (on its target display)  */
         const factor = D.scaleFactor
 
         /*  determine width/height of browser window (on its target display)  */
-        const width  = this.cfg.D ? Math.round(this.cfg.w / factor) : this.cfg.w
-        const height = this.cfg.D ? Math.round(this.cfg.h / factor) : this.cfg.h
+        const width  = Math.round(this.cfg.w / factor)
+        const height = Math.round(this.cfg.h / factor)
 
         /*  determine position of browser window (on its target display)  */
         let pos = {}
@@ -330,6 +333,7 @@ module.exports = class Browser {
         }
 
         /*  create content browser window (visible or offscreen)  */
+        this.log.info(`browser: create (${this.cfg.w}x${this.cfg.h} @ ${factor} -> ${width}x${height})`)
         const opts1 = (this.cfg.D ? {
             ...pos,
             width:           width,
@@ -358,7 +362,11 @@ module.exports = class Browser {
         } : {
             width:           width,
             height:          height,
-            useContentSize:  false,
+            minWidth:        width,
+            minHeight:       height,
+            maxWidth:        width,
+            maxHeight:       height,
+            useContentSize:  true,
             show:            false
         })
         const opts2 = (this.cfg.D ? {
@@ -366,7 +374,7 @@ module.exports = class Browser {
             zoomFactor:      this.cfg.z / factor
         } : {
             offscreen:       true,
-            zoomFactor:      this.cfg.z
+            zoomFactor:      this.cfg.z / factor
         })
         const content = new electron.BrowserWindow({
             ...opts1,
@@ -582,7 +590,7 @@ module.exports = class Browser {
             if (this.cfg.D)
                 content.webContents.setZoomFactor(this.cfg.z / factor)
             else
-                content.webContents.setZoomFactor(this.cfg.z)
+                content.webContents.setZoomFactor(this.cfg.z / factor)
         })
 
         /*  finally load the Web Content  */
