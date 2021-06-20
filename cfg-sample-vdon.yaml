@@ -13,7 +13,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -45,6 +45,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "VDON-P02"
@@ -52,7 +53,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -84,6 +85,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "VDON-P03"
@@ -91,7 +93,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -123,6 +125,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "VDON-P04"
@@ -130,7 +133,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -161,6 +164,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "VDON-P05"
@@ -168,7 +172,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -200,6 +204,7 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "VDON-P06"
@@ -207,7 +212,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "#00ff00"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 true
@@ -239,5 +244,6 @@
     Output2SinkFFmpegOptions:      ""
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 

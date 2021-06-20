@@ -10,7 +10,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -42,5 +42,6 @@
     Output2SinkFFmpegOptions:      "vingester-test.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 

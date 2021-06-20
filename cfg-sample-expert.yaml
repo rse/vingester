@@ -10,7 +10,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -42,6 +42,7 @@
     Output2SinkFFmpegOptions:      "the-expert-1.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-2"
@@ -49,7 +50,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -81,6 +82,7 @@
     Output2SinkFFmpegOptions:      "the-expert-2.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-3"
@@ -88,7 +90,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -120,6 +122,7 @@
     Output2SinkFFmpegOptions:      "the-expert-3.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-4"
@@ -127,7 +130,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -159,6 +162,7 @@
     Output2SinkFFmpegOptions:      "the-expert-4.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
 -   BrowserTitle:                  "The-Expert-5"
@@ -166,7 +170,7 @@
     BrowserWidth:                  1280
     BrowserHeight:                 720
     BrowserColor:                  "transparent"
-    BrowserZoom:                   "1.0"
+    BrowserZoom:                   1.0
     BrowserTrust:                  false
     BrowserNodeAPI:                false
     BrowserOBSDOM:                 false
@@ -198,5 +202,6 @@
     Output2SinkFFmpegOptions:      "the-expert-5.mkv"
     PreviewEnabled:                false
     ConsoleEnabled:                false
+    DevToolsEnabled:               false
     Collapsed:                     false
 
