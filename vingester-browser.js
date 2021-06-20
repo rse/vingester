@@ -309,7 +309,7 @@ module.exports = class Browser {
 
         /*  determine position of browser window (on its target display)  */
         let pos = {}
-        if (this.cfg.x !== null && this.cfg.y !== null) {
+        if (this.cfg.D && this.cfg.x !== null && this.cfg.y !== null) {
             const x = Math.round(D.bounds.x + (this.cfg.x / factor))
             const y = Math.round(D.bounds.y + (this.cfg.y / factor))
             pos = { x, y }
