@@ -10,6 +10,7 @@ versions and prefixed with the kind of change.
     - UPGRADE: upgrade to Electron 13.1.2
     - UPGRADE: upgrade to Electron Builder 22.11.7
     - UPGRADE: upgrade to @discord/opus 0.5.3
+    - UPGRADE: upgrade minor dependencies
 
 - 2.2.6
     - BUGFIX: try to ensure that in "frameless" mode the windows are really of the intended content size
