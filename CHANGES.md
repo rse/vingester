@@ -6,6 +6,9 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.2.9
+    - UPGRADE: upgrade to Electron 13.1.3
+
 - 2.2.8
     - BUGFIX: fix size of offscreen browser windows in "headless" mode (where Electron uses the primary display scale factor)
     - BUGFIX: align the default importable configurations to the current export format
