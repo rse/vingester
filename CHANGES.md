@@ -6,6 +6,9 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.2.10
+    - UPGRADE: upgrade to Electron 13.1.4
+
 - 2.2.9
     - UPGRADE: upgrade to Electron 13.1.3
 
