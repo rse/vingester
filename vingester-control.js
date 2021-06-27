@@ -346,6 +346,7 @@ const app = Vue.createApp({
         },
         async load () {
             const browsers = await electron.ipcRenderer.invoke("browsers-load")
+            await electron.ipcRenderer.invoke("control", "prune")
             for (const browser of browsers) {
                 await electron.ipcRenderer.invoke("control", "add", browser.id, browser)
                 this.resetState(browser.id)

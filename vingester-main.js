@@ -553,7 +553,14 @@ electron.app.on("ready", async () => {
     log.info("provide IPC hooks for browser control")
     const browsers = {}
     const controlBrowser = async (action, id, cfg) => {
-        if (action === "add") {
+        if (action === "prune") {
+            for (const id of Object.keys(browsers)) {
+                if (browsers[id].running())
+                    browsers[id].stop()
+                delete browsers[id]
+            }
+        }
+        else if (action === "add") {
             /*  add browser configuration  */
             browsers[id] = new Browser(log, id, cfg, control, FFmpeg.binary)
         }
@@ -724,9 +731,12 @@ electron.app.on("ready", async () => {
     /*  optionally auto-import configuration  */
     if (configFile !== null) {
         if (await pathExists(configFile)) {
+            log.info(`loading auto-import/export configuration: "${configFile}"`)
             await importConfig(configFile)
             control.webContents.send("load")
         }
+        else
+            log.warn(`auto-import/export configuration not found: "${configFile}"`)
     }
 
     /*  gracefully shutdown application  */
