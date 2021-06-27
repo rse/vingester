@@ -9,6 +9,7 @@ versions and prefixed with the kind of change.
 - 2.3.0
     - BUGFIX: fix --config option handling: configuration entries were added twice on subsequent Vingester runs
     - UPGRADE: upgrade to Electron 13.1.4
+    - UPGRADE: finally upgrade to Vue-Tippy 6.0.0-alpha.30 and Vue-Next-Select 2.6.0
 
 - 2.2.9
     - UPGRADE: upgrade to Electron 13.1.3
