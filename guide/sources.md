@@ -160,7 +160,9 @@ and computer graphics animation application which can output its results
 in HTML5 format. These HTML5 exports then can be directly ingested into
 Vingester.
 
-Alternatively, [Adobe After Effects](https://www.adobe.com/products/aftereffects.html) is a
+### Adobe After Effects
+
+[Adobe After Effects](https://www.adobe.com/products/aftereffects.html) is a
 commercial cross-platform popular motion graphics, compositing and
 visual effects application, which usually outputs its results as a whole
 in video format for direct embedding in a video mixing application.
