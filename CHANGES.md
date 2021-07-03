@@ -8,6 +8,8 @@ versions and prefixed with the kind of change.
 
 - 2.3.1
     - IMPROVEMENT: add Tally Reload option which forces NDI Tally preview/program state to reload the Web contents
+    - UPGRADE: upgrade to Electron 13.1.5
+    - UPGRADE: upgrade minor dependencies
 
 - 2.3.0
     - BUGFIX: fix --config option handling: configuration entries were added twice on subsequent Vingester runs
