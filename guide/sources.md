@@ -150,7 +150,13 @@ Graphics Animations
 [Google Web Designer](https://webdesigner.withgoogle.com/) is
 a free cross-platform vector-based multimedia authoring and computer graphics
 animation application which output directly in HTML5 format.
-These HTML5 exports then can be directly ingested into Vingester.
+Its HTML5 exports can be directly ingested into Vingester.
+
+### Saola Animate
+
+[Saola Animate](https://atomisystems.com/saola-animate/) is a commercial
+cross-platform HTML5 animation application. Its HTML5 exports can be
+directly ingested into Vingester.
 
 ### Adobe Animate
 
