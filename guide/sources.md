@@ -158,6 +158,12 @@ Its HTML5 exports can be directly ingested into Vingester.
 cross-platform HTML5 animation application. Its HTML5 exports can be
 directly ingested into Vingester.
 
+### Tumult Hype
+
+[Tumult Hype](https://tumult.com/hype/) is a commercial
+HTML5 animation application for macOS. Its HTML5 exports can be
+directly ingested into Vingester.
+
 ### Adobe Animate
 
 [Adobe Animate](https://www.adobe.com/products/animate.html) is
