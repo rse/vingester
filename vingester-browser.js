@@ -107,14 +107,24 @@ module.exports = class Browser {
         if (this.cfg.D && !this.cfg.N && !this.cfg.P)
             framerate = 0
         else if (this.cfg.N && this.cfg.a && framerate > 0) {
-            if (this.tally === "unconnected" && !this.cfg.P)
-                framerate = 1
-            else if (this.tally === "unconnected" && this.cfg.P)
-                framerate = 5
-            else if (this.tally === "connected") {
-                framerate = Math.trunc(framerate / 3)
-                if (framerate < 5)
+            if (this.cfg.l) {
+                /*  for NDI Adaptive with Tally Reload mode, we drop the framerate
+                    dramatically down if we are not in preview or program  */
+                if (this.tally === "unconnected" || this.tally === "connected")
+                    framerate = this.cfg.P ? 1 : 0
+            }
+            else {
+                /*  for standard NDI Adaptive mode, we adjust the
+                    framerate in a dynamic and reasonable way  */
+                if (this.tally === "unconnected" && !this.cfg.P)
+                    framerate = 1
+                else if (this.tally === "unconnected" && this.cfg.P)
                     framerate = 5
+                else if (this.tally === "connected") {
+                    framerate = Math.trunc(framerate / 3)
+                    if (framerate < 5)
+                        framerate = 5
+                }
             }
         }
 
@@ -262,6 +272,10 @@ module.exports = class Browser {
                     this.update()
                     this.log.info(`browser: new NDI TALLY state: ${this.tally}`)
                     notifyContent(this.tally)
+                    if (this.cfg.l && (this.tally === "preview" || this.tally === "program")) {
+                        this.log.info("browser: reloading content because of new tally state")
+                        this.content.reload()
+                    }
                 }
             }
         })
