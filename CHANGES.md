@@ -8,6 +8,7 @@ versions and prefixed with the kind of change.
 
 - 2.3.1
     - IMPROVEMENT: add Tally Reload option which forces NDI Tally preview/program state to reload the Web contents
+    - IMPROVEMENT: keep the up/down buttons on a collapsed browser configuration
     - UPGRADE: upgrade to Electron 13.1.5
     - UPGRADE: upgrade minor dependencies
 

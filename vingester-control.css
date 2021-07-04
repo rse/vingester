@@ -664,6 +664,7 @@ body {
             color: #cccccc;
             cursor: pointer;
             font-size: 16px;
+            margin-top: -1px;
             &:hover {
                 color: #ffffff;
             }
