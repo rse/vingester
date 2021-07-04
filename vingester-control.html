@@ -426,11 +426,6 @@
                                     v-on:click="moveBrowser(browser, 'down')">
                                     <i class="fas fa-arrow-alt-circle-down"></i>
                                 </div>
-                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
-                                    v-show="!browser._"
-                                    v-on:click="delBrowser(browser)">
-                                    <i class="fas fa-minus-circle"></i>
-                                </div>
                                 <div class="button" v-tippy="{ placement: 'bottom', content: 'Clone this browser<br/>configuration entry.' }"
                                     v-show="!browser._"
                                     v-on:click="cloneBrowser(browser)">
@@ -438,6 +433,11 @@
                                         <span class="icon"><i class="fas fa-circle"></i></span>
                                         <span class="icon"><i class="fas fa-clone" data-fa-transform="shrink-7"></i></span>
                                     </span>
+                                </div>
+                                <div class="button" v-tippy="{ placement: 'bottom', content: 'Delete this browser<br/>configuration entry.' }"
+                                    v-show="!browser._"
+                                    v-on:click="delBrowser(browser)">
+                                    <i class="fas fa-minus-circle"></i>
                                 </div>
                             </div>
                             <div class="box">
