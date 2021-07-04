@@ -215,6 +215,14 @@ The fifth group of configuration fields target the Headless output:
   [OBS Studio](https://obsproject.com) + [OBS-NDI](https://github.com/Palakis/obs-ndi/), or
   [LiveMind Receiver](https://livemind.tv/recorder) for receiving the sent NDI streams.
 
+- **Headless / Sink / NDI / Tally Reload**:<br/>
+  Enable or disable the NDI&reg; tally state to force a reload of the
+  Web contents when it enters the preview or program state. This allows
+  *one-shot* Web contents -- like HTML5 exported animations, e.g. lower
+  thirds, from applications like Google Web Designer, Saolo Animate, or
+  Tumult Hype -- to be freshly send out via NDI once the receiver enters
+  its corresponding scene.
+
 - **Headless / Sink / FFmpeg**:<br/>
   Enable or disable the FFmpeg&trade; sink engine.
   Use the following two options for controlling FFmpeg's particular operation.
