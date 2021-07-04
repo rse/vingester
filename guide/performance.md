@@ -70,11 +70,12 @@ related aspects should be kept in mind:
 - **Adaptive Framerate**:
 
   For the "headless" NDI mode, **Vingester** supports a tally light
-  based adaptive framerate adjustment. When enabled, the framerate is
-  reduced to 1 fps if the video stream is not received by any peer,
-  reduced to 1/3 of the target framerate if the video stream is received
-  by any peer and set to the target framerate if the video stream is
-  part of the preview or program at any receiving peer.
+  based adaptive framerate adjustment (field **Output 2 / Headless /
+  Video / Adaptive**). When enabled, the framerate is reduced to 1 fps
+  if the video stream is not received by any peer, reduced to 1/3 of the
+  target framerate if the video stream is received by any peer and set
+  to the target framerate if the video stream is part of the preview or
+  program at any receiving peer.
 
 - **Main Capturing Process**:
 
