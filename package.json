@@ -13,11 +13,11 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "13.1.5",
+        "electron":                      "13.1.6",
         "electron-builder":              "22.11.7",
         "electron-notarize":             "1.0.0",
         "cross-env":                     "7.0.3",
-        "nodemon":                       "2.0.9",
+        "nodemon":                       "2.0.10",
         "glob":                          "7.1.7",
         "shell":                         "0.8.4",
         "npm-run-all":                   "4.1.5",
@@ -48,7 +48,7 @@
         "got":                           "11.8.2",
         "clone":                         "2.1.2",
         "adm-zip":                       "0.5.5",
-        "dayjs":                         "1.10.5",
+        "dayjs":                         "1.10.6",
         "update-helper":                 "1.1.5",
         "tmp":                           "0.2.1",
         "execa":                         "5.1.1",
