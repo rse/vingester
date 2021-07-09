@@ -6,6 +6,10 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.3.2
+    - UPGRADE: upgrade to Electron 13.1.6
+    - UPGRADE: upgrade minor dependencies
+
 - 2.3.1
     - IMPROVEMENT: add Tally Reload option which forces NDI Tally preview/program state to reload the Web contents
     - IMPROVEMENT: keep the up/down buttons on a collapsed browser configuration
