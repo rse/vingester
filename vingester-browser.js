@@ -12,6 +12,7 @@ const rimraf      = require("rimraf")
 
 /*  require external modules  */
 const electron    = require("electron")
+const contextMenu = require("electron-context-menu")
 const bluebird    = require("bluebird")
 const util        = require("./vingester-util.js")
 
@@ -535,6 +536,21 @@ module.exports = class Browser {
         worker.on("enter-full-screen",  (ev) => { ev.preventDefault() })
         worker.on("leave-full-screen",  (ev) => { ev.preventDefault() })
         content.setMenu(null)
+        contextMenu({
+            window: content,
+            showLookUpSelection:  false,
+            showSearchWithGoogle: false,
+            showCopyImage:        false,
+            showCopyImageAddress: true,
+            showSaveImage:        false,
+            showSaveImageAs:      false,
+            showSaveLinkAs:       false,
+            showInspectElement:   true,
+            showServices:         false,
+            labels: {
+                inspect:          "Inspect in DevTools"
+            }
+        })
         content.on("close",             (ev) => { ev.preventDefault() })
         content.on("minimize",          (ev) => { ev.preventDefault() })
         content.on("restore",           (ev) => { ev.preventDefault() })

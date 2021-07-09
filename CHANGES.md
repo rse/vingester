@@ -9,6 +9,8 @@ versions and prefixed with the kind of change.
 - 2.3.2
     - UPGRADE: upgrade to Electron 13.1.6
     - UPGRADE: upgrade minor dependencies
+    - IMPROVEMENT: provide copy/paste/inspect context menu for frameless content windows
+    - IMPROVEMENT: provide copy/paste/inspect context menu for control window
 
 - 2.3.1
     - IMPROVEMENT: add Tally Reload option which forces NDI Tally preview/program state to reload the Web contents

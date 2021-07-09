@@ -11,6 +11,7 @@ const process     = require("process")
 
 /*  require external modules  */
 const electron    = require("electron")
+const contextMenu = require("electron-context-menu")
 const grandiose   = require("grandiose")
 const Store       = require("electron-store")
 const debounce    = require("throttle-debounce").debounce
@@ -170,6 +171,21 @@ electron.app.on("ready", async () => {
         }
     })
     control.removeMenu()
+    contextMenu({
+        window: control,
+        showLookUpSelection:  false,
+        showSearchWithGoogle: false,
+        showCopyImage:        false,
+        showCopyImageAddress: true,
+        showSaveImage:        false,
+        showSaveImageAs:      false,
+        showSaveLinkAs:       false,
+        showInspectElement:   (process.env.DEBUG === "2"),
+        showServices:         false,
+        labels: {
+            inspect:          "Inspect in DevTools"
+        }
+    })
     if (process.env.DEBUG === "2") {
         setTimeout(() => {
             control.webContents.openDevTools()
