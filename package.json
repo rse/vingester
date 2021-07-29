@@ -33,7 +33,7 @@
         "htmllint-cli":                  "0.0.7"
     },
     "dependencies": {
-        "electron-log":                  "4.3.5",
+        "electron-log":                  "4.4.0",
         "electron-store":                "8.0.0",
         "electron-context-menu":         "3.1.1",
         "bluebird":                      "3.7.2",
@@ -61,7 +61,7 @@
         "vue":                           "3.0.11",
         "vue3-perfect-scrollbar":        "1.5.5",
         "vue-tippy":                     "6.0.0-alpha.30",
-        "vue-next-select":               "2.7.1",
+        "vue-next-select":               "2.8.0",
         "@fortawesome/fontawesome-free": "5.15.3",
         "typopro-web":                   "4.2.5"
     },
