@@ -7,6 +7,8 @@ reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
 - 2.4.1
+    - UPGRADE: upgrade to Electron 13.1.8
+    - UPGRADE: upgrade to NDI SDK 5.0.3
     - UPGRADE: upgrade minor dependencies
 
 - 2.4.0

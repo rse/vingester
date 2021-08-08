@@ -13,9 +13,9 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "13.1.7",
+        "electron":                      "13.1.8",
         "electron-builder":              "22.11.7",
-        "electron-notarize":             "1.0.1",
+        "electron-notarize":             "1.1.0",
         "cross-env":                     "7.0.3",
         "nodemon":                       "2.0.12",
         "glob":                          "7.1.7",
@@ -61,8 +61,8 @@
         "vue":                           "3.0.11",
         "vue3-perfect-scrollbar":        "1.5.5",
         "vue-tippy":                     "6.0.0-alpha.30",
-        "vue-next-select":               "2.8.0",
-        "@fortawesome/fontawesome-free": "5.15.3",
+        "vue-next-select":               "2.9.0",
+        "@fortawesome/fontawesome-free": "5.15.4",
         "typopro-web":                   "4.2.5"
     },
     "main":                              "vingester-main.js",
