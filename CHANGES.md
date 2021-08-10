@@ -6,6 +6,10 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.4.2
+    - EXTENSION: support --autostart CLI option for auto-starting all browser instances on start
+    - EXTENSION: support --minimize CLI option for starting the control window in minimized state
+
 - 2.4.1
     - UPGRADE: upgrade to Electron 13.1.9
     - UPGRADE: upgrade to NDI SDK 5.0.3

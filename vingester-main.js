@@ -95,6 +95,16 @@ if (electron.app.commandLine.hasSwitch("tag")) {
     log.info(`using user interface tag: "${tag}"`)
 }
 
+/*  support initial user interface minimization  */
+let initially_minimized = false
+if (electron.app.commandLine.hasSwitch("minimize"))
+    initially_minimized = true
+
+/*  support browser instances auto-start  */
+let autostart = false
+if (electron.app.commandLine.hasSwitch("autostart"))
+    autostart = true
+
 /*  optionally initialize NDI library  */
 if (grandiose.isSupportedCPU())
     grandiose.initialize()
@@ -673,9 +683,25 @@ electron.app.on("ready", async () => {
 
     /*  show the window once the DOM was mounted  */
     electron.ipcMain.handle("control-mounted", (ev) => {
-        log.info("finally showing user interface")
-        control.show()
-        control.focus()
+        /*  bring user interface into final state   */
+        if (initially_minimized) {
+            log.info("bring user interface into final state (minimized)")
+            control.minimize()
+        }
+        else {
+            log.info("bring user interface into final state (shown and focused)")
+            control.show()
+            control.focus()
+        }
+
+        /*  optionally auto-start browser instances
+            (requires some delay to give browser instances a chance to be loaded)  */
+        if (autostart) {
+            setTimeout(() => {
+                log.info("auto-start all browser instances")
+                controlBrowser("start-all")
+            }, 2000)
+        }
     })
 
     /*  load web content  */
