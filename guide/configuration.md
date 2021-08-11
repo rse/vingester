@@ -215,6 +215,13 @@ The fifth group of configuration fields target the Headless output:
   [OBS Studio](https://obsproject.com) + [OBS-NDI](https://github.com/Palakis/obs-ndi/), or
   [LiveMind Receiver](https://livemind.tv/recorder) for receiving the sent NDI streams.
 
+
+- **Headless / Sink / NDI / Alpha**:<br/>
+  Enable or disable the NDI&reg; alpha channel. If the alpha channel is
+  enabled, **Vingester** sends the video frames in BGRA color format,
+  else in the BGRX color format. Usually, the alpha channel should be
+  enabled, but it can be disabled to support older NDI&reg; receivers.
+
 - **Headless / Sink / NDI / Tally Reload**:<br/>
   Enable or disable the NDI&reg; tally state to force a reload of the
   Web contents when it enters the preview or program state. This allows
