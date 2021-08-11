@@ -7,6 +7,7 @@ reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
 - 2.4.2
+    - IMPROVEMENT: add NDI/Alpha field for disabling/enabling alpha channel support over NDI
     - EXTENSION: support --autostart CLI option for auto-starting all browser instances on start
     - EXTENSION: support --minimize CLI option for starting the control window in minimized state
 

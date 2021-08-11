@@ -36,6 +36,7 @@
     Output2AudioChannels:          2
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
     Output2SinkNDITallyReload:     false
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegMode:         "vbr"
@@ -77,6 +78,7 @@
     Output2AudioChannels:          2
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
     Output2SinkNDITallyReload:     false
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegMode:         "vbr"
@@ -118,6 +120,7 @@
     Output2AudioChannels:          2
     Output2AudioDelay:             0
     Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
     Output2SinkNDITallyReload:     false
     Output2SinkFFmpegEnabled:      false
     Output2SinkFFmpegMode:         "vbr"

@@ -226,6 +226,13 @@ class BrowserWorker {
                 if (os.endianness() === "BE")
                     util.ImageBufferAdjustment.ARGBtoBGRA(buffer)
 
+                /*  optionally convert from BGRA to BGRX (no alpha channel)  */
+                let fourCC = grandiose.FOURCC_BGRA
+                if (!this.cfg.v) {
+                    util.ImageBufferAdjustment.BGRAtoBGRX(buffer)
+                    fourCC = grandiose.FOURCC_BGRX
+                }
+
                 /*  send NDI video frame  */
                 const now = this.timeNow()
                 const bytesForBGRA = 4
@@ -243,7 +250,7 @@ class BrowserWorker {
                     lineStrideBytes:    size.width * bytesForBGRA,
 
                     /*  the data itself  */
-                    fourCC:             grandiose.FOURCC_BGRA,
+                    fourCC:             fourCC,
                     data:               buffer
                 }
                 await this.ndiSender.video(frame)

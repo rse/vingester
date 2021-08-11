@@ -959,6 +959,12 @@ body {
             &.field-pin .toggle {
                 width: 50px;
             }
+            &.field-alpha .toggle {
+                width: 57px;
+            }
+            &.field-tallyreload .toggle {
+                width: 53px;
+            }
             &.field-mode .toggle {
                 width: 110px;
             }

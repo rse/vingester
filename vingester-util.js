@@ -94,6 +94,12 @@ class ImageBufferAdjustment {
             data[i + 2] = B
         }
     }
+
+    /*  convert from BGRA to BGRX  */
+    static BGRAtoBGRX (data) {
+        for (let i = 0; i < data.length; i += 4)
+            data[i + 3] = 255
+    }
 }
 
 /*  helper class for determining displays  */
