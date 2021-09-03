@@ -10,6 +10,7 @@ body {
     margin: 0;
     user-select: none;
     overflow: hidden;
+    background-color: #333333;
 }
 .ui {
     color: #ffffff;

@@ -171,6 +171,7 @@ electron.app.on("ready", async () => {
         useContentSize:  false,
         webPreferences: {
             devTools:                   (process.env.DEBUG === "2"),
+            nativeWindowOpen:           false,
             nodeIntegration:            true,
             nodeIntegrationInWorker:    true,
             contextIsolation:           false,

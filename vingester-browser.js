@@ -172,6 +172,7 @@ module.exports = class Browser {
             title:           "Vingester Browser Worker",
             webPreferences: {
                 devTools:                   (process.env.DEBUG === "2"),
+                nativeWindowOpen:           false,
                 backgroundThrottling:       false,
                 nodeIntegration:            true,
                 nodeIntegrationInWorker:    true,
@@ -397,6 +398,7 @@ module.exports = class Browser {
                 ...opts2,
                 session:                    session,
                 devTools:                   true,
+                nativeWindowOpen:           false,
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),
                 nodeIntegration:            this.cfg.I ? true : false,
