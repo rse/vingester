@@ -9,6 +9,7 @@ versions and prefixed with the kind of change.
 - 2.6.0
     - UPGRADE: upgrade to Electron 14.0.0
     - UPGRADE: upgrade to Vue 3.2.8
+    - UPGRADE: upgrade minor dependencies
 
 - 2.5.0
     - IMPROVEMENT: add NDI/Alpha field for disabling/enabling alpha channel support over NDI
