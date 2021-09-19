@@ -6,6 +6,9 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.6.2
+    - UPGRADE: downgrade to Electron 13.4.0 as 14.0.{0,1} breaks under Windows 10 (network service crash inside Chromium)
+
 - 2.6.1
     - UPGRADE: upgrade to Electron 14.0.1
     - UPGRADE: upgrade to Vue 3.2.12
