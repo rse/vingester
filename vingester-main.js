@@ -61,9 +61,10 @@ log.info(`starting Vingester: ${version.vingester}`)
 log.info(`using Electron: ${version.electron}`)
 log.info(`using Chromium: ${version.chromium}`)
 log.info(`using V8: ${version.v8}`)
-log.info(`using Node: ${version.node}`)
+log.info(`using Node.js: ${version.node}`)
 log.info(`using NDI: ${version.ndi} (supported by CPU: ${support.ndi ? "yes" : "no"})`)
 log.info(`using FFmpeg: ${version.ffmpeg}`)
+log.info(`using Vue: ${version.vuejs}`)
 
 /*  support particular profiles  */
 if (electron.app.commandLine.hasSwitch("profile")) {
