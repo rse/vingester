@@ -97,9 +97,9 @@ if (electron.app.commandLine.hasSwitch("tag")) {
 }
 
 /*  support initial user interface minimization  */
-let initially_minimized = false
+let initiallyMinimized = false
 if (electron.app.commandLine.hasSwitch("minimize"))
-    initially_minimized = true
+    initiallyMinimized = true
 
 /*  support browser instances auto-start  */
 let autostart = false
@@ -687,7 +687,7 @@ electron.app.on("ready", async () => {
     /*  show the window once the DOM was mounted  */
     electron.ipcMain.handle("control-mounted", (ev) => {
         /*  bring user interface into final state   */
-        if (initially_minimized) {
+        if (initiallyMinimized) {
             log.info("bring user interface into final state (minimized)")
             control.minimize()
         }
