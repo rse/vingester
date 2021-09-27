@@ -181,12 +181,12 @@ module.exports = class Browser {
                 disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false,
-                additionalArguments:        [ JSON.stringify({
+                additionalArguments:        [ "vingester-cfg-" + btoa(unescape(encodeURIComponent(JSON.stringify({
                     ...this.cfg,
                     controlId:  this.control.webContents.id,
                     ffmpeg:     this.ffmpeg,
                     ffmpegCwd:  electron.app.getPath("videos")
-                }) ]
+                })))) ]
             }
         })
         worker.removeMenu()
@@ -408,11 +408,11 @@ module.exports = class Browser {
                 disableDialogs:             true,
                 autoplayPolicy:             "no-user-gesture-required",
                 spellcheck:                 false,
-                additionalArguments:        [ JSON.stringify({
+                additionalArguments:        [ "vingester-cfg-" + btoa(unescape(encodeURIComponent(JSON.stringify({
                     ...this.cfg,
                     controlId: this.control.webContents.id,
                     workerId: this.worker.webContents.id
-                }) ]
+                })))) ]
             }
         })
         if (os.platform() === "darwin")

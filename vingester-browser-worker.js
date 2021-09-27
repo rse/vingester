@@ -20,7 +20,14 @@ const FFmpeg           = require("./vingester-ffmpeg.js")
 const vingesterLog     = require("./vingester-log.js")
 
 /*  parse passed-through browser configuration  */
-const cfg = JSON.parse(process.argv[process.argv.length - 1])
+let cfg = {}
+for (let i = process.argv.length - 1; i >= 0; i--) {
+    let m
+    if ((m = process.argv[i].match(/^vingester-cfg-(.+)$/)) !== null) {
+        cfg = JSON.parse(decodeURIComponent(escape(atob(m[1]))))
+        break
+    }
+}
 
 /*  etablish reasonable logging environment  */
 const log = vingesterLog.scope(`browser/worker-${cfg.id}`)
