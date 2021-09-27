@@ -8,6 +8,7 @@ versions and prefixed with the kind of change.
 
 - 2.6.3
     - UPGRADE: upgrade to Electron 15.0.0
+    - UPGRADE: upgrade minor dependencies
     - IMPROVEMENT: make argument passing to sub-processes more robust
 
 - 2.6.2
