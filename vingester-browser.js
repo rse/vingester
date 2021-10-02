@@ -350,52 +350,45 @@ module.exports = class Browser {
 
         /*  create content browser window (visible or offscreen)  */
         this.log.info(`browser: create (${this.cfg.w}x${this.cfg.h} @ ${factor} -> ${width}x${height})`)
-        const opts1 = (this.cfg.D ? {
-            ...pos,
-            width:           width,
-            height:          height,
-            minWidth:        width,
-            minHeight:       height,
-            maxWidth:        width,
-            maxHeight:       height,
-            resizable:       false,
-            movable:         false,
-            minimizable:     false,
-            maximizable:     false,
-            closable:        false,
-            useContentSize:  true,
-            autoHideMenuBar: true,
-            roundedCorners:  false,
-            transparent:     true,
-            frame:           false,
-            ...(this.cfg.c === "transparent" ? { transparent: true } : { backgroundColor: this.cfg.c }),
-            hasShadow:       false,
-            enableLargerThanScreen: true,
-            fullscreenable:  true,
-            titleBarStyle:   "hidden",
-            thickFrame:      false,
-            title:           title
-        } : {
-            width:           width,
-            height:          height,
-            minWidth:        width,
-            minHeight:       height,
-            maxWidth:        width,
-            maxHeight:       height,
-            useContentSize:  true,
-            show:            false
-        })
-        const opts2 = (this.cfg.D ? {
-            offscreen:       false,
-            zoomFactor:      this.cfg.z / factor
-        } : {
-            offscreen:       true,
-            zoomFactor:      this.cfg.z / factor
-        })
         const content = new electron.BrowserWindow({
-            ...opts1,
+            width:                          width,
+            height:                         height,
+            minWidth:                       width,
+            minHeight:                      height,
+            maxWidth:                       width,
+            maxHeight:                      height,
+            useContentSize:                 true,
+            ...(this.cfg.c === "transparent" ? {
+                transparent:                true
+            } : {
+                backgroundColor:            this.cfg.c
+            }),
+            ...(this.cfg.D ? {
+                ...pos,
+                resizable:                  false,
+                movable:                    false,
+                minimizable:                false,
+                maximizable:                false,
+                closable:                   false,
+                autoHideMenuBar:            true,
+                roundedCorners:             false,
+                frame:                      false,
+                hasShadow:                  false,
+                enableLargerThanScreen:     true,
+                fullscreenable:             true,
+                titleBarStyle:              "hidden",
+                thickFrame:                 false,
+                title:                      title
+            } : {
+                show:                       false
+            }),
             webPreferences: {
-                ...opts2,
+                ...(this.cfg.D ? {
+                    offscreen:              false
+                } : {
+                    offscreen:              true
+                }),
+                zoomFactor:                 this.cfg.z / factor,
                 session:                    session,
                 devTools:                   true,
                 nativeWindowOpen:           false,
@@ -411,7 +404,7 @@ module.exports = class Browser {
                 additionalArguments:        [ "vingester-cfg-" + btoa(unescape(encodeURIComponent(JSON.stringify({
                     ...this.cfg,
                     controlId: this.control.webContents.id,
-                    workerId: this.worker.webContents.id
+                    workerId:  this.worker.webContents.id
                 })))) ]
             }
         })
