@@ -13,7 +13,7 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "15.0.0",
+        "electron":                      "15.1.0",
         "electron-builder":              "22.11.7",
         "electron-notarize":             "1.1.1",
         "cross-env":                     "7.0.3",
@@ -48,7 +48,7 @@
         "pure-uuid":                     "1.6.2",
         "got":                           "11.8.2",
         "clone":                         "2.1.2",
-        "adm-zip":                       "0.5.6",
+        "adm-zip":                       "0.5.7",
         "dayjs":                         "1.10.7",
         "update-helper":                 "1.1.5",
         "tmp":                           "0.2.1",
@@ -58,9 +58,9 @@
         "which":                         "2.0.2",
         "moment":                        "2.29.1",
         "dsig":                          "1.1.7",
-        "vue":                           "3.2.12",
+        "vue":                           "3.2.19",
         "vue3-perfect-scrollbar":        "1.5.5",
-        "vue-tippy":                     "6.0.0-alpha.30",
+        "vue-tippy":                     "6.0.0-alpha.33",
         "vue-next-select":               "2.10.1",
         "@fortawesome/fontawesome-free": "5.15.4",
         "typopro-web":                   "4.2.5"

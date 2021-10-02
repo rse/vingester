@@ -6,6 +6,11 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.6.4
+    - UPGRADE: upgrade to Electron 15.1.0
+    - UPGRADE: upgrade to Vue 3.2.19
+    - UPGRADE: upgrade minor dependencies
+
 - 2.6.3
     - UPGRADE: upgrade to Electron 15.0.0
     - UPGRADE: upgrade minor dependencies
