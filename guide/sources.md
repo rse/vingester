@@ -109,6 +109,14 @@ playout NDI output, you can also use **Vingester**.
 If your SPX-GC instance is running under http://127.0.0.1:5000/,
 the ingest URL for **Vingester** is http://127.0.0.1:5000/renderer/ 
 
+### Holographics
+
+[Holographics](https://hologfx.io/) is a graphics controller for
+creating lower-thirds, messages, ticker tapes, clocks and logos,
+using HTML graphics. Holographics ships as a Windows or macOS desktop
+application with a built-in web server. The ingest URL for **Vingester**
+is http://localhost:3000/render.
+
 ### Singular.Live
 
 [Singular.Live](https://singular.live/) is a graphics controller for
