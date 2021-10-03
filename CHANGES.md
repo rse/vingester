@@ -6,6 +6,10 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.6.6
+    - IMPROVEMENT: attach "Vingester/M.N.K" string to user agent identifier
+    - CLEANUP: cleaned up handling of zoom factor
+
 - 2.6.5
     - BUGFIX: fix handling of tranparent background for "headless" mode
 

@@ -15,6 +15,7 @@ const electron    = require("electron")
 const contextMenu = require("electron-context-menu")
 const bluebird    = require("bluebird")
 const util        = require("./vingester-util.js")
+const pkg         = require("./package.json")
 
 /*  browser abstraction  */
 module.exports = class Browser {
@@ -430,7 +431,9 @@ module.exports = class Browser {
         })
 
         /*  determine user-agent identifier  */
-        const ua = content.webContents.getUserAgent()
+        let ua = content.webContents.getUserAgent()
+        ua += ` Vingester/${pkg.version}`
+        content.webContents.setUserAgent(ua)
         this.log.info(`browser: content: user-agent: "${ua}"`)
 
         /*  allow insecure HTTPS connections  */
@@ -444,7 +447,7 @@ module.exports = class Browser {
                 callback(-3)
         })
 
-        /*  control audio (for desktop window we unmute, for NDI we mute)  */
+        /*  control audio (we unmute for "frameless" window and "headless" with no audio channels)  */
         if (this.cfg.D || (this.cfg.N && this.cfg.C === 0))
             content.webContents.setAudioMuted(false)
         else
@@ -612,10 +615,7 @@ module.exports = class Browser {
 
             /*  force zoom level (sometimes Chromium keeps old factors if
                 just the "zoomFactor" attribute is used)  */
-            if (this.cfg.D)
-                content.webContents.setZoomFactor(this.cfg.z / factor)
-            else
-                content.webContents.setZoomFactor(this.cfg.z / factor)
+            content.webContents.setZoomFactor(this.cfg.z / factor)
         })
 
         /*  finally load the Web Content  */
