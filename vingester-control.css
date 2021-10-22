@@ -1511,7 +1511,7 @@ body {
         }
     }
     &.disabled,
-    &[aria-disabled='true'] {
+    &[aria-disabled="true"] {
         background-color: #4477aa;
         border-top: 1px solid #5386b9;
         border-left: 1px solid #5386b9;

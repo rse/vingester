@@ -17,4 +17,8 @@ rules:
     max-empty-lines: 10
     no-descending-specificity: null
     no-duplicate-selectors: null
+    shorthand-property-no-redundant-values: null
+    property-no-vendor-prefix: null
+    selector-class-pattern: null
+    alpha-value-notation: null
 
