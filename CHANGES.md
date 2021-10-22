@@ -9,6 +9,7 @@ versions and prefixed with the kind of change.
 - 2.6.7
     - UPGRADE: upgrade to Electron 15.3.0
     - UPGRADE: upgrade minor dependencies
+    - BUGFIX: downgrade to old Electron-Builder 22.11.11 to get rid of false positives in Windows Defender
 
 - 2.6.6
     - UPGRADE: upgrade to Electron 15.1.0
