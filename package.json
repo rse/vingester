@@ -60,7 +60,7 @@
         "dsig":                          "1.1.7",
         "vue":                           "3.2.20",
         "vue3-perfect-scrollbar":        "1.5.5",
-        "vue-tippy":                     "6.0.0-alpha.33",
+        "vue-tippy":                     "6.0.0-alpha.35",
         "vue-next-select":               "2.10.1",
         "@fortawesome/fontawesome-free": "5.15.4",
         "typopro-web":                   "4.2.6"
