@@ -63,3 +63,18 @@ Limited Alternatives
   instance support and corresponding window positioning management is
   very simple.
 
+Specialized Alternatives
+------------------------
+
+- [NDI Remote](https://www.ndi.tv/tools/):
+  Instead of using the combination of [VDO.Ninja](https://vdo.ninja)
+  and **Vingester** (in "headless" NDI mode) to ingest the
+  video stream of a remote online meeting participant, you
+  can use [NDI Remote](https://www.ndi.tv/tools/). This is a
+  browser and WebRTC based application, similar to the [NDI HX
+  Camera](https://apps.apple.com/de/app/ndi-hx-camera/id1477266080)
+  iOS app of NDI. The major drawback compared to
+  [VDO.Ninja](https://vdo.ninja) is that [NDI
+  Remote](https://www.ndi.tv/tools/) does not have a return feed. It is
+  just a unidirectional video/audio link, not a bidirectional one.
+
