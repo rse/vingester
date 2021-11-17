@@ -42,7 +42,7 @@
         "@discordjs/opus":               "0.7.0",
         "ebml":                          "3.0.0",
         "less":                          "4.1.2",
-        "grandiose":                     "rse/grandiose#0179661",
+        "grandiose":                     "rse/grandiose#af0b81c",
         "throttle-debounce":             "3.0.1",
         "js-yaml":                       "4.1.0",
         "pure-uuid":                     "1.6.2",
