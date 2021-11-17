@@ -52,7 +52,7 @@
         "dayjs":                         "1.10.7",
         "update-helper":                 "1.1.5",
         "tmp":                           "0.2.1",
-        "execa":                         "6.0.0",
+        "execa":                         "5.1.1",
         "mkdirp":                        "1.0.4",
         "rimraf":                        "3.0.2",
         "which":                         "2.0.2",
