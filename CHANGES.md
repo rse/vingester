@@ -6,6 +6,13 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.7.0
+    - UPGRADE: upgrade to Electron 16.0.0
+    - UPGRADE: upgrade to FFmpeg 4.4.1
+    - UPGRADE: upgrade to @discordjs/opus 0.7.0
+    - UPGRADE: upgrade to Vue 3.2.22
+    - UPGRADE: upgrade minor dependencies
+
 - 2.6.7
     - UPGRADE: upgrade to Electron 15.3.0
     - UPGRADE: upgrade minor dependencies
