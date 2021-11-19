@@ -13,7 +13,7 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "16.0.0",
+        "electron":                      "16.0.1",
         "electron-builder":              "22.13.1",
         "electron-notarize":             "1.1.1",
         "cross-env":                     "7.0.3",
@@ -46,7 +46,7 @@
         "throttle-debounce":             "3.0.1",
         "js-yaml":                       "4.1.0",
         "pure-uuid":                     "1.6.2",
-        "got":                           "11.8.2",
+        "got":                           "11.8.3",
         "clone":                         "2.1.2",
         "adm-zip":                       "0.5.9",
         "dayjs":                         "1.10.7",
@@ -66,7 +66,7 @@
         "typopro-web":                   "4.2.6"
     },
     "main":                              "vingester-main.js",
-    "upd":                               [ "!eslint" ],
+    "upd":                               [ "!eslint", "!execa" ],
     "build": {
         "appId":                         "com.engelschall.apps.vingester",
         "productName":                   "Vingester",
