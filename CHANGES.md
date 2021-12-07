@@ -7,11 +7,11 @@ reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
 - 2.7.0
-    - UPGRADE: upgrade to Electron 16.0.1
+    - UPGRADE: upgrade to Electron 16.0.4
     - UPGRADE: upgrade to FFmpeg 4.4.1
     - UPGRADE: upgrade to @discordjs/opus 0.7.0
-    - UPGRADE: upgrade to Vue 3.2.22
-    - UPGRADE: upgrade to Electron-Builder 22.14.7 (which seems to be fine for Windows Defender again)
+    - UPGRADE: upgrade to Vue 3.2.24
+    - UPGRADE: upgrade to Electron-Builder 22.14.5 (which seems to be fine for Windows Defender again)
     - UPGRADE: upgrade minor dependencies
 
 - 2.6.7
