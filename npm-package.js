@@ -51,10 +51,14 @@ const PromptPW  = require("prompt-password")
 
     /*   package according to platform...  */
     const electronbuilder = path.resolve(path.join("node_modules", ".bin", "electron-builder"))
+    const arch1 = os.arch()
+    let arch2 = arch1
+    if (arch2 === "arm64")
+        arch2 = "a64"
     if (os.platform() === "win32") {
         /*  run Electron-Builder to package the application  */
         console.log("++ packaging App as an Electron distribution for Windows platform")
-        execa.sync(electronbuilder, [],
+        execa.sync(electronbuilder, [ "--win", `--${arch1}` ],
             { stdin: "inherit", stdout: "inherit", stderr: "inherit" })
 
         /*  pack application into a distribution archive
@@ -62,13 +66,13 @@ const PromptPW  = require("prompt-password")
         console.log("++ packing App into ZIP distribution archive")
         zip.zipSync(
             path.join(__dirname, "dist/Vingester.exe"),
-            path.join(__dirname, "dist/Vingester-win-x64.zip"))
-        await sign("dist/Vingester-win-x64.zip")
+            path.join(__dirname, `dist/Vingester-win-${arch2}.zip`))
+        await sign(`dist/Vingester-win-${arch2}.zip`)
     }
     else if (os.platform() === "darwin") {
         /*  run Electron-Builder to package the application  */
         console.log("++ packaging App as an Electron distribution for macOS platform")
-        execa.sync(electronbuilder, [ "--dir" ],
+        execa.sync(electronbuilder, [ "--mac", `--${arch1}` ],
             { stdin: "inherit", stdout: "inherit", stderr: "inherit" })
 
         /*  pack application into a distribution archive
@@ -77,13 +81,13 @@ const PromptPW  = require("prompt-password")
         shell.mv("dist/mac/Vingester.app", "dist/Vingester.app")
         zip.zipSync(
             path.join(__dirname, "dist/Vingester.app"),
-            path.join(__dirname, "dist/Vingester-mac-x64.zip"))
-        await sign("dist/Vingester-mac-x64.zip")
+            path.join(__dirname, `dist/Vingester-mac-${arch2}.zip`))
+        await sign(`dist/Vingester-mac-${arch2}.zip`)
     }
     else if (os.platform() === "linux") {
         /*  run Electron-Builder to package the application  */
         console.log("++ packaging App as an Electron distribution for Linux platform")
-        execa.sync(electronbuilder, [],
+        execa.sync(electronbuilder, [ "--linux", `--${arch1}` ],
             { stdin: "inherit", stdout: "inherit", stderr: "inherit" })
 
         /*  pack application into a distribution archive  */
@@ -91,8 +95,8 @@ const PromptPW  = require("prompt-password")
         shell.mv("dist/Vingester-*.AppImage", "dist/Vingester")
         zip.zipSync(
             path.join(__dirname, "dist/Vingester"),
-            path.join(__dirname, "dist/Vingester-lnx-x64.zip"))
-        await sign("dist/Vingester-lnx-x64.zip")
+            path.join(__dirname, `dist/Vingester-lnx-${arch2}.zip`))
+        await sign(`dist/Vingester-lnx-${arch2}.zip`)
     }
 })().catch((err) => {
     console.log(`** npm: package: ERROR: ${err}`)

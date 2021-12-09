@@ -1,7 +1,7 @@
 {
     "name":                              "Vingester",
     "homepage":                          "https://vingester.app",
-    "version":                           "2.7.0",
+    "version":                           "2.7.1",
     "description":                       "Ingest Web Contents as Video Streams",
     "author":                            "Dr. Ralf S. Engelschall",
     "keywords":                          [ "web", "contents", "video", "audio", "stream", "capture", "ndi" ],
@@ -37,7 +37,7 @@
         "electron-store":                "8.0.1",
         "electron-context-menu":         "3.1.1",
         "bluebird":                      "3.7.2",
-        "@rse/ffmpeg":                   "1.0.3",
+        "@rse/ffmpeg":                   "1.0.4",
         "pcm-convert":                   "1.6.5",
         "@discordjs/opus":               "0.7.0",
         "ebml":                          "3.0.0",
@@ -80,7 +80,7 @@
             "output":                    "dist"
         },
         "mac": {
-            "target":                    [ { "target": "default", "arch": [ "x64" ] } ],
+            "target":                    [ { "target": "dir" } ],
             "category":                  "com.engelschall.apps",
             "identity":                  null,
             "icon":                      "vingester-icon.png",
@@ -102,7 +102,7 @@
                                          "!node_modules/npm-install-fetch/**" ]
         },
         "win": {
-            "target":                    [ { "target": "portable", "arch": [ "x64" ] } ],
+            "target":                    [ { "target": "portable" } ],
             "icon":                      "vingester-icon.png",
             "files": [                   "!*.ai",
                                          "!node_modules/electron-builder/**",
@@ -124,7 +124,7 @@
         },
         "linux": {
             "category":                  "AudioVideo",
-            "target":                    [ { "target": "AppImage", "arch": [ "x64" ] } ],
+            "target":                    [ { "target": "AppImage" } ],
             "executableName":            "Vingester",
             "icon":                      "vingester-icon.png",
             "files": [                   "!*.ai",

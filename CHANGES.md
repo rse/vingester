@@ -6,6 +6,10 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.7.1
+    - IMPROVEMENT: allow building also under Linux/arm64
+    - UPGRADE: upgrade minor dependencies
+
 - 2.7.0
     - UPGRADE: upgrade to Electron 16.0.4
     - UPGRADE: upgrade to FFmpeg 4.4.1
