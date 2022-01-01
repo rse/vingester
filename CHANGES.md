@@ -7,8 +7,9 @@ reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
 - 2.7.1
-    - IMPROVEMENT: allow building also under Linux/arm64
+    - UPGRADE: upgrade to Electron 16.0.5
     - UPGRADE: upgrade minor dependencies
+    - IMPROVEMENT: allow building also under Linux/arm64
 
 - 2.7.0
     - UPGRADE: upgrade to Electron 16.0.4
