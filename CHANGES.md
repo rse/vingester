@@ -8,6 +8,7 @@ versions and prefixed with the kind of change.
 
 - 2.7.1
     - UPGRADE: upgrade to Electron 16.0.5
+    - UPGRADE: upgrade to Vue 3.2.26
     - UPGRADE: upgrade minor dependencies
     - IMPROVEMENT: allow building also under Linux/arm64
 

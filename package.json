@@ -58,7 +58,7 @@
         "which":                         "2.0.2",
         "moment":                        "2.29.1",
         "dsig":                          "1.1.7",
-        "vue":                           "3.2.24",
+        "vue":                           "3.2.26",
         "vue3-perfect-scrollbar":        "1.5.5",
         "vue-tippy":                     "6.0.0-alpha.36",
         "vue-next-select":               "2.10.2",
