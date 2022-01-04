@@ -32,6 +32,6 @@ documentation on **Vingester**.
 Copyright & License
 -------------------
 
-Copyright &copy; 2021 [Dr. Ralf S. Engelschall](mailto:rse@engelschall.com)<br/>
+Copyright &copy; 2021-2022 [Dr. Ralf S. Engelschall](mailto:rse@engelschall.com)<br/>
 Licensed under [GPL 3.0](https://spdx.org/licenses/GPL-3.0-only)
 
