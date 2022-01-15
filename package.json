@@ -42,7 +42,7 @@
         "@discordjs/opus":               "0.7.0",
         "ebml":                          "3.0.0",
         "less":                          "4.1.2",
-        "grandiose":                     "rse/grandiose#af0b81c",
+        "grandiose":                     "rse/grandiose#abe6e17d",
         "throttle-debounce":             "3.0.1",
         "js-yaml":                       "4.1.0",
         "pure-uuid":                     "1.6.2",
@@ -60,7 +60,7 @@
         "dsig":                          "1.1.7",
         "vue":                           "3.2.26",
         "vue3-perfect-scrollbar":        "1.5.5",
-        "vue-tippy":                     "6.0.0-alpha.36",
+        "vue-tippy":                     "6.0.0-alpha.43",
         "vue-next-select":               "2.10.2",
         "@fortawesome/fontawesome-free": "5.15.4",
         "typopro-web":                   "4.2.6"
