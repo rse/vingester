@@ -13,7 +13,7 @@
         "url":                           "http://engelschall.com/"
     },
     "devDependencies": {
-        "electron":                      "16.0.7",
+        "electron":                      "16.0.8",
         "electron-builder":              "22.14.5",
         "electron-notarize":             "1.1.1",
         "cross-env":                     "7.0.3",
@@ -28,12 +28,12 @@
         "eslint-config-standard":        "16.0.3",
         "eslint-plugin-import":          "2.25.4",
         "eslint-plugin-node":            "11.1.0",
-        "stylelint":                     "14.2.0",
+        "stylelint":                     "14.3.0",
         "stylelint-config-standard":     "24.0.0",
         "htmllint-cli":                  "0.0.7"
     },
     "dependencies": {
-        "electron-log":                  "4.4.4",
+        "electron-log":                  "4.4.5",
         "electron-store":                "8.0.1",
         "electron-context-menu":         "3.1.1",
         "bluebird":                      "3.7.2",
@@ -58,9 +58,9 @@
         "which":                         "2.0.2",
         "moment":                        "2.29.1",
         "dsig":                          "1.1.7",
-        "vue":                           "3.2.26",
+        "vue":                           "3.2.29",
         "vue3-perfect-scrollbar":        "1.5.5",
-        "vue-tippy":                     "6.0.0-alpha.43",
+        "vue-tippy":                     "6.0.0-alpha.44",
         "vue-next-select":               "2.10.2",
         "@fortawesome/fontawesome-free": "5.15.4",
         "typopro-web":                   "4.2.6"
