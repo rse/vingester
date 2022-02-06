@@ -117,6 +117,14 @@ using HTML graphics. Holographics ships as a Windows or macOS desktop
 application with a built-in web server. The ingest URL for **Vingester**
 is http://localhost:3000/render.
 
+### H2R Graphics
+
+[H2R Graphics](https://h2r.graphics/) is a
+a graphics controller for creating lower-thirds, messages, ticker tapes,
+clocks and logos, using HTML graphics. H2R Graphics ships as a Windows
+or macOS desktop application with a built-in web server. The ingest URL
+for **Vingester** is http://localhost:4001/output/<ProjectID>/.
+
 ### Singular.Live
 
 [Singular.Live](https://singular.live/) is a graphics controller for
