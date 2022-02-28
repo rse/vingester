@@ -50,6 +50,13 @@ Limited Alternatives
   browser instances and preview functionality and hence its use-cases
   are more limited.
 
+- [Flowics NDI Converter](https://pages.flowics.com/flowics-ndi-converter):
+  This is a Windows application providing a similar functionality than
+  the **Vingester** "headless" mode by capturing the Web Contents and
+  sending it out via NDI. Unfortunately, it does not support multiple
+  browser instances and preview functionality and hence its use-cases
+  are more limited.
+
 - [SIENNA WebNDI](http://www.sienna-tv.com/ndi/webndi.html):
   This is an iPad application providing a similar functionality than
   the **Vingester** "headless" mode by capturing the Web Contents and
