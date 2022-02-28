@@ -229,6 +229,32 @@ An example ingest URL is:
 
 https://player.vimeo.com/video/99907545?autoplay=1&background=1&transparent=1&controls=0&quality=1080p
 
+Timers and Clocks
+-----------------
+
+### AnalogClock
+
+[AnalogClock](https://github.com/rse/analogclock) is a plain
+HTML/CSS/JS application for displaying a classical analog clock based
+timer. This is usually used as a count-down until an event starts or as
+a duration for a pause.
+
+An example set of ingest URLs is:
+
+`file://<path-to-analogclock>/index.html?until=2022-01-01T10:20:00`<br/>
+`file://<path-to-analogclock>/index.html?duration=15`
+
+### StageTimer
+
+[StageTimer](https://stagetimer.io/) is a speaker timer that works on
+all screen sizes and orientations and provides timer, progress bar,
+speaker message, etc.
+
+An example set of ingest URLs is:
+
+`https://stagetimer.io/r/<id>/`<br/>
+`https://stagetimer.io/r/<id>/agenda/`
+
 Test Screens
 ------------
 
