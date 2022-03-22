@@ -6,6 +6,13 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.8.0
+    - UPGRADE: upgrade to Electron 17.1.2
+    - UPGRADE: upgrade to Electron-Builder 22.14.13
+    - UPGRADE: upgrade to Vue 3.2.31
+    - UPGRADE: upgrade to Font Awesome 6.1.0
+    - UPGRADE: upgrade minor dependencies
+
 - 2.7.1
     - UPGRADE: upgrade to Electron 16.0.8
     - UPGRADE: upgrade to Vue 3.2.29
