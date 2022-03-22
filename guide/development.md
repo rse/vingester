@@ -6,7 +6,7 @@ Open Source
 -----------
 
 **Vingester** is Open Source Software (OSS), copyright &copy;
-2021 by [Dr. Ralf S. Engelschall](mailto:rse@engelschall.com),
+2021-2022 by [Dr. Ralf S. Engelschall](mailto:rse@engelschall.com),
 and licensed under [GNU General Public License (GPL) 3.0
 only](https://spdx.org/licenses/GPL-3.0-only). Its homepage is
 [Vingester.app](https://vingester.app) and its source code can be found
