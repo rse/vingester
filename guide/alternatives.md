@@ -19,7 +19,7 @@ Decent Alternatives
   degrade at least audio quality regularly. The major drawback of
   [OBS-Browser](https://github.com/obsproject/obs-browser) is that its
   Chromium Embedded Framework (CEF) and this way its contained Chromium
-  engine is not the latest one.
+  engine is not always the latest one.
 
 - [OBS-Studio](https://obsproject.com) +
   [OBS-Browser](https://github.com/obsproject/obs-browser) +
