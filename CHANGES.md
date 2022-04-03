@@ -12,6 +12,7 @@ versions and prefixed with the kind of change.
     - UPGRADE: upgrade to Vue 3.2.31
     - UPGRADE: upgrade to Font Awesome 6.1.1
     - UPGRADE: upgrade minor dependencies
+    - BUGFIX: enable START button only if browser configuration is valid"
 
 - 2.7.1
     - UPGRADE: upgrade to Electron 16.0.8
