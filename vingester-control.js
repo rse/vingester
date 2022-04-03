@@ -324,6 +324,12 @@ const app = Vue.createApp({
                 browser.d = 0
             if (browser.d >= this.displays.length)
                 browser.d = (this.displays.length - 1)
+            if (   (browser.D || browser.N)
+                && (!browser.N || (browser.N && (browser.n || browser.m)))
+                && browser.t !== "" && browser.u !== "")
+                delete this.invalid[browser.id]["GLOBAL"]
+             else
+                this.invalid[browser.id]["GLOBAL"] = true
         },
         resetState (id) {
             this.running[id] = false
