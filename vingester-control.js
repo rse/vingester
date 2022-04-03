@@ -170,7 +170,7 @@ const app = Vue.createApp({
                 this.trace[trace.id].messages.shift()
             this.trace[trace.id].messages.push({ level, message: trace.message })
             this.$nextTick(() => {
-                const console = this.$refs[`console-${trace.id}`]
+                const console = this.$refs[`console-${trace.id}`][0]
                 if (console !== null)
                     console.scrollTop = console.scrollHeight
             })
@@ -187,7 +187,7 @@ const app = Vue.createApp({
             this.tally[msg.id] = { status: msg.status, connections: msg.connections }
         })
         electron.ipcRenderer.on("capture", async (ev, capture) => {
-            const canvas = this.$refs[`canvas-${capture.id}`]
+            const canvas = this.$refs[`canvas-${capture.id}`][0]
             const ctx = canvas.getContext("2d")
             const arr    = new Uint8ClampedArray(capture.buffer)
             const pixels = new ImageData(arr, capture.size.width, capture.size.height)
@@ -278,7 +278,7 @@ const app = Vue.createApp({
                 for (const browser of this.browsers) {
                     /*  ...and displays  */
                     for (const display of this.displays) {
-                        const canvas = this.$refs[`display-icon-${browser.id}-${display.num}`]
+                        const canvas = this.$refs[`display-icon-${browser.id}-${display.num}`][0]
                         if (canvas === null)
                             continue
 
