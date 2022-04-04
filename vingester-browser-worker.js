@@ -388,3 +388,4 @@ electron.ipcRenderer.on("browser-worker-stop", async (ev) => {
     await browserWorker.stop()
     electron.ipcRenderer.send("browser-worker-stopped")
 })
+
