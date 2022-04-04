@@ -739,7 +739,7 @@ module.exports = class Browser {
             callbacks were at least done one last time  */
         this.worker.webContents.send("browser-worker-stop")
         await new Promise((resolve) => {
-            this.worker.webContents.on("browser-worker-stopped", () => {
+            electron.ipcMain.on("browser-worker-stopped", () => {
                 resolve()
             })
         })
