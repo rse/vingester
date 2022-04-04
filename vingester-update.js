@@ -153,7 +153,7 @@ module.exports = class Update {
             progress("downloading application distribution archive", 0.0)
         let req = got({
             method:       "GET",
-            url:          url,
+            url,
             headers:      { "User-Agent": `${pjson.name}/${pjson.version}` },
             responseType: "buffer",
             https:        { rejectUnauthorized: false }
@@ -179,7 +179,7 @@ module.exports = class Update {
             progress("downloading application distribution signature", 0.0)
         req = got({
             method:       "GET",
-            url:          url,
+            url,
             headers:      { "User-Agent": `${pjson.name}/${pjson.version}` },
             responseType: "buffer",
             https:        { rejectUnauthorized: false }

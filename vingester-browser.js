@@ -351,8 +351,8 @@ module.exports = class Browser {
         /*  create content browser window (visible or offscreen)  */
         this.log.info(`browser: create (${this.cfg.w}x${this.cfg.h} @ ${factor} -> ${width}x${height})`)
         const content = new electron.BrowserWindow({
-            width:                          width,
-            height:                         height,
+            width,
+            height,
             minWidth:                       width,
             minHeight:                      height,
             maxWidth:                       width,
@@ -378,7 +378,7 @@ module.exports = class Browser {
                 fullscreenable:             true,
                 titleBarStyle:              "hidden",
                 thickFrame:                 false,
-                title:                      title
+                title
             } : {
                 show:                       false
             }),
@@ -389,7 +389,7 @@ module.exports = class Browser {
                     offscreen:              true
                 }),
                 zoomFactor:                 this.cfg.z / factor,
-                session:                    session,
+                session,
                 devTools:                   true,
                 backgroundThrottling:       false,
                 preload:                    path.join(__dirname, "vingester-browser-preload.js"),

@@ -6,6 +6,10 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
+- 2.8.1
+    - UPGRADE: upgrade to ESLint 18
+    - CLEANUP: make ESLint happy again
+
 - 2.8.0
     - UPGRADE: upgrade to Electron 18.0.1
     - UPGRADE: upgrade to Electron-Builder 22.14.13

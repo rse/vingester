@@ -327,9 +327,9 @@ const app = Vue.createApp({
             if (   (browser.D || browser.N)
                 && (!browser.N || (browser.N && (browser.n || browser.m)))
                 && browser.t !== "" && browser.u !== "")
-                delete this.invalid[browser.id]["GLOBAL"]
-             else
-                this.invalid[browser.id]["GLOBAL"] = true
+                delete this.invalid[browser.id].GLOBAL
+            else
+                this.invalid[browser.id].GLOBAL = true
         },
         resetState (id) {
             this.running[id] = false

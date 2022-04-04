@@ -55,4 +55,5 @@ rules:
     multiline-ternary:                   off
     no-new:                              off
     no-unneeded-ternary:                 off
+    n/no-callback-literal:               off
 

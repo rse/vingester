@@ -257,7 +257,7 @@ class BrowserWorker {
                     lineStrideBytes:    size.width * bytesForBGRA,
 
                     /*  the data itself  */
-                    fourCC:             fourCC,
+                    fourCC,
                     data:               buffer
                 }
                 await this.ndiSender.video(frame)
@@ -342,8 +342,8 @@ class BrowserWorker {
                     timecode:           now / BigInt(100),
 
                     /*  type-specific information  */
-                    sampleRate:         sampleRate,
-                    noChannels:         noChannels,
+                    sampleRate,
+                    noChannels,
                     noSamples:          Math.trunc(buffer2.byteLength / noChannels / bytesForFloat32),
                     channelStrideBytes: Math.trunc(buffer2.byteLength / noChannels),
 

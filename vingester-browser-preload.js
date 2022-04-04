@@ -22,7 +22,7 @@
     /*  provide global Vingester environment (for postload)  */
     let visibility = cfg.D ? "visible" : "hidden"
     electron.contextBridge.exposeInMainWorld("vingester", {
-        cfg: cfg,
+        cfg,
         log (...args) {
             log.info(...args)
         },
