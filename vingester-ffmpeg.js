@@ -190,10 +190,14 @@ module.exports = class FFmpeg extends EventEmitter {
             cwd:   this.options.cwd
         })
         this.proc.stdout.on("data", (line) => {
+            if (this.stopping)
+                return
             this.options.log("info", `FFmpeg stdout: ${line.toString()}`)
             this.emit("error", `FFmpeg stdout: ${line.toString()}`)
         })
         this.proc.stderr.on("data", (line) => {
+            if (this.stopping)
+                return
             this.options.log("info", `FFmpeg stderr: ${line.toString()}`)
             this.emit("error", `FFmpeg stderr: ${line.toString()}`)
         })
@@ -201,6 +205,9 @@ module.exports = class FFmpeg extends EventEmitter {
         /*  process exit of ffmpeg(1) subprocess  */
         this.workaround = false
         this.proc.on("exit", async (code, signal) => {
+            if (this.stopping)
+                return
+
             /*  just log the information  */
             this.options.log("error", `FFmpeg exit: code: ${code}, signal: ${signal}`)
 
@@ -226,29 +233,44 @@ module.exports = class FFmpeg extends EventEmitter {
         })
     }
     async video (data) {
-        if (this.proc !== null && !this.stopping)
+        if (this.options.fps > 0 && this.proc !== null && !this.stopping)
             await new Promise((resolve) => this.proc.stdio[0].write(data, null, resolve))
     }
     async audio (data) {
-        if (this.proc !== null && !this.stopping)
+        if (this.options.ac > 0 && this.proc !== null && !this.stopping)
             await new Promise((resolve) => this.proc.stdio[3].write(data, null, resolve))
-    }
-    async end () {
-        if (this.proc !== null) {
-            this.options.log("info", "closing FFmpeg video and audio input")
-            await new Promise((resolve) => this.proc.stdio[0].end(resolve))
-            await new Promise((resolve) => this.proc.stdio[3].end(resolve))
-        }
     }
     async stop () {
         /*  kill ffmpeg(1) subprocess  */
         if (this.proc !== null && !this.stopping) {
+            /*  stop feeding the input streams  */
+            this.options.log("info", "stopping FFmpeg input stream feeding")
             this.stopping = true
-            this.options.log("info", "ending FFmpeg input stream")
-            await this.end()
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+
+            /*  close the input streams  */
+            this.options.log("info", "closing FFmpeg input streams")
+            await new Promise((resolve) => {
+                let used = 0
+                if (this.options.fps > 0) used++
+                if (this.options.ac  > 0) used++
+                const done = () => { if (--used === 0) resolve() }
+                if (this.options.fps > 0) {
+                    this.proc.stdio[0].once("finish", done)
+                    this.proc.stdio[0].end()
+                }
+                if (this.options.ac > 0) {
+                    this.proc.stdio[3].once("finish", done)
+                    this.proc.stdio[3].end()
+                }
+            })
+
+            /*  stop sub-process  */
             this.options.log("info", "stopping FFmpeg process")
-            this.proc.kill("SIGTERM", { forceKillAfterTimeout: 2 * 1000 })
             try {
+                this.proc.kill("SIGINT")
+                await new Promise((resolve) => setTimeout(resolve, 1000))
+                this.proc.kill("SIGTERM", { forceKillAfterTimeout: 2000 })
                 await this.proc
             }
             catch (err) {

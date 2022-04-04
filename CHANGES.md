@@ -16,6 +16,7 @@ versions and prefixed with the kind of change.
     - BUGFIX: enable START button only if browser configuration is valid"
     - BUGFIX: Vue DOM element references were incorrectly handled (which broke preview and console)
     - BUGFIX: correctly wait for FFmpeg process termination
+    - BUGFIX: fix audio handling in case FFmpeg is used as a sink
 
 - 2.7.1
     - UPGRADE: upgrade to Electron 16.0.8

@@ -64,6 +64,9 @@
                 })
             }
 
+            /*  determine if FFmpeg is used as a sink and audio channels are enabled  */
+            const ffmpegWithAudio = (vingester.cfg.m && vingester.cfg.C > 0)
+
             /*  create a stereo audio destination  */
             let dest = null
             if (vingester.cfg.N) {
@@ -71,6 +74,19 @@
                 dest.channelCount          = parseInt(vingester.cfg.C)
                 dest.channelCountMode      = "explicit"
                 dest.channelInterpretation = "speakers"
+
+                /*  if FFmpeg is enabled as a sink and audio channels are enabled,
+                    produce silence as the fallback to get the recorder always
+                    producing an audio stream or at least FFmpeg will starve later!
+                    For NDI as a sink, it doesn't matter, as NDI does not starve.  */
+                if (ffmpegWithAudio) {
+                    const gain = ac.createGain()
+                    gain.gain.setValueAtTime(0, ac.currentTime)
+                    gain.connect(dest)
+                    const osc = ac.createOscillator()
+                    osc.connect(gain)
+                    osc.start()
+                }
             }
 
             /*  create media recorder to create an WebM/OPUS stream as the output.
@@ -92,6 +108,8 @@
                     const u8 = new Uint8Array(ab, 0, ab.byteLength)
                     vingester.audioCapture(u8)
                 })
+                if (ffmpegWithAudio)
+                    recorder.start(Math.round(1000 / vingester.cfg.f))
             }
 
             /*  internal state  */
@@ -111,7 +129,7 @@
                     source.connect(dest)
                     tracks.set(track, source)
                     attached++
-                    if (attached === 1)
+                    if (attached === 1 && !ffmpegWithAudio)
                         recorder.start(Math.round(1000 / vingester.cfg.f))
                 }
             }
@@ -124,7 +142,7 @@
                     source.disconnect(dest)
                     tracks.delete(track)
                     attached--
-                    if (attached === 0)
+                    if (attached === 0 && !ffmpegWithAudio)
                         recorder.stop()
                 }
             }
