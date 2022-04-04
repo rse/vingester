@@ -66,7 +66,7 @@
         "typopro-web":                   "4.2.6"
     },
     "main":                              "vingester-main.js",
-    "upd":                               [ "!eslint", "!execa", "!got" ],
+    "upd":                               [ "!eslint", "!execa", "!got", "!dsig" ],
     "build": {
         "appId":                         "com.engelschall.apps.vingester",
         "productName":                   "Vingester",
