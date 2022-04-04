@@ -738,7 +738,11 @@ module.exports = class Browser {
         /*  notify worker and wait until its processVideo/processAudio
             callbacks were at least done one last time  */
         this.worker.webContents.send("browser-worker-stop")
-        await new Promise((resolve) => setTimeout(resolve, 200))
+        await new Promise((resolve) => {
+            this.worker.webContents.on("browser-worker-stopped", () => {
+                resolve()
+            })
+        })
 
         /*  remove all listeners  */
         this.worker.removeAllListeners()
