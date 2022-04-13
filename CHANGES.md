@@ -7,6 +7,9 @@ reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
 - 2.8.1
+    - UPGRADE: upgrade to Electron 18.0.3
+    - UPGRADE: upgrade to Electron-Builder 23.0.3
+    - UPGRADE: upgrade to Vue 3.2.32
     - UPGRADE: upgrade to ESLint 18
     - CLEANUP: make ESLint happy again
 
