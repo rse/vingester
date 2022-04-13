@@ -213,10 +213,14 @@
                         <i>CentralControl</i>, <i>Show Cockpit</i> or similar control
                         software.
                         <p/>
-                        The API access URL for HTTP <tt>GET</tt> requests is
-                        <tt>http://{{ apiAddr }}:{{ apiPort }}/<i>browser</i>/<i>command</i></tt>,
-                        where <tt><i>browser</i></tt> is the <b>BROWSER / Title</b> of the browser (or <tt>all</tt> for all
-                        browsers) and <tt><i>command</i></tt> is <tt>start</tt>, <tt>reload</tt> or <tt>stop</tt>.
+                        The <b>Vingester</b> API access URL for HTTP <tt>GET</tt> requests is:
+                        <p/>
+                        <div class="url">
+                            <tt>http://{{ apiAddr }}:{{ apiPort }}/<i>browser</i>/<i>command</i></tt>
+                        </div>
+                        <p/>
+                        The <tt><i>browser</i></tt> parameter is the <b>BROWSER / Title</b> of the browser (or <tt>all</tt> for all
+                        browsers) and the <tt><i>command</i></tt> parameter is <tt>start</tt>, <tt>reload</tt> or <tt>stop</tt>.
                     </div>
                 </div>
                 <div class="ui-modal-messages" v-show="modal === 'messages'">

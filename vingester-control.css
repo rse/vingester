@@ -398,6 +398,14 @@ body {
                     margin-bottom: 10px;
                 }
             }
+            .about {
+                .url {
+                    background-color: #a89070;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    padding: 4px 10px 4px 10px;
+                }
+            }
         }
         .ui-modal-info {
             display: flex;
