@@ -243,6 +243,162 @@ body {
         z-index: 20;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
+        color: #000000;
+        .toggle {
+            width: 60px;
+            height: 18px;
+            border-radius: 4px;
+            border-top: 1px solid #d8c0a0;
+            border-left: 1px solid #d8c0a0;
+            border-right: 1px solid #988060;
+            border-bottom: 1px solid #988060;
+            padding: 1px 4px 1px 4px;
+            background-color: #c8b090;
+            color: #000000;
+            display: flex;
+            text-align: center;
+            cursor: pointer;
+            .toggle-option {
+                position: relative;
+                top: -2px;
+                display: none;
+                width: 100%;
+                .icon {
+                    position: relative;
+                    top: 1px;
+                    color: #988060;
+                    display: inline-block;
+                    padding-right: 4px;
+                }
+            }
+            .toggle-option.selected {
+                display: block;
+            }
+            &:hover {
+                border-top: 1px solid #f8e0c0;
+                border-left: 1px solid #f8e0c0;
+                border-right: 1px solid #b8a080;
+                border-bottom: 1px solid #b8a080;
+                background-color: #e8d0b0;
+                .toggle-option .icon {
+                    color: #a89070;
+                }
+            }
+        }
+        .field {
+            -webkit-app-region: no-drag;
+            border-radius: 4px;
+            border-top: 1px solid #988060;
+            border-left: 1px solid #988060;
+            border-right: 1px solid #d8c0a0;
+            border-bottom: 1px solid #d8c0a0;
+            margin-top: 2px;
+            margin-left: 8px;
+            margin-bottom: 2px;
+            &.field-usage .input-button {
+                background-color: #a89070;
+                border-top: 1px solid #a89070;
+                border-left: 1px solid #a89070;
+                border-right: 1px solid #a89070;
+                border-bottom: 1px solid #a89070;
+                width: 100px;
+                cursor: default;
+                &:hover {
+                    background-color: #a89070;
+                    border-top: 1px solid #a89070;
+                    border-left: 1px solid #a89070;
+                    border-right: 1px solid #a89070;
+                    border-bottom: 1px solid #a89070;
+                    .icon {
+                        color: #786040;
+                    }
+                }
+            }
+            &.field-api .input-button {
+                background-color: #c8b090;
+            }
+            &.field-api:hover .input-button {
+                background-color: #e8d0b0;
+                cursor: pointer;
+            }
+            &.disabled .input-button {
+                background-color: #b8a080;
+                cursor: default;
+                &:hover {
+                    background-color: #b8a080;
+                    border-top: 1px solid #d8c0a0;
+                    border-left: 1px solid #d8c0a0;
+                    border-right: 1px solid #988060;
+                    border-bottom: 1px solid #988060;
+                    cursor: default;
+                    .icon {
+                        color: #786040;
+                    }
+                }
+            }
+            > input {
+                width: 120px;
+                height: 18px;
+                border: 0;
+                outline: none;
+                border-radius: 4px;
+                padding-left: 4px;
+                padding-right: 4px;
+                user-select: text;
+                border-top: 1px solid #c8b090;
+                border-left: 1px solid #c8b090;
+                border-right: 1px solid #887050;
+                border-bottom: 1px solid #887050;
+                background-color: #a89070;
+                color: #000000;
+            }
+            > input:hover {
+                border-top: 1px solid #b8a080;
+                border-left: 1px solid #b8a080;
+                background-color: #988060;
+                color: #000000;
+                border-right: 1px solid #786040;
+                border-bottom: 1px solid #786040;
+            }
+            > input:focus {
+                border-top: 1px solid #b8a080;
+                border-left: 1px solid #b8a080;
+                background-color: #988060;
+                color: #000000;
+                border-right: 1px solid #786040;
+                border-bottom: 1px solid #786040;
+            }
+            > input.disabled {
+                background-color: #b8a080;
+                color: #000000;
+            }
+            > input.disabled:hover {
+                background-color: #b8a080;
+                color: #000000;
+            }
+        }
+        .ui-modal-api {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-items: center;
+            .form {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-items: center;
+                margin-right: 20px;
+                .label {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+                .field {
+                    margin-left: 0;
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                }
+            }
+        }
         .ui-modal-info {
             display: flex;
             flex-direction: row;

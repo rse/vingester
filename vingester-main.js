@@ -18,6 +18,9 @@ const debounce    = require("throttle-debounce").debounce
 const throttle    = require("throttle-debounce").throttle
 const jsYAML      = require("js-yaml")
 const UUID        = require("pure-uuid")
+const HAPI        = require("hapi")
+const HAPIHeader  = require("hapi-plugin-header")
+const Boom        = require("@hapi/boom")
 const moment      = require("moment")
 const mkdirp      = require("mkdirp")
 const FFmpeg      = require("@rse/ffmpeg")
@@ -752,6 +755,134 @@ electron.app.on("ready", async () => {
         electron.app.exit()
     })
 
+    /*  toggle API  */
+    const API = class {
+        constructor () {
+            this.hapi = null
+        }
+        async configure (cfg) {
+            this.enabled = cfg.enabled ?? false
+            this.addr    = cfg.addr    ?? "127.0.0.1"
+            this.port    = cfg.port    ?? "7211"
+            if (this.enabled && !this.hapi)
+                this.start()
+            else if (!this.enabled && this.hapi)
+                this.stop()
+        }
+        async start () {
+            log.info("start API")
+            this.hapi = new HAPI.server({
+                host:  this.addr,
+                port:  parseInt(this.port),
+                debug: false
+            })
+            await this.hapi.register({
+                plugin: HAPIHeader,
+                options: { Server: `${pkg.name}/${pkg.version}` }
+            })
+            this.hapi.events.on("response", (request) => {
+                const msg =
+                    `remote=${request.info.remoteAddress}, ` +
+                    `method=${request.method.toUpperCase()}, ` +
+                    `url=${request.url.pathname}, ` +
+                    `protocol=HTTP/${request.raw.req.httpVersion}, ` +
+                    `response=${request.response?.statusCode ?? "<unknown>"}`
+                log.info(`API: request: ${msg}`)
+            })
+            this.hapi.events.on("log", (ev, tags) => {
+                if (tags.error) {
+                    const err = ev.error
+                    if (err instanceof Error)
+                        log.error(`API: log: ${err.message}`)
+                    else
+                        log.error(`API: log: ${err}`)
+                }
+            })
+            this.hapi.events.on({ name: "request", channels: [ "error" ] }, (req, ev, tags) => {
+                if (ev.error instanceof Error)
+                    log.error(`API: request-error: ${ev.error.message}`)
+                else
+                    log.error(`API: request-error: ${ev.error}`)
+            })
+            this.hapi.route({
+                method:   "GET",
+                path:     "/{browser}/{command}",
+                handler: async (req, h) => {
+                    const { browser, command } = req.params
+                    if (browser === "all") {
+                        if (command === "start")
+                            await controlBrowser("start-all")
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else if (command === "reload")
+                            await controlBrowser("reload-all")
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else if (command === "stop")
+                            await controlBrowser("stop-all")
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else
+                            throw new Boom.badRequest("invalid command")
+                    }
+                    else {
+                        let id = Object.keys(browsers).find((id) => browsers[id].cfg.t === browser)
+                        if (id === undefined)
+                            throw new Boom.notFound("invalid browser title/name")
+                        if (command === "start")
+                            await controlBrowser("start", id)
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else if (command === "reload")
+                            await controlBrowser("reload", id)
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else if (command === "stop")
+                            await controlBrowser("stop", id)
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else if (command === "clear")
+                            await controlBrowser("clear", id)
+                                .catch((err) => { throw new Boom.expectationFailed(err.message) })
+                        else
+                            throw new Boom.badRequest("invalid command")
+                    }
+                    return h.response("OK").code(200)
+                }
+            })
+            this.hapi.route({
+                method:   [ "GET", "POST" ],
+                path:     "/{any*}",
+                handler: async (req, h) => {
+                    throw new Boom.notFound("resource not found")
+                }
+            })
+            await this.hapi.start()
+        }
+        async stop () {
+            log.info("stop API")
+            await this.hapi.stop().catch(() => {})
+            this.hapi = null
+        }
+    }
+    log.info("create API")
+    const api = new API()
+    api.configure({
+        enabled: store.get("api.enabled"),
+        addr:    store.get("api.addr"),
+        port:    store.get("api.port")
+    })
+    log.info("send API status and provide IPC hook for API status change")
+    control.webContents.send("api", {
+        enabled: api.enabled,
+        addr:    api.addr,
+        port:    api.port
+    })
+    electron.ipcMain.handle("api", async (ev, cfg) => {
+        store.set("api.enabled", cfg.enabled)
+        store.set("api.addr",    cfg.addr)
+        store.set("api.port",    cfg.port)
+        api.configure({
+            enabled: cfg.enabled,
+            addr:    cfg.addr,
+            port:    cfg.port
+        })
+    })
+
     /*  collect metrics  */
     log.info("start usage gathering timer")
     const usages = new util.WeightedAverage(20, 5)
@@ -798,6 +929,10 @@ electron.app.on("ready", async () => {
 
         /*  stop all browsers  */
         await controlBrowser("stop-all", null)
+
+        /*  stop API  */
+        if (API.started)
+            await API.stop()
 
         /*  optionally auto-export configuration  */
         if (configFile !== null) {

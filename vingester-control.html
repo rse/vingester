@@ -54,11 +54,18 @@
                     </div>
                     <div class="row-right">
                         <div class="icons">
+                            <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>API dialog.' }"
+                                v-on:click="modalToggle('api')">
+                                <span class="icon-stack">
+                                    <span class="icon"><i class="fas fa-circle"></i></span>
+                                    <span class="icon"><i class="fas fa-globe" data-fa-transform="shrink-7"></i></span>
+                                </span>
+                            </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application error messages.' }"
                                 v-on:click="modalToggle('messages')">
                                 <span class="icon-stack">
                                     <span class="icon"><i class="fas fa-circle"></i></span>
-                                    <span class="icon"><i class="fas fa-exclamation-triangle" data-fa-transform="shrink-7 up-1 left-1"></i></span>
+                                    <span class="icon"><i class="fas fa-exclamation-triangle" data-fa-transform="shrink-7"></i></span>
                                 </span>
                             </div>
                             <div v-tippy="{ placement: 'bottom', content: 'Click to show/hide the<br/>application version information.' }"
@@ -172,6 +179,46 @@
                 </div>
             </div>
             <div class="ui-modal" v-show="modal !== ''">
+                <div class="ui-modal-api" v-show="modal === 'api'">
+                    <div class="form">
+                        <div class="label label-api">API Enabled:</div>
+                        <div class="field field-api"
+                            v-tippy="{ placement: 'top', content: 'Click to ' + (apiEnabled ? 'disable' : 'enable') + ' the REST API<br/>for remote controlling Vingester.' }">
+                            <div class="toggle" v-on:click="toggleAPI()">
+                                <div class="toggle-option" v-bind:class="{ selected:  apiEnabled }"><span class="icon"><i class="fas fa-check-circle"></i></span> YES</div>
+                                <div class="toggle-option" v-bind:class="{ selected: !apiEnabled }"><span class="icon"><i class="fas fa-times-circle"></i></span> NO</div>
+                            </div>
+                        </div>
+                        <div class="label label-api-addr">IP Address:</div>
+                        <div class="field field-api-addr"
+                            v-tippy="{ placement: 'top', content: 'IP address or hostname to listen<br>(Use 0.0.0.0 for any address).' }">
+                            <input type="text" v-model="apiAddr"
+                                v-bind:class="{ disabled: apiEnabled }"
+                                v-bind:disabled="apiEnabled">
+                        </div>
+                        <div class="label label-api-port">TCP Port:</div>
+                        <div class="field field-api-port"
+                            v-tippy="{ placement: 'top', content: 'TCP port to listen.' }">
+                            <input type="text" v-model="apiPort"
+                                v-bind:class="{ disabled: apiEnabled }"
+                                v-bind:disabled="apiEnabled">
+                        </div>
+                    </div>
+                    <div class="about">
+                        If enabled on the left, <b>Vingester</b> provides an
+                        optional HTTP-based <i>Application Programming
+                        Interface (API)</i> on the configured IP address and
+                        TCP port. Use this API for remotely controlling
+                        <b>Vingester</b> from <i>Elgato Stream Deck</i>, <i>Bitfocus Companion</i>,
+                        <i>CentralControl</i>, <i>Show Cockpit</i> or similar control
+                        software.
+                        <p/>
+                        The API access URL for HTTP <tt>GET</tt> requests is
+                        <tt>http://{{ apiAddr }}:{{ apiPort }}/<i>browser</i>/<i>command</i></tt>,
+                        where <tt><i>browser</i></tt> is the <b>BROWSER / Title</b> of the browser (or <tt>all</tt> for all
+                        browsers) and <tt><i>command</i></tt> is <tt>start</tt>, <tt>reload</tt> or <tt>stop</tt>.
+                    </div>
+                </div>
                 <div class="ui-modal-messages" v-show="modal === 'messages'">
                     <div class="message-title">ERROR MESSAGE LOG:</div>
                     <div class="message-border-outside">

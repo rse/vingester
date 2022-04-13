@@ -67,7 +67,10 @@ const app = Vue.createApp({
             updateError:       null,
             audioDevices:      [],
             tag:               null,
-            displays:          []
+            displays:          [],
+            apiEnabled:        false,
+            apiAddr:           "127.0.0.1",
+            apiPort:           "7211"
         }
     },
     computed: {
@@ -200,6 +203,11 @@ const app = Vue.createApp({
         })
         electron.ipcRenderer.on("gpu", (ev, gpu) => {
             this.gpu = gpu
+        })
+        electron.ipcRenderer.on("api", (ev, api) => {
+            this.apiEnabled = api.enabled
+            this.apiAddr    = api.addr
+            this.apiPort    = api.port
         })
         electron.ipcRenderer.on("update-updateable", (ev, updateable) => {
             this.updateUpdateable = updateable
@@ -457,6 +465,14 @@ const app = Vue.createApp({
             this.modBrowser(clone(browser))
             this.save()
         }),
+        toggleAPI () {
+            this.apiEnabled = !this.apiEnabled
+            electron.ipcRenderer.invoke("api", {
+                enabled: this.apiEnabled,
+                addr:    this.apiAddr,
+                port:    this.apiPort
+            })
+        },
         toggleGPU () {
             electron.ipcRenderer.invoke("gpu", !this.gpu)
         },

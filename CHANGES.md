@@ -6,7 +6,8 @@ The following is a detailed list of all changes to **Vingester** in
 reverse chronological order (newer first), grouped by the release
 versions and prefixed with the kind of change.
 
-- 2.8.1
+- 3.0.0
+    - IMPROVEMENT: add HTTP API for remote start/reload/stop of all browsers or a particular browser
     - UPGRADE: upgrade to Electron 18.0.3
     - UPGRADE: upgrade to Electron-Builder 23.0.3
     - UPGRADE: upgrade to Vue 3.2.32
