@@ -806,6 +806,16 @@ electron.app.on("ready", async () => {
             })
             this.hapi.route({
                 method:   "GET",
+                path:     "/",
+                handler: async (req, h) => {
+                    const response = []
+                    for (const id of Object.keys(browsers))
+                        response.push(browsers[id].cfg.t)
+                    return h.response(JSON.stringify(response)).type("application/json").code(200)
+                }
+            })
+            this.hapi.route({
+                method:   "GET",
                 path:     "/{browser}/{command}",
                 handler: async (req, h) => {
                     const { browser, command } = req.params
