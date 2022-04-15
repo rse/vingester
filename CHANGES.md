@@ -8,9 +8,9 @@ versions and prefixed with the kind of change.
 
 - 3.0.0
     - IMPROVEMENT: add HTTP API for remote start/reload/stop of all browsers or a particular browser
-    - UPGRADE: upgrade to Electron 18.0.3
+    - UPGRADE: upgrade to Electron 18.0.4
     - UPGRADE: upgrade to Electron-Builder 23.0.3
-    - UPGRADE: upgrade to Vue 3.2.32
+    - UPGRADE: upgrade to Vue 3.2.33
     - UPGRADE: upgrade to ESLint 18
     - BUGFIX: switch from device-dependent scaling to device-independent scaling for browsers (causes no more sizing problems)
     - BUGFIX: fix audio handling in case of 0 channels
