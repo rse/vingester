@@ -833,7 +833,7 @@ electron.app.on("ready", async () => {
                             throw new Boom.badRequest("invalid command")
                     }
                     else {
-                        let id = Object.keys(browsers).find((id) => browsers[id].cfg.t === browser)
+                        const id = Object.keys(browsers).find((id) => browsers[id].cfg.t === browser)
                         if (id === undefined)
                             throw new Boom.notFound("invalid browser title/name")
                         if (command === "start")
