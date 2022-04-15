@@ -57,7 +57,7 @@
         try {
             /*  create offline audio context  */
             let ac = null
-            if (vingester.cfg.N) {
+            if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0) {
                 ac = new AudioContext({
                     latencyHint: "interactive",
                     sampleRate:  parseInt(vingester.cfg.r)
@@ -65,11 +65,11 @@
             }
 
             /*  determine if FFmpeg is used as a sink and audio channels are enabled  */
-            const ffmpegWithAudio = (vingester.cfg.m && vingester.cfg.C > 0)
+            const ffmpegWithAudio = (vingester.cfg.N && parseInt(vingester.cfg.C) > 0 && vingester.cfg.m)
 
             /*  create a stereo audio destination  */
             let dest = null
-            if (vingester.cfg.N) {
+            if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0) {
                 dest = ac.createMediaStreamDestination()
                 dest.channelCount          = parseInt(vingester.cfg.C)
                 dest.channelCountMode      = "explicit"
@@ -99,7 +99,7 @@
                 even if it causes extra decoding performance and theoretically (but not noticable)
                 is also a lossy intermediate step.  */
             let recorder = null
-            if (vingester.cfg.N) {
+            if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0) {
                 recorder = new MediaRecorder(dest.stream, {
                     mimeType: "audio/webm; codecs=\"opus\""
                 })
@@ -185,7 +185,7 @@
                         }
                         nodes.set(node, true)
                     }
-                    if (vingester.cfg.N) {
+                    if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0) {
                         vingester.log(`on ${when} attach to ${node.tagName}`)
                         const stream = node.captureStream()
                         const audiotracks = stream.getAudioTracks()
@@ -225,7 +225,7 @@
                             node.setSinkId("default").catch((ex) => void (0))
                         }
                     }
-                    if (vingester.cfg.N) {
+                    if (vingester.cfg.N && parseInt(vingester.cfg.C) > 0) {
                         vingester.log(`on ${when} detach from ${node.tagName} node`)
                         const listener = listeners2.get(node)
                         node.removeEventListener("volumechange", listener)
