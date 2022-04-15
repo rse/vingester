@@ -109,6 +109,10 @@ let autostart = false
 if (electron.app.commandLine.hasSwitch("autostart"))
     autostart = true
 
+/*  force Chromium of browsers (not control UI) to ignore device scaling  */
+electron.app.commandLine.appendSwitch("high-dpi-support", 1)
+electron.app.commandLine.appendSwitch("force-device-scale-factor", 1)
+
 /*  optionally initialize NDI library  */
 if (grandiose.isSupportedCPU())
     grandiose.initialize()
@@ -160,13 +164,18 @@ electron.app.on("ready", async () => {
     const h = store.get("control.h", 575)
     const pos = (x !== null && y !== null ? { x, y } : {})
 
+    /*  determine target display of browser window  */
+    let display = electron.screen.getPrimaryDisplay()
+    if (x !== null && y !== null)
+        display = electron.screen.getDisplayNearestPoint({ x, y })
+
     /*  create main window  */
     log.info("creating control user interface")
     const control = new electron.BrowserWindow({
         ...pos,
         show:            false,
-        width:           w,
-        height:          h,
+        width:           w * display.scaleFactor,
+        height:          h * display.scaleFactor,
         minWidth:        840,
         minHeight:       575,
         frame:           false,
@@ -174,6 +183,7 @@ electron.app.on("ready", async () => {
         backgroundColor: "#333333",
         useContentSize:  false,
         webPreferences: {
+            zoomFactor:                 display.scaleFactor,
             devTools:                   (process.env.DEBUG === "2"),
             nodeIntegration:            true,
             nodeIntegrationInWorker:    true,
@@ -184,6 +194,7 @@ electron.app.on("ready", async () => {
             spellcheck:                 false
         }
     })
+    control.webContents.setZoomFactor(display.scaleFactor)
     control.removeMenu()
     contextMenu({
         window: control,

@@ -319,18 +319,11 @@ module.exports = class Browser {
             })
         }
 
-        /*  determine scale factor of browser window (on its target display)  */
-        const factor = D.scaleFactor
-
-        /*  determine width/height of browser window (on its target display)  */
-        const width  = Math.round(this.cfg.w / factor)
-        const height = Math.round(this.cfg.h / factor)
-
         /*  determine position of browser window (on its target display)  */
         let pos = {}
         if (this.cfg.D && this.cfg.x !== null && this.cfg.y !== null) {
-            const x = Math.round(D.bounds.x + (this.cfg.x / factor))
-            const y = Math.round(D.bounds.y + (this.cfg.y / factor))
+            const x = D.bounds.x + this.cfg.x
+            const y = D.bounds.y + this.cfg.y
             pos = { x, y }
         }
 
@@ -349,14 +342,14 @@ module.exports = class Browser {
         }
 
         /*  create content browser window (visible or offscreen)  */
-        this.log.info(`browser: create (${this.cfg.w}x${this.cfg.h} @ ${factor} -> ${width}x${height})`)
+        this.log.info(`browser: create (${this.cfg.w}x${this.cfg.h} @ ${this.cfg.z})`)
         const content = new electron.BrowserWindow({
-            width,
-            height,
-            minWidth:                       width,
-            minHeight:                      height,
-            maxWidth:                       width,
-            maxHeight:                      height,
+            width:                          this.cfg.w,
+            height:                         this.cfg.h,
+            minWidth:                       this.cfg.w,
+            minHeight:                      this.cfg.h,
+            maxWidth:                       this.cfg.w,
+            maxHeight:                      this.cfg.h,
             useContentSize:                 true,
             ...(this.cfg.c === "transparent" ? {
                 transparent:                true
@@ -388,7 +381,7 @@ module.exports = class Browser {
                 } : {
                     offscreen:              true
                 }),
-                zoomFactor:                 this.cfg.z / factor,
+                zoomFactor:                 this.cfg.z,
                 session,
                 devTools:                   true,
                 backgroundThrottling:       false,
@@ -484,7 +477,7 @@ module.exports = class Browser {
                 framesSkipped = 0
                 const buffer = image.getBitmap()
                 const size   = image.getSize()
-                const ratio  = image.getAspectRatio(factor)
+                const ratio  = image.getAspectRatio()
                 this.worker.webContents.send("video-capture", buffer, size, ratio, dirty)
             }
         }
@@ -500,7 +493,7 @@ module.exports = class Browser {
                     return
                 const buffer = image.getBitmap()
                 const size   = image.getSize()
-                const ratio  = image.getAspectRatio(factor)
+                const ratio  = image.getAspectRatio()
                 this.worker.webContents.send("video-capture", buffer, size, ratio, dirty)
             }
         }
@@ -613,7 +606,7 @@ module.exports = class Browser {
 
             /*  force zoom level (sometimes Chromium keeps old factors if
                 just the "zoomFactor" attribute is used)  */
-            content.webContents.setZoomFactor(this.cfg.z / factor)
+            content.webContents.setZoomFactor(this.cfg.z)
         })
 
         /*  finally load the Web Content  */

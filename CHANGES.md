@@ -12,6 +12,7 @@ versions and prefixed with the kind of change.
     - UPGRADE: upgrade to Electron-Builder 23.0.3
     - UPGRADE: upgrade to Vue 3.2.32
     - UPGRADE: upgrade to ESLint 18
+    - BUGFIX: switch from device-dependent scaling to device-independent scaling for browsers (causes no more sizing problems)
     - BUGFIX: fix audio handling in case of 0 channels
     - BUGFIX: try to stop FFmpeg sub-process in a more clean way
     - CLEANUP: make ESLint happy again
