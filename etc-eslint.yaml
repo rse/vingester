@@ -56,4 +56,6 @@ rules:
     no-new:                              off
     no-unneeded-ternary:                 off
     n/no-callback-literal:               off
+    n/handle-callback-err:               off
+    new-cap:                             off
 
