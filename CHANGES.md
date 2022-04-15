@@ -12,6 +12,7 @@ versions and prefixed with the kind of change.
     - UPGRADE: upgrade to Electron-Builder 23.0.3
     - UPGRADE: upgrade to Vue 3.2.32
     - UPGRADE: upgrade to ESLint 18
+    - BUGFIX: fix audio handling in case of 0 channels
     - CLEANUP: make ESLint happy again
 
 - 2.8.0
