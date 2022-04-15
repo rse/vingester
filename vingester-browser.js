@@ -212,6 +212,8 @@ module.exports = class Browser {
         const changeVisibilityState = (state) => {
             if (this.content === null)
                 return
+            if (this.cfg.D)
+                return
             this.content.webContents.executeJavaScript(`
                 vingester.visibility(${JSON.stringify(state)});
                 document.dispatchEvent(new Event("visibilitychange", {

@@ -15,6 +15,7 @@ versions and prefixed with the kind of change.
     - BUGFIX: switch from device-dependent scaling to device-independent scaling for browsers (causes no more sizing problems)
     - BUGFIX: fix audio handling in case of 0 channels
     - BUGFIX: try to stop FFmpeg sub-process in a more clean way
+    - BUGFIX: do not tell the Web content the document is ever hidden for parallel frameless and headless mode
     - CLEANUP: make ESLint happy again
 
 - 2.8.0
