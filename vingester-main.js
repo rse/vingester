@@ -110,8 +110,8 @@ if (electron.app.commandLine.hasSwitch("autostart"))
     autostart = true
 
 /*  force Chromium of browsers (not control UI) to ignore device scaling  */
-electron.app.commandLine.appendSwitch("high-dpi-support", 1)
-electron.app.commandLine.appendSwitch("force-device-scale-factor", 1)
+electron.app.commandLine.appendSwitch("high-dpi-support", "true")
+electron.app.commandLine.appendSwitch("force-device-scale-factor", "1")
 
 /*  optionally initialize NDI library  */
 if (grandiose.isSupportedCPU())
