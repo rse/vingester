@@ -250,11 +250,11 @@
                             if (node instanceof HTMLMediaElement)
                                 attach("mutation", node)
                             else if (node.children && node.children.length){
-								const els = node.querySelectorAll("audio, video");
-								for (const el of els){
-									attach("mutation", el);
-								}
-							}
+                                const els = node.querySelectorAll("audio, video")
+                                for (const el of els){
+                                    attach("mutation", el)
+                                }
+                            }
                         for (const node of mutation.removedNodes)
                             if (node instanceof HTMLMediaElement)
                                 detach("mutation", node)
