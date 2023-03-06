@@ -258,6 +258,12 @@
                         for (const node of mutation.removedNodes)
                             if (node instanceof HTMLMediaElement)
                                 detach("mutation", node)
+							else if (node.children && node.children.length){
+                                const els = node.querySelectorAll("audio, video")
+                                for (const el of els){
+                                    detach("mutation", el)
+                                }
+                            }
                     }
                 }
             })
