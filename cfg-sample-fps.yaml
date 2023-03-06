@@ -1,0 +1,133 @@
+%YAML 1.2
+##
+##  Vingester Sample Configuration
+##
+
+---
+
+-   BrowserTitle:                  "Sample-FPS-24"
+    BrowserInfo:                   "Sample Video with 24 FPS"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    BrowserZoom:                   1.0
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
+    BrowserPersist:                false
+    InputURL:                      "https://www.youtube.com/embed/Dfw_5DykRxs?autoplay=1&controls=0&rel=0"
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           0
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         24
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
+    Output2SinkNDITallyReload:     false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+    DevToolsEnabled:               false
+    Collapsed:                     false
+
+-   BrowserTitle:                  "Sample-FPS-30"
+    BrowserInfo:                   "Sample Video with 30 FPS"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    BrowserZoom:                   1.0
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
+    BrowserPersist:                false
+    InputURL:                      "https://www.youtube.com/embed/N6IC80LfrNs?autoplay=1&controls=0&rel=0"
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           0
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         30
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
+    Output2SinkNDITallyReload:     false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+    DevToolsEnabled:               false
+    Collapsed:                     false
+
+-   BrowserTitle:                  "Sample-FPS-60"
+    BrowserInfo:                   "Sample Video with 60 FPS"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    BrowserZoom:                   1.0
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
+    BrowserPersist:                false
+    InputURL:                      "https://www.youtube.com/embed/79ImZE0K7xc?autoplay=1&controls=0&rel=0"
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
+    Output1Enabled:                false
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           0
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                true
+    Output2VideoFrameRate:         60
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
+    Output2SinkNDITallyReload:     false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      ""
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+    DevToolsEnabled:               false
+    Collapsed:                     false
+

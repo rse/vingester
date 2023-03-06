@@ -1,0 +1,49 @@
+%YAML 1.2
+##
+##  Vingester Sample Configuration
+##
+
+---
+
+-   BrowserTitle:                  "Vingester-Test"
+    BrowserInfo:                   "Vingester Test Page"
+    BrowserWidth:                  1280
+    BrowserHeight:                 720
+    BrowserColor:                  "transparent"
+    BrowserZoom:                   1.0
+    BrowserTrust:                  false
+    BrowserNodeAPI:                false
+    BrowserOBSDOM:                 false
+    BrowserPersist:                false
+    InputURL:                      "https://vingester.app/test/"
+    PatchDelay:                    0
+    PatchFrame:                    ""
+    PatchStyleType:                "inline"
+    PatchStyleCode:                ""
+    PatchScriptType:               "inline"
+    PatchScriptCode:               ""
+    Output1Enabled:                true
+    Output1VideoPositionX:         0
+    Output1VideoPositionY:         0
+    Output1VideoDisplay:           0
+    Output1VideoPinTop:            false
+    Output1AudioDevice:            ""
+    Output2Enabled:                false
+    Output2VideoFrameRate:         24
+    Output2VideoAdaptive:          false
+    Output2VideoDelay:             0
+    Output2AudioSampleRate:        48000
+    Output2AudioChannels:          2
+    Output2AudioDelay:             0
+    Output2SinkNDIEnabled:         true
+    Output2SinkNDIAlpha:           true
+    Output2SinkNDITallyReload:     false
+    Output2SinkFFmpegEnabled:      false
+    Output2SinkFFmpegMode:         "vbr"
+    Output2SinkFFmpegFormat:       "matroska"
+    Output2SinkFFmpegOptions:      "vingester-test.mkv"
+    PreviewEnabled:                false
+    ConsoleEnabled:                false
+    DevToolsEnabled:               false
+    Collapsed:                     false
+

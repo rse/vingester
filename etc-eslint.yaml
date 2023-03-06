@@ -1,6 +1,6 @@
 ##
 ##  Vingester ~ Ingest Web Contents as Video Streams
-##  Copyright (c) 2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
+##  Copyright (c) 2021-2022 Dr. Ralf S. Engelschall <rse@engelschall.com>
 ##  Licensed under GPL 3.0 <https://spdx.org/licenses/GPL-3.0-only>
 ##
 
@@ -11,7 +11,7 @@ extends:
     - eslint-config-standard
 
 parserOptions:
-    ecmaVersion: 10
+    ecmaVersion: 11
     sourceType:  module
     ecmaFeatures:
         jsx:     false
@@ -27,6 +27,7 @@ env:
 globals:
     process:        true
     Vue:            true
+    VueNextSelect:  true
 
 rules:
     #   modified rules
@@ -53,4 +54,8 @@ rules:
     node/no-callback-literal:            off
     multiline-ternary:                   off
     no-new:                              off
+    no-unneeded-ternary:                 off
+    n/no-callback-literal:               off
+    n/handle-callback-err:               off
+    new-cap:                             off
 
