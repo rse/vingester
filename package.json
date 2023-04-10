@@ -98,12 +98,9 @@
         },
         "mac": {
             "target": [
-                {
-                    "target": "dir"
-                }
+              "zip"
             ],
             "category": "com.engelschall.apps",
-            "identity": null,
             "icon": "vingester-icon.png",
             "files": [
                 "!node_modules/electron-builder/**",
@@ -122,7 +119,9 @@
                 "!node_modules/app-builder-lib/**",
                 "!node_modules/7zip-bin/**",
                 "!node_modules/npm-install-fetch/**"
-            ]
+            ],
+            "hardenedRuntime": true,
+            "entitlements": "./build/entitlements.mac.inherit.plist"
         },
         "win": {
             "target": [
