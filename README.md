@@ -1,9 +1,9 @@
 
-This is fork of Vingester, designed to address some bugs in the current official version. 
+note: This is fork of Vingester, designed to address some bugs in the current official version. This forked version will not be updated frequently, so security patches will most certainly not be up to date.
 
 If using VDO.Ninja, v21 or older should mostly work with the official version of Vingester, but v22 and later may not.  
 
-I've gotten this patched version to work on Windows PC, but I've not managed to get a build for macOS, so if using mac, you may need to use https://vdo.ninja/v21/ with the offical version in the meanwhile.
+I've gotten this patched version of Vingester to work on Windows PC, but I've not managed to get a build for macOS, so if using mac, you may need to use https://vdo.ninja/v21/ with the offical version in the meanwhile.
 
 <img src="https://raw.githubusercontent.com/rse/vingester/master/vingester-icon.png" width="150" align="right" alt=""/>
 
