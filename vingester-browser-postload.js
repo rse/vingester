@@ -246,12 +246,24 @@
             const observer = new MutationObserver((mutationsList, observer) => {
                 for (const mutation of mutationsList) {
                     if (mutation.type === "childList") {
-                        for (const node of mutation.addedNodes)
+                        for (const node of mutation.addedNodes) {
                             if (node instanceof HTMLMediaElement)
                                 attach("mutation", node)
-                        for (const node of mutation.removedNodes)
+                            else if (node.children && node.children.length) {
+                                const els = node.querySelectorAll("audio, video")
+                                for (const el of els)
+                                    attach("mutation", el)
+                            }
+                        }
+                        for (const node of mutation.removedNodes) {
                             if (node instanceof HTMLMediaElement)
                                 detach("mutation", node)
+                            else if (node.children && node.children.length) {
+                                const els = node.querySelectorAll("audio, video")
+                                for (const el of els)
+                                    detach("mutation", el)
+                            }
+                        }
                     }
                 }
             })
